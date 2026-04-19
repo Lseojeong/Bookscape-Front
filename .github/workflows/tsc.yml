@@ -38,4 +38,4 @@ jobs:
         run: pnpm typegen
 
       - name: Run TypeScript
-        run: pnpm exec tsc --noEmit
+        run: pnpm type-check
