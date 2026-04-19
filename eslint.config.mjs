@@ -1,37 +1,29 @@
 import queryPlugin from '@tanstack/eslint-plugin-query';
-import importPlugin from 'eslint-plugin-import';
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
+import { flatConfigs as importXConfigs } from 'eslint-plugin-import-x';
 import { configs as storybookConfigs } from 'eslint-plugin-storybook';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier/flat';
 
-const stripPlugins = (config) => {
-  const configWithoutPlugins = { ...config };
-  delete configWithoutPlugins.plugins;
-  return configWithoutPlugins;
-};
-
-const importRecommended = stripPlugins(importPlugin.flatConfigs.recommended);
-const importTypescript = stripPlugins(importPlugin.flatConfigs.typescript);
-
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  importRecommended,
-  importTypescript,
+  importXConfigs.recommended,
+  importXConfigs.typescript,
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     plugins: {
       '@tanstack/query': queryPlugin,
     },
     settings: {
-      'import/resolver': {
-        typescript: {
+      'import-x/resolver-next': [
+        createTypeScriptImportResolver({
           alwaysTryTypes: true,
           project: './tsconfig.json',
-        },
-      },
+        }),
+      ],
     },
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
@@ -41,8 +33,8 @@ const eslintConfig = defineConfig([
       'react/self-closing-comp': 'warn',
       'react/jsx-pascal-case': 'error',
       'react/prop-types': 'off',
-      'import/no-anonymous-default-export': [2, { allowObject: true }],
-      'import/order': [
+      'import-x/no-anonymous-default-export': [2, { allowObject: true }],
+      'import-x/order': [
         'error',
         {
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
@@ -56,7 +48,7 @@ const eslintConfig = defineConfig([
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-      'import/no-unresolved': 'off',
+      'import-x/no-unresolved': 'error',
       '@tanstack/query/exhaustive-deps': 'error',
       '@tanstack/query/no-rest-destructuring': 'warn',
       '@tanstack/query/stable-query-client': 'error',
