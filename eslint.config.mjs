@@ -40,6 +40,7 @@ const eslintConfig = defineConfig([
       'react/jsx-key': 'error',
       'react/self-closing-comp': 'warn',
       'react/jsx-pascal-case': 'error',
+      'react/prop-types': 'off',
       'import/no-anonymous-default-export': [2, { allowObject: true }],
       'import/order': [
         'error',
