@@ -17,7 +17,7 @@ const config = {
         '✨ Feat',
         '🐛 Fix',
         '♻️ Refactor',
-        '⚙️ Chore',
+        '🔧 Chore',
         '🎨 Style',
         '📝 Docs',
         '🚚 Rename',
@@ -27,4 +27,4 @@ const config = {
   },
 };
 
-export default config;
+module.exports = config;
