@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@/shared/styles/globals.css';
 
 // TODO: metadata 수정하기
 export const metadata: Metadata = {
