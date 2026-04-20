@@ -31,7 +31,7 @@ import StarIcon from './ic-star.svg';
 import TourIcon from './ic-tour.svg';
 import WellbeingIcon from './ic-wellbeing.svg';
 
-const icons = {
+export {
   ActivityIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -65,5 +65,3 @@ const icons = {
   TourIcon,
   WellbeingIcon,
 };
-
-export default icons;
