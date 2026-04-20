@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import QueryProvider from '@/shared/providers/QueryProvider';
 import '@/shared/styles/globals.css';
 
-// TODO: metadata 수정하기
 export const metadata: Metadata = {
   title: '북스케이프: bookscape',
   description: '체험을 만들고, 찾고, 예약까지 한 번에 북스케이프에서 경험해보세요!',
@@ -14,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }
