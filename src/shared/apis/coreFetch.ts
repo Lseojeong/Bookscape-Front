@@ -86,7 +86,7 @@ export async function coreFetch<T>(
   baseUrl: string,
   endpoint: string,
   options: FetchRequestOptions = {},
-  query = '',
+  query?: QueryParams,
   body?: unknown
 ): Promise<T | null> {
   const url = buildRequestUrl(baseUrl, endpoint, query);
@@ -111,6 +111,8 @@ export async function coreFetch<T>(
       ...(requestBody !== undefined ? { body: requestBody } : {}),
     });
 
+    if (res.status === 204) return null;
+
     const text = await res.text();
     const isJson = res.headers.get('content-type')?.includes('application/json') ?? false;
     const data = parseResponse(text, isJson);
@@ -121,8 +123,6 @@ export async function coreFetch<T>(
         data?.message || res.statusText || `API 요청 실패: ${res.status}`
       );
     }
-
-    if (res.status === 204) return null;
 
     return data;
   } finally {
