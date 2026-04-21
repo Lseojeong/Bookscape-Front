@@ -1,4 +1,4 @@
-import { coreFetch } from './coreFetch';
+import { coreFetch, FetchRequestOptions, QueryParams } from './coreFetch';
 import { ENV } from './env';
 /**
  * 토큰 없는 공개 API용 Fetch 유틸리티
@@ -21,11 +21,6 @@ import { ENV } from './env';
  * }
  * ```
  */
-type QueryParams = Record<string, string | number | boolean | undefined>;
-
-type FetchRequestOptions = RequestInit & {
-  isFormData?: boolean;
-};
 
 type BaseRequestOptions = Omit<FetchRequestOptions, 'body' | 'isFormData'>;
 

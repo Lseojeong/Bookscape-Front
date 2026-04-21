@@ -32,9 +32,9 @@ import { ApiError } from './apiError';
 
 const REQUEST_TIMEOUT = 5000;
 
-type QueryParams = Record<string, string | number | boolean | undefined>;
+export type QueryParams = Record<string, string | number | boolean | undefined>;
 
-type FetchRequestOptions = RequestInit & {
+export type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
