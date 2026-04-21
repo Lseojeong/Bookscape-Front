@@ -11,14 +11,12 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 function SampleButton() {
   return (
     // TODO: Tailwind CSS 설정 완료 후 클래스 네임으로 교체 예정
-    <button style={{ backgroundColor: 'orange', padding: '10px', color: 'white' }}>
-      배포 오류 방지 샘플
-    </button>
+    <button style={{ backgroundColor: 'orange', padding: '10px' }}>배포 오류 방지 샘플</button>
   );
 }
 
 const meta: Meta<typeof SampleButton> = {
-  title: 'Example/TestButton',
+  title: 'Example/SampleButton',
   component: SampleButton,
 };
 
