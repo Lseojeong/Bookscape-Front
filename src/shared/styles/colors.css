@@ -1,9 +1,10 @@
 @theme {
-  /* --------------------------------------------------------------------------
-     Colors
-     사용법: bg-primary-{scale} / text-primary-{scale} / border-gray-{scale}
-     예시:   bg-primary-500, text-primary-100, border-gray-900
-  -------------------------------------------------------------------------- */
+  /**
+    Colors Token
+    사용법: bg-primary-{scale} | text-primary-{scale} | border-gray-{scale}
+    예시:  bg-primary-500 | text-primary-100 | border-gray-900
+  */
+
   --color-primary-50: #f0f7fb;
   --color-primary-100: #d1e5f2;
   --color-primary-400: #88bcdd;
@@ -27,18 +28,35 @@
   --color-black: #000000;
   --color-white: #ffffff;
 
-  --color-kakao-bg: #fee500;
-  --color-error: #ff2727;
+  /* Secondary */
   --color-secondary-500: #ff8b47;
+
+  /* Brand */
+  --color-kakao-bg: #fee500;
+
+  /* Status */
+  --color-error: #ff2727;
+
+  /* Orange */
   --color-orange-100: #fff8dd;
   --color-orange-400: #ffb051;
+
+  /* Red */
   --color-red-100: #fcecea;
   --color-red-400: #f96767;
+
+  /* Blue */
   --color-blue-100: #daf0ff;
   --color-blue-400: #0d6cd1;
+
+  /* Mint */
   --color-mint-100: #ddf9f9;
   --color-mint-400: #1790a0;
+
+  /* Green */
   --color-green-100: #e9fbe4;
   --color-green-400: #2ba90d;
+
+  /* Yellow */
   --color-yellow-500: #ffcb02;
 }
