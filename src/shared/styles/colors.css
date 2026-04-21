@@ -1,0 +1,62 @@
+@theme {
+  /**
+    Colors Token
+    사용법: bg-primary-{scale} | text-primary-{scale} | border-gray-{scale}
+    예시:  bg-primary-500 | text-primary-100 | border-gray-900
+  */
+
+  --color-primary-50: #f0f7fb;
+  --color-primary-100: #d1e5f2;
+  --color-primary-400: #88bcdd;
+  --color-primary-500: #6aabd5;
+  --color-primary-600: #609cc2;
+  --color-primary-700: #4b7997;
+
+  --color-gray-25: #f8f8f8;
+  --color-gray-50: #edeef2;
+  --color-gray-100: #e0e0e5;
+  --color-gray-200: #c6c8cf;
+  --color-gray-300: #b3b4bc;
+  --color-gray-400: #9fa0a7;
+  --color-gray-500: #84858c;
+  --color-gray-600: #707177;
+  --color-gray-700: #5d5d61;
+  --color-gray-800: #49494c;
+  --color-gray-900: #323236;
+  --color-gray-950: #1f1f22;
+
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  /* Secondary */
+  --color-secondary-500: #ff8b47;
+
+  /* Brand */
+  --color-kakao-bg: #fee500;
+
+  /* Status */
+  --color-error: #ff2727;
+
+  /* Orange */
+  --color-orange-100: #fff8dd;
+  --color-orange-400: #ffb051;
+
+  /* Red */
+  --color-red-100: #fcecea;
+  --color-red-400: #f96767;
+
+  /* Blue */
+  --color-blue-100: #daf0ff;
+  --color-blue-400: #0d6cd1;
+
+  /* Mint */
+  --color-mint-100: #ddf9f9;
+  --color-mint-400: #1790a0;
+
+  /* Green */
+  --color-green-100: #e9fbe4;
+  --color-green-400: #2ba90d;
+
+  /* Yellow */
+  --color-yellow-500: #ffcb02;
+}

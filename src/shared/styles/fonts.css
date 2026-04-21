@@ -1,0 +1,175 @@
+@theme {
+  --font-sans: 'Pretendard Variable', sans-serif;
+  /**
+    Font Size
+    사용법: text-{size}
+    예시:  text-10 | text-12 | text-13 | text-14 | text-16
+  */
+
+  --text-10: 0.625rem; /* 10px */
+  --text-12: 0.75rem; /* 12px */
+  --text-13: 0.8125rem; /* 13px */
+  --text-14: 0.875rem; /* 14px */
+  --text-16: 1rem; /* 16px */
+  --text-18: 1.125rem; /* 18px */
+  --text-20: 1.25rem; /* 20px */
+  --text-24: 1.5rem; /* 24px */
+  --text-32: 2rem; /* 32px */
+
+  /**
+    Font Weight
+    사용법: font-{name}
+    예시:   font-medium | font-bold
+  */
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /**
+    Line Height - Body 전용
+    사용법: leading-{name}
+    예시:   leading-body-180 | leading-body-140 | leading-body-160
+  */
+  --leading-body-180: 1.8;
+  --leading-body-160: 1.6;
+  --leading-body-140: 1.4;
+}
+
+/**
+   Typography Utilities
+   font-size + font-weight + letter-spacing 조합
+   사용법: typo-{size}-{weight}
+   예시:   typo-10-medium | typo-14-bold
+*/
+/* 10px */
+@utility typo-10-medium {
+  font-size: var(--text-10);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-10-bold {
+  font-size: var(--text-10);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 12px */
+@utility typo-12-medium {
+  font-size: var(--text-12);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-12-bold {
+  font-size: var(--text-12);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 13px */
+@utility typo-13-medium {
+  font-size: var(--text-13);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-13-bold {
+  font-size: var(--text-13);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 14 - 14px */
+@utility typo-14-medium {
+  font-size: var(--text-14);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-14-bold {
+  font-size: var(--text-14);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 16px */
+@utility typo-16-medium {
+  font-size: var(--text-16);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-16-bold {
+  font-size: var(--text-16);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 18px */
+@utility typo-18-medium {
+  font-size: var(--text-18);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-18-bold {
+  font-size: var(--text-18);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 20px */
+@utility typo-20-medium {
+  font-size: var(--text-20);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-20-bold {
+  font-size: var(--text-20);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 24px */
+@utility typo-24-medium {
+  font-size: var(--text-24);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-24-bold {
+  font-size: var(--text-24);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* 32px */
+@utility typo-32-medium {
+  font-size: var(--text-32);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-32-bold {
+  font-size: var(--text-32);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
+}
+
+/* Body */
+@utility typo-14-body-medium {
+  font-size: var(--text-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-body-180); /* 1.8 */
+  letter-spacing: -0.025em;
+}
+@utility typo-16-body-medium {
+  font-size: var(--text-16);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-body-180); /* 1.8 */
+  letter-spacing: -0.025em;
+}
+@utility typo-18-body-bold {
+  font-size: var(--text-18);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-body-140); /* 1.4 */
+  letter-spacing: -0.025em;
+}
+@utility typo-20-body-bold {
+  font-size: var(--text-20);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-body-160); /* 1.6 */
+  letter-spacing: -0.025em;
+}
