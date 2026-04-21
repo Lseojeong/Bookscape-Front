@@ -92,7 +92,14 @@ export async function fetchInstance<T>(
 
     const text = await res.text();
     const isJson = res.headers.get('content-type')?.includes(JSON_CONTENT_TYPE);
-    const data = text && isJson ? JSON.parse(text) : null;
+    const data = (() => {
+      if (!text || !isJson) return null;
+      try {
+        return JSON.parse(text);
+      } catch {
+        return null;
+      }
+    })();
 
     if (!res.ok) {
       throw new ApiError(res.status, data?.message || text || `API 요청 실패: ${res.status}`);
