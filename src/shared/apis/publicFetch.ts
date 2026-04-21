@@ -26,14 +26,16 @@ type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
+type QueryParams = Record<string, string | number | boolean | undefined>;
+
 type RequestConfig = {
   endpoint: string;
   method: RequestInit['method'];
   body?: unknown;
-  query?: string;
+  query?: QueryParams;
 } & Omit<FetchRequestOptions, 'body'>;
 
-const request = <T>({ endpoint, method, body, query = '', ...options }: RequestConfig) =>
+const request = <T>({ endpoint, method, body, query, ...options }: RequestConfig) =>
   coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method }, query, body);
 
 export const get = <T>(endpoint: string, options?: FetchRequestOptions) =>

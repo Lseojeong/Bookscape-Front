@@ -32,15 +32,31 @@ import { ApiError } from './apiError';
 
 const REQUEST_TIMEOUT = 5000;
 
+type QueryParams = Record<string, string | number | boolean | undefined>;
+
 type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
-const buildRequestUrl = (baseUrl: string, endpoint: string, query = '') => {
+const buildQueryString = (query?: QueryParams): string => {
+  if (!query) return '';
+
+  const params = new URLSearchParams();
+
+  Object.entries(query).forEach(([key, value]) => {
+    if (value !== undefined) {
+      params.append(key, String(value));
+    }
+  });
+
+  return params.toString() ? `?${params.toString()}` : '';
+};
+
+const buildRequestUrl = (baseUrl: string, endpoint: string, query?: QueryParams) => {
   const base = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
   const url = new URL(endpoint.replace(/^\//, ''), base);
   if (query) {
-    url.search = query.startsWith('?') ? query : `?${query}`;
+    url.search = buildQueryString(query).replace(/^\?/, '');
   }
   return url.toString();
 };
