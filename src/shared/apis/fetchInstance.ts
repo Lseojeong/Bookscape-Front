@@ -9,7 +9,7 @@ import { ENV } from './env';
  *
  * 이 함수는 요청을 보내고 응답을 처리하여 JSON 데이터를 반환합니다.
  * 요청이 실패하면 ApiError를 throw합니다.
- * 또한, 요청 타임아웃을 설정하여 일정 시간 내에 응답이 없으면 요청을 취소합니다.   
+ * 또한, 요청 타임아웃을 설정하여 일정 시간 내에 응답이 없으면 요청을 취소합니다.
  * @example
  * // GET 요청 예시
  *  export const getActivities = () =>
@@ -18,7 +18,7 @@ import { ENV } from './env';
  * // POST 요청 예시
  *  export const login = (body: LoginBody) =>
  *  post<LoginResponse>('/auth/login', body);
- * 
+ *
  * // FormData를 사용하는 POST 요청 예시
  *  export const uploadImage = (formData: FormData) =>
  *  postFormData<UploadResponse>('/images/upload', formData);
@@ -26,7 +26,6 @@ import { ENV } from './env';
 
 const REQUEST_TIMEOUT = 5000;
 const JSON_CONTENT_TYPE = 'application/json';
-
 
 type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
@@ -39,11 +38,14 @@ type RequestConfig = {
   query?: string;
 } & Omit<FetchRequestOptions, 'body'>;
 
-const buildRequestUrl = (endpoint: string, query = '') =>
-  new URL(
-    [endpoint.replace(/^\//, ''), query].filter(Boolean).join('/'),
-    ENV.API_BASE_URL
-  ).toString();
+const buildRequestUrl = (endpoint: string, query = '') => {
+  const baseUrl = ENV.API_BASE_URL.endsWith('/') ? ENV.API_BASE_URL : `${ENV.API_BASE_URL}/`;
+  const url = new URL(endpoint.replace(/^\//, ''), baseUrl);
+  if (query) {
+    url.search = query.startsWith('?') ? query : `?${query}`;
+  }
+  return url.toString();
+};
 
 const requestBodyWithContentType = (
   body: unknown,
@@ -73,8 +75,10 @@ export async function fetchInstance<T>(
     : controller.signal;
 
   try {
-    const { body: requestBody, headers: extraHeaders } =
-      requestBodyWithContentType(body, isFormData);
+    const { body: requestBody, headers: extraHeaders } = requestBodyWithContentType(
+      body,
+      isFormData
+    );
 
     const res = await fetch(url, {
       ...requestOptions,
@@ -91,10 +95,7 @@ export async function fetchInstance<T>(
     const data = text && isJson ? JSON.parse(text) : null;
 
     if (!res.ok) {
-      throw new ApiError(
-        res.status,
-        data?.message || text || `API 요청 실패: ${res.status}`
-      );
+      throw new ApiError(res.status, data?.message || text || `API 요청 실패: ${res.status}`);
     }
 
     if (res.status === 204) return null;
@@ -105,9 +106,7 @@ export async function fetchInstance<T>(
   }
 }
 
-const request = <T>({
-  endpoint, method, body, query = '', ...options
-}: RequestConfig) =>
+const request = <T>({ endpoint, method, body, query = '', ...options }: RequestConfig) =>
   fetchInstance<T>(endpoint, { ...options, method }, query, body);
 
 export const get = <T>(endpoint: string, options?: FetchRequestOptions) =>
@@ -125,5 +124,8 @@ export const patch = <T>(endpoint: string, body: unknown, options?: FetchRequest
 export const del = <T>(endpoint: string, options?: FetchRequestOptions) =>
   request<T>({ endpoint, method: 'DELETE', ...options });
 
-export const postFormData = <T>(endpoint: string, formData: FormData, options?: FetchRequestOptions) =>
-  request<T>({ endpoint, method: 'POST', body: formData, isFormData: true, ...options });
+export const postFormData = <T>(
+  endpoint: string,
+  formData: FormData,
+  options?: FetchRequestOptions
+) => request<T>({ endpoint, method: 'POST', body: formData, isFormData: true, ...options });
