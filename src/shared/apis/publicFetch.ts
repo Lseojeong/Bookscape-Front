@@ -21,12 +21,13 @@ import { ENV } from './env';
  * }
  * ```
  */
+type QueryParams = Record<string, string | number | boolean | undefined>;
 
 type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
-type QueryParams = Record<string, string | number | boolean | undefined>;
+type GetOptions = Omit<FetchRequestOptions, 'body' | 'isFormData'>;
 
 type RequestConfig = {
   endpoint: string;
@@ -38,8 +39,8 @@ type RequestConfig = {
 const request = <T>({ endpoint, method, body, query, ...options }: RequestConfig) =>
   coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method }, query, body);
 
-export const get = <T>(endpoint: string, options?: FetchRequestOptions) =>
-  request<T>({ endpoint, method: 'GET', ...options });
+export const get = <T>(endpoint: string, query?: QueryParams, options?: GetOptions) =>
+  request<T>({ endpoint, method: 'GET', query, ...options });
 
 export const post = <T>(endpoint: string, body: unknown, options?: FetchRequestOptions) =>
   request<T>({ endpoint, method: 'POST', body, ...options });
@@ -50,7 +51,7 @@ export const put = <T>(endpoint: string, body: unknown, options?: FetchRequestOp
 export const patch = <T>(endpoint: string, body: unknown, options?: FetchRequestOptions) =>
   request<T>({ endpoint, method: 'PATCH', body, ...options });
 
-export const del = <T>(endpoint: string, options?: FetchRequestOptions) =>
+export const del = <T>(endpoint: string, options?: GetOptions) =>
   request<T>({ endpoint, method: 'DELETE', ...options });
 
 export const postFormData = <T>(
