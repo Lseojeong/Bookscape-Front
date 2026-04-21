@@ -5,6 +5,8 @@
     사용법: text-{name}
     예시:  text-xs | text-sm | text-md | text-lg | text-2lg
   */
+
+  /* TODO: tailwind의 표준 사이즈와 상이하여 폰트 사이즈 재정의 또는 접두사 추가 필요  */
   --text-xs: 0.625rem; /* 10px */
   --text-sm: 0.75rem; /* 12px */
   --text-md: 0.8125rem; /* 13px */
