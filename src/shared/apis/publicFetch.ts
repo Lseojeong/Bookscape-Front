@@ -27,7 +27,7 @@ type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
-type GetOptions = Omit<FetchRequestOptions, 'body' | 'isFormData'>;
+type BaseRequestOptions = Omit<FetchRequestOptions, 'body' | 'isFormData'>;
 
 type RequestConfig = {
   endpoint: string;
@@ -39,7 +39,7 @@ type RequestConfig = {
 const request = <T>({ endpoint, method, body, query, ...options }: RequestConfig) =>
   coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method }, query, body);
 
-export const get = <T>(endpoint: string, query?: QueryParams, options?: GetOptions) =>
+export const get = <T>(endpoint: string, query?: QueryParams, options?: BaseRequestOptions) =>
   request<T>({ endpoint, method: 'GET', query, ...options });
 
 export const post = <T>(endpoint: string, body: unknown, options?: FetchRequestOptions) =>
@@ -51,7 +51,7 @@ export const put = <T>(endpoint: string, body: unknown, options?: FetchRequestOp
 export const patch = <T>(endpoint: string, body: unknown, options?: FetchRequestOptions) =>
   request<T>({ endpoint, method: 'PATCH', body, ...options });
 
-export const del = <T>(endpoint: string, options?: GetOptions) =>
+export const del = <T>(endpoint: string, options?: BaseRequestOptions) =>
   request<T>({ endpoint, method: 'DELETE', ...options });
 
 export const postFormData = <T>(
