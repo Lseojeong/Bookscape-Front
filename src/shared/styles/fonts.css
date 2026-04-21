@@ -150,17 +150,17 @@
   font-weight: var(--font-weight-medium);
   line-height: var(--leading-body-180); /* 1.8 */
 }
-@utility typo-214-body-m {
+@utility typo-16-body-m {
   font-size: var(--text-16);
   font-weight: var(--font-weight-medium);
   line-height: var(--leading-body-180); /* 1.8 */
 }
-@utility typo-xl-body-b {
+@utility typo-18-body-b {
   font-size: var(--text-18);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-body-140); /* 1.4 */
 }
-@utility typo-2xl-body-b {
+@utility typo-20-body-b {
   font-size: var(--text-20);
   font-weight: var(--font-weight-bold);
   line-height: var(--leading-body-160); /* 1.6 */
