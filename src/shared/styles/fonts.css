@@ -2,20 +2,20 @@
   --font-sans: 'Pretendard Variable', sans-serif;
   /**
     Font Size
-    사용법: text-{name}
-    예시:  text-xs | text-sm | text-md | text-lg | text-2lg
+    사용법: text-{size}
+    예시:  text-10 | text-12 | text-13 | text-14 | text-16
   */
 
   /* TODO: tailwind의 표준 사이즈와 상이하여 폰트 사이즈 재정의 또는 접두사 추가 필요  */
-  --text-xs: 0.625rem; /* 10px */
-  --text-sm: 0.75rem; /* 12px */
-  --text-md: 0.8125rem; /* 13px */
-  --text-lg: 0.875rem; /* 14px */
-  --text-2lg: 1rem; /* 16px */
-  --text-xl: 1.125rem; /* 18px */
-  --text-2xl: 1.25rem; /* 20px */
-  --text-3xl: 1.5rem; /* 24px */
-  --text-4xl: 2rem; /* 32px */
+  --text-10: 0.625rem; /* 10px */
+  --text-12: 0.75rem; /* 12px */
+  --text-13: 0.8125rem; /* 13px */
+  --text-14: 0.875rem; /* 14px */
+  --text-16: 1rem; /* 16px */
+  --text-18: 1.125rem; /* 18px */
+  --text-20: 1.25rem; /* 20px */
+  --text-24: 1.5rem; /* 24px */
+  --text-32: 2rem; /* 32px */
 
   /**
     Font Weight
@@ -43,112 +43,112 @@
 */
 /* xs - 10px */
 @utility typo-xs-medium {
-  font-size: var(--text-xs);
+  font-size: var(--text-10);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-xs-bold {
-  font-size: var(--text-xs);
+  font-size: var(--text-10);
   font-weight: var(--font-weight-bold);
 }
 
 /* sm - 12px */
 @utility typo-sm-medium {
-  font-size: var(--text-sm);
+  font-size: var(--text-12);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-sm-bold {
-  font-size: var(--text-sm);
+  font-size: var(--text-12);
   font-weight: var(--font-weight-bold);
 }
 
 /* md - 13px */
 @utility typo-md-medium {
-  font-size: var(--text-md);
+  font-size: var(--text-13);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-md-bold {
-  font-size: var(--text-md);
+  font-size: var(--text-13);
   font-weight: var(--font-weight-bold);
 }
 
 /* lg - 14px */
 @utility typo-lg-medium {
-  font-size: var(--text-lg);
+  font-size: var(--text-14);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-lg-bold {
-  font-size: var(--text-lg);
+  font-size: var(--text-14);
   font-weight: var(--font-weight-bold);
 }
 
 /* 2lg - 16px */
 @utility typo-2lg-medium {
-  font-size: var(--text-2lg);
+  font-size: var(--text-16);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-2lg-bold {
-  font-size: var(--text-2lg);
+  font-size: var(--text-16);
   font-weight: var(--font-weight-bold);
 }
 
 /* xl - 18px */
 @utility typo-xl-medium {
-  font-size: var(--text-xl);
+  font-size: var(--text-18);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-xl-bold {
-  font-size: var(--text-xl);
+  font-size: var(--text-18);
   font-weight: var(--font-weight-bold);
 }
 
 /* 2xl - 20px */
 @utility typo-2xl-medium {
-  font-size: var(--text-2xl);
+  font-size: var(--text-20);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-2xl-bold {
-  font-size: var(--text-2xl);
+  font-size: var(--text-20);
   font-weight: var(--font-weight-bold);
 }
 
 /* 3xl - 24px */
 @utility typo-3xl-medium {
-  font-size: var(--text-3xl);
+  font-size: var(--text-24);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-3xl-bold {
-  font-size: var(--text-3xl);
+  font-size: var(--text-24);
   font-weight: var(--font-weight-bold);
 }
 
 /* 4xl - 32px */
 @utility typo-4xl-medium {
-  font-size: var(--text-4xl);
+  font-size: var(--text-32);
   font-weight: var(--font-weight-medium);
 }
 @utility typo-4xl-bold {
-  font-size: var(--text-4xl);
+  font-size: var(--text-32);
   font-weight: var(--font-weight-bold);
 }
 
 /* Body */
 @utility typo-lg-body-m {
-  font-size: var(--text-lg); /* 14px */
+  font-size: var(--text-14);
   font-weight: var(--font-weight-medium);
-  line-height: var(--leading-body-180); /* 180% */
+  line-height: var(--leading-body-180); /* 1.8 */
 }
 @utility typo-2lg-body-m {
-  font-size: var(--text-2lg); /* 16px */
+  font-size: var(--text-16);
   font-weight: var(--font-weight-medium);
-  line-height: var(--leading-body-180); /* 180% */
+  line-height: var(--leading-body-180); /* 1.8 */
 }
 @utility typo-xl-body-b {
-  font-size: var(--text-xl); /* 18px */
+  font-size: var(--text-18);
   font-weight: var(--font-weight-bold);
-  line-height: var(--leading-body-140); /* 140% */
+  line-height: var(--leading-body-140); /* 1.4 */
 }
 @utility typo-2xl-body-b {
-  font-size: var(--text-2xl); /* 20px */
+  font-size: var(--text-20);
   font-weight: var(--font-weight-bold);
-  line-height: var(--leading-body-160); /* 160% */
+  line-height: var(--leading-body-160); /* 1.6 */
 }
