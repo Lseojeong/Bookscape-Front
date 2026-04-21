@@ -2,20 +2,19 @@
   --font-sans: 'Pretendard Variable', sans-serif;
   /**
     Font Size
-    사용법: text-{name}
-    예시:  text-xs | text-sm | text-md | text-lg | text-2lg
+    사용법: text-{size}
+    예시:  text-10 | text-12 | text-13 | text-14 | text-16
   */
 
-  /* TODO: tailwind의 표준 사이즈와 상이하여 폰트 사이즈 재정의 또는 접두사 추가 필요  */
-  --text-xs: 0.625rem; /* 10px */
-  --text-sm: 0.75rem; /* 12px */
-  --text-md: 0.8125rem; /* 13px */
-  --text-lg: 0.875rem; /* 14px */
-  --text-2lg: 1rem; /* 16px */
-  --text-xl: 1.125rem; /* 18px */
-  --text-2xl: 1.25rem; /* 20px */
-  --text-3xl: 1.5rem; /* 24px */
-  --text-4xl: 2rem; /* 32px */
+  --text-10: 0.625rem; /* 10px */
+  --text-12: 0.75rem; /* 12px */
+  --text-13: 0.8125rem; /* 13px */
+  --text-14: 0.875rem; /* 14px */
+  --text-16: 1rem; /* 16px */
+  --text-18: 1.125rem; /* 18px */
+  --text-20: 1.25rem; /* 20px */
+  --text-24: 1.5rem; /* 24px */
+  --text-32: 2rem; /* 32px */
 
   /**
     Font Weight
@@ -37,118 +36,140 @@
 
 /**
    Typography Utilities
-   font-size + font-weight 조합
+   font-size + font-weight + letter-spacing 조합
    사용법: typo-{size}-{weight}
-   예시:   typo-xs-medium | typo-lg-bold
+   예시:   typo-10-medium | typo-14-bold
 */
-/* xs - 10px */
-@utility typo-xs-medium {
-  font-size: var(--text-xs);
+/* 10px */
+@utility typo-10-medium {
+  font-size: var(--text-10);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-xs-bold {
-  font-size: var(--text-xs);
+@utility typo-10-bold {
+  font-size: var(--text-10);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* sm - 12px */
-@utility typo-sm-medium {
-  font-size: var(--text-sm);
+/* 12px */
+@utility typo-12-medium {
+  font-size: var(--text-12);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-sm-bold {
-  font-size: var(--text-sm);
+@utility typo-12-bold {
+  font-size: var(--text-12);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* md - 13px */
-@utility typo-md-medium {
-  font-size: var(--text-md);
+/* 13px */
+@utility typo-13-medium {
+  font-size: var(--text-13);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-md-bold {
-  font-size: var(--text-md);
+@utility typo-13-bold {
+  font-size: var(--text-13);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* lg - 14px */
-@utility typo-lg-medium {
-  font-size: var(--text-lg);
+/* 14 - 14px */
+@utility typo-14-medium {
+  font-size: var(--text-14);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-lg-bold {
-  font-size: var(--text-lg);
+@utility typo-14-bold {
+  font-size: var(--text-14);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* 2lg - 16px */
-@utility typo-2lg-medium {
-  font-size: var(--text-2lg);
+/* 16px */
+@utility typo-16-medium {
+  font-size: var(--text-16);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-2lg-bold {
-  font-size: var(--text-2lg);
+@utility typo-16-bold {
+  font-size: var(--text-16);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* xl - 18px */
-@utility typo-xl-medium {
-  font-size: var(--text-xl);
+/* 18px */
+@utility typo-18-medium {
+  font-size: var(--text-18);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-xl-bold {
-  font-size: var(--text-xl);
+@utility typo-18-bold {
+  font-size: var(--text-18);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* 2xl - 20px */
-@utility typo-2xl-medium {
-  font-size: var(--text-2xl);
+/* 20px */
+@utility typo-20-medium {
+  font-size: var(--text-20);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-2xl-bold {
-  font-size: var(--text-2xl);
+@utility typo-20-bold {
+  font-size: var(--text-20);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* 3xl - 24px */
-@utility typo-3xl-medium {
-  font-size: var(--text-3xl);
+/* 24px */
+@utility typo-24-medium {
+  font-size: var(--text-24);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-3xl-bold {
-  font-size: var(--text-3xl);
+@utility typo-24-bold {
+  font-size: var(--text-24);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
-/* 4xl - 32px */
-@utility typo-4xl-medium {
-  font-size: var(--text-4xl);
+/* 32px */
+@utility typo-32-medium {
+  font-size: var(--text-32);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
 }
-@utility typo-4xl-bold {
-  font-size: var(--text-4xl);
+@utility typo-32-bold {
+  font-size: var(--text-32);
   font-weight: var(--font-weight-bold);
+  letter-spacing: -0.025em;
 }
 
 /* Body */
-@utility typo-lg-body-m {
-  font-size: var(--text-lg); /* 14px */
+@utility typo-14-body-medium {
+  font-size: var(--text-14);
   font-weight: var(--font-weight-medium);
-  line-height: var(--leading-body-180); /* 180% */
+  line-height: var(--leading-body-180); /* 1.8 */
+  letter-spacing: -0.025em;
 }
-@utility typo-2lg-body-m {
-  font-size: var(--text-2lg); /* 16px */
+@utility typo-16-body-medium {
+  font-size: var(--text-16);
   font-weight: var(--font-weight-medium);
-  line-height: var(--leading-body-180); /* 180% */
+  line-height: var(--leading-body-180); /* 1.8 */
+  letter-spacing: -0.025em;
 }
-@utility typo-xl-body-b {
-  font-size: var(--text-xl); /* 18px */
+@utility typo-18-body-bold {
+  font-size: var(--text-18);
   font-weight: var(--font-weight-bold);
-  line-height: var(--leading-body-140); /* 140% */
+  line-height: var(--leading-body-140); /* 1.4 */
+  letter-spacing: -0.025em;
 }
-@utility typo-2xl-body-b {
-  font-size: var(--text-2xl); /* 20px */
+@utility typo-20-body-bold {
+  font-size: var(--text-20);
   font-weight: var(--font-weight-bold);
-  line-height: var(--leading-body-160); /* 160% */
+  line-height: var(--leading-body-160); /* 1.6 */
+  letter-spacing: -0.025em;
 }
