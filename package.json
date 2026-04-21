@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/eslint-plugin-query": "^5.99.1",
     "@types/node": "^20",
