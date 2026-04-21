@@ -3,6 +3,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 interface QueryProviderProps {
@@ -10,7 +11,7 @@ interface QueryProviderProps {
 }
 
 export default function QueryProvider({ children }: QueryProviderProps) {
-  const queryClient = getQueryClient();
+  const [queryClient] = useState(() => getQueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
