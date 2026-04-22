@@ -14,7 +14,7 @@ export type TitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
   color?: string;
 };
 
-export const TITLE_TYPO_MAP: Record<TitleSize, Record<TitleWeight, string>> = {
+export const titleTypoMap: Record<TitleSize, Record<TitleWeight, string>> = {
   '14': {
     medium: 'typo-14-medium',
     bold: 'typo-14-bold',
@@ -69,7 +69,7 @@ function Title({
   ...props
 }: TitleProps) {
   return (
-    <Tag className={cn(TITLE_TYPO_MAP[size][weight], color, className)} {...props}>
+    <Tag className={cn(titleTypoMap[size][weight], color, className)} {...props}>
       {children}
     </Tag>
   );
