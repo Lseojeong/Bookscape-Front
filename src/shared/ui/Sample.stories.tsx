@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import StarIcon from '@/shared/assets/icons/ic-star.svg';
+import { StarIcon } from '@/shared/assets/icons';
 
 /**
  * 배포 오류 방지를 위한 샘플 버튼 컴포넌트입니다.
