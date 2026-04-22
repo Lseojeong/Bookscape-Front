@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import Title from '@/shared/ui/title/Title.tsx';
+import Title from '@/shared/ui/title/Title';
 
 const meta: Meta<typeof Title> = {
   title: 'Shared/Title',
