@@ -30,6 +30,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Publish to Chromatic
+        id: chromatic
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
@@ -37,3 +38,11 @@ jobs:
           onlyChanged: true
           exitZeroOnChanges: true
           buildScriptName: build-storybook
+      
+      - name: Comment PR with Storybook link
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            🎨 **스토리북 배포 링크 확인**
+            
+            - 🔗 Storybook: ${{ steps.chromatic.outputs.storybookUrl }}
