@@ -58,7 +58,7 @@ export const titleTypoMap: Record<TitleSize, Record<TitleWeight, string>> = {
  * ```
  *
  */
-function Title({
+export default function Title({
   as: Tag = 'h2',
   size = '20',
   weight = 'bold',
@@ -73,5 +73,3 @@ function Title({
     </Tag>
   );
 }
-
-export default Title;
