@@ -47,14 +47,15 @@ const getPageNumbers = (
   return Array.from({ length: endPage - startPage + 1 }, (_, i) => i + startPage); // 페이지 번호 배열 생성
 };
 
-const PageButton = ({
+// 숫자/화살표 버튼을 렌더링하는 서브 컴포넌트
+function PageButton({
   children,
   onClick,
   disabled,
   isActive,
   isArrow,
   ariaLabel,
-}: PageButtonProps) => {
+}: PageButtonProps) {
   const state = isArrow ? (disabled ? 'arrowDisabled' : 'arrow') : isActive ? 'active' : 'default';
 
   return (
@@ -67,7 +68,7 @@ const PageButton = ({
       {children}
     </button>
   );
-};
+}
 
 /**
  * 페이지 단위로 데이터를 나누어 보여줄 수 있는 페이지네이션 공통 컴포넌트입니다.
