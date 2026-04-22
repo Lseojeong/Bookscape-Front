@@ -46,7 +46,7 @@ const RESERVATION_BADGE_MAP: Record<ReservationStatus, { label: string; classNam
  *
  * @example API 데이터 연동
  * ```tsx
- * <StateBadge status={reservation.status} />
+ * <StateBadge status={reservations.status} />
  * ```
  */
 export default function StateBadge({ status, className }: ReservationBadgeProps) {
