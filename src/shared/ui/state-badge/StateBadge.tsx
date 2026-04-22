@@ -41,7 +41,7 @@ const RESERVATION_BADGE_MAP: Record<ReservationStatus, { label: string; classNam
  *
  * @example 기본 사용
  * ```tsx
- * <StateBadge status="APPROVED" />
+ * <StateBadge status="pending" />
  * ```
  *
  * @example API 데이터 연동
