@@ -5,6 +5,12 @@ import { AvatarSizeProvider } from '@/shared/ui/avatar/context/avatarProvider';
 import { cn } from '@/shared/utils/cn';
 import type { AvatarProps, AvatarComponent } from './types';
 
+/**
+ * @example
+ * <Avatar user={user}>
+ *  {user.profileImageUrl ? <Avatar.Img /> : <Avatar.Fallback />}
+ * </Avatar>
+ */
 const Avatar = (({ children, user, size = 'lg', className }: AvatarProps) => {
   return (
     <AvatarSizeProvider size={size} user={user}>
