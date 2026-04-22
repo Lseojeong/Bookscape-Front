@@ -4,13 +4,11 @@ import { useAvatarUser } from '@/shared/ui/avatar/context/avatarContext';
 export default function AvatarImage(props: Omit<ImageProps, 'src' | 'alt'>) {
   const avatarUser = useAvatarUser();
 
-  const src = avatarUser?.profileImageUrl;
-
-  if (!src) return null;
+  if (!avatarUser?.profileImageUrl) return null;
 
   return (
     <Image
-      src={src}
+      src={avatarUser?.profileImageUrl}
       alt={`${avatarUser?.nickname || '사용자'}님의 프로필 이미지`}
       fill
       className="object-cover"
