@@ -1,7 +1,6 @@
-import type { JSX } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-export type TitleAs = Extract<keyof JSX.IntrinsicElements, 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>;
+export type TitleAs = 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 export type TitleSize = '14' | '16' | '18' | '20' | '24' | '32';
 
