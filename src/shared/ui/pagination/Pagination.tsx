@@ -94,8 +94,8 @@ export default function Pagination({
   const pageNumbers = getPageNumbers(currentPage, totalPages, pageGroupSize); // 현재 페이지 그룹에 해당하는 페이지 번호 배열
   const startPage = pageNumbers[0]; // 현재 페이지 그룹의 시작 페이지 번호
   const endPage = pageNumbers[pageNumbers.length - 1]; // 현재 페이지 그룹의 끝 페이지 번호
-  const isPrevDisabled = startPage === 1; // 이전 페이지 버튼 비활성화 여부 (현재 페이지가 1이면 버튼 비활성화)
-  const isNextDisabled = endPage === totalPages; // 다음 페이지 버튼 비활성화 여부 (현재 페이지가 마지막 페이지이면 버튼 비활성화)
+  const isPrevDisabled = !startPage || startPage === 1; // 이전 페이지 버튼 비활성화 여부 (startPage가 없거나 첫번째 그룹이면 비활성화)
+  const isNextDisabled = !endPage || endPage === totalPages; // 다음 페이지 버튼 비활성화 여부 (endPage가 없거나 마지막 그룹이면 비활성화)
 
   const handlePrevClick = () => {
     if (!isPrevDisabled) {
