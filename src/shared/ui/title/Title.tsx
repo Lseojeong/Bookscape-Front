@@ -62,7 +62,7 @@ export default function Title({
   as: Tag = 'h2',
   size = '20',
   weight = 'bold',
-  color = 'text-black-200',
+  color = 'text-black',
   className,
   children,
   ...props
