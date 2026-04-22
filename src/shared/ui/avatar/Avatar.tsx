@@ -1,7 +1,7 @@
 import { avatarSizeClassNames } from '@/shared/ui/avatar/AvatarConstants';
 import AvatarFallback from '@/shared/ui/avatar/AvatarFallback';
 import AvatarImage from '@/shared/ui/avatar/AvatarImage';
-import { AvatarSizeProvider } from '@/shared/ui/avatar/context/avatarProvider';
+import { AvatarProvider } from '@/shared/ui/avatar/context/AvatarProvider';
 import type { AvatarProps } from '@/shared/ui/avatar/types';
 import { cn } from '@/shared/utils/cn';
 
@@ -16,7 +16,7 @@ import { cn } from '@/shared/utils/cn';
  */
 export default function Avatar({ children, user, size = 'lg', className }: AvatarProps) {
   return (
-    <AvatarSizeProvider size={size} user={user}>
+    <AvatarProvider size={size} user={user}>
       <div
         className={cn(
           'relative inline-flex items-center justify-center overflow-hidden rounded-full',
@@ -26,7 +26,7 @@ export default function Avatar({ children, user, size = 'lg', className }: Avata
       >
         {children}
       </div>
-    </AvatarSizeProvider>
+    </AvatarProvider>
   );
 }
 

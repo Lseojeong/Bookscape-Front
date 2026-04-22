@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { AvatarSizeContext, AvatarUserContext } from '@/shared/ui/avatar/context/avatarContext';
 import type { AvatarSize, AvatarUser } from '@/shared/ui/avatar/types';
 
-export function AvatarSizeProvider({
+export function AvatarProvider({
   children,
   size,
   user = null,
