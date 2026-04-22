@@ -2,7 +2,7 @@ import { avatarSizeClassNames } from '@/shared/ui/avatar/AvatarConstants';
 import AvatarFallback from '@/shared/ui/avatar/AvatarFallback';
 import AvatarImage from '@/shared/ui/avatar/AvatarImage';
 import { AvatarSizeProvider } from '@/shared/ui/avatar/context/avatarProvider';
-import type { AvatarProps, AvatarComponent } from '@/shared/ui/avatar/types';
+import type { AvatarProps } from '@/shared/ui/avatar/types';
 import { cn } from '@/shared/utils/cn';
 
 /**
@@ -14,7 +14,7 @@ import { cn } from '@/shared/utils/cn';
  *  {user.profileImageUrl ? <Avatar.Img /> : <Avatar.Fallback />}
  * </Avatar>
  */
-const Avatar = (({ children, user, size = 'lg', className }: AvatarProps) => {
+export default function Avatar({ children, user, size = 'lg', className }: AvatarProps) {
   return (
     <AvatarSizeProvider size={size} user={user}>
       <div
@@ -28,9 +28,7 @@ const Avatar = (({ children, user, size = 'lg', className }: AvatarProps) => {
       </div>
     </AvatarSizeProvider>
   );
-}) as AvatarComponent;
+}
 
 Avatar.Img = AvatarImage;
 Avatar.Fallback = AvatarFallback;
-
-export default Avatar;
