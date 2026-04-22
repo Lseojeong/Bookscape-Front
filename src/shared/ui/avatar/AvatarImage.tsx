@@ -11,7 +11,7 @@ export default function AvatarImage(props: Omit<ImageProps, 'src' | 'alt'>) {
   return (
     <Image
       src={src}
-      alt="프로필 이미지"
+      alt={`${avatarUser?.nickname || '사용자'}님의 프로필 이미지`}
       fill
       className="object-cover"
       unoptimized // TODO : 임시로 작성, 삭제 필요
