@@ -1,4 +1,4 @@
-import { avatarSizeClassNames } from '@/shared/ui/avatar/AvatarConstants';
+import { avatarSizeClassNames } from '@/shared/ui/avatar/avatarConstants';
 import AvatarFallback from '@/shared/ui/avatar/AvatarFallback';
 import AvatarImage from '@/shared/ui/avatar/AvatarImage';
 import { AvatarProvider } from '@/shared/ui/avatar/context/AvatarProvider';
