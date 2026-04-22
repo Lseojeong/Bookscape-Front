@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import Title from './Title';
 
 const meta: Meta<typeof Title> = {
-  title: 'Shared/Title',
+  title: 'shared/ui/title/Title',
   component: Title,
   tags: ['autodocs'],
   argTypes: {
