@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/nextjs-vite';
+import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 
 const config: StorybookConfig = {
@@ -13,7 +14,7 @@ const config: StorybookConfig = {
   framework: '@storybook/nextjs-vite',
   staticDirs: ['../public'],
   async viteFinal(config) {
-    config.plugins = [...(config.plugins ?? []), svgr()];
+    config.plugins = [...(config.plugins ?? []), tailwindcss(), svgr({ include: '**/*.svg' })];
     return config;
   },
 };

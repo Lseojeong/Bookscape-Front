@@ -36,6 +36,7 @@
     "@storybook/nextjs-vite": "^10.3.5",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/vite": "^4.2.4",
     "@tanstack/eslint-plugin-query": "^5.99.1",
     "@types/node": "^20.19.39",
     "@types/react": "^19",
