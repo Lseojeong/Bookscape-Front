@@ -11,7 +11,7 @@ export type AvatarSize = 'sm' | 'md' | 'lg';
 
 export type AvatarUser = {
   nickname?: string;
-  profileImageUrl?: string;
+  profileImageUrl?: string | null;
 };
 
 export type AvatarProps = {
