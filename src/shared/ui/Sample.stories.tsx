@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import StarIcon from '@/shared/assets/icons/ic-star.svg';
 
 /**
@@ -13,7 +13,7 @@ import StarIcon from '@/shared/assets/icons/ic-star.svg';
 function SampleButton() {
   return (
     <button className="inline-flex items-center gap-2 rounded-md bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-orange-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500">
-      <StarIcon aria-hidden="true" className="size-4" />
+      <StarIcon aria-hidden="true" className="w-2" />
       배포 오류 방지 샘플
     </button>
   );

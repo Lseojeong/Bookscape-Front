@@ -1,22 +1,54 @@
-import type { StorybookConfig } from '@storybook/nextjs-vite';
-import tailwindcss from '@tailwindcss/vite';
-import svgr from 'vite-plugin-svgr';
+import type { StorybookConfig } from '@storybook/nextjs';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: [
-    '@chromatic-com/storybook',
-    '@storybook/addon-vitest',
-    '@storybook/addon-a11y',
-    '@storybook/addon-docs',
-    '@storybook/addon-onboarding',
-  ],
-  framework: '@storybook/nextjs-vite',
-  staticDirs: ['../public'],
-  async viteFinal(config) {
-    config.plugins = [...(config.plugins ?? []), tailwindcss(), svgr({ include: '**/*.svg' })];
+  addons: ['@storybook/addon-onboarding', '@chromatic-com/storybook', '@storybook/addon-a11y'],
+  framework: {
+    name: '@storybook/nextjs',
+    options: {},
+  },
+  webpackFinal: async (config) => {
+    if (!config.module || !config.module.rules) {
+      return config;
+    }
+
+    config.module.rules = [
+      ...config.module.rules.map((rule) => {
+        if (!rule || rule === '...') {
+          return rule;
+        }
+
+        if (rule.test && /svg/.test(String(rule.test))) {
+          return { ...rule, exclude: /\.svg$/i };
+        }
+
+        return rule;
+      }),
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
+    ];
+
     return config;
   },
 };
-
 export default config;
