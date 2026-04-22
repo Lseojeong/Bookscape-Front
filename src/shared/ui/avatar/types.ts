@@ -9,11 +9,13 @@ import AvatarImage from '@/shared/ui/avatar/AvatarImage';
 /** Avatar 사이즈  */
 export type AvatarSize = 'sm' | 'md' | 'lg';
 
+/** 아바타에 표시할 유저 정보 */
 export type AvatarUser = {
   nickname?: string;
   profileImageUrl?: string | null;
 };
 
+/** Avatar 컴포넌트의 props */
 export type AvatarProps = {
   user: AvatarUser;
   size?: AvatarSize;
@@ -22,6 +24,7 @@ export type AvatarProps = {
   loading?: 'lazy' | 'eager';
 };
 
+/** 컴파운드 패턴을 위한 Avatar 컴포넌트 타입 */
 export type AvatarComponent = FC<AvatarProps> & {
   Img: typeof AvatarImage;
   Fallback: typeof AvatarFallback;

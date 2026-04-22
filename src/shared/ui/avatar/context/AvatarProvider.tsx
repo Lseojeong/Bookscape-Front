@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { AvatarSizeContext, AvatarUserContext } from '@/shared/ui/avatar/context/avatarContext';
+import { useState, type ReactNode } from 'react';
+import { AvatarContext } from '@/shared/ui/avatar/context/avatarContext';
 import type { AvatarSize, AvatarUser } from '@/shared/ui/avatar/types';
 
 export function AvatarProvider({
@@ -11,9 +11,10 @@ export function AvatarProvider({
   size: AvatarSize;
   user?: AvatarUser | null;
 }) {
+  const [imageError, setImageError] = useState(false);
   return (
-    <AvatarUserContext.Provider value={user}>
-      <AvatarSizeContext.Provider value={size}>{children}</AvatarSizeContext.Provider>
-    </AvatarUserContext.Provider>
+    <AvatarContext.Provider value={{ user, size, imageError, setImageError }}>
+      {children}
+    </AvatarContext.Provider>
   );
 }
