@@ -19,6 +19,7 @@ export type AvatarProps = {
   size?: AvatarSize;
   children: React.ReactNode;
   className?: string;
+  loading?: 'lazy' | 'eager';
 };
 
 export type AvatarComponent = FC<AvatarProps> & {
