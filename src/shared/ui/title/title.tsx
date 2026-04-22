@@ -49,12 +49,12 @@ export const titleTypoMap: Record<TitleSize, Record<TitleWeight, string>> = {
  *
  * @example 기본 사용
  * ```tsx
- * <Title as="h1" size="lg" weight="bold">페이지 제목</Title>
+ * <Title as="h1" size="14" weight="bold">페이지 제목</Title>
  * ```
  *
  * @example 색상 커스텀
  * ```tsx
- * <Title as="h2" size="md" color="text-gray-500">서브 타이틀</Title>
+ * <Title as="h2" size="16" color="text-gray-500">서브 타이틀</Title>
  * ```
  *
  */
