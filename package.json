@@ -12,7 +12,9 @@
     "lint:fix": "eslint --fix src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
-    "prepare": "husky"
+    "prepare": "husky",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.99.2",
@@ -25,7 +27,13 @@
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^5.1.2",
     "@commitlint/cli": "^20.5.0",
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/addon-onboarding": "^10.3.5",
+    "@storybook/addon-vitest": "^10.3.5",
+    "@storybook/nextjs-vite": "^10.3.5",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@tanstack/eslint-plugin-query": "^5.99.1",
@@ -34,6 +42,9 @@
     "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.58.2",
     "@typescript-eslint/parser": "^8.58.2",
+    "@vitest/browser-playwright": "^4.1.5",
+    "@vitest/coverage-v8": "^4.1.5",
+    "chromatic": "^16.4.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "eslint-config-prettier": "^10.1.8",
@@ -42,10 +53,14 @@
     "eslint-plugin-storybook": "^10.3.5",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
+    "playwright": "^1.59.1",
     "prettier": "3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "storybook": "^10.3.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^8.0.9",
+    "vitest": "^4.1.5"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
