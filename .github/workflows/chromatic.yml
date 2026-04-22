@@ -6,6 +6,10 @@ on:
       - dev
       - 'feat/**'
 
+permissions:
+  pull-requests: write
+  contents: read
+
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
