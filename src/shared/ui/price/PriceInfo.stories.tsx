@@ -1,31 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import PriceDisplay from '@/shared/ui/price/PriceDisplay';
-import TotalPrice from '@/shared/ui/price/TotalPrice';
 
-function TestPriceInfo() {
-  return (
-    <>
-      <div>
-        <PriceDisplay price={38000} unit="인" />
-      </div>
-      <div className="">
-        <PerPersonPrice pricePerPerson={5000} />
-      </div>
-      <div className="">
-        <TotalPrice totalPrice={450000} headCount={8} />
-      </div>
-    </>
-  );
-}
-
-const meta: Meta<typeof TestPriceInfo> = {
+const meta: Meta<typeof PriceDisplay> = {
   title: 'Shared/PriceInfo',
-  component: TestPriceInfo,
+  component: PriceDisplay,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof PriceDisplay>;
 
-export const Default: Story = {};
+// 가격/인
+export const PriceBase: Story = {
+  render: (args) => <PriceDisplay {...args} />,
+  args: {
+    price: 38000,
+    unit: '인',
+  },
+};
