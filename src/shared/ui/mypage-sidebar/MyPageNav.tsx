@@ -42,7 +42,7 @@ export default function MyPageNav() {
     <nav>
       <ul className="flex flex-col gap-3 lg:gap-3.5">
         {NAV_ITEMS.map(({ label, href, icon: Icon }) => {
-          const isActive = pathname === href;
+          const isActive = pathname?.startsWith(href);
 
           return (
             <li key={href}>
