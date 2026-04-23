@@ -7,7 +7,7 @@ import { RefObject, useEffect } from 'react';
  *
  * 지정한 요소의 바깥 영역을 클릭했을 때 콜백을 실행하는 훅입니다.
  *
- * 드롭다운, 모달, 팝오버처럼 외부 클릭으로 닫혀야 하는 UI에서 사용합니다.
+ * 드롭다운, 모달 등 외부 클릭으로 닫혀야 하는 UI에서 사용합니다.
  *
  * @param ref - 외부 클릭 여부를 판단할 기준 DOM 요소의 ref
  * @param onOutsideClick - 기준 요소 바깥을 클릭했을 때 실행할 콜백
