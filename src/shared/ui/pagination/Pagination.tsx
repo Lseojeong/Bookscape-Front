@@ -23,14 +23,14 @@ const pageButtonVariants = cva(
   {
     variants: {
       state: {
-        default: 'typo-14-medium text-gray-300 cursor-pointer', // 일반 숫자 버튼
-        active: 'typo-14-bold text-gray-950 border-b-2 border-primary-500', // 현재 페이지 숫자 버튼
+        page: 'typo-14-medium text-gray-300 cursor-pointer', // 일반 숫자 버튼
+        pageActive: 'typo-14-bold text-gray-950 border-b-2 border-primary-500', // 현재 페이지 숫자 버튼
         arrow: 'text-gray-950 cursor-pointer', // 활성 화살표 버튼
         arrowDisabled: 'text-gray-300 cursor-not-allowed', // 비활성 화살표 버튼
       },
     },
     defaultVariants: {
-      state: 'default', // state가 없을 때 기본값 (일반 숫자 버튼) 적용
+      state: 'page', // state가 없을 때 기본값 (일반 숫자 버튼) 적용
     },
   }
 );
@@ -56,7 +56,7 @@ function PageButton({
   isArrow,
   ariaLabel,
 }: PageButtonProps) {
-  const state = isArrow ? (disabled ? 'arrowDisabled' : 'arrow') : isActive ? 'active' : 'default';
+  const state = isArrow ? (disabled ? 'arrowDisabled' : 'arrow') : isActive ? 'pageActive' : 'page';
 
   return (
     <button
