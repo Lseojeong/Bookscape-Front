@@ -8,6 +8,8 @@ export type PriceDisplayProps = {
   priceClassName?: string;
   /** 기본값: typo-16-medium */
   unitClassName?: string;
+  /** `/` 구분자 표시 여부. 기본값: `true` */
+  showSlash?: boolean;
 };
 
 /**
@@ -24,11 +26,15 @@ export default function PriceDisplay({
   unit,
   priceClassName,
   unitClassName,
+  showSlash,
 }: PriceDisplayProps) {
   return (
     <span className={cn('typo-18-bold text-gray-950', priceClassName)}>
       ₩{price.toLocaleString('ko-KR')}
-      <span className={cn('typo-16-medium text-gray-500', unitClassName)}>/{unit}</span>
+      <span className={cn('typo-16-medium text-gray-500', !showSlash && 'pl-1', unitClassName)}>
+        {showSlash && '/'}
+        {unit}
+      </span>
     </span>
   );
 }
