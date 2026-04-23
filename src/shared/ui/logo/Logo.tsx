@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import LogoWhiteIcon from '@/shared/assets/logo/logo-white.svg';
-import LogoIcon from '@/shared/assets/logo/logo.svg';
+import { LogoIcon, LogoWhiteIcon } from '@/shared/assets/logo';
 
 type LogoProps = {
   isWhite?: boolean; // 화이트 버전 여부 (헤더에서 사용)
