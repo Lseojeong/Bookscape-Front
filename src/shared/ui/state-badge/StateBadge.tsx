@@ -2,7 +2,7 @@ import { cn } from '@/shared/utils/cn';
 
 export type ReservationStatus = 'pending' | 'confirmed' | 'completed' | 'declined' | 'canceled';
 
-export type ReservationBadgeProps = {
+export type StateBadgeProps = {
   status: ReservationStatus;
   className?: string;
 };
@@ -49,7 +49,7 @@ const RESERVATION_BADGE_MAP: Record<ReservationStatus, { label: string; classNam
  * <StateBadge status={reservations.status} />
  * ```
  */
-export default function StateBadge({ status, className }: ReservationBadgeProps) {
+export default function StateBadge({ status, className }: StateBadgeProps) {
   const { label, className: badgeClassName } = RESERVATION_BADGE_MAP[status];
 
   return (
