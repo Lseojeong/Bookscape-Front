@@ -6,12 +6,12 @@ import type { PolymorphicButtonProps } from '@/shared/ui/button/types';
 import { cn } from '@/shared/utils/cn';
 
 const buttonStyle = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-[14px] border transition-colors cursor-pointer disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-[14px] border transition-colors cursor-pointer aria-disabled:cursor-not-allowed',
   {
     variants: {
       theme: {
         primary:
-          'border-transparent bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 disabled:bg-gray-200 disabled:text-gray-50',
+          'border-transparent bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 aria-disabled:bg-gray-200 aria-disabled:text-gray-50 aria-disabled:hover:bg-gray-200 aria-disabled:active:bg-gray-200',
         secondary: 'border-gray-200 bg-white text-gray-600',
         gray: 'border-transparent bg-gray-50 text-gray-600',
       },
@@ -64,11 +64,10 @@ export default function Button<T extends ElementType = 'button'>({
 
   return (
     <Component
+      aria-disabled={disabled}
       className={cn(buttonStyle({ theme, size }), className)}
       onClick={handleClick}
-      {...(isButtonElement
-        ? { type, disabled }
-        : { 'aria-disabled': disabled, tabIndex: disabled ? -1 : undefined })}
+      {...(isButtonElement ? { type, disabled } : { tabIndex: disabled ? -1 : undefined })}
       {...props}
     >
       {children}
