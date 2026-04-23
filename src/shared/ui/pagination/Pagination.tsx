@@ -91,6 +91,8 @@ export default function Pagination({
   onPageChange,
   pageGroupSize = 5,
 }: PaginationProps) {
+  if (totalPages <= 1) return null; // 페이지가 1개 이하인 경우 페이지네이션을 렌더링하지 않음
+
   const pageNumbers = getPageNumbers(currentPage, totalPages, pageGroupSize); // 현재 페이지 그룹에 해당하는 페이지 번호 배열
   const startPage = pageNumbers[0]; // 현재 페이지 그룹의 시작 페이지 번호
   const endPage = pageNumbers[pageNumbers.length - 1]; // 현재 페이지 그룹의 끝 페이지 번호
