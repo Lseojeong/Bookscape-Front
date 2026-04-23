@@ -32,8 +32,11 @@ export default function RatingSummary({
   countClassName,
 }: RatingSummaryProps) {
   return (
-    <div className="flex items-center gap-1">
-      <StarIcon className="h-5 w-5 -translate-y-px" />
+    <div
+      className="flex items-center gap-1"
+      aria-label={`별점 ${averageRating}점, 리뷰 ${totalCount}개`}
+    >
+      <StarIcon className="h-5 w-5 -translate-y-px" aria-hidden />
       <div className="flex items-center gap-0.5 leading-none">
         <span className={cn('typo-14-medium text-gray-700', ratingClassName)}>
           {averageRating.toFixed(1)}
