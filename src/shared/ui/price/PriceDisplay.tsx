@@ -26,7 +26,7 @@ export default function PriceDisplay({
   unit,
   priceClassName,
   unitClassName,
-  showSlash,
+  showSlash = true,
 }: PriceDisplayProps) {
   return (
     <span className={cn('typo-18-bold text-gray-950', priceClassName)}>
