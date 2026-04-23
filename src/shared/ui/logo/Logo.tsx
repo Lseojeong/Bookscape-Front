@@ -24,7 +24,7 @@ type LogoProps = {
  */
 export default function Logo({ isWhite, className }: LogoProps) {
   return (
-    <Link href="/">
+    <Link href="/" aria-label="Bookscape 메인 페이지로 이동">
       <h1 className={className}>{isWhite ? <LogoWhiteIcon /> : <LogoIcon />}</h1>
     </Link>
   );
