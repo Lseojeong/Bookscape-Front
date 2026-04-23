@@ -1,6 +1,7 @@
 import { cva } from 'class-variance-authority';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
+import { getPageNumbers } from './utils/getPageNumbers';
 
 type PaginationProps = {
   currentPage: number; // 현재 페이지 번호
@@ -34,18 +35,6 @@ const pageButtonVariants = cva(
     },
   }
 );
-
-const getPageNumbers = (
-  currentPage: number,
-  totalPages: number,
-  pageGroupSize: number
-): number[] => {
-  const groupIndex = Math.floor((currentPage - 1) / pageGroupSize); // 몇 번째 그룹인지 계산
-  const startPage = groupIndex * pageGroupSize + 1; // 그룹의 시작 페이지 번호
-  const endPage = Math.min(startPage + pageGroupSize - 1, totalPages); // 그룹의 끝 페이지 번호
-
-  return Array.from({ length: endPage - startPage + 1 }, (_, i) => i + startPage); // 페이지 번호 배열 생성
-};
 
 // 숫자/화살표 버튼을 렌더링하는 서브 컴포넌트
 function PageButton({
