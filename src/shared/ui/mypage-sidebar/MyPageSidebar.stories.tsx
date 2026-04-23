@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import MyPageSidebar from './MyPageSidebar';
+import MyPageSidebar from '@/shared/ui/mypage-sidebar/MyPageSidebar';
 
 const meta: Meta<typeof MyPageSidebar> = {
   title: 'Shared/MyPageSidebar',
