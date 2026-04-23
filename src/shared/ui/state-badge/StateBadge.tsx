@@ -55,7 +55,6 @@ export default function StateBadge({ status, className }: StateBadgeProps) {
   return (
     <span
       className={cn(
-        // 'inline-block h-6 rounded-full px-2 pt-px align-middle typo-13-bold leading-6',
         'inline-flex h-6 items-center rounded-full px-2 pt-px align-middle typo-13-bold',
         badgeClassName,
         className
