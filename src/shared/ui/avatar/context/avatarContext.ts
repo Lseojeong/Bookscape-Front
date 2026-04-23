@@ -7,6 +7,7 @@ export type AvatarContextType = {
   size: AvatarSize;
   imageError: boolean;
   setImageError: Dispatch<SetStateAction<boolean>>;
+  loading?: 'lazy' | 'eager';
 };
 
 export const AvatarContext = createContext<AvatarContextType | undefined>(undefined);

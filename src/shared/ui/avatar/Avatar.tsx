@@ -14,9 +14,9 @@ import { cn } from '@/shared/utils/cn';
  *  {user.profileImageUrl ? <Avatar.Img /> : <Avatar.Fallback />}
  * </Avatar>
  */
-export default function Avatar({ children, user, size = 'lg', className }: AvatarProps) {
+export default function Avatar({ children, user, size = 'lg', className, loading }: AvatarProps) {
   return (
-    <AvatarProvider size={size} user={user}>
+    <AvatarProvider size={size} user={user} loading={loading}>
       <div
         className={cn(
           'relative inline-flex items-center justify-center overflow-hidden rounded-full',

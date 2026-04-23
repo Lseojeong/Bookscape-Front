@@ -2,7 +2,7 @@ import Image, { ImageProps } from 'next/image';
 import { useAvatarContext } from '@/shared/ui/avatar/context/avatarContext';
 
 export default function AvatarImage(props: Omit<ImageProps, 'src' | 'alt'>) {
-  const { user, imageError, setImageError } = useAvatarContext();
+  const { user, imageError, setImageError, loading } = useAvatarContext();
 
   if (!user?.profileImageUrl || imageError) return null;
 
@@ -14,6 +14,7 @@ export default function AvatarImage(props: Omit<ImageProps, 'src' | 'alt'>) {
       className="object-cover"
       onError={() => setImageError(true)}
       unoptimized // TODO : 임시로 작성, 삭제 필요
+      loading={loading}
       {...props}
     />
   );

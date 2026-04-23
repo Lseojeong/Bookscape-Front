@@ -20,7 +20,7 @@ type Story = StoryObj<typeof Avatar>;
 export const WithImage: Story = {
   render: (args) => (
     <Avatar {...args}>
-      <Avatar.Img />
+      <Avatar.Img loading="eager" />
       <Avatar.Fallback />
     </Avatar>
   ),
