@@ -22,6 +22,15 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
+export const Playground: Story = {
+  args: {
+    children: '버튼',
+    theme: 'primary',
+    size: 'md',
+    disabled: false,
+  },
+};
+
 // 사이즈별 기본 버튼
 export const Sizes: Story = {
   render: () => (
