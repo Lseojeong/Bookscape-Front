@@ -2,7 +2,7 @@ import Avatar from '@/shared/ui/avatar/Avatar';
 import type { AvatarProps } from '@/shared/ui/avatar/types';
 import { cn } from '@/shared/utils/cn';
 
-type ProfileProps = AvatarProps & {
+type ProfileProps = Omit<AvatarProps, 'children'> & {
   nicknameClassName?: string;
 };
 
