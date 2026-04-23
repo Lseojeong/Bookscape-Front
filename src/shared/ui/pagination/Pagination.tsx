@@ -56,7 +56,13 @@ function PageButton({
   isArrow,
   ariaLabel,
 }: PageButtonProps) {
-  const state = isArrow ? (disabled ? 'arrowDisabled' : 'arrow') : isActive ? 'pageActive' : 'page';
+  let state: 'page' | 'pageActive' | 'arrow' | 'arrowDisabled' = 'page';
+
+  if (isArrow) {
+    state = disabled ? 'arrowDisabled' : 'arrow';
+  } else if (isActive) {
+    state = 'pageActive';
+  }
 
   return (
     <button
