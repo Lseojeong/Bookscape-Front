@@ -40,7 +40,7 @@ export default function MyPageNav() {
 
   return (
     <nav>
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col gap-3 lg:gap-3.5">
         {NAV_ITEMS.map(({ label, href, icon: Icon }) => {
           const isActive = pathname === href;
 
@@ -49,7 +49,7 @@ export default function MyPageNav() {
               <Link
                 href={href}
                 className={cn(
-                  'flex items-center rounded-xl px-5 py-3.5 transition-colors',
+                  'flex items-center rounded-xl px-5 py-3.5 transition-colors lg:py-3.75',
                   isActive ? 'bg-primary-50 text-black' : 'text-gray-600 hover:bg-gray-50'
                 )}
               >
