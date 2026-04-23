@@ -4,7 +4,7 @@ import { PlusIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 
 const meta: Meta<typeof Button> = {
-  title: 'Shared/UI/Button',
+  title: 'Shared/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
