@@ -30,12 +30,7 @@ export default function Profile({
         <Avatar.Img />
         <Avatar.Fallback />
       </Avatar>
-      <span
-        className={cn('typo-14-medium', nicknameClassName)}
-        aria-label={`${user?.nickname || '사용자'}`}
-      >
-        {user.nickname ?? '사용자'}
-      </span>
+      <span className={cn('typo-14-medium', nicknameClassName)}>{user?.nickname ?? '사용자'}</span>
     </div>
   );
 }
