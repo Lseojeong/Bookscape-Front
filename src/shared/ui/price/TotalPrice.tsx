@@ -16,6 +16,7 @@ export type TotalPriceProps = {
  *   headCount={5}
  *   priceClassName="text-xl"
  *   unitClassName="text-sm text-blue-500"
+ *   showSlash={false} // `/` 구분자 표시 안함
  * />
  *
  */
