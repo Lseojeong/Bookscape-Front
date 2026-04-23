@@ -7,6 +7,18 @@ import MyPageNav from '@/shared/ui/mypage-sidebar/MyPageNav';
 type MyPageSidebarProps = {
   user: AvatarProps['user'];
 };
+/**
+ * 마이페이지 사이드바 컴포넌트입니다.
+ *
+ * 아바타 이미지와 네비게이션 탭을 표시하며,
+ * 375px 이하에서는 숨김 처리됩니다.
+ * profileImageUrl이 있을 경우 이미지를, 없을 경우 Fallback UI를 표시합니다.
+ *
+ * @example
+ * ```tsx
+ * <MyPageSidebar user={user} />
+ * ```
+ */
 
 export default function MyPageSidebar({ user }: MyPageSidebarProps) {
   return (
