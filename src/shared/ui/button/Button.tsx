@@ -66,7 +66,9 @@ export default function Button<T extends ElementType = 'button'>({
     <Component
       className={cn(buttonStyle({ theme, size }), className)}
       onClick={handleClick}
-      {...(isButtonElement ? { type, disabled } : { 'aria-disabled': disabled })}
+      {...(isButtonElement
+        ? { type, disabled }
+        : { 'aria-disabled': disabled, tabIndex: disabled ? -1 : undefined })}
       {...props}
     >
       {children}
