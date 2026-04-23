@@ -31,10 +31,10 @@ const buttonStyle = cva(
 
 /**
  * 다형성을 지원하는 공통 버튼 컴포넌트입니다.
- * * @example
+ * @example
  * // 일반 버튼 사용
  * <Button theme="primary" size="lg" onClick={handleClick}>저장하기</Button>
- * * @example
+ * @example
  * // Next.js Link 버튼으로 사용 (className 덮어쓰기)
  * <Button as={Link} href="/reservation" className="w-full">예약하기</Button>
  */
