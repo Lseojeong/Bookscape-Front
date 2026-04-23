@@ -116,7 +116,7 @@ export default function Pagination({
   };
 
   return (
-    <nav className="flex items-center gap-1" aria-label="페이지네이션">
+    <nav className="flex w-76 items-center justify-center gap-1" aria-label="페이지네이션">
       {/* 이전 버튼 */}
       <PageButton
         onClick={handlePrevClick}
