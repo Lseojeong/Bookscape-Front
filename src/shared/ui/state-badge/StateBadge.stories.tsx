@@ -45,7 +45,7 @@ export const Canceled: Story = {
 /** 전체 상태 한눈에 보기 */
 export const AllStatus: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+    <div className="flex flex-wrap gap-3">
       <StateBadge status="pending" />
       <StateBadge status="confirmed" />
       <StateBadge status="completed" />
