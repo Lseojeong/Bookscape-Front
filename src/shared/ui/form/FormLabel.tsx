@@ -8,7 +8,9 @@ type FormLabelProps = ComponentProps<'label'> & {
 /**
  * 제목을 나타내는 Label 컴포넌트입니다.
  * @example
+ * ```tsx
  * <FormLabel htmlFor="email" weight="medium">이메일</FormLabel>
+ * ```
  */
 export default function FormLabel({
   children,

@@ -1,4 +1,5 @@
-import { forwardRef, type ComponentProps } from 'react';
+import { forwardRef, useId, type ComponentProps } from 'react';
+import { useFormField } from '@/shared/ui/form/FormField';
 import { cn } from '@/shared/utils/cn';
 
 export type InputProps = ComponentProps<'input'> & {
@@ -8,15 +9,25 @@ export type InputProps = ComponentProps<'input'> & {
 /**
  * 공통 Input 컴포넌트입니다.
  * @example
- * <Input placeholder="이메일을 입력하세요" isError={false} {...register('email')} />
+ * ```tsx
+ * <Input placeholder="이메일을 입력하세요" {...register('email')} />
+ * ```
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, isError, disabled, ...props }, ref) => {
+  ({ className, disabled, id, ...props }, ref) => {
+    // FormField가 Provider로 내려준 데이터 받아옴
+    const formField = useFormField();
+    const isError = props.isError ?? formField?.isError ?? false;
+    const fallbackId = useId();
+    const inputId = id ?? formField?.id ?? fallbackId;
+
     return (
       <input
         ref={ref}
+        id={inputId}
         disabled={disabled}
         aria-invalid={isError}
+        aria-describedby={isError ? formField?.errorId : undefined}
         className={cn(
           // 공통 뼈대
           'h-13.5 w-full rounded-2xl px-5 transition-colors outline-none',
