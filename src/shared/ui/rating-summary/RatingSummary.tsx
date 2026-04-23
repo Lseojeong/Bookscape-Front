@@ -41,7 +41,9 @@ export default function RatingSummary({
         <span className={cn('typo-14-medium text-gray-700', ratingClassName)}>
           {averageRating.toFixed(1)}
         </span>
-        <span className={cn('typo-14-medium text-gray-700', countClassName)}>({totalCount})</span>
+        <span className={cn('typo-14-medium text-gray-700', countClassName)}>
+          ({totalCount.toLocaleString()})
+        </span>
       </div>
     </div>
   );
