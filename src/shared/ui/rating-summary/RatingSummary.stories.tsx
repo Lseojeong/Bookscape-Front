@@ -10,8 +10,7 @@ const meta: Meta<typeof RatingSummary> = {
 export default meta;
 type Story = StoryObj<typeof RatingSummary>;
 
-// 가격/인
-export const PriceBase: Story = {
+export const Rating: Story = {
   render: (args) => <RatingSummary {...args} />,
   args: {
     averageRating: 4.2,
