@@ -60,7 +60,7 @@ type SelectDropdownItemProps<T = string> = WithChildren & {
  *
  * @example
  * ```tsx
- * <SelectDropdownItem value={문화 · 예술}>🎨 문화 · 예술</SelectDropdownItem>
+ * <SelectDropdownItem value={문화 · 예술}>문화 · 예술</SelectDropdownItem>
  * ```
  */
 export default function SelectDropdownItem<T = string>({
