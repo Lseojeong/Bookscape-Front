@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { WithChildren } from '@/shared/types/common';
 import useDropdownBaseContext from '@/shared/ui/dropdown/hooks/useDropdownBaseContext';
-import useDropdownKeyboardNavigation from '@/shared/ui/dropdown/hooks/useDropdownKeyboardNavigation';
+import useKeyboardNavigation from '@/shared/ui/dropdown/hooks/useKeyboardNavigation';
 import { cn } from '@/shared/utils/cn';
 
 type DropdownBaseRootProps = WithChildren & {
@@ -31,7 +31,7 @@ export default function BaseDropdown({ children, className }: DropdownBaseRootPr
     setIsOpen(false);
   });
 
-  const handleKeyDown = useDropdownKeyboardNavigation({
+  const handleKeyDown = useKeyboardNavigation({
     rootRef,
     isOpen,
     setIsOpen,

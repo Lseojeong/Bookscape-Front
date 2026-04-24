@@ -57,7 +57,7 @@ type UseDropdownKeyboardNavigationParams = {
 };
 
 /**
- * useDropdownKeyboardNavigation
+ * useKeyboardNavigation
  *
  * 드롭다운 공통 키보드 네비게이션을 제공하는 훅입니다.
  *
@@ -73,7 +73,7 @@ type UseDropdownKeyboardNavigationParams = {
  * @param params.setIsOpen - 드롭다운 open 상태 setter
  * @returns 드롭다운 루트에 연결할 `onKeyDown` 핸들러
  */
-const useDropdownKeyboardNavigation = ({
+const useKeyboardNavigation = ({
   rootRef,
   isOpen,
   setIsOpen,
@@ -120,4 +120,4 @@ const useDropdownKeyboardNavigation = ({
   );
 };
 
-export default useDropdownKeyboardNavigation;
+export default useKeyboardNavigation;
