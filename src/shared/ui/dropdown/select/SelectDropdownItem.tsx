@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { KeyboardEvent } from 'react';
+import type { KeyboardEvent } from 'react';
 import { WithChildren } from '@/shared/types/common';
 import useDropdownBaseContext from '@/shared/ui/dropdown/hooks/useDropdownBaseContext';
 import useSelectContext from '@/shared/ui/dropdown/hooks/useSelectDropdownContext';
@@ -10,7 +10,7 @@ import {
   dropdownItemBase,
   dropdownItemShadowStyle,
 } from '@/shared/ui/dropdown/styles/dropdownItem';
-import { moveFocus, moveToEdge } from '@/shared/ui/dropdown/utils/focusNavigate';
+import { handleRovingFocusKeyDown } from '@/shared/ui/dropdown/utils/keyboardNavigation';
 import { cn } from '@/shared/utils/cn';
 
 export const dropdownItemVariants = cva(dropdownItemBase, {
@@ -83,44 +83,7 @@ export default function SelectDropdownItem<T = string>({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>) => {
-    const current = e.currentTarget;
-    const key = e.key;
-
-    if (disabled) {
-      return;
-    }
-
-    if (
-      key === 'ArrowDown' ||
-      key === 'ArrowUp' ||
-      key === 'Home' ||
-      key === 'End' ||
-      key === 'Enter' ||
-      key === ' '
-    ) {
-      e.preventDefault();
-    } else {
-      return;
-    }
-
-    switch (key) {
-      case 'ArrowDown':
-        moveFocus(current, 'next');
-        break;
-      case 'ArrowUp':
-        moveFocus(current, 'prev');
-        break;
-      case 'Home':
-        moveToEdge(current, 'first');
-        break;
-      case 'End':
-        moveToEdge(current, 'last');
-        break;
-      case 'Enter':
-      case ' ':
-        selectOption();
-        break;
-    }
+    handleRovingFocusKeyDown(e, { disabled, onActivate: selectOption });
   };
 
   return (
