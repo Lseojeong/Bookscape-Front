@@ -21,7 +21,18 @@ type FocusEdge = 'first' | 'last';
  * ```
  */
 export const moveFocus = (current: HTMLElement, direction: FocusDirection) => {
-  let target = direction === 'next' ? current.nextElementSibling : current.previousElementSibling;
+  const parent = current.parentElement;
+  if (!parent) {
+    return;
+  }
+
+  const step = (node: Element | null) =>
+    direction === 'next'
+      ? (node?.nextElementSibling ?? null)
+      : (node?.previousElementSibling ?? null);
+
+  let target: Element | null =
+    direction === 'next' ? current.nextElementSibling : current.previousElementSibling;
 
   while (target) {
     if (target instanceof HTMLElement && target.getAttribute('aria-disabled') !== 'true') {
@@ -29,7 +40,19 @@ export const moveFocus = (current: HTMLElement, direction: FocusDirection) => {
       return;
     }
 
-    target = direction === 'next' ? target.nextElementSibling : target.previousElementSibling;
+    target = step(target);
+  }
+
+  // Wrap-around: 끝까지 갔는데 이동 못하면 반대편 edge부터 다시 탐색합니다.
+  target = direction === 'next' ? parent.firstElementChild : parent.lastElementChild;
+
+  while (target && target !== current) {
+    if (target instanceof HTMLElement && target.getAttribute('aria-disabled') !== 'true') {
+      target.focus();
+      return;
+    }
+
+    target = step(target);
   }
 };
 
