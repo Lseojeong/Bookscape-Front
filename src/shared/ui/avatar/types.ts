@@ -2,9 +2,12 @@
  * avatar(프로필)에 사용되는 타입 정의
  */
 
-import { FC } from 'react';
-import AvatarFallback from '@/shared/ui/avatar/AvatarFallback';
-import AvatarImage from '@/shared/ui/avatar/AvatarImage';
+import { ImageProps } from 'next/image';
+import { PropsWithChildren } from 'react';
+
+// import { FC } from 'react';
+// import AvatarFallback from '@/shared/ui/avatar/AvatarFallback';
+// import AvatarImage from '@/shared/ui/avatar/AvatarImage';
 
 /** Avatar 사이즈  */
 export type AvatarSize = 'sm' | 'md' | 'lg';
@@ -15,17 +18,21 @@ export type AvatarUser = {
   profileImageUrl?: string | null;
 };
 
-/** Avatar 컴포넌트의 props */
-export type AvatarProps = {
-  user: AvatarUser;
-  size?: AvatarSize;
-  children: React.ReactNode;
+/** 공통 props */
+type BaseProps = {
   className?: string;
-  loading?: 'lazy' | 'eager';
 };
 
-/** 컴파운드 패턴을 위한 Avatar 컴포넌트 타입 */
-export type AvatarComponent = FC<AvatarProps> & {
-  Img: typeof AvatarImage;
-  Fallback: typeof AvatarFallback;
-};
+/** Avatar */
+export type AvatarProps = PropsWithChildren<
+  BaseProps & {
+    user: AvatarUser;
+    size?: AvatarSize;
+  }
+>;
+
+/** Avatar Image */
+export type AvatarImgProps = BaseProps & Omit<ImageProps, 'src' | 'alt'>;
+
+/** Avatar Fallback */
+export type AvatarFallbackProps = BaseProps;
