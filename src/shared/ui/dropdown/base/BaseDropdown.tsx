@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import { WithChildren } from '@/shared/types/common';
 import useDropdownBaseContext from '@/shared/ui/dropdown/hooks/useDropdownBaseContext';
+import useDropdownKeyboardNavigation from '@/shared/ui/dropdown/hooks/useDropdownKeyboardNavigation';
 import { cn } from '@/shared/utils/cn';
 
 type DropdownBaseRootProps = WithChildren & {
@@ -23,15 +24,21 @@ type DropdownBaseRootProps = WithChildren & {
  * - `DropdownBaseContext`를 사용해서 `setIsOpen(false)`를 수행합니다.
  */
 export default function BaseDropdown({ children, className }: DropdownBaseRootProps) {
-  const { setIsOpen } = useDropdownBaseContext();
+  const { isOpen, setIsOpen } = useDropdownBaseContext();
   const rootRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(rootRef, () => {
     setIsOpen(false);
   });
 
+  const handleKeyDown = useDropdownKeyboardNavigation({
+    rootRef,
+    isOpen,
+    setIsOpen,
+  });
+
   return (
-    <div ref={rootRef} className={cn('relative select-none', className)}>
+    <div ref={rootRef} className={cn('relative select-none', className)} onKeyDown={handleKeyDown}>
       {children}
     </div>
   );
