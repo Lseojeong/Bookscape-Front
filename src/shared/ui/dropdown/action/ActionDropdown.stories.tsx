@@ -30,7 +30,7 @@ import Profile from '@/shared/ui/profile/Profile';
  * ### 사용 예시
  * ```tsx
  * <ActionDropdown>
- *   <ActionDropdownTrigger aria-label="유저 메뉴 열기">
+ *   <ActionDropdownTrigger ariaLabel="유저 메뉴 열기">
  *     <Avatar />
  *   </ActionDropdownTrigger>
  *   <ActionDropdownContent>
@@ -82,7 +82,7 @@ export const Default: Story = {
     return (
       <div className="h-90">
         <ActionDropdown>
-          <ActionDropdownTrigger className="flex items-center gap-10" aria-label="유저 메뉴 열기">
+          <ActionDropdownTrigger className="flex items-center gap-10" ariaLabel="유저 메뉴 열기">
             <Profile user={DEFAULT_USER} />
           </ActionDropdownTrigger>
 
@@ -115,7 +115,7 @@ export const IconOnlyTrigger: Story = {
     return (
       <div className="h-90">
         <ActionDropdown>
-          <ActionDropdownTrigger aria-label="유저 메뉴 열기">
+          <ActionDropdownTrigger ariaLabel="유저 메뉴 열기">
             <MenuIcon aria-hidden className="h-6 w-6" />
           </ActionDropdownTrigger>
 
