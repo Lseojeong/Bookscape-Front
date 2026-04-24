@@ -13,6 +13,7 @@ type Story = StoryObj<typeof meta>;
 // 로그인, 회원가입 페이지에서 사용되는 일반 버전 로고
 export const Default: Story = {
   args: {
+    variant: 'default',
     className: 'w-42 h-10',
   },
 };
@@ -20,6 +21,7 @@ export const Default: Story = {
 // 푸터에서 사용되는 일반 버전 로고
 export const Footer: Story = {
   args: {
+    variant: 'default',
     className: 'w-21 h-5',
   },
 };
@@ -33,7 +35,7 @@ export const Header: Story = {
     </div>
   ),
   args: {
-    isWhite: true,
+    variant: 'white',
     className: 'w-[118px] h-7',
   },
 };
