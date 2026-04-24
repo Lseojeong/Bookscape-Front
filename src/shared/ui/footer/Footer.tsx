@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         <div className="flex flex-col gap-5">
           <Logo className="h-5 w-21" />
-          <span className="text-13 text-gray-400">{COPYRIGHT}</span>
+          <small className="text-13 text-gray-400">{COPYRIGHT}</small>
         </div>
         <FooterNav />
       </div>
