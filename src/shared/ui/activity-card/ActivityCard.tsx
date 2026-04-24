@@ -1,46 +1,61 @@
-import Image from 'next/image';
-import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
+import ActivityCardImage from '@/shared/ui/activity-card/ActivityCardImage';
+import ActivityCardInfo from '@/shared/ui/activity-card/ActivityCardInfo';
 
-type ActivityCardProps = {
-  bannerImageUrl: string;
+/**
+ * TODO: 임시 타입 정의 (삭제 예정)
+ *
+ * - 현재 API 응답 구조를 정의하지않아 페이지 기능 구현 시 응답 구조 타입 정의 후 삭제 예정
+ */
+type Activity = {
+  id: number;
+  userId: number;
   title: string;
-  reviewCount: number;
-  rating: number;
+  description: string;
+  category: string;
   price: number;
+  address: string;
+  bannerImageUrl: string;
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
 };
+
+/**
+ * 카드에 필요한 데이터를 개별 props로 나누지 않고
+ * data 객체로 전달한 뒤, 자식 컴포넌트에서 필요한 값만 선택해서 사용
+ */
+type ActivityCardProps = {
+  data: Pick<Activity, 'bannerImageUrl' | 'title' | 'reviewCount' | 'rating' | 'price'>;
+};
+
 /**
  * 체험 정보를 표시하는 카드 컴포넌트입니다.
- * 사진과 체험명, 리뷰 정보, 가격을 보여주며, 클릭 시 상세 페이지로 이동됩니다.
+ * 사진과 체험명, 리뷰 정보, 가격을 표시합니다.
+ *
+ * 부모 컴포넌트에서 그리드 열 수를 제어하며,
+ * 데스크탑에서는 4열, 태블릿에서는 2열로 사용합니다.
  *
  * @example
+ * ```tsx
+ * // 단일 사용
+ * <ActivityCard data={activity} />
+ *
+ * // 그리드 목록
+ * <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+ *   {activities.map((activity) => (
+ *     <ActivityCard key={activity.id} data={activity} />
+ *   ))}
+ * </div>
+ * ```
  */
-export default function ActivityCard({
-  bannerImageUrl,
-  title,
-  reviewCount,
-  rating,
-  price,
-}: ActivityCardProps) {
+export default function ActivityCard({ data }: ActivityCardProps) {
+  const { bannerImageUrl, title, reviewCount, rating, price } = data;
+
   return (
     <div className="relative w-full overflow-hidden rounded-[18px]">
-      <div className="relative mb-16.5 h-44 w-full overflow-hidden">
-        <Image
-          src={bannerImageUrl}
-          alt="체험 배너"
-          fill
-          priority
-          unoptimized
-          className="object-cover"
-        />
-      </div>
-      <div className="absolute bottom-0 flex w-full flex-col gap-2.5 rounded-[18px] bg-white p-4 sm:gap-4.5">
-        <div className="flex flex-col gap-1">
-          <p className="typo-14-semibold truncate">{title}</p>
-          <RatingSummary averageRating={rating} totalCount={reviewCount} />
-        </div>
-        {/* TODO : PricePerPerson 컴포넌트로 교체 필요 */}
-        <span className="typo-15-bold">₩ {price} / 인</span>
-      </div>
+      <ActivityCardImage bannerImageUrl={bannerImageUrl} />
+      <ActivityCardInfo title={title} rating={rating} reviewCount={reviewCount} price={price} />
     </div>
   );
 }
