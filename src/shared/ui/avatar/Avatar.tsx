@@ -10,14 +10,24 @@ import { cn } from '@/shared/utils/cn';
  * 이미지 로드 실패 시 또는 이미지가 없을 때 Fallback UI를 제공합니다.
  *
  * @example Avatar 내부에서 알아서 처리하게끔 분기없이 작성
+ *
+ * ```tsx
+ * // 일반 버전
  * <Avatar user={user}>
- *  <Avatar.Img />
- *  <Avatar.Fallback />
+ *   <Avatar.Img />
+ *   <Avatar.Fallback />
  * </Avatar>
+ *
+ * // image props 제어 버전
+ * <Avatar user={user}>
+ *   <Avatar.Img loading="eager" />
+ *   <Avatar.Fallback />
+ * </Avatar>
+ * ```
  */
-export default function Avatar({ children, user, size = 'lg', className, loading }: AvatarProps) {
+export default function Avatar({ children, user, size = 'lg', className }: AvatarProps) {
   return (
-    <AvatarProvider size={size} user={user} loading={loading}>
+    <AvatarProvider size={size} user={user}>
       <div
         className={cn(
           'relative inline-flex items-center justify-center overflow-hidden rounded-full',
