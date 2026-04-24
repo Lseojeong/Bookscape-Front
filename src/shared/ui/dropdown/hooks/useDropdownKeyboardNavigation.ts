@@ -73,11 +73,11 @@ type UseDropdownKeyboardNavigationParams = {
  * @param params.setIsOpen - 드롭다운 open 상태 setter
  * @returns 드롭다운 루트에 연결할 `onKeyDown` 핸들러
  */
-export default function useDropdownKeyboardNavigation({
+const useDropdownKeyboardNavigation = ({
   rootRef,
   isOpen,
   setIsOpen,
-}: UseDropdownKeyboardNavigationParams) {
+}: UseDropdownKeyboardNavigationParams) => {
   return useCallback(
     (e: KeyboardEvent<HTMLElement>) => {
       if (e.defaultPrevented) {
@@ -118,4 +118,6 @@ export default function useDropdownKeyboardNavigation({
     },
     [isOpen, rootRef, setIsOpen]
   );
-}
+};
+
+export default useDropdownKeyboardNavigation;
