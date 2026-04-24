@@ -3,4 +3,5 @@
  */
 
 export const dropdownListBase = 'absolute left-0 top-full z-10 mt-2 flex flex-col gap-1 bg-white';
-export const dropdownListShadowStyle = 'w-fit rounded-md border border-gray-100 p-1.5 shadow';
+export const dropdownListShadowStyle =
+  'w-fit rounded-md border border-gray-100 p-1.5 shadow typo-16-medium';

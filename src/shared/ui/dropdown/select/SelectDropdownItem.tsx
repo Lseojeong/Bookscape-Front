@@ -15,7 +15,7 @@ import { cn } from '@/shared/utils/cn';
 export const dropdownItemVariants = cva(dropdownItemBase, {
   variants: {
     variants: {
-      basic: 'rounded-xl px-5 py-3 text-14 sm:text-16',
+      basic: 'rounded-xl px-5 py-3 typo-16-medium',
       shadow: dropdownItemShadowStyle,
     },
     disabled: {
@@ -23,7 +23,7 @@ export const dropdownItemVariants = cva(dropdownItemBase, {
       false: 'text-gray-800 hover:font-bold',
     },
     selected: {
-      true: 'font-bold text-primary-500',
+      true: 'font-medium text-primary-500',
       false: '',
     },
   },

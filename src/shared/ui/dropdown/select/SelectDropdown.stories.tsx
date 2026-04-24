@@ -111,6 +111,7 @@ const CATEGORY_OPTIONS = [
 
 export const Default: Story = {
   args: {
+    variants: 'basic',
     value: '',
     triggerId: 'category-filter',
   },
@@ -133,7 +134,7 @@ export const Default: Story = {
             updateArgs({ value: nextValue as ActivityCategory | '' });
           }}
         >
-          <SelectDropdownTrigger className="rounded-lg px-4 py-2">
+          <SelectDropdownTrigger>
             <SelectDropdownValue
               placeholder="카테고리 선택"
               render={(value: string) => CATEGORY_OPTIONS.find((opt) => opt.value === value)?.label}
@@ -302,12 +303,11 @@ export const WithShadowVariants: Story = {
           value={value}
           onChangeValue={(nextValue: string) => updateArgs({ value: nextValue })}
         >
-          <SelectDropdownTrigger className="rounded-lg px-4 py-2">
+          <SelectDropdownTrigger>
             <SelectDropdownValue
               placeholder="가격"
               render={(value: string) => CATEGORY_OPTIONS.find((opt) => opt.value === value)?.label}
               placeholderClassName="typo-18-bold text-gray-950"
-              valueClassName="typo-18-bold text-gray-950"
             />
           </SelectDropdownTrigger>
 

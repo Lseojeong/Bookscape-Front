@@ -13,7 +13,7 @@ const selectDropdownTriggerVariants = cva('flex items-center', {
     variants: {
       basic:
         'w-full justify-between rounded-2xl border border-gray-100 bg-white px-4 py-3.75 outline-none focus-within:border-primary-500',
-      shadow: 'gap-4 border border-gray-100 shadow rounded-lg px-4 py-2',
+      shadow: 'gap-4 border border-gray-100 shadow rounded-lg px-4 py-2 typo-16-medium',
     },
   },
   defaultVariants: {
