@@ -6,16 +6,14 @@ export function AvatarProvider({
   children,
   size,
   user = null,
-  loading = 'lazy',
 }: {
   children: ReactNode;
   size: AvatarSize;
   user?: AvatarUser | null;
-  loading?: 'lazy' | 'eager';
 }) {
   const [imageError, setImageError] = useState(false);
   return (
-    <AvatarContext.Provider value={{ user, size, imageError, setImageError, loading }}>
+    <AvatarContext.Provider value={{ user, size, imageError, setImageError }}>
       {children}
     </AvatarContext.Provider>
   );
