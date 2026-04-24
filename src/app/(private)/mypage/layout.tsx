@@ -9,8 +9,12 @@ type MyPageLayoutProps = {
 const MOCK_USER = {
   nickname: '정만철',
 };
+/**
+ * 마이페이지 레이아웃 컴포넌트입니다.
+ *
+ */
 
-export default async function MyPageLayout({ children }: MyPageLayoutProps) {
+export default function MyPageLayout({ children }: MyPageLayoutProps) {
   return (
     <div className="mx-auto max-w-7xl gap-4 pt-3 sm:flex sm:justify-center sm:pt-10">
       <MyPageSidebar user={MOCK_USER} />
