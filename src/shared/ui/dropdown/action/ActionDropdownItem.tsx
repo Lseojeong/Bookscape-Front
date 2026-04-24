@@ -8,7 +8,7 @@ import {
   dropdownItemHoverBase,
   dropdownItemShadowStyle,
 } from '@/shared/ui/dropdown/styles/dropdownItem';
-import { moveFocus, moveToEdge } from '@/shared/ui/dropdown/utils/focusNavgate';
+import { moveFocus, moveToEdge } from '@/shared/ui/dropdown/utils/focusNavigate';
 import { cn } from '@/shared/utils/cn';
 
 type ActionDropdownItemProps = WithChildren & {

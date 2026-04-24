@@ -10,7 +10,7 @@ import {
   dropdownItemBase,
   dropdownItemShadowStyle,
 } from '@/shared/ui/dropdown/styles/dropdownItem';
-import { moveFocus, moveToEdge } from '@/shared/ui/dropdown/utils/focusNavgate';
+import { moveFocus, moveToEdge } from '@/shared/ui/dropdown/utils/focusNavigate';
 import { cn } from '@/shared/utils/cn';
 
 export const dropdownItemVariants = cva(dropdownItemBase, {
@@ -83,12 +83,12 @@ export default function SelectDropdownItem<T = string>({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>) => {
+    const current = e.currentTarget;
+    const key = e.key;
+
     if (disabled) {
       return;
     }
-
-    const current = e.currentTarget;
-    const key = e.key;
 
     if (
       key === 'ArrowDown' ||
