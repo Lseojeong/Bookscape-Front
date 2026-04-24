@@ -45,7 +45,7 @@ export default function ActivityCard({ data }: ActivityCardProps) {
   const { bannerImageUrl, title, reviewCount, rating, price } = data;
 
   return (
-    <div className="relative w-full gap-6 overflow-hidden rounded-[18px] shadow-card">
+    <div className="relative w-full overflow-hidden rounded-[18px] shadow-card">
       <ActivityCardImage
         bannerImageUrl={bannerImageUrl}
         containerClassName="mb-16.5 h-44 sm:mb-19 sm:h-93.5 md:h-72.5"
