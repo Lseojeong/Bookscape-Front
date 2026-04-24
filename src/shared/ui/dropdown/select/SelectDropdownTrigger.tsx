@@ -70,7 +70,7 @@ export default function SelectDropdownTrigger({
       aria-expanded={isOpen}
       className={cn(
         selectDropdownTriggerVariants({ variants }),
-        isError && !isOpen && 'border-red-500',
+        isError && !isOpen && 'border-error',
         className
       )}
       onClick={() => setIsOpen((prev) => !prev)}
