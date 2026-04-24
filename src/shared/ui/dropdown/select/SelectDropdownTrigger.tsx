@@ -78,7 +78,7 @@ export default function SelectDropdownTrigger({
     >
       {children}
       <CaretDownIcon
-        aria-hidden
+        aria-hidden="true"
         className={cn('transition-transform duration-200', 'w-7', isOpen && 'rotate-180')}
       />
     </button>
