@@ -5,7 +5,7 @@ import BaseDropdownRoot from '@/shared/ui/dropdown/base/BaseDropdown';
 import BaseDropdownProvider from '@/shared/ui/dropdown/base/BaseDropdownProvider';
 
 /**
- * ## ActionDropdown
+ * ActionDropdown
  *
  * ActionDropdown의 루트 컴포넌트입니다.
  *
@@ -26,7 +26,6 @@ import BaseDropdownProvider from '@/shared/ui/dropdown/base/BaseDropdownProvider
  * </ActionDropdown>
  * ```
  */
-
 export default function ActionDropdown({ children }: WithChildren) {
   return (
     <BaseDropdownProvider>

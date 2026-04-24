@@ -43,7 +43,7 @@ export default function ActionDropdownItem({
     onClick();
   };
 
-  //TODO: 키보드 접근성 개선
+  // TODO: 키보드 접근성 개선
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     const key = e.key;
 

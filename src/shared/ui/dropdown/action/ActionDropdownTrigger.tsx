@@ -11,7 +11,7 @@ type ActionDropdownTriggerProps = WithChildren & {
 };
 
 /**
- * ## ActionDropdownTrigger
+ * ActionDropdownTrigger
  *
  * ActionDropdown의 트리거 버튼 컴포넌트입니다.
  *
@@ -25,7 +25,6 @@ type ActionDropdownTriggerProps = WithChildren & {
  * </ActionDropdownTrigger>
  * ```
  */
-
 export default function ActionDropdownTrigger({
   children,
   className,
