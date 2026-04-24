@@ -39,7 +39,7 @@ export default function ActivityCardInfo({
       )}
     >
       <div className="flex flex-col gap-1">
-        <p className="truncate typo-14-semibold">{title}</p>
+        <h3 className="truncate typo-14-semibold">{title}</h3>
         <RatingSummary averageRating={rating} totalCount={reviewCount} />
       </div>
       <PerPersonPrice pricePerPerson={price} />
