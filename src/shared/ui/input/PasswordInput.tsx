@@ -5,6 +5,16 @@ import Input from '@/shared/ui/input/Input';
 type PasswordInputProps = Omit<ComponentProps<typeof Input>, 'type' | 'rightElement'>;
 
 /**
+ * @example
+ * ```tsx
+ * <PasswordInput placeholder="비밀번호를 입력해주세요" />
+ * <FormField label="비밀번호" errorMessage={errors.password?.message}>
+ * <PasswordInput
+ * placeholder="비밀번호를 입력해주세요"
+ * {...register('password')}
+ * />
+ * </FormField>
+ * ```
  * 비밀번호 입력 전용 Input 컴포넌트입니다.
  * 내부적으로 상태를 관리하여 눈 모양 토글 아이콘을 자동 렌더링합니다.
  */

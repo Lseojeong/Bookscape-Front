@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import { type ComponentProps } from 'react';
+import { useState, type ComponentProps } from 'react';
 import { ReservationStatusIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import Input from '@/shared/ui/input/Input';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
+import PriceInput from '@/shared/ui/input/PriceInput';
 
 type InputPlaygroundProps = ComponentProps<typeof Input> & {
   label?: string;
@@ -109,4 +110,32 @@ export const LabelActionTest: Story = {
       </FormField>
     </div>
   ),
+};
+
+export const PriceTest: Story = {
+  render: () => {
+    const PriceTestWrapper = () => {
+      const [rawValue, setRawValue] = useState('');
+
+      return (
+        <div className="flex w-100 flex-col gap-6 rounded-xl bg-gray-50 p-8">
+          <div>
+            <FormField label="체험 가격">
+              <PriceInput
+                placeholder="금액을 입력해주세요 (숫자만 가능)"
+                onChange={(e) => setRawValue(e.target.value)}
+              />
+            </FormField>
+          </div>
+
+          <p className="typo-14-medium text-gray-600">
+            부모 컴포넌트로 전달되는 실제 값
+            <span className="typo-16-bold">rawValue = {rawValue}</span>
+          </p>
+        </div>
+      );
+    };
+
+    return <PriceTestWrapper />;
+  },
 };
