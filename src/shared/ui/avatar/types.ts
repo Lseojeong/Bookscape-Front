@@ -5,10 +5,6 @@
 import { ImageProps } from 'next/image';
 import { PropsWithChildren } from 'react';
 
-// import { FC } from 'react';
-// import AvatarFallback from '@/shared/ui/avatar/AvatarFallback';
-// import AvatarImage from '@/shared/ui/avatar/AvatarImage';
-
 /** Avatar 사이즈  */
 export type AvatarSize = 'sm' | 'md' | 'lg';
 
