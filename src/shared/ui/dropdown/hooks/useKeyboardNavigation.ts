@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import type { Dispatch, KeyboardEvent, RefObject, SetStateAction } from 'react';
 
 type DropdownKeyboardEdge = 'first' | 'last';
@@ -78,6 +78,23 @@ const useKeyboardNavigation = ({
   isOpen,
   setIsOpen,
 }: UseDropdownKeyboardNavigationParams) => {
+  const pendingEdgeRef = useRef<DropdownKeyboardEdge | null>(null);
+
+  useLayoutEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const edge = pendingEdgeRef.current;
+    if (!edge) {
+      return;
+    }
+
+    pendingEdgeRef.current = null;
+
+    focusEdgeItem(rootRef, edge);
+  }, [isOpen, rootRef]);
+
   return useCallback(
     (e: KeyboardEvent<HTMLElement>) => {
       if (e.defaultPrevented) {
@@ -101,8 +118,8 @@ const useKeyboardNavigation = ({
       const edge: DropdownKeyboardEdge = key === 'ArrowUp' || key === 'End' ? 'last' : 'first';
 
       if (!isOpen) {
+        pendingEdgeRef.current = edge;
         setIsOpen(true);
-        setTimeout(() => focusEdgeItem(rootRef, edge), 0);
         return;
       }
 
