@@ -3,7 +3,7 @@
  */
 
 import { ImageProps } from 'next/image';
-import { PropsWithChildren } from 'react';
+import { ComponentType, PropsWithChildren, ReactNode } from 'react';
 
 /** Avatar 사이즈  */
 export type AvatarSize = 'sm' | 'md' | 'lg';
@@ -32,3 +32,10 @@ export type AvatarImgProps = BaseProps & Omit<ImageProps, 'src' | 'alt'>;
 
 /** Avatar Fallback */
 export type AvatarFallbackProps = BaseProps;
+
+/** 컴파운드 패턴을 위한 Avatar 컴포넌트 타입 */
+export type AvatarComponent = {
+  (props: AvatarProps): ReactNode;
+  Img: ComponentType<AvatarImgProps>;
+  Fallback: ComponentType<AvatarFallbackProps>;
+};
