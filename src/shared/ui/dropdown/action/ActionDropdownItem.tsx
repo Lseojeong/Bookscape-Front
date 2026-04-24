@@ -8,6 +8,7 @@ import {
   dropdownItemHoverBase,
   dropdownItemShadowStyle,
 } from '@/shared/ui/dropdown/styles/dropdownItem';
+import { moveFocus, moveToEdge } from '@/shared/ui/dropdown/utils/focusNavgate';
 import { cn } from '@/shared/utils/cn';
 
 type ActionDropdownItemProps = WithChildren & {
@@ -43,13 +44,40 @@ export default function ActionDropdownItem({
     setIsOpen(false);
   };
 
-  // TODO: 키보드 접근성 개선
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    const current = e.currentTarget;
     const key = e.key;
 
-    if (key === 'Enter' || key === ' ') {
+    if (
+      key === 'ArrowDown' ||
+      key === 'ArrowUp' ||
+      key === 'Home' ||
+      key === 'End' ||
+      key === 'Enter' ||
+      key === ' '
+    ) {
       e.preventDefault();
-      executeAction();
+    } else {
+      return;
+    }
+
+    switch (key) {
+      case 'ArrowDown':
+        moveFocus(current, 'next');
+        break;
+      case 'ArrowUp':
+        moveFocus(current, 'prev');
+        break;
+      case 'Home':
+        moveToEdge(current, 'first');
+        break;
+      case 'End':
+        moveToEdge(current, 'last');
+        break;
+      case 'Enter':
+      case ' ':
+        executeAction();
+        break;
     }
   };
 
