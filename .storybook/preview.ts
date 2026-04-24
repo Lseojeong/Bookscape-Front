@@ -3,6 +3,12 @@ import '@/shared/styles/globals.css';
 
 const preview: Preview = {
   parameters: {
+    // 기본 레이아웃 가운데 정렬
+    layout: 'centered',
+
+    // docs 자동 생성
+    tags: ['autodocs'],
+
     controls: {
       matchers: {
         color: /(background|color)$/i,
