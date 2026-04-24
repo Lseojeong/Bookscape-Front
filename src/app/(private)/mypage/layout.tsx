@@ -18,7 +18,7 @@ export default function MyPageLayout({ children }: MyPageLayoutProps) {
   return (
     <div className="mx-auto max-w-7xl gap-4 pt-3 sm:flex sm:justify-center sm:pt-10">
       <MyPageSidebar user={MOCK_USER} />
-      <main className="shrink-0">{children}</main>
+      <section>{children}</section>
     </div>
   );
 }
