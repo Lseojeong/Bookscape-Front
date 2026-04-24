@@ -108,3 +108,25 @@ export const IconTest: Story = {
     );
   },
 };
+
+export const LabelActionTest: Story = {
+  render: () => (
+    <div className="w-100 rounded-xl bg-gray-50 p-8">
+      <FormField
+        label="주소"
+        labelAction={
+          // TODO: Button 컴포넌트 머지 후 공통 Button으로 교체 필요
+          <button
+            type="button"
+            className="rounded-lg bg-primary-500 px-4 py-2 typo-12-medium text-white"
+            onClick={() => alert('우편번호 찾기 팝업 띄우기')}
+          >
+            우편 번호 찾기
+          </button>
+        }
+      >
+        <Input placeholder="주소를 입력해 주세요" readOnly />
+      </FormField>
+    </div>
+  ),
+};
