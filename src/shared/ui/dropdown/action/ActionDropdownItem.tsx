@@ -39,8 +39,8 @@ export default function ActionDropdownItem({
   const { setIsOpen } = useDropdownBaseContext();
 
   const executeAction = () => {
-    setIsOpen(false);
     onClick();
+    setIsOpen(false);
   };
 
   // TODO: 키보드 접근성 개선
