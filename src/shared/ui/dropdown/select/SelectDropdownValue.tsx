@@ -15,7 +15,7 @@ interface SelectDropdownValueProps<T = string> {
   valueClassName?: string;
 }
 
-const dropdownValueStyle = 'text-14 sm:text-16 font-medium text-gray-800';
+const dropdownValueStyle = 'typo-16-medium text-gray-800';
 
 /**
  * SelectDropdownValue

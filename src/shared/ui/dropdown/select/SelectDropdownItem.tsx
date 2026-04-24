@@ -23,7 +23,7 @@ export const dropdownItemVariants = cva(dropdownItemBase, {
       false: 'text-gray-800 hover:font-bold',
     },
     selected: {
-      true: 'font-medium text-primary-500',
+      true: 'text-primary-500',
       false: '',
     },
   },
