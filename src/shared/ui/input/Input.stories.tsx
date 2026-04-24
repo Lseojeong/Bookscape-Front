@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import type { ComponentProps } from 'react';
+import { useState, type ComponentProps } from 'react';
+import { EyeOnIcon, EyeOffIcon, ReservationStatusIcon } from '@/shared/assets/icons';
 import FormField from '@/shared/ui/form/FormField';
 import Input from '@/shared/ui/input/Input';
 
@@ -42,7 +43,7 @@ export const Playground: Story = {
   ),
 };
 
-export const AsFormField: Story = {
+export const StateTest: Story = {
   render: () => (
     <div className="flex w-100 flex-col gap-8 rounded-xl bg-gray-50 p-8">
       {/* 기본/타이핑 상태 테스트 */}
@@ -61,4 +62,49 @@ export const AsFormField: Story = {
       </FormField>
     </div>
   ),
+};
+
+export const IconTest: Story = {
+  render: () => {
+    const PasswordInputWrapper = () => {
+      const [showPassword, setShowPassword] = useState(false);
+
+      return (
+        <FormField label="비밀번호">
+          <Input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="비밀번호를 입력하세요"
+            rightElement={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+              >
+                {showPassword ? <EyeOnIcon /> : <EyeOffIcon />}
+              </button>
+            }
+          />
+        </FormField>
+      );
+    };
+
+    return (
+      <div className="flex w-100 flex-col gap-8 rounded-xl bg-gray-50 p-8">
+        <PasswordInputWrapper />
+
+        <FormField label="날짜">
+          <Input
+            type="text"
+            placeholder="yy/mm/dd"
+            readOnly
+            rightElement={
+              <button type="button">
+                <ReservationStatusIcon />
+              </button>
+            }
+          />
+        </FormField>
+      </div>
+    );
+  },
 };
