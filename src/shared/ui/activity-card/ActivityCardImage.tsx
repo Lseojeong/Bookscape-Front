@@ -27,8 +27,7 @@ export default function ActivityCardImage({
         src={bannerImageUrl}
         alt="체험 배너 이미지"
         fill
-        priority
-        unoptimized
+        unoptimized // TODO : 스토리북에서 미리보기를 위해 임시로 작성, 배포 시 삭제 필요
         className={cn('object-cover', imageClassName)}
       />
     </div>
