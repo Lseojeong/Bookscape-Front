@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import useSelectContext from '@/shared/ui/dropdown/hooks/useSelectDropdownContext';
 import { cn } from '@/shared/utils/cn';
 
-interface SelectDropdownValueProps<T = string> {
+type SelectDropdownValueProps<T = string> = {
   /** 선택된 값이 없을 때 표시할 플레이스홀더 텍스트 */
   placeholder?: string;
   /** 선택된 value를 받아 커스텀 UI를 반환하는 렌더 함수 */
@@ -13,7 +13,7 @@ interface SelectDropdownValueProps<T = string> {
   placeholderClassName?: string;
   /** 선택된 값 텍스트에 적용할 추가 클래스 */
   valueClassName?: string;
-}
+};
 
 const dropdownValueStyle = 'typo-16-medium text-gray-800';
 

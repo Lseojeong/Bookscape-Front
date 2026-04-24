@@ -9,10 +9,10 @@ import {
 } from '@/shared/ui/dropdown/styles/dropdownContent';
 import { cn } from '@/shared/utils/cn';
 
-interface SelectDropdownContentProps extends WithChildren {
+type SelectDropdownContentProps = WithChildren & {
   /** 옵션 리스트 영역에 추가로 적용할 커스텀 스타일 */
   className?: string;
-}
+};
 
 const dropdownContentVariants = {
   basic:

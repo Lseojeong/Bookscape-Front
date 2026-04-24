@@ -40,12 +40,12 @@ export const dropdownItemVariants = cva(dropdownItemBase, {
   },
 });
 
-interface SelectDropdownItemProps<T = string> extends WithChildren {
+type SelectDropdownItemProps<T = string> = WithChildren & {
   /** 옵션의 실제 선택 값 */
   value: T;
   /** 옵션 비활성화 여부 */
   disabled?: boolean;
-}
+};
 
 /**
  * SelectDropdownItem

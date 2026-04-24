@@ -21,17 +21,17 @@ const selectDropdownTriggerVariants = cva('flex items-center', {
   },
 });
 
-interface SelectDropdownTriggerProps
-  extends WithChildren, VariantProps<typeof selectDropdownTriggerVariants> {
-  /** 트리거 버튼에 적용할 추가 스타일 클래스 */
-  className?: string;
-  /** Label 클릭 시 트리거에 포커스를 이동시키는 UX를 위해 사용 */
-  ref?: RefObject<HTMLButtonElement | null>;
-  /** 외부 label과 연결하는 접근성 식별자 */
-  ariaLabelledBy?: string;
-  /** 에러 상태일 때 스타일 적용 (드롭다운이 닫힌 상태에서만) */
-  isError?: boolean;
-}
+type SelectDropdownTriggerProps = WithChildren &
+  VariantProps<typeof selectDropdownTriggerVariants> & {
+    /** 트리거 버튼에 적용할 추가 스타일 클래스 */
+    className?: string;
+    /** Label 클릭 시 트리거에 포커스를 이동시키는 UX를 위해 사용 */
+    ref?: RefObject<HTMLButtonElement | null>;
+    /** 외부 label과 연결하는 접근성 식별자 */
+    ariaLabelledBy?: string;
+    /** 에러 상태일 때 스타일 적용 (드롭다운이 닫힌 상태에서만) */
+    isError?: boolean;
+  };
 
 /**
  * SelectDropdownTrigger
