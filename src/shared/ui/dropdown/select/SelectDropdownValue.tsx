@@ -51,11 +51,7 @@ export default function SelectDropdownValue<T = string>({
   const { value } = useSelectContext<T>();
 
   if (!value) {
-    return (
-      <span className={cn('text-14 text-gray-400 sm:text-16', placeholderClassName)}>
-        {placeholder}
-      </span>
-    );
+    return <span className={cn('text-gray-400', placeholderClassName)}>{placeholder}</span>;
   }
 
   return (
