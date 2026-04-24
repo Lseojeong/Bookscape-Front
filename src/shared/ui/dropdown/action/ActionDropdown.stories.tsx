@@ -43,6 +43,7 @@ import Profile from '@/shared/ui/profile/Profile';
 const meta: Meta<typeof ActionDropdown> = {
   title: 'Shared/Dropdown/ActionDropdown',
   component: ActionDropdown,
+  tags: ['autodocs'],
   argTypes: {
     children: {
       description:
