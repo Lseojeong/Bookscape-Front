@@ -19,9 +19,10 @@
   /**
     Font Weight
     사용법: font-{name}
-    예시:   font-medium | font-bold
+    예시:   font-medium | font-semibold | font-bold
   */
   --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
   /**
@@ -46,6 +47,11 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: -0.025em;
 }
+@utility typo-10-semibold {
+  font-size: var(--text-10);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.025em;
+}
 @utility typo-10-bold {
   font-size: var(--text-10);
   font-weight: var(--font-weight-bold);
@@ -56,6 +62,11 @@
 @utility typo-12-medium {
   font-size: var(--text-12);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-12-semibold {
+  font-size: var(--text-12);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: -0.025em;
 }
 @utility typo-12-bold {
@@ -70,16 +81,26 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: -0.025em;
 }
+@utility typo-13-semibold {
+  font-size: var(--text-13);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.025em;
+}
 @utility typo-13-bold {
   font-size: var(--text-13);
   font-weight: var(--font-weight-bold);
   letter-spacing: -0.025em;
 }
 
-/* 14 - 14px */
+/* 14px */
 @utility typo-14-medium {
   font-size: var(--text-14);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-14-semibold {
+  font-size: var(--text-14);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: -0.025em;
 }
 @utility typo-14-bold {
@@ -94,6 +115,11 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: -0.025em;
 }
+@utility typo-16-semibold {
+  font-size: var(--text-16);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.025em;
+}
 @utility typo-16-bold {
   font-size: var(--text-16);
   font-weight: var(--font-weight-bold);
@@ -104,6 +130,11 @@
 @utility typo-18-medium {
   font-size: var(--text-18);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-18-semibold {
+  font-size: var(--text-18);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: -0.025em;
 }
 @utility typo-18-bold {
@@ -118,6 +149,11 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: -0.025em;
 }
+@utility typo-20-semibold {
+  font-size: var(--text-20);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.025em;
+}
 @utility typo-20-bold {
   font-size: var(--text-20);
   font-weight: var(--font-weight-bold);
@@ -130,6 +166,11 @@
   font-weight: var(--font-weight-medium);
   letter-spacing: -0.025em;
 }
+@utility typo-24-semibold {
+  font-size: var(--text-24);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.025em;
+}
 @utility typo-24-bold {
   font-size: var(--text-24);
   font-weight: var(--font-weight-bold);
@@ -140,6 +181,11 @@
 @utility typo-32-medium {
   font-size: var(--text-32);
   font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+}
+@utility typo-32-semibold {
+  font-size: var(--text-32);
+  font-weight: var(--font-weight-semibold);
   letter-spacing: -0.025em;
 }
 @utility typo-32-bold {
