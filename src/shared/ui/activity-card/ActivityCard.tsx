@@ -3,22 +3,14 @@ import ActivityCardInfo from '@/shared/ui/activity-card/ActivityCardInfo';
 
 /**
  * TODO: 임시 타입 정의 (삭제 예정)
- *
- * - 현재 API 응답 구조를 정의하지않아 페이지 기능 구현 시 응답 구조 타입 정의 후 삭제 예정
+ * - 현재 API 응답 구조를 정의하지않아 페이지 기능 구현 시 정의 후 삭제 예정
  */
 type Activity = {
-  id: number;
-  userId: number;
   title: string;
-  description: string;
-  category: string;
   price: number;
-  address: string;
   bannerImageUrl: string;
   rating: number;
   reviewCount: number;
-  createdAt: string;
-  updatedAt: string;
 };
 
 /**
@@ -42,7 +34,7 @@ type ActivityCardProps = {
  * <ActivityCard data={activity} />
  *
  * // 그리드 목록
- * <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+ * <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
  *   {activities.map((activity) => (
  *     <ActivityCard key={activity.id} data={activity} />
  *   ))}
@@ -53,9 +45,18 @@ export default function ActivityCard({ data }: ActivityCardProps) {
   const { bannerImageUrl, title, reviewCount, rating, price } = data;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[18px]">
-      <ActivityCardImage bannerImageUrl={bannerImageUrl} />
-      <ActivityCardInfo title={title} rating={rating} reviewCount={reviewCount} price={price} />
+    <div className="relative w-full gap-6 overflow-hidden rounded-[18px] shadow-card">
+      <ActivityCardImage
+        bannerImageUrl={bannerImageUrl}
+        containerClassName="mb-16.5 h-44 sm:mb-19 sm:h-93.5 md:h-72.5"
+      />
+      <ActivityCardInfo
+        title={title}
+        rating={rating}
+        reviewCount={reviewCount}
+        price={price}
+        containerClassName="gap-2.5 p-4 sm:gap-4.5 sm:px-7.5 sm:py-5 md:gap-6"
+      />
     </div>
   );
 }
