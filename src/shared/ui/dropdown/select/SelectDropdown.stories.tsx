@@ -307,7 +307,6 @@ export const WithShadowVariants: Story = {
             <SelectDropdownValue
               placeholder="가격"
               render={(value: string) => CATEGORY_OPTIONS.find((opt) => opt.value === value)?.label}
-              placeholderClassName="typo-18-bold text-gray-950"
             />
           </SelectDropdownTrigger>
 
