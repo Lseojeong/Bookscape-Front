@@ -33,7 +33,7 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
         <button onClick={() => router.back()} aria-label="이전 페이지로 이동">
-          <ChevronLeftIcon className="h-6 w-6" />
+          <ChevronLeftIcon className="h-10 w-10" />
         </button>
         <Title as="h2" size="18" weight="bold">
           {title}
