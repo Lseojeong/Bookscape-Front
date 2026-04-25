@@ -80,7 +80,7 @@ export default function TabBar({ tabs, activeTab, onTabChange, tabClassName }: T
       {tabs.map((tab) => (
         <button
           key={tab.label}
-          onClick={() => onTabChange(tab.label)}
+          onClick={() => activeTab !== tab.label && onTabChange(tab.label)}
           role="tab"
           aria-selected={activeTab === tab.label}
           className={cn(
