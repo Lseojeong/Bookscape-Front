@@ -1,5 +1,6 @@
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
+import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 
 type ActivityCardInfoProps = {
@@ -39,7 +40,9 @@ export default function ActivityCardInfo({
       )}
     >
       <div className="flex flex-col gap-1">
-        <h3 className="truncate typo-14-semibold">{title}</h3>
+        <Title as="h3" size="14" weight="bold" className="truncate">
+          {title}
+        </Title>
         <RatingSummary averageRating={rating} totalCount={reviewCount} />
       </div>
       <PerPersonPrice pricePerPerson={price} />
