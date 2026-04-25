@@ -77,7 +77,7 @@ export default function UserNav({ theme, user, className, onLogout }: UserNavPro
       <button
         type="button"
         aria-label="알림"
-        className="flex h-10 w-10 items-center justify-center"
+        className="flex h-10 w-10 cursor-pointer items-center justify-center"
       >
         <NotificationIcon aria-hidden="true" className={notificationIconVariants({ theme })} />
       </button>
@@ -85,7 +85,10 @@ export default function UserNav({ theme, user, className, onLogout }: UserNavPro
       <span aria-hidden="true" className={dividerVariants()} />
 
       <ActionDropdown>
-        <ActionDropdownTrigger className="flex items-center" ariaLabel="유저 메뉴 열기">
+        <ActionDropdownTrigger
+          className="flex cursor-pointer items-center"
+          ariaLabel="유저 메뉴 열기"
+        >
           <Profile user={user} size="sm" nicknameClassName={profileNicknameVariants({ theme })} />
         </ActionDropdownTrigger>
 
