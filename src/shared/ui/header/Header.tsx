@@ -53,6 +53,18 @@ type HeaderProps = {
  * - `/` 경로에서는 primary 테마, 그 외는 light 테마 스타일을 적용합니다.
  * - 우측 영역은 `HeaderNav`에서 `isLoggedIn`/`user`로 분기합니다.
  *
+ * @example
+ * ```tsx
+ * // Guest
+ * <Header />
+ *
+ * // Logged in
+ * <Header
+ *   isLoggedIn
+ *   user={{ nickname: '정만철', profileImageUrl: 'https://...' }}
+ * />
+ * ```
+ *
  * @param props.isLoggedIn - 로그인 여부
  * @param props.user - 유저 정보
  * @param props.className - 추가 클래스
