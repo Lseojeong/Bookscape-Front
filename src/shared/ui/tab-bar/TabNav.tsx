@@ -28,15 +28,10 @@ type TabNavProps = {
  *
  * @example
  * ```tsx
- * <TabNav
- *  tabs={[
- *    { id: 'info', label: '내 정보', href: '/mypage/info' },
- *    { id: 'reservation-list', label: '예약내역', href: '/mypage/reservations' },
- *    { id: 'activity', label: '내 체험 관리', href: '/mypage/activities' },
- *    { id: 'reservation-status', label: '예약 현황', href: '/mypage/reservation-status' },
- *  ]}
- *  tabClassName="flex-1"
- * />
+ * // 마이페이지 레이아웃에서 모바일 전용으로 사용
+ * <div className="md:hidden">
+ *   <TabNav tabs={TAB_ITEMS} tabClassName="flex-1" />
+ * </div>
  * ```
  */
 export default function TabNav({ tabs, tabClassName }: TabNavProps) {
