@@ -45,7 +45,7 @@ export default function SearchInput() {
 
   // TODO : 인풋 베이스 스타일 상수로 분리
   const inputBase =
-    'w-full rounded-2xl border border-gray-100 bg-white transition-colors outline-none placeholder:text-gray-400 focus:border-[1.5px] focus:border-primary-500 focus:placeholder-transparent disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-25 disabled:text-gray-400 aria-invalid:border-error';
+    'w-full rounded-2xl border border-gray-100 bg-white transition-colors outline-none placeholder:text-gray-400 focus:border-[1.5px] focus:border-primary-500 focus:placeholder-transparent';
 
   return (
     <form role="search" className="relative w-full" onSubmit={handleSubmit}>
