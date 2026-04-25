@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import TabBar from './TabBar';
+import TabBar from '@/shared/ui/tab-bar/TabBar';
 
 const meta: Meta<typeof TabBar> = {
   title: 'Shared/TabBar',
