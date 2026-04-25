@@ -69,6 +69,7 @@ type UserNavProps = {
  */
 export default function UserNav({ theme, user, className, onLogout }: UserNavProps) {
   const router = useRouter();
+  // TODO: 실제 로그아웃 로직(인증 상태/토큰/스토어 초기화 등) 연결
   const handleLogout = onLogout ?? (() => {});
 
   return (
