@@ -1,6 +1,6 @@
 'use client';
 
-import { KeyboardEvent } from 'react';
+import type { KeyboardEvent } from 'react';
 import { WithChildren } from '@/shared/types/common';
 import useDropdownBaseContext from '@/shared/ui/dropdown/hooks/useDropdownBaseContext';
 import {
@@ -8,6 +8,7 @@ import {
   dropdownItemHoverBase,
   dropdownItemShadowStyle,
 } from '@/shared/ui/dropdown/styles/dropdownItem';
+import { handleRovingFocusKeyDown } from '@/shared/ui/dropdown/utils/keyboardNavigation';
 import { cn } from '@/shared/utils/cn';
 
 type ActionDropdownItemProps = WithChildren & {
@@ -43,14 +44,8 @@ export default function ActionDropdownItem({
     setIsOpen(false);
   };
 
-  // TODO: 키보드 접근성 개선
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-    const key = e.key;
-
-    if (key === 'Enter' || key === ' ') {
-      e.preventDefault();
-      executeAction();
-    }
+    handleRovingFocusKeyDown(e, { onActivate: executeAction });
   };
 
   return (
