@@ -28,10 +28,10 @@ export const Default: Story = {
       };
 
       return (
-        <div className="flex w-100 flex-col gap-6 rounded-xl bg-gray-50 p-8">
+        <div className="rounded-xlp-8 flex w-100 flex-col gap-6">
           <SearchInputUi ref={ref} onSubmit={handleSubmit} />
           <p className="typo-14-medium text-gray-600">
-            <span className="typo-16-bold">검색어 : {submitted}</span>
+            <span className="typo-14-medium">검색어 : {submitted}</span>
           </p>
         </div>
       );
@@ -54,10 +54,10 @@ export const WithKeyword: Story = {
       };
 
       return (
-        <div className="flex w-100 flex-col gap-6 rounded-xl bg-gray-50 p-8">
+        <div className="flex w-100 flex-col gap-6 rounded-xl p-8">
           <SearchInputUi ref={ref} onSubmit={handleSubmit} defaultValue="제주도" />
           <p className="typo-14-medium text-gray-600">
-            <span className="typo-16-bold">검색어 : {submitted}</span>
+            <span className="typo-14-medium">검색어 : {submitted}</span>
           </p>
         </div>
       );
