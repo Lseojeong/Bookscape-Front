@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn';
 
 type Tab = {
+  id: string;
   label: string;
   count?: number;
 };
@@ -79,7 +80,7 @@ export default function TabBar({ tabs, activeTab, onTabChange, tabClassName }: T
     <div className="flex w-full border-b border-gray-100" role="tablist" aria-label="탭 목록">
       {tabs.map((tab) => (
         <button
-          key={tab.label}
+          key={tab.id}
           onClick={() => activeTab !== tab.label && onTabChange(tab.label)}
           type="button"
           role="tab"
