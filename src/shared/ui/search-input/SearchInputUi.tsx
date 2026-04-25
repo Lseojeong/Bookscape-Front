@@ -33,7 +33,7 @@ const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
           aria-label="검색어 입력"
           className={cn(
             inputBase,
-            'h-15.5 rounded-[20px] px-5 py-5.5 pr-14 typo-14-medium text-gray-950 sm:h-17.5 sm:rounded-3xl sm:typo-18-medium'
+            'h-15.5 rounded-[20px] px-5 py-5.5 pr-14 typo-14-medium text-gray-950 sm:h-17.5 sm:rounded-3xl sm:px-8 sm:py-6 sm:pr-22 sm:typo-18-medium'
           )}
         />
         <button
