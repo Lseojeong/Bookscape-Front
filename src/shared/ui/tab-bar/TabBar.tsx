@@ -13,7 +13,6 @@ type TabBarProps = {
   activeTab: string;
   onTabChange: (tabLabel: string) => void;
   tabClassName?: string;
-  className?: string;
 };
 
 const tabVariants = cva(
@@ -39,7 +38,6 @@ const tabVariants = cva(
  * @param activeTab - 현재 활성화된 탭 이름
  * @param onTabChange - 탭 변경 시 호출되는 콜백 함수
  * @param tabClassName - 각 탭에 추가로 적용할 클래스 이름
- * @param className - 탭바 전체에 추가로 적용할 클래스 이름
  *
  * @example
  * ```tsx
@@ -76,19 +74,9 @@ const tabVariants = cva(
  * />
  * ```
  */
-export default function TabBar({
-  tabs,
-  activeTab,
-  onTabChange,
-  tabClassName,
-  className,
-}: TabBarProps) {
+export default function TabBar({ tabs, activeTab, onTabChange, tabClassName }: TabBarProps) {
   return (
-    <div
-      className={cn('flex w-full border-b border-gray-100', className)}
-      role="tablist"
-      aria-label="탭 목록"
-    >
+    <div className="flex w-full border-b border-gray-100" role="tablist" aria-label="탭 목록">
       {tabs.map((tab) => (
         <button
           key={tab.label}
