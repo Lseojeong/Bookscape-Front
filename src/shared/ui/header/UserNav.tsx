@@ -77,7 +77,7 @@ export default function UserNav({ theme, user, className, onLogout }: UserNavPro
       <button
         type="button"
         aria-label="알림"
-        className="flex h-10 w-10 cursor-pointer items-center justify-center"
+        className="flex h-6 w-6 cursor-pointer items-center justify-center"
       >
         <NotificationIcon aria-hidden="true" className={notificationIconVariants({ theme })} />
       </button>
