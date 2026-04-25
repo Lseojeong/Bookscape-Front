@@ -2,6 +2,7 @@
 
 import { cva } from 'class-variance-authority';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import type { AvatarUser } from '@/shared/ui/avatar/types';
 import HeaderNav from '@/shared/ui/header/HeaderNav';
 import Logo from '@/shared/ui/logo/Logo';
@@ -59,7 +60,21 @@ type HeaderProps = {
  */
 export default function Header({ isLoggedIn = false, user, className }: HeaderProps) {
   const pathname = usePathname();
-  const theme: HeaderTheme = pathname === '/' ? 'primary' : 'light';
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      return;
+    }
+
+    const update = () => setIsScrolled(window.scrollY > 0);
+    update();
+
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, [pathname]);
+
+  const theme: HeaderTheme = pathname === '/' && !isScrolled ? 'primary' : 'light';
 
   return (
     <header className={cn('sticky top-0 z-50', headerVariants({ theme }), className)}>
