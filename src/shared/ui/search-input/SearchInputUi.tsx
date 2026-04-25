@@ -1,53 +1,33 @@
-import { useRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { SearchIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
-type SearchInputProps = {
-  onSubmit?: (value: string) => void;
+type SearchInputUiProps = {
+  onSubmit?: React.FormEventHandler<HTMLFormElement>;
   defaultValue?: string;
   placeholder?: string;
+  name?: string;
 };
 
+// TODO: inputBase 상수로 분리
+const inputBase =
+  'w-full rounded-2xl border border-gray-100 bg-white transition-colors outline-none placeholder:text-gray-400 focus:border-[1.5px] focus:border-primary-500 focus:placeholder-transparent';
+
 /**
- * 검색 인풋 UI 확인을 위한 컴포넌트입니다.
+ * 검색 인풋 UI 컴포넌트입니다.
+ * 검색 실행 핸들러는 onSubmit prop으로 주입받아 실행합니다.
+ * ref는 input 엘리먼트로 전달됩니다.
  *
- * ⚠️ 실제 SearchInput은 앱 라우터 기반으로 작성해서
- * 스토리북에서 직접 렌더링이 불가능하여 UI 확인 전용으로 생성한 컴포넌트입니다.
- *
- * 확인 가능한 항목
- * - 인풋 기본 스타일 및 focus 상태
- * - 엔터 키 입력 시 검색 실행
- * - 검색 버튼 클릭 시 검색 실행
- * - 검색어 제출 시 하단 "검색어" 텍스트로 결과 확인
- *
- * 실제 컴포넌트와의 차이점
- * - URL query string 업데이트 없음
- * - useRouter, useSearchParams 미사용
+ * ⚠️ 실제 검색 핸들러는 SearchInput에서 관리합니다.
+ * 스토리북에서는 앱 라우터 의존성으로 인해 SearchInput 대신 이 컴포넌트를 직접 사용합니다.
  */
-export default function SearchInputUi({
-  onSubmit,
-  defaultValue = '',
-  placeholder = '체험을 검색해 주세요',
-}: SearchInputProps) {
-  const [value, setValue] = useState('');
-
-  const ref = useRef<HTMLInputElement>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const value = ref.current?.value ?? '';
-    onSubmit?.(value);
-    setValue(value);
-  };
-
-  const inputBase =
-    'w-full rounded-2xl border border-gray-100 bg-white transition-colors outline-none placeholder:text-gray-400 focus:border-[1.5px] focus:border-primary-500 focus:placeholder-transparent';
-
-  return (
-    <div className="flex w-100 flex-col gap-6 rounded-xl bg-gray-50 p-8">
-      <form role="search" className="relative w-full" onSubmit={handleSubmit}>
+const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
+  ({ onSubmit, placeholder = '체험을 검색해 주세요', defaultValue, name }, ref) => {
+    return (
+      <form role="search" className="relative w-full" onSubmit={onSubmit}>
         <input
           ref={ref}
+          name={name ?? 'keyword'}
           defaultValue={defaultValue}
           placeholder={placeholder}
           aria-label="검색어 입력"
@@ -64,9 +44,9 @@ export default function SearchInputUi({
           <SearchIcon />
         </button>
       </form>
-      <p className="typo-14-medium text-gray-600">
-        <span className="typo-16-bold">검색어 : {value}</span>
-      </p>
-    </div>
-  );
-}
+    );
+  }
+);
+
+SearchInputUi.displayName = 'SearchInputUi'; // React DevTools에서 보여질 컴포넌트 이름
+export default SearchInputUi;
