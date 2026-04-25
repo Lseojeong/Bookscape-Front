@@ -64,7 +64,7 @@ export default function TabBar({ tabs, activeTab, onTabChange, tabClassName }: T
           )}
         >
           {tab.label}
-          {tab.count !== undefined && <span aria-label={`${tab.count}건`}> {tab.count}</span>}
+          {tab.count !== undefined && <span aria-label={`${tab.count}건`}>&nbsp;{tab.count}</span>}
         </button>
       ))}
     </div>
