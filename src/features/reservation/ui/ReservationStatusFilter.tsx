@@ -2,10 +2,10 @@ import FilterButton from '@/shared/ui/filter-button/FilterButton';
 
 const STATUS_LIST = ['예약 완료', '예약 취소', '예약 승인', '예약 거절', '체험 완료'];
 
-interface ReservationStatusFilterProps {
+type ReservationStatusFilterProps = {
   selectedStatus: string;
   onSelectStatus: (status: string) => void;
-}
+};
 
 /**
  * 예약 도메인의 예약 상태를 필터링하는 컴포넌트입니다.
