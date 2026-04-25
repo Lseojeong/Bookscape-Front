@@ -3,7 +3,7 @@ import { useState } from 'react';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 
 const meta: Meta<typeof TabBar> = {
-  title: 'Shared/TabBar',
+  title: 'Shared/TabBar/TabBar',
   component: TabBar,
   tags: ['autodocs'],
 };
@@ -24,23 +24,6 @@ export const ActivityDetail: Story = {
       { id: 'review', label: '체험 후기' },
     ],
     tabClassName: 'flex-1 md:flex-none md:w-[130px]',
-  },
-};
-
-// 마이페이지 (모바일)
-export const MyPage: Story = {
-  render: (args) => {
-    const [activeTab, setActiveTab] = useState('내 정보');
-    return <TabBar {...args} activeTab={activeTab} onTabChange={setActiveTab} />;
-  },
-  args: {
-    tabs: [
-      { id: 'info', label: '내 정보' },
-      { id: 'reservation-list', label: '예약내역' },
-      { id: 'activity', label: '내 체험 관리' },
-      { id: 'reservation-status', label: '예약 현황' },
-    ],
-    tabClassName: 'flex-1',
   },
 };
 
