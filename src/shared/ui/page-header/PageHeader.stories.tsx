@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { fn } from 'storybook/test';
-import PageHeader from './PageHeader';
+import PageHeader from '@/shared/ui/page-header/PageHeader';
 
 const meta: Meta<typeof PageHeader> = {
   title: 'Shared/PageHeader',
