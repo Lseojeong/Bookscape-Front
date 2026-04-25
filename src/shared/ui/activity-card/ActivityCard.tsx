@@ -34,7 +34,7 @@ type ActivityCardProps = {
  * <ActivityCard data={activity} />
  *
  * // 그리드 목록
- * <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
+ * <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4 lg:gap-6">
  *   {activities.map((activity) => (
  *     <ActivityCard key={activity.id} data={activity} />
  *   ))}
@@ -48,14 +48,14 @@ export default function ActivityCard({ data }: ActivityCardProps) {
     <div className="relative w-full overflow-hidden rounded-[18px] shadow-card">
       <ActivityCardImage
         bannerImageUrl={bannerImageUrl}
-        containerClassName="mb-16.5 h-44 sm:mb-19 sm:h-93.5 md:h-72.5"
+        containerClassName="mb-16.5 h-44 md:mb-19 md:h-93.5 lg:h-72.5"
       />
       <ActivityCardInfo
         title={title}
         rating={rating}
         reviewCount={reviewCount}
         price={price}
-        containerClassName="gap-2.5 p-4 sm:gap-4.5 sm:px-7.5 sm:py-5 md:gap-6"
+        containerClassName="gap-2.5 p-4 md:gap-4.5 md:px-7.5 md:py-5 lg:gap-6"
       />
     </div>
   );

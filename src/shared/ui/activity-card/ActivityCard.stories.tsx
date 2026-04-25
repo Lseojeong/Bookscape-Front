@@ -50,7 +50,7 @@ const mockActivities = [
 // 반응형 적용
 export const BreakPoint: Story = {
   render: () => (
-    <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
+    <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4 lg:gap-6">
       {mockActivities.map((activity) => (
         <ActivityCard key={activity.id} data={activity} />
       ))}
