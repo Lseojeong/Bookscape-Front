@@ -36,7 +36,7 @@ type GuestNavProps = {
  */
 export default function GuestNav({ theme, className }: GuestNavProps) {
   return (
-    <nav aria-label="인증 메뉴" className={cn('flex items-center gap-5', className)}>
+    <nav aria-label="인증 메뉴" className={cn('flex items-center gap-1', className)}>
       <Link href="/login" className={authLinkVariants({ theme })}>
         로그인
       </Link>
