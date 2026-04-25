@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ChevronLeftIcon } from '@/shared/assets/icons';
+import { BackIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 
 type PageHeaderProps = {
@@ -33,13 +33,13 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
         <button onClick={() => router.back()} aria-label="이전 페이지로 이동">
-          <ChevronLeftIcon className="h-10 w-10" />
+          <BackIcon />
         </button>
         <Title as="h2" size="18" weight="bold">
           {title}
         </Title>
       </div>
-      {description && <p className="typo-14-medium text-gray-500">{description}</p>}
+      {description && <p className="pl-1.5 typo-14-medium text-gray-500">{description}</p>}
     </div>
   );
 }
