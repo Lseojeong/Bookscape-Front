@@ -4,8 +4,8 @@ import { BackIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 
 type PageHeaderProps = {
-  title: string; // 타이틀
-  description?: string; // 설명
+  title: string;
+  description?: string;
   onBack: () => void;
 };
 
