@@ -28,7 +28,7 @@ export default function SearchInput() {
 
     // form 내부 input(name="keyword") 값 추출
     const formData = new FormData(e.currentTarget);
-    const value = (formData.get('keyword') as string).trim();
+    const value = (formData.get('keyword')?.toString() || '').trim();
 
     // 기존 query 유지하면서 keyword만 업데이트하기 위한 객체 생성
     const params = new URLSearchParams(searchParams.toString());
