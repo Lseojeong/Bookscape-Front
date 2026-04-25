@@ -34,7 +34,7 @@ export default function FooterNav() {
         {NAV_LINK_ITEMS.map(({ label, href, icon: Icon }) => (
           <li key={label}>
             <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
-              <Icon className="h-6 w-6" />
+              <Icon className="h-6 w-6 transition-colors hover:text-gray-500" />
             </a>
           </li>
         ))}
