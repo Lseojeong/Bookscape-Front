@@ -4,7 +4,7 @@ export type TitleAs = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 export type TitleSize = '14' | '16' | '18' | '20' | '24' | '32';
 
-export type TitleWeight = 'medium' | 'bold';
+export type TitleWeight = 'medium' | 'semibold' | 'bold';
 
 export type TitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
   as?: TitleAs;
@@ -16,26 +16,32 @@ export type TitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
 export const titleTypoMap: Record<TitleSize, Record<TitleWeight, string>> = {
   '14': {
     medium: 'typo-14-medium',
+    semibold: 'typo-14-semibold',
     bold: 'typo-14-bold',
   },
   '16': {
     medium: 'typo-16-medium',
+    semibold: 'typo-16-semibold',
     bold: 'typo-16-bold',
   },
   '18': {
     medium: 'typo-18-medium',
+    semibold: 'typo-18-semibold',
     bold: 'typo-18-bold',
   },
   '20': {
     medium: 'typo-20-medium',
+    semibold: 'typo-20-semibold',
     bold: 'typo-20-bold',
   },
   '24': {
     medium: 'typo-24-medium',
+    semibold: 'typo-24-semibold',
     bold: 'typo-24-bold',
   },
   '32': {
     medium: 'typo-32-medium',
+    semibold: 'typo-32-semibold',
     bold: 'typo-32-bold',
   },
 } as const;
