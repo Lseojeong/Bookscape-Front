@@ -21,10 +21,6 @@ const headerVariants = cva('h-12 md:h-20', {
   },
 });
 
-const headerInnerVariants = cva(
-  'mx-auto flex h-full w-full max-w-380 items-center justify-between px-6 md:px-7.5 xl:px-50'
-);
-
 const logoVariantByTheme = {
   primary: 'white',
   light: 'default',
@@ -77,7 +73,7 @@ export default function Header({ isLoggedIn = false, user, className }: HeaderPr
 
   return (
     <header className={cn('sticky top-0 z-50', headerVariants({ theme }), className)}>
-      <div className={headerInnerVariants()}>
+      <div className="shell-inner">
         <h1 className="leading-none">
           <Logo variant={logoVariantByTheme[theme]} className="h-6 md:h-7" />
         </h1>
