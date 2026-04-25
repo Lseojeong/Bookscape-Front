@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useRef, useState } from 'react';
-import SearchInputUi from '@/shared/ui/search-input/SearchInputUi';
+import SearchInputUi from '@/shared/ui/search-input/SearchInputField';
 
 const meta: Meta<typeof SearchInputUi> = {
   title: 'Shared/SearchInput',

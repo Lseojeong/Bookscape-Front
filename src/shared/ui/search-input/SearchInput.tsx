@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams, useRouter } from 'next/navigation';
-import SearchInputUi from '@/shared/ui/search-input/SearchInputUi';
+import SearchInputUi from '@/shared/ui/search-input/SearchInputField';
 
 /**
  * 검색 인풋 컴포넌트입니다.
