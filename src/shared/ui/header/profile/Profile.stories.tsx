@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import Profile from '@/shared/ui/profile/Profile';
+import Profile from '@/shared/ui/header/profile/Profile';
 
 const meta: Meta<typeof Profile> = {
   title: 'Shared/Profile',
