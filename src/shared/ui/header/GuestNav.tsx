@@ -1,8 +1,7 @@
 import { cva } from 'class-variance-authority';
 import Link from 'next/link';
+import type { HeaderTheme } from '@/shared/ui/header/types';
 import { cn } from '@/shared/utils/cn';
-
-type HeaderTheme = 'primary' | 'light';
 
 const authLinkVariants = cva('typo-14-medium rounded-md px-3 py-2 transition-colors', {
   variants: {

@@ -9,9 +9,8 @@ import {
   ActionDropdownTrigger,
 } from '@/shared/ui/dropdown/action';
 import Profile from '@/shared/ui/header/profile/Profile';
+import type { HeaderTheme } from '@/shared/ui/header/types';
 import { cn } from '@/shared/utils/cn';
-
-type HeaderTheme = 'primary' | 'light';
 
 const notificationIconVariants = cva('h-6 w-6', {
   variants: {

@@ -1,8 +1,7 @@
 import type { AvatarUser } from '@/shared/ui/avatar/types';
 import GuestNav from '@/shared/ui/header/GuestNav';
+import type { HeaderTheme } from '@/shared/ui/header/types';
 import UserNav from '@/shared/ui/header/UserNav';
-
-type HeaderTheme = 'primary' | 'light';
 
 /**
  * HeaderNav 컴포넌트 Props 입니다.
