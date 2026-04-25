@@ -16,7 +16,7 @@ const MOCK_USER = {
 
 export default function MyPageLayout({ children }: MyPageLayoutProps) {
   return (
-    <div className="mx-auto max-w-7xl gap-4 pt-3 sm:flex sm:justify-center sm:pt-10">
+    <div className="mx-auto max-w-7xl pt-3 sm:flex sm:justify-center sm:pt-10 md:gap-7.5 lg:gap-12.5">
       <MyPageSidebar user={MOCK_USER} />
       <section>{children}</section>
     </div>
