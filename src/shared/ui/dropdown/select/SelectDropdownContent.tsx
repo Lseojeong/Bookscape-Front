@@ -15,8 +15,7 @@ type SelectDropdownContentProps = WithChildren & {
 };
 
 const dropdownContentVariants = {
-  basic:
-    'z-10 max-h-83 w-full overflow-y-auto rounded-2xl border border-gray-100 p-3 scrollbar-thin',
+  basic: 'max-h-83 w-full overflow-y-auto rounded-2xl border border-gray-100 p-3 scrollbar-thin',
   shadow: dropdownListShadowStyle,
 };
 
