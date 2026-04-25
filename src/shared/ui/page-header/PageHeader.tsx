@@ -35,7 +35,7 @@ export default function PageHeader({ title, description }: PageHeaderProps) {
         <button onClick={() => router.back()} aria-label="이전 페이지로 이동">
           <BackIcon />
         </button>
-        <Title as="h2" size="18" weight="bold">
+        <Title as="h1" size="18" weight="bold">
           {title}
         </Title>
       </div>
