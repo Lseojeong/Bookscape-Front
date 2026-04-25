@@ -2,7 +2,7 @@ import FilterButton from '@/shared/ui/filter-button/FilterButton';
 
 const STATUS_LIST = ['예약 완료', '예약 취소', '예약 승인', '예약 거절', '체험 완료'];
 
-type ReservationStatusFilterProps = {
+type StatusFilterProps = {
   selectedStatus: string;
   onSelectStatus: (status: string) => void;
 };
@@ -13,11 +13,11 @@ type ReservationStatusFilterProps = {
  * * @example
  * ```tsx
  * import { useState } from 'react';
- * import ReservationStatusFilter from '@/features/reservation/ui/ReservationStatusFilter';
+ * import StatusFilter from '@/features/reservation/ui/status-filter/StatusFilter';
  * export default function MyReservationPage() {
  * const [status, setStatus] = useState('');
  * return (
- * <ReservationStatusFilter
+ * <StatusFilter
  * selectedStatus={status}
  * onSelectStatus={setStatus}
  * />
@@ -25,10 +25,7 @@ type ReservationStatusFilterProps = {
  * }
  * ```
  */
-export default function ReservationStatusFilter({
-  selectedStatus,
-  onSelectStatus,
-}: ReservationStatusFilterProps) {
+export default function StatusFilter({ selectedStatus, onSelectStatus }: StatusFilterProps) {
   return (
     <div className="flex flex-wrap gap-2">
       {STATUS_LIST.map((status) => (

@@ -12,7 +12,7 @@ type CategoryFilterProps = {
  * * @example
  * ```tsx
  * import { useState } from 'react';
- * import CategoryFilter from '@/features/activity/ui/CategoryFilter';
+ * import CategoryFilter from '@/features/activity/ui/category-filter/CategoryFilter';
  * export default function SearchPage() {
  * const [category, setCategory] = useState('전체');
  * return (
