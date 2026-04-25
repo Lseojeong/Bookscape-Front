@@ -111,9 +111,13 @@ export const HomeScrolled: Story = {
     const win = canvasElement.ownerDocument.defaultView;
     if (!win) return;
 
-    await new Promise((r) => win.setTimeout(r, 0));
     win.scrollTo(0, SCROLL_Y);
     win.dispatchEvent(new Event('scroll'));
+
+    // rAF 쓰로틀이므로 한 프레임 대기
+    await new Promise<void>((resolve) => {
+      win.requestAnimationFrame(() => resolve());
+    });
   },
 };
 
