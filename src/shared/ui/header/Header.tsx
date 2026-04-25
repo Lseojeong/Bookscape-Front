@@ -46,7 +46,8 @@ type HeaderProps = {
  *
  * @remarks
  * - 모바일 높이 `48px`, `md`부터 `80px`입니다.
- * - `/` 경로에서는 primary 테마, 그 외는 light 테마 스타일을 적용합니다.
+ * - `/`, `/search` 경로에서는 스크롤 위치에 따라 primary/light 테마가 전환됩니다.
+ * - 그 외 경로에서는 light 테마 스타일을 적용합니다.
  * - 우측 영역은 `HeaderNav`에서 `isLoggedIn`/`user`로 분기합니다.
  *
  * @example
@@ -67,9 +68,10 @@ type HeaderProps = {
  */
 export default function Header({ isLoggedIn = false, user, className }: HeaderProps) {
   const pathname = usePathname();
-  const { isScrolled } = useScroll({ isEnabled: pathname === '/' });
+  const isScrollThemedPage = pathname === '/' || pathname === '/search';
+  const { isScrolled } = useScroll({ isEnabled: isScrollThemedPage });
 
-  const theme: HeaderTheme = pathname === '/' && !isScrolled ? 'primary' : 'light';
+  const theme: HeaderTheme = isScrollThemedPage && !isScrolled ? 'primary' : 'light';
 
   return (
     <header className={cn('sticky top-0 z-50', headerVariants({ theme }), className)}>
