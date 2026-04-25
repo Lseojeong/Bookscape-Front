@@ -1,0 +1,56 @@
+import type { AvatarUser } from '@/shared/ui/avatar/types';
+import GuestNav from '@/shared/ui/header/GuestNav';
+import UserNav from '@/shared/ui/header/UserNav';
+
+type HeaderTheme = 'primary' | 'light';
+
+/**
+ * HeaderNav 컴포넌트 Props 입니다.
+ *
+ * @property theme - 헤더 테마 (`'primary' | 'light'`)
+ * @property isLoggedIn - 로그인 여부
+ * @property user - 로그인 유저 정보
+ */
+type HeaderNavProps = {
+  theme: HeaderTheme;
+  isLoggedIn?: boolean;
+  user?: AvatarUser;
+};
+
+type LoggedInActionsProps = {
+  theme: HeaderTheme;
+  user: AvatarUser;
+};
+
+function LoggedInActions({ theme, user }: LoggedInActionsProps) {
+  return <UserNav theme={theme} user={user} />;
+}
+
+type GuestActionsProps = {
+  theme: HeaderTheme;
+};
+
+function GuestActions({ theme }: GuestActionsProps) {
+  return <GuestNav theme={theme} />;
+}
+
+/**
+ * ## HeaderNav
+ *
+ * 헤더 우측 영역(유저 메뉴/게스트 메뉴)을 렌더링하는 컴포넌트입니다.
+ *
+ * @remarks
+ * - `isLoggedIn && user`이면 `UserNav`를 렌더링합니다.
+ * - 그 외에는 `GuestNav`를 렌더링합니다.
+ *
+ * @param props.theme - 헤더 테마
+ * @param props.isLoggedIn - 로그인 여부
+ * @param props.user - 유저 정보
+ */
+export default function HeaderNav({ theme, isLoggedIn = false, user }: HeaderNavProps) {
+  if (isLoggedIn && user) {
+    return <LoggedInActions theme={theme} user={user} />;
+  }
+
+  return <GuestActions theme={theme} />;
+}
