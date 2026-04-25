@@ -12,7 +12,7 @@ const headerVariants = cva('h-12 md:h-20', {
   variants: {
     theme: {
       primary: 'bg-primary-500',
-      light: 'border-gray-100 bg-white/60 backdrop-blur',
+      light: 'bg-white/60 backdrop-blur',
     },
   },
   defaultVariants: {
