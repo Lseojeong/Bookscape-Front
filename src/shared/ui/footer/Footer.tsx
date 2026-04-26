@@ -15,8 +15,8 @@ const COPYRIGHT = '©FE22-PART4-TEAM1';
  */
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-gray-50 bg-white px-6 py-10 md:px-7.5 lg:px-50">
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
+    <footer className="w-full border-t border-gray-50 bg-white py-10">
+      <div className="shell-inner">
         <div className="flex flex-col gap-5">
           <Logo className="h-5 w-21" />
           <small className="text-13 text-gray-400">{COPYRIGHT}</small>

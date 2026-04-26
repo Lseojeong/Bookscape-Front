@@ -4,6 +4,9 @@ import Footer from './Footer';
 const meta: Meta<typeof Footer> = {
   title: 'Shared/Footer',
   component: Footer,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export default meta;
