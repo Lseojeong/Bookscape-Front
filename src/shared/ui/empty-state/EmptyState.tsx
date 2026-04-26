@@ -123,7 +123,7 @@ export default function EmptyState(props: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="mb-7.5 flex flex-col items-center justify-center typo-16-body-medium text-gray-600">
-        <Lottie className="h-55 w-55" animationData={animationData} loop play />
+        <Lottie aria-hidden="true" className="h-55 w-55" animationData={animationData} loop play />
         <p className="text-center whitespace-pre-line">{mainText}</p>
       </div>
 
