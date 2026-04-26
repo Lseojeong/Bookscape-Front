@@ -6,11 +6,6 @@ const meta: Meta<typeof TabNav> = {
   component: TabNav,
   tags: ['autodocs'],
   parameters: {
-    docs: {
-      description: {
-        component: 'URL 기반으로 동작하여 Storybook에서는 탭 전환 동작을 확인할 수 없습니다.',
-      },
-    },
     nextjs: {
       appDirectory: true,
       navigation: {

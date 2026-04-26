@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>;
 // 체험 상세 페이지
 export const ActivityDetail: Story = {
   render: (args) => {
-    const [activeTab, setActiveTab] = useState('체험 설명');
+    const [activeTab, setActiveTab] = useState('description');
     return <TabBar {...args} activeTab={activeTab} onTabChange={setActiveTab} />;
   },
   args: {
@@ -30,7 +30,7 @@ export const ActivityDetail: Story = {
 // 예약 현황 (count 포함)
 export const ReservationStatus: Story = {
   render: (args) => {
-    const [activeTab, setActiveTab] = useState('신청');
+    const [activeTab, setActiveTab] = useState('pending');
     return <TabBar {...args} activeTab={activeTab} onTabChange={setActiveTab} />;
   },
   args: {
