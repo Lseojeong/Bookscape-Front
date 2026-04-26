@@ -10,7 +10,7 @@ export default function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
 
   return (
-    <div className="fixed bottom-10 left-1/2 flex -translate-x-1/2 flex-col gap-2">
+    <div className="fixed bottom-10 left-1/2 z-50 flex -translate-x-1/2 flex-col gap-2">
       {toasts.map((toast) => (
         <Toast
           key={toast.id}

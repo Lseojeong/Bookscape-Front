@@ -59,7 +59,7 @@ export default function Toast({ type, message, onClose }: ToastProps) {
       aria-live="polite"
       onTransitionEnd={isClosing ? onClose : undefined}
       className={cn(
-        'flex h-13 items-center rounded-full bg-gray-700 px-7 py-3 transition-opacity duration-300',
+        'flex items-center rounded-full bg-gray-700 px-7 py-3 transition-opacity duration-300',
         isClosing ? 'opacity-0' : 'opacity-100'
       )}
     >
