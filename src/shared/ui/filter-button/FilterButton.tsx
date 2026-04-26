@@ -26,6 +26,7 @@ export default function FilterButton({
   return (
     <button
       type="button"
+      aria-pressed={isSelected}
       className={cn(
         // 기본 상태
         'rounded-full px-4 py-2.5 transition-colors',
