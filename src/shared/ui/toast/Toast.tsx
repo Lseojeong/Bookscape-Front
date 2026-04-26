@@ -5,6 +5,8 @@ import { CancelIcon, CheckIcon, DeleteIcon, WarningIcon } from '@/shared/assets/
 import { cn } from '@/shared/utils/cn';
 import type { ToastType } from './types';
 
+const TOAST_DURATION = 3000;
+
 type ToastProps = {
   type: ToastType;
   message: string;
@@ -47,7 +49,7 @@ export default function Toast({ type, message, onClose }: ToastProps) {
   };
 
   useEffect(() => {
-    const timer = setTimeout(handleClose, 3000);
+    const timer = setTimeout(handleClose, TOAST_DURATION);
     return () => clearTimeout(timer);
   }, []);
 
