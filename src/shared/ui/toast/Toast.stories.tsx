@@ -33,7 +33,7 @@ export const Check: Story = {
 export const Warning: Story = {
   args: {
     type: 'warning',
-    message: '경고: 작업 중 문제가 발생했습니다.',
+    message: '작업 중 문제가 발생했습니다.',
     onClose: fn(),
   },
 };
