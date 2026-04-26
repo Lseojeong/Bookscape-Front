@@ -1,6 +1,7 @@
 @import 'tailwindcss';
-@import './fonts.css';
-@import './colors.css';
-@import './scroll.css';
+@import './base/fonts.css';
+@import './base/colors.css';
+@import './base/z-index.css';
+@import './base/scroll.css';
 @import './layout.css';
-@import './z-index.css';
+@import './modal.css';
