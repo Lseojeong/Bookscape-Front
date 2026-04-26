@@ -1,0 +1,74 @@
+import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
+import CardActions from '@/shared/ui/card/CardActions';
+import { ReservationCardProps } from '@/shared/ui/card/reservation-card/ReservationCard';
+import TotalPrice from '@/shared/ui/price/TotalPrice';
+import StateBadge from '@/shared/ui/state-badge/StateBadge';
+import Title from '@/shared/ui/title/Title';
+
+/**
+ * 예약 카드의 "정보 영역"을 구성하는 컴포넌트입니다.
+ *
+ * - 예약 상태(status)에 따라 버튼(CardActions)이 동적으로 변경됩니다.
+ * - 오른쪽에 이미지가 겹치는 카드 구조이므로, 텍스트 영역이 이미지와 겹치지 않도록 width를 제한합니다.
+ *
+ * @example
+ * ```tsx
+ * <ReservationCardInfo
+ *   data={{
+ *     activity: { title: '한강 요트 체험', bannerImageUrl: '', id: 1 },
+ *     totalPrice: 70000,
+ *     headCount: 2,
+ *     status: 'confirmed',
+ *     date: '2024-04-01',
+ *     startTime: '14:00',
+ *     endTime: '16:00',
+ *     reviewSubmitted: false,
+ *   }}
+ * />
+ * ```
+ */
+export default function ReservationCardInfo({ data }: ReservationCardProps) {
+  const { activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
+    data;
+  const { title } = activity;
+
+  return (
+    <BaseCardInfo
+      /**
+       * - w-[calc(100%-107px)]: 오른쪽 이미지 영역을 제외한 콘텐츠 영역 확보
+       * - mr-26.75: 이미지와 겹침 방지 여백
+       * - px / py: 내부 여백
+       */
+      className="mr-26.75 flex w-[calc(100%-107px)] flex-col rounded-3xl px-5 py-5 lg:px-10 lg:py-7.5"
+    >
+      {/* 예약 상태 뱃지 */}
+      <StateBadge status={status} className="w-fit" />
+
+      {/* 체험명 + 예약 일정 */}
+      <div className="mt-2 mb-2 flex flex-col gap-1 lg:mt-3 lg:mb-1.5 lg:gap-2">
+        {/* 체험명 (길어질 경우 말줄임) */}
+        <Title as="h3" size="14" weight="bold" className="truncate lg:typo-18-bold">
+          {title}
+        </Title>
+
+        {/* 예약 날짜 + 시간 */}
+        <p className="flex gap-1 typo-13-medium text-gray-500 lg:typo-16-medium">
+          <span className="hidden lg:inline-block">{date}</span>
+          <span className="hidden lg:inline-block"> ·</span>
+          <span>
+            {startTime} - {endTime}
+          </span>
+        </p>
+      </div>
+
+      {/* 가격 + 액션 */}
+      <div className="flex flex-col justify-between gap-3 lg:flex-row">
+        {/* 총 금액 + 인원 */}
+        <TotalPrice totalPrice={totalPrice} headCount={headCount} showSlash={false} />
+
+        {/* 예약 상태 기반 액션 버튼 */}
+        <CardActions type="reservation" status={status} reviewSubmitted={reviewSubmitted} />
+      </div>
+    </BaseCardInfo>
+  );
+}
