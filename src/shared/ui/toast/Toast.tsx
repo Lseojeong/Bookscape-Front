@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { CancelIcon, CheckIcon, DeleteIcon, WarningIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
-import { ToastType } from './types';
+import type { ToastType } from './types';
 
 type ToastProps = {
   type: ToastType;
