@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { tabVariants } from '@/shared/ui/tab-bar/styles/tabVariants';
 import { handleTabKeyDown } from '@/shared/ui/tab-bar/utils/tabKeyboardNavigation';
 import { cn } from '@/shared/utils/cn';
@@ -37,7 +37,6 @@ type TabNavProps = {
  */
 export default function TabNav({ tabs, tabClassName }: TabNavProps) {
   const pathname = usePathname();
-  const router = useRouter();
 
   return (
     <div className="flex w-full border-b border-gray-100" role="tablist" aria-label="탭 목록">
@@ -50,11 +49,7 @@ export default function TabNav({ tabs, tabClassName }: TabNavProps) {
             role="tab"
             aria-selected={isActive}
             className={cn(tabVariants({ state: isActive ? 'active' : 'inactive' }), tabClassName)}
-            onKeyDown={(e) =>
-              handleTabKeyDown(e, tabs.length, index, (nextIndex) => {
-                router.push(tabs[nextIndex].href);
-              })
-            }
+            onKeyDown={(e) => handleTabKeyDown(e, tabs.length, index, () => {})}
           >
             {tab.label}
           </Link>
