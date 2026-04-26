@@ -5,6 +5,9 @@ type FilterButtonProps = ComponentProps<'button'> & {
   isSelected?: boolean;
 };
 
+const selectedStyle = 'border-primary-500 bg-primary-100';
+const defaultStyle = 'border-gray-200 bg-white hover:bg-gray-50';
+
 /**
  * 목록을 필터링할 때 사용하는 공통 FilterButton 컴포넌트입니다.
  * @example
@@ -29,9 +32,7 @@ export default function FilterButton({
         'typo-16-medium text-gray-950',
         'border',
         // 선택 상태일 경우
-        isSelected
-          ? 'border-primary-500 bg-primary-100'
-          : 'border-gray-200 bg-white hover:bg-gray-50',
+        isSelected ? selectedStyle : defaultStyle,
         className
       )}
       {...props}
