@@ -1,0 +1,36 @@
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.modal-backdrop {
+  animation: modalFadeIn 350ms ease-out both;
+}
+
+.modal-surface {
+  @apply w-full rounded-2xl bg-white p-6 shadow-card;
+  will-change: transform, opacity;
+  animation: modalSlideUp 350ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal-surface {
+    animation: none;
+  }
+}
