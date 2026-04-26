@@ -102,8 +102,13 @@ type EmptyStateProps = ReviewProps | SearchProps | ExperienceProps;
 export default function EmptyState(props: EmptyStateProps) {
   const { type, mainText, button } = props;
 
-  const animationData =
-    type === 'review' ? NoReviewAnimation : type === 'search' ? NoSearchAnimation : NoDataAnimation;
+  const animationMap = {
+    review: NoReviewAnimation,
+    search: NoSearchAnimation,
+    experience: NoDataAnimation,
+  } as const;
+
+  const animationData = animationMap[type];
 
   const renderButton = () => {
     if (type !== 'experience' || !button?.text) return null;
