@@ -7,7 +7,6 @@ type CardActionsProps = {
   status?: ReservationStatus;
   reviewSubmitted?: boolean; // 리뷰 작성 여부
   // TODO : 페이지 이동 및 모달 기능 연결 필요
-  onEdit?: () => void;
   onDelete?: () => void;
   onReview?: () => void;
 };
@@ -16,7 +15,6 @@ export default function CardActions({
   type,
   status,
   reviewSubmitted,
-  onEdit,
   onDelete,
   onReview,
 }: CardActionsProps) {
@@ -24,14 +22,8 @@ export default function CardActions({
   if (type === 'manage') {
     return (
       <div className="flex gap-2">
-        <Button
-          as={Link}
-          href="/"
-          theme="secondary"
-          size="sm"
-          className="w-17 rounded-lg"
-          onClick={onEdit}
-        >
+        {/* TODO : 내 체험 수정 페이지 링크 연결 */}
+        <Button as={Link} href="/" theme="secondary" size="sm" className="w-17 rounded-lg">
           수정하기
         </Button>
         <Button
@@ -52,14 +44,8 @@ export default function CardActions({
   if (status === 'confirmed') {
     return (
       <div className="flex gap-2">
-        <Button
-          as={Link}
-          href="/"
-          theme="secondary"
-          size="sm"
-          className="w-17 rounded-lg"
-          onClick={onEdit}
-        >
+        {/* TODO : 체험 상세페이지 링크 연결 */}
+        <Button as={Link} href="/" theme="secondary" size="sm" className="w-17 rounded-lg">
           예약 변경
         </Button>
         <Button type="button" theme="gray" size="sm" className="w-17 rounded-lg" onClick={onDelete}>
