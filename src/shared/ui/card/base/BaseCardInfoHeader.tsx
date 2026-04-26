@@ -2,7 +2,7 @@ import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 
-type BaseCardInfoHeader = {
+type BaseCardInfoHeaderProps = {
   title: string;
   rating: number;
   reviewCount: number;
@@ -32,7 +32,7 @@ export default function BaseCardInfoHeader({
   rating,
   reviewCount,
   className,
-}: BaseCardInfoHeader) {
+}: BaseCardInfoHeaderProps) {
   return (
     <div className={cn('flex flex-col', className)}>
       {/* 제목 (길어질 경우 말줄임 처리) */}
