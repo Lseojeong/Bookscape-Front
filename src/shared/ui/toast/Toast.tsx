@@ -1,9 +1,10 @@
 'use client';
 
 import { CancelIcon, CheckIcon, DeleteIcon, WarningIcon } from '@/shared/assets/icons';
+import { ToastType } from './types';
 
 type ToastProps = {
-  type: 'cancel' | 'check' | 'warning';
+  type: ToastType;
   message: string;
   onClose: () => void;
 };
