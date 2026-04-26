@@ -1,24 +1,14 @@
-import { useState, type ComponentProps } from 'react';
+import { useState } from 'react';
+import { FieldValues } from 'react-hook-form';
 import { EyeOnIcon, EyeOffIcon } from '@/shared/assets/icons';
-import Input from '@/shared/ui/input/Input';
+import Input, { InputProps } from '@/shared/ui/input/Input';
 
-type PasswordInputProps = Omit<ComponentProps<typeof Input>, 'type' | 'rightElement'>;
+type PasswordInputProps<T extends FieldValues> = Omit<InputProps<T>, 'type' | 'rightElement'>;
 
-/**
- * @example
- * ```tsx
- * <PasswordInput placeholder="비밀번호를 입력해주세요" />
- * <FormField label="비밀번호" errorMessage={errors.password?.message}>
- * <PasswordInput
- * placeholder="비밀번호를 입력해주세요"
- * {...register('password')}
- * />
- * </FormField>
- * ```
- * 비밀번호 입력 전용 Input 컴포넌트입니다.
- * 내부적으로 상태를 관리하여 눈 모양 토글 아이콘을 자동 렌더링합니다.
- */
-export default function PasswordInput({ className, ...props }: PasswordInputProps) {
+export default function PasswordInput<T extends FieldValues>({
+  className,
+  ...props
+}: PasswordInputProps<T>) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
