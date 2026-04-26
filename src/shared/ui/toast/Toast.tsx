@@ -55,6 +55,8 @@ export default function Toast({ type, message, onClose }: ToastProps) {
 
   return (
     <div
+      role={type === 'cancel' ? 'alert' : 'status'}
+      aria-live="polite"
       onTransitionEnd={isClosing ? onClose : undefined}
       className={cn(
         'flex h-13 items-center rounded-full bg-gray-700 px-7 py-3 transition-opacity duration-300',
