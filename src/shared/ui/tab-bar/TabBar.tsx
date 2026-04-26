@@ -1,6 +1,7 @@
 'use client';
 
 import { tabVariants } from '@/shared/ui/tab-bar/styles/tabVariants';
+import { handleTabKeyDown } from '@/shared/ui/tab-bar/utils/tabKeyboardNavigation';
 import { cn } from '@/shared/utils/cn';
 
 type Tab = {
@@ -51,10 +52,15 @@ type TabBarProps = {
 export default function TabBar({ tabs, activeTab, onTabChange, tabClassName }: TabBarProps) {
   return (
     <div className="flex w-full border-b border-gray-100" role="tablist" aria-label="탭 목록">
-      {tabs.map((tab) => (
+      {tabs.map((tab, index) => (
         <button
           key={tab.id}
           onClick={() => activeTab !== tab.label && onTabChange(tab.label)}
+          onKeyDown={(e) =>
+            handleTabKeyDown(e, tabs.length, index, (nextIndex) => {
+              onTabChange(tabs[nextIndex].label);
+            })
+          }
           type="button"
           role="tab"
           aria-selected={activeTab === tab.label}
