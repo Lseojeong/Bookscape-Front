@@ -55,17 +55,17 @@ export default function TabBar({ tabs, activeTab, onTabChange, tabClassName }: T
       {tabs.map((tab, index) => (
         <button
           key={tab.id}
-          onClick={() => activeTab !== tab.label && onTabChange(tab.label)}
+          onClick={() => activeTab !== tab.id && onTabChange(tab.id)}
           onKeyDown={(e) =>
             handleTabKeyDown(e, tabs.length, index, (nextIndex) => {
-              onTabChange(tabs[nextIndex].label);
+              onTabChange(tabs[nextIndex].id);
             })
           }
           type="button"
           role="tab"
-          aria-selected={activeTab === tab.label}
+          aria-selected={activeTab === tab.id}
           className={cn(
-            tabVariants({ state: activeTab === tab.label ? 'active' : 'inactive' }),
+            tabVariants({ state: activeTab === tab.id ? 'active' : 'inactive' }),
             tabClassName
           )}
         >
