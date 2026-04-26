@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { CancelIcon, CheckIcon, DeleteIcon, WarningIcon } from '@/shared/assets/icons';
+import { cn } from '@/shared/utils/cn';
 import { ToastType } from './types';
 
 type ToastProps = {
@@ -37,13 +39,29 @@ const toastIconConfig = {
  * ```
  */
 export default function Toast({ type, message, onClose }: ToastProps) {
+  const [isClosing, setIsClosing] = useState(false);
   const { icon } = toastIconConfig[type];
 
+  const handleClose = () => {
+    setIsClosing(true);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(handleClose, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="flex h-13 items-center rounded-full bg-gray-700 px-7 py-3">
+    <div
+      onTransitionEnd={isClosing ? onClose : undefined}
+      className={cn(
+        'flex h-13 items-center rounded-full bg-gray-700 px-7 py-3 transition-opacity duration-300',
+        isClosing ? 'opacity-0' : 'opacity-100'
+      )}
+    >
       {icon}
       <span className="ml-3 typo-18-medium text-gray-25">{message}</span>
-      <button onClick={onClose} aria-label="토스트 닫기" className="ml-5 cursor-pointer">
+      <button onClick={handleClose} aria-label="토스트 닫기" className="ml-5 cursor-pointer">
         <DeleteIcon className="h-8 w-8 text-gray-100" />
       </button>
     </div>
