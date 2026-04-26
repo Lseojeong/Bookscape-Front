@@ -1,12 +1,13 @@
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
+import BaseCardInfoHeader from '@/shared/ui/card/base/BaseCardInfoHeader';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 
 /**
  * TODO: 임시 타입 정의 (삭제 예정)
  * - 현재 API 응답 구조를 정의하지않아 페이지 기능 구현 시 정의 후 삭제 예정
  */
-type Activity = {
+export type Activity = {
   title: string;
   price: number;
   bannerImageUrl: string;
@@ -14,7 +15,7 @@ type Activity = {
   reviewCount: number;
 };
 
-type ActivityCardProps = {
+export type ActivityCardProps = {
   data: Pick<Activity, 'bannerImageUrl' | 'title' | 'reviewCount' | 'rating' | 'price'>;
 };
 
@@ -47,14 +48,10 @@ export default function ActivityCard({ data }: ActivityCardProps) {
         bannerImageUrl={bannerImageUrl}
         containerClassName="mb-16.5 h-44 md:mb-19 md:h-93.5 lg:h-72.5"
       />
-      <BaseCardInfo
-        title={title}
-        rating={rating}
-        reviewCount={reviewCount}
-        containerClassName="gap-2.5 p-4 md:gap-4.5 md:px-7.5 md:py-5 lg:gap-6"
-        price={price}
-        priceSlot={({ price }) => <PerPersonPrice pricePerPerson={price} />}
-      />
+      <BaseCardInfo containerClassName="absolute bottom-0 gap-2.5 p-4 md:gap-4.5 md:px-7.5 md:py-5">
+        <BaseCardInfoHeader title={title} rating={rating} reviewCount={reviewCount} />
+        <PerPersonPrice pricePerPerson={price} />
+      </BaseCardInfo>
     </div>
   );
 }

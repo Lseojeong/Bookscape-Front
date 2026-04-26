@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import ActivityCard from '@/shared/ui/card/ActivityCard';
+import MyActivityCard from '@/shared/ui/card/my-activity-card/MyActivityCard';
 
 const meta: Meta<typeof ActivityCard> = {
   title: 'Shared/ActivityCard',
@@ -18,6 +19,7 @@ const mockActivities = [
     reviewCount: 5,
     rating: 4.74,
     price: 10000,
+    status: 'confirmed',
   },
   {
     id: 2,
@@ -46,17 +48,27 @@ const mockActivities = [
     price: 99000,
   },
 ];
-
-// 반응형 적용
-export const BreakPoint: Story = {
+// 내 체험 관리 카드
+export const MyActivity: Story = {
   render: () => (
-    <div className="grid w-75 min-w-75 grid-cols-2 gap-5 md:w-186 md:gap-5 lg:w-230 lg:grid-cols-4 lg:gap-6">
+    <div className="grid gap-6">
       {mockActivities.map((activity) => (
-        <ActivityCard key={activity.id} data={activity} />
+        <MyActivityCard key={activity.id} data={activity} />
       ))}
     </div>
   ),
 };
+
+// 반응형 적용
+// export const BreakPoint: Story = {
+//   render: () => (
+//     <div className="grid w-75 min-w-75 grid-cols-2 gap-5 md:w-186 md:gap-5 lg:w-230 lg:grid-cols-4 lg:gap-6">
+//       {mockActivities.map((activity) => (
+//         <ActivityCard key={activity.id} data={activity} />
+//       ))}
+//     </div>
+//   ),
+// };
 
 // 데스크탑: 4열
 export const GridDesktop: Story = {
@@ -69,13 +81,13 @@ export const GridDesktop: Story = {
   ),
 };
 
-// 태블릿: 2열
-export const GridTablet: Story = {
-  render: () => (
-    <div className="grid min-w-186 grid-cols-2 gap-5">
-      {mockActivities.map((activity) => (
-        <ActivityCard key={activity.id} data={activity} />
-      ))}
-    </div>
-  ),
-};
+// // 태블릿: 2열
+// export const GridTablet: Story = {
+//   render: () => (
+//     <div className="grid min-w-186 grid-cols-2 gap-5">
+//       {mockActivities.map((activity) => (
+//         <ActivityCard key={activity.id} data={activity} />
+//       ))}
+//     </div>
+//   ),
+// };
