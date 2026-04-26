@@ -1,5 +1,6 @@
-import ActivityCardImage from '@/shared/ui/activity-card/ActivityCardImage';
-import ActivityCardInfo from '@/shared/ui/activity-card/ActivityCardInfo';
+import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
+import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
+import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 
 /**
  * TODO: 임시 타입 정의 (삭제 예정)
@@ -13,10 +14,6 @@ type Activity = {
   reviewCount: number;
 };
 
-/**
- * 카드에 필요한 데이터를 개별 props로 나누지 않고
- * data 객체로 전달한 뒤, 자식 컴포넌트에서 필요한 값만 선택해서 사용
- */
 type ActivityCardProps = {
   data: Pick<Activity, 'bannerImageUrl' | 'title' | 'reviewCount' | 'rating' | 'price'>;
 };
@@ -46,16 +43,17 @@ export default function ActivityCard({ data }: ActivityCardProps) {
 
   return (
     <div className="relative w-full overflow-hidden rounded-[18px] shadow-card">
-      <ActivityCardImage
+      <BaseCardImage
         bannerImageUrl={bannerImageUrl}
         containerClassName="mb-16.5 h-44 md:mb-19 md:h-93.5 lg:h-72.5"
       />
-      <ActivityCardInfo
+      <BaseCardInfo
         title={title}
         rating={rating}
         reviewCount={reviewCount}
-        price={price}
         containerClassName="gap-2.5 p-4 md:gap-4.5 md:px-7.5 md:py-5 lg:gap-6"
+        price={price}
+        priceSlot={({ price }) => <PerPersonPrice pricePerPerson={price} />}
       />
     </div>
   );

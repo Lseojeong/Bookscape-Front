@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { cn } from '@/shared/utils/cn';
 
-type ActivityCardImageProps = {
+type BaseCardImageProps = {
   bannerImageUrl: string;
   containerClassName?: string;
   imageClassName?: string;
@@ -13,14 +13,14 @@ type ActivityCardImageProps = {
  * @example
  * ```tsx
  * // 체험 카드
- * <ActivityCardImage bannerImageUrl="https://example.com/image.jpg" />
+ * <BaseCardImage bannerImageUrl="https://example.com/image.jpg" />
  * ```
  */
-export default function ActivityCardImage({
+export default function BaseCardImage({
   bannerImageUrl,
   containerClassName,
   imageClassName,
-}: ActivityCardImageProps) {
+}: BaseCardImageProps) {
   return (
     <div className={cn('relative w-full overflow-hidden', containerClassName)}>
       <Image

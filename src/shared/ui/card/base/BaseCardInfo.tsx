@@ -1,14 +1,17 @@
-import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
+import { ReactNode } from 'react';
 import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
+import StateBadge, { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 
-type ActivityCardInfoProps = {
+type BaseCardInfoProps = {
   title: string;
   rating: number;
   reviewCount: number;
-  price: number;
   containerClassName?: string;
+  status?: ReservationStatus; // 예약 상태
+  price: number;
+  priceSlot?: (props: { price: number }) => ReactNode;
 };
 
 /**
@@ -17,21 +20,23 @@ type ActivityCardInfoProps = {
  *
  * @example
  * ```tsx
- * <ActivityCardInfo
+ * <BaseCardInfo
  *   title="함께 배우면 즐거운 스트릿댄스"
  *   rating={4.74}
  *   reviewCount={5}
- *   price={10000}
+ *   priceSlot={<PerPersonPrice pricePerPerson={price} />}
  * />
  * ```
  */
-export default function ActivityCardInfo({
+export default function BaseCardInfo({
   title,
   reviewCount,
   rating,
-  price,
   containerClassName,
-}: ActivityCardInfoProps) {
+  status,
+  price,
+  priceSlot,
+}: BaseCardInfoProps) {
   return (
     <div
       className={cn(
@@ -39,13 +44,23 @@ export default function ActivityCardInfo({
         containerClassName
       )}
     >
+      {/* 예약 상태 뱃지 */}
+      {status && (
+        <div>
+          <StateBadge status={status} />
+        </div>
+      )}
+
+      {/* 타이틀, 리뷰 요약 */}
       <div className="flex flex-col gap-1">
-        <Title as="h3" size="14" weight="bold" className="truncate">
+        <Title as="h3" size="14" weight="semibold" className="truncate">
           {title}
         </Title>
         <RatingSummary averageRating={rating} totalCount={reviewCount} />
       </div>
-      <PerPersonPrice pricePerPerson={price} />
+
+      {/* 가격 */}
+      {priceSlot?.({ price })}
     </div>
   );
 }
