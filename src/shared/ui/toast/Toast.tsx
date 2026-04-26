@@ -26,19 +26,7 @@ const toastIconConfig = {
  *
  * @param type - 토스트 타입 (cancel: 에러, check: 성공, warning: 경고)
  * @param message - 토스트 메시지
- * @param onClose - 닫기 버튼 클릭 시 호출되는 콜백 함수
- *
- * @example
- * ```tsx
- * // 에러
- * <Toast type="cancel" message="작업 중 오류가 발생했습니다." onClose={handleClose} />
- *
- * // 성공
- * <Toast type="check" message="예약이 완료되었습니다." onClose={handleClose} />
- *
- * // 경고
- * <Toast type="warning" message="주의: 이 작업은 되돌릴 수 없습니다." onClose={handleClose} />
- * ```
+ * @param onClose - 토스트가 화면에서 사라진 후, 스토어에서 해당 데이터를 제거하는 콜백 함수
  */
 export default function Toast({ type, message, onClose }: ToastProps) {
   const [isClosing, setIsClosing] = useState(false);
