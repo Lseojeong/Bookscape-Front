@@ -1,14 +1,11 @@
 import type { ReactNode } from 'react';
+import { MOCK_USER } from '@/mocks/user';
 import MyPageSidebar from '@/shared/ui/mypage-sidebar/MyPageSidebar';
 
 type MyPageLayoutProps = {
   children: ReactNode;
 };
 
-// TODO: API 연결 후 실제 유저 데이터로 교체
-const MOCK_USER = {
-  nickname: '정만철',
-};
 /**
  * 마이페이지 레이아웃 컴포넌트입니다.
  *
