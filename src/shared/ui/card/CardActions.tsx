@@ -6,18 +6,9 @@ type CardActionsProps = {
   type: 'manage' | 'reservation';
   status?: ReservationStatus;
   reviewSubmitted?: boolean; // 리뷰 작성 여부
-  // TODO : 페이지 이동 및 모달 기능 연결 필요
-  onDelete?: () => void;
-  onReview?: () => void;
 };
 
-export default function CardActions({
-  type,
-  status,
-  reviewSubmitted,
-  onDelete,
-  onReview,
-}: CardActionsProps) {
+export default function CardActions({ type, status, reviewSubmitted }: CardActionsProps) {
   // 내 체험 관리 버튼
   if (type === 'manage') {
     return (
@@ -32,7 +23,7 @@ export default function CardActions({
           theme="gray"
           size="sm"
           className="w-17 rounded-lg"
-          onClick={onDelete}
+          onClick={() => alert('삭제하기 버튼 클릭')}
         >
           삭제하기
         </Button>
@@ -48,7 +39,13 @@ export default function CardActions({
         <Button as={Link} href="/" theme="secondary" size="sm" className="w-17 rounded-lg">
           예약 변경
         </Button>
-        <Button type="button" theme="gray" size="sm" className="w-17 rounded-lg" onClick={onDelete}>
+        <Button
+          type="button"
+          theme="gray"
+          size="sm"
+          className="w-17 rounded-lg"
+          onClick={() => alert('예약 취소 버튼 클릭')}
+        >
           예약 취소
         </Button>
       </div>
@@ -58,17 +55,15 @@ export default function CardActions({
   // 체험 완료 시 버튼
   if (status === 'completed') {
     return reviewSubmitted ? (
-      <Button
-        theme="gray"
-        size="sm"
-        className="rounded-lg px-2.5 py-1.5"
-        disabled
-        onClick={onReview}
-      >
+      <Button theme="gray" size="sm" className="rounded-lg px-2.5 py-1.5" disabled>
         후기 작성 완료
       </Button>
     ) : (
-      <Button size="sm" className="rounded-lg px-2.5 py-1.5" onClick={onReview}>
+      <Button
+        size="sm"
+        className="rounded-lg px-2.5 py-1.5"
+        onClick={() => alert('후기 작성 버튼 클릭')}
+      >
         후기 작성하기
       </Button>
     );
