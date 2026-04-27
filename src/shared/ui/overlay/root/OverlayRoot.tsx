@@ -25,7 +25,7 @@ import useOverlayStore from '@/shared/ui/overlay/stores/useOverlayStore';
  * }
  * ```
  */
-const OverlayRoot = () => {
+export default function OverlayRoot() {
   const isOpen = useOverlayStore((s) => s.isOpen);
   const content = useOverlayStore((s) => s.content);
   const ariaLabel = useOverlayStore((s) => s.ariaLabel);
@@ -44,6 +44,4 @@ const OverlayRoot = () => {
       {content}
     </OverlayLayer>
   );
-};
-
-export default OverlayRoot;
+}
