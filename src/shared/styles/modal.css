@@ -24,13 +24,16 @@
 
 .modal-surface {
   @apply w-full rounded-2xl bg-white p-6 shadow-card;
+}
+
+.modal-surface-animation {
   will-change: transform, opacity;
   animation: modalSlideUp 350ms ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .modal-backdrop,
-  .modal-surface {
+  .modal-surface-animation {
     animation: none;
   }
 }
