@@ -30,8 +30,8 @@ const logoVariantClassName = {
 export default function Logo({ variant = 'default', className }: LogoProps) {
   return (
     <Link href="/" aria-label="Bookscape 메인 페이지로 이동">
-      <div className={cn(logoVariantClassName[variant], className)}>
-        <LogoIcon />
+      <div className={cn('inline-block', logoVariantClassName[variant], className)}>
+        <LogoIcon aria-hidden="true" className="h-full w-auto" />
       </div>
     </Link>
   );
