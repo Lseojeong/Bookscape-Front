@@ -111,7 +111,7 @@ export default function EmptyState(props: EmptyStateProps) {
   const animationData = animationMap[type];
 
   const renderButton = () => {
-    if (type !== 'experience' || !button?.text) return null;
+    if (type !== 'experience' || !button?.text || !button?.href) return null;
 
     return (
       <Button as={Link} href={button.href} theme="primary">
