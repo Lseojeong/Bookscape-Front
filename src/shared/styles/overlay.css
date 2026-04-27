@@ -19,7 +19,7 @@
 }
 
 .overlay-backdrop {
-  animation: modalFadeIn 350ms ease-out both;
+  animation: overlayFadeIn 350ms ease-out both;
 }
 
 .overlay-surface {
