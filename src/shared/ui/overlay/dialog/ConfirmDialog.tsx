@@ -2,6 +2,7 @@
 
 import Button from '@/shared/ui/button/Button';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
+import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 
 export type ConfirmDialogProps = {
@@ -75,12 +76,21 @@ export default function ConfirmDialog({
       ariaLabel={ariaLabel}
       position="center"
       variant="dialog"
+      elevation="card"
       surfaceClassName="w-80 md:w-100"
       contentClassName="modal-surface-animation rounded-[30px]"
     >
       <div className={cn('flex flex-col items-center gap-4 text-center', className)}>
         <div className="space-y-2">
-          <h2 className="typo-18-body-bold text-gray-950 md:typo-20-body-bold">{title}</h2>
+          <Title
+            as="h2"
+            size="18"
+            weight="bold"
+            color="text-gray-950"
+            className="typo-18-body-bold md:typo-20-body-bold"
+          >
+            {title}
+          </Title>
           {description ? <p className="typo-14-medium text-gray-600">{description}</p> : null}
         </div>
 
