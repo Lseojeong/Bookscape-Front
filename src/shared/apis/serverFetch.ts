@@ -1,6 +1,11 @@
 import { cookies } from 'next/headers';
+import {
+  coreFetch,
+  FetchRequestOptions,
+  QueryParams,
+  RequestConfig,
+} from '@/shared/apis/coreFetch';
 import { ENV } from '@/shared/apis/env';
-import { coreFetch, FetchRequestOptions, QueryParams, RequestConfig } from './coreFetch';
 
 /**
  * 서버 사이드 전용 Fetch 함수 (Server Components, Route Handlers, Server Actions 전용)
