@@ -5,7 +5,9 @@ import { useFormField } from '@/shared/ui/form/FormField';
 import Input from '@/shared/ui/input/Input';
 
 type PriceInputProps<T extends FieldValues> = UseControllerProps<T> &
-  Omit<React.ComponentProps<'input'>, 'name' | 'value' | 'onChange'>;
+  Omit<React.ComponentProps<'input'>, 'name' | 'value' | 'onChange'> & {
+    isError?: boolean;
+  };
 
 /**
  * React Hook Form과 연동하여 금액(숫자)을 입력받는 전용 Input 컴포넌트입니다.
@@ -37,6 +39,7 @@ export default function PriceInput<T extends FieldValues>({
   name,
   control,
   rules,
+  isError: isErrorProp,
   ...props
 }: PriceInputProps<T>) {
   const {
@@ -45,7 +48,7 @@ export default function PriceInput<T extends FieldValues>({
   } = useController({ name, control, rules });
 
   const formField = useFormField();
-  const isError = !!error || formField?.isError;
+  const isError = isErrorProp ?? (!!error || !!formField?.isError);
   const inputId = props.id ?? formField?.id;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -14,7 +14,7 @@ type InputPlaygroundProps = {
   errorMessage: string;
   placeholder: string;
   disabled: boolean;
-  isError: boolean;
+  isError?: boolean;
 };
 
 const meta: Meta<InputPlaygroundProps> = {
@@ -41,7 +41,7 @@ export const Playground: Story = {
     errorMessage: '',
     placeholder: 'test@email.com',
     disabled: false,
-    isError: false,
+    isError: undefined,
   },
   render: ({ label, labelWeight, errorMessage, ...args }) => {
     type PlaygroundForm = { playgroundInput: string };

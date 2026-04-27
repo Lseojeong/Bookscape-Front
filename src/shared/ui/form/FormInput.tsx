@@ -36,7 +36,8 @@ export default function FormInput<T extends FieldValues>({
   } = useController({ name, control, rules, shouldUnregister });
 
   const formField = useFormField();
-  const isError = isErrorProp || !!error || !!formField?.isError;
+  // NOTE: 에러 상태 결정 우선순위: 명시적 prop 주입 > react-hook-form 필드 에러 > FormField Context 부모 에러
+  const isError = isErrorProp ?? (!!error || !!formField?.isError);
   const inputId = id ?? formField?.id;
   const describedBy = isError ? formField?.errorId : undefined;
 
