@@ -1,7 +1,7 @@
+import { MyActivityCardProps } from '@/features/my-page/ui/reservation-list/my-activity-card/MyActivityCard';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
 import { cardInfoStyles } from '@/shared/ui/card/cardStyles';
-import { MyActivityCardProps } from '@/shared/ui/card/my-activity-card/MyActivityCard';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
 import Title from '@/shared/ui/title/Title';

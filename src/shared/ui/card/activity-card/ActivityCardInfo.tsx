@@ -1,4 +1,4 @@
-import { ActivityCardProps } from '@/shared/ui/card/activity-card/ActivityCard';
+import { ActivityCardProps } from '@/features/main/ui/activity-card/ActivityCard';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
 import Title from '@/shared/ui/title/Title';

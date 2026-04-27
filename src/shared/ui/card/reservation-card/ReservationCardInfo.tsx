@@ -1,7 +1,7 @@
+import { ReservationCardProps } from '@/features/reservation/ui/reservation-card/ReservationCard';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
 import { cardInfoStyles } from '@/shared/ui/card/cardStyles';
-import { ReservationCardProps } from '@/shared/ui/card/reservation-card/ReservationCard';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 import Title from '@/shared/ui/title/Title';

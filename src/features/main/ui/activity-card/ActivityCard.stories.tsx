@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import MyActivityCard from '@/shared/ui/card/my-activity-card/MyActivityCard';
+import ActivityCard from '@/features/main/ui/activity-card/ActivityCard';
 
-const meta: Meta<typeof MyActivityCard> = {
-  title: 'Shared/Card/MyActivityCard',
-  component: MyActivityCard,
+const meta: Meta<typeof ActivityCard> = {
+  title: 'Shared/Card/ActivityCard',
+  component: ActivityCard,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof MyActivityCard>;
+type Story = StoryObj<typeof ActivityCard>;
 
 const mockActivities = [
   {
@@ -47,21 +47,34 @@ const mockActivities = [
     price: 99000,
   },
 ];
-// 내 체험 관리 카드
-export const MyActivity: Story = {
-  args: {
-    data: {
-      id: 1,
-      title: '제목이 아주 길어지는 경우에는 말줄임표가 적용됩니다',
-      reviewCount: 120,
-      rating: 3.5,
-      price: 25000,
-    },
-  },
+// 반응형 적용
+export const BreakPoint: Story = {
   render: () => (
-    <div className="flex w-100 flex-col gap-5 md:w-130 md:gap-5 lg:w-170">
+    <div className="grid w-75 min-w-75 grid-cols-2 gap-5 md:w-186 md:gap-5 lg:w-230 lg:grid-cols-4 lg:gap-6">
       {mockActivities.map((activity) => (
-        <MyActivityCard key={activity.id} data={activity} />
+        <ActivityCard key={activity.id} data={activity} />
+      ))}
+    </div>
+  ),
+};
+
+// 데스크탑: 4열
+export const GridDesktop: Story = {
+  render: () => (
+    <div className="grid min-w-220 grid-cols-4 gap-6">
+      {mockActivities.map((activity) => (
+        <ActivityCard key={activity.id} data={activity} />
+      ))}
+    </div>
+  ),
+};
+
+// 태블릿: 2열
+export const GridTablet: Story = {
+  render: () => (
+    <div className="grid min-w-186 grid-cols-2 gap-5">
+      {mockActivities.map((activity) => (
+        <ActivityCard key={activity.id} data={activity} />
       ))}
     </div>
   ),
