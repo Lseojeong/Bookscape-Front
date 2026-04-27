@@ -8,7 +8,7 @@ import {
   ActionDropdownContent,
   ActionDropdownItem,
 } from '@/shared/ui/dropdown/action';
-import Profile from '@/shared/ui/profile/Profile';
+import Profile from '@/shared/ui/header/profile/Profile';
 
 /**
  * ActionDropdown 컴포넌트 스토리 가이드
@@ -43,6 +43,7 @@ import Profile from '@/shared/ui/profile/Profile';
 const meta: Meta<typeof ActionDropdown> = {
   title: 'Shared/Dropdown/ActionDropdown',
   component: ActionDropdown,
+  tags: ['autodocs'],
   argTypes: {
     children: {
       description:

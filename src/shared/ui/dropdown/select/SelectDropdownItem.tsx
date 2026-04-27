@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { KeyboardEvent } from 'react';
+import type { KeyboardEvent } from 'react';
 import { WithChildren } from '@/shared/types/common';
 import useDropdownBaseContext from '@/shared/ui/dropdown/hooks/useDropdownBaseContext';
 import useSelectContext from '@/shared/ui/dropdown/hooks/useSelectDropdownContext';
@@ -10,6 +10,7 @@ import {
   dropdownItemBase,
   dropdownItemShadowStyle,
 } from '@/shared/ui/dropdown/styles/dropdownItem';
+import { handleRovingFocusKeyDown } from '@/shared/ui/dropdown/utils/keyboardNavigation';
 import { cn } from '@/shared/utils/cn';
 
 export const dropdownItemVariants = cva(dropdownItemBase, {
@@ -82,24 +83,7 @@ export default function SelectDropdownItem<T = string>({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>) => {
-    if (disabled) {
-      return;
-    }
-
-    const key = e.key;
-
-    if (key === 'Enter' || key === ' ') {
-      e.preventDefault();
-    } else {
-      return;
-    }
-
-    switch (key) {
-      case 'Enter':
-      case ' ':
-        selectOption();
-        break;
-    }
+    handleRovingFocusKeyDown(e, { disabled, onActivate: selectOption });
   };
 
   return (
