@@ -1,7 +1,8 @@
+import ActivityCardInfo from '@/shared/ui/card/activity-card/ActivityCardInfo';
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
-import BaseCardInfoHeader from '@/shared/ui/card/base/BaseCardInfoHeader';
-import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
+import { cardWrapStyles } from '@/shared/ui/card/cardStyles';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * TODO: 임시 타입 정의 (삭제 예정)
@@ -36,10 +37,10 @@ export type ActivityCardProps = {
  * ```
  */
 export default function ActivityCard({ data }: ActivityCardProps) {
-  const { bannerImageUrl, title, reviewCount, rating, price } = data;
+  const { bannerImageUrl } = data;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[18px] shadow-card">
+    <div className={cn(cardWrapStyles)}>
       {/* 이미지 */}
       <BaseCardImage
         bannerImageUrl={bannerImageUrl}
@@ -48,13 +49,7 @@ export default function ActivityCard({ data }: ActivityCardProps) {
 
       {/* 정보 영역 */}
       <BaseCardInfo className="absolute bottom-0 p-4 md:px-7.5 md:py-5">
-        <div className="flex flex-col gap-2.5 md:gap-4.5">
-          {/* 체험명 + 리뷰 요약 */}
-          <BaseCardInfoHeader title={title} rating={rating} reviewCount={reviewCount} />
-
-          {/* 1인당 가격 */}
-          <PerPersonPrice pricePerPerson={price} />
-        </div>
+        <ActivityCardInfo data={data} />
       </BaseCardInfo>
     </div>
   );

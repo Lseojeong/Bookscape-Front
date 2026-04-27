@@ -1,5 +1,7 @@
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
+import { cardImageStyles, cardWrapStyles } from '@/shared/ui/card/cardStyles';
 import MyActivityCardInfo from '@/shared/ui/card/my-activity-card/MyActivityCardInfo';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * MyActivityCard에서 사용하는 데이터 타입
@@ -31,9 +33,9 @@ export default function MyActivityCard({ data }: MyActivityCardProps) {
   const { title } = data;
 
   return (
-    <div className="relative flex w-full items-center overflow-hidden rounded-3xl shadow-card">
+    <div className={cn('flex items-center rounded-3xl', cardWrapStyles)}>
       {/* 이미지 영역 */}
-      <BaseCardImage alt={title} containerClassName="absolute right-0 z-0 w-[145px]" />
+      <BaseCardImage alt={title} containerClassName={cardImageStyles} />
 
       {/* 정보 영역 */}
       <div className="relative z-10 w-full">

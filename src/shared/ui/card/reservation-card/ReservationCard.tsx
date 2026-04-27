@@ -1,6 +1,8 @@
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
+import { cardImageStyles, cardWrapStyles } from '@/shared/ui/card/cardStyles';
 import ReservationCardInfo from '@/shared/ui/card/reservation-card/ReservationCardInfo';
 import { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
+import { cn } from '@/shared/utils/cn';
 
 export type ReservationCardData = {
   id: number;
@@ -40,12 +42,9 @@ export type ReservationCardProps = {
  */
 export default function ReservationCard({ data }: ReservationCardProps) {
   return (
-    <div className="relative flex w-full items-center overflow-hidden rounded-3xl shadow-card">
+    <div className={cn('flex items-center rounded-3xl', cardWrapStyles)}>
       {/* 이미지 */}
-      <BaseCardImage
-        containerClassName="absolute right-0 z-0 w-[145px]"
-        alt={data.activity.title}
-      />
+      <BaseCardImage containerClassName={cardImageStyles} alt={data.activity.title} />
       {/* 정보 영역 */}
       <div className="relative z-10 w-full">
         <ReservationCardInfo data={data} />

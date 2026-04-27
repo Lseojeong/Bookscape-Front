@@ -1,9 +1,11 @@
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
+import { cardInfoStyles } from '@/shared/ui/card/cardStyles';
 import { ReservationCardProps } from '@/shared/ui/card/reservation-card/ReservationCard';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 import Title from '@/shared/ui/title/Title';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * 예약 카드의 "정보 영역"을 구성하는 컴포넌트입니다.
@@ -31,21 +33,14 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
   const { title } = activity;
 
   return (
-    <BaseCardInfo
-      /**
-       * - w-[calc(100%-107px)]: 오른쪽 이미지 영역을 제외한 콘텐츠 영역 확보
-       * - mr-26.75: 이미지와 겹침 방지 여백
-       * - px / py: 내부 여백
-       */
-      className="mr-26.75 flex w-[calc(100%-107px)] flex-col rounded-3xl px-5 py-5 lg:px-10 lg:py-7.5"
-    >
+    <BaseCardInfo className={cn(cardInfoStyles)}>
       {/* 예약 상태 뱃지 */}
       <StateBadge status={status} className="w-fit" />
 
       {/* 체험명 + 예약 일정 */}
       <div className="mt-2 mb-2 flex flex-col gap-1 lg:mt-3 lg:mb-1.5 lg:gap-2">
         {/* 체험명 (길어질 경우 말줄임) */}
-        <Title as="h3" size="14" weight="bold" className="truncate lg:typo-18-bold">
+        <Title as="h2" size="16" weight="bold" className="truncate lg:typo-18-bold">
           {title}
         </Title>
 
