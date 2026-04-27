@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import QueryProvider from '@/shared/providers/QueryProvider';
-import ModalAction from '@/shared/ui/overlay/modal/ModalAction';
+import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
 import '@/shared/styles/globals.css';
 
 //TODO: 메타태그 수정하기
@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendard.variable}`}>
       <body>
         <QueryProvider>{children}</QueryProvider>
-        <ModalAction />
+        <OverlayRoot />
         <div id="modal-root" />
       </body>
     </html>

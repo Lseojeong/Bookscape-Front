@@ -20,6 +20,14 @@ type UseEscapeKeyParams = {
  *
  * @param params.isEnabled - ESC 키 처리 활성화 여부
  * @param params.onEscape - ESC 입력 시 실행할 콜백
+ *
+ * @example
+ * ```tsx
+ * useEscapeKey({
+ *   isEnabled: isOpen,
+ *   onEscape: handleClose,
+ * });
+ * ```
  */
 const useEscapeKey = ({ isEnabled, onEscape }: UseEscapeKeyParams) => {
   useEffect(() => {

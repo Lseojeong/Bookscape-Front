@@ -26,6 +26,11 @@ const getScrollbarWidth = () => {
  *   `padding-right`를 보정합니다.
  *
  * @param params.isLocked - 스크롤 잠금 활성화 여부
+ *
+ * @example
+ * ```tsx
+ * useBodyScrollLock({ isLocked: isOpen });
+ * ```
  */
 const useBodyScrollLock = ({ isLocked }: UseBodyScrollLockParams) => {
   useEffect(() => {

@@ -23,6 +23,11 @@ const overlayBackdropBase = 'absolute inset-0 layer-modal-backdrop bg-black/50';
  * @remarks
  * - 기본 투명도는 black 50% 입니다.
  * - `onClick`이 있을 때만 클릭으로 닫기 동작을 연결합니다.
+ *
+ * @example
+ * ```tsx
+ * <OverlayBackdrop ariaLabel="닫기" onClick={handleClose} />
+ * ```
  */
 export default function OverlayBackdrop({
   onClick,

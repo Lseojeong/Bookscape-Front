@@ -3,21 +3,21 @@
 import type { ReactNode } from 'react';
 import { create } from 'zustand';
 
-export type OpenModalParams = {
+export type OpenOverlayParams = {
   content: ReactNode;
   ariaLabel?: string;
   closeOnOverlayClick?: boolean;
   closeOnEsc?: boolean;
 };
 
-type ModalStoreState = {
+type OverlayStoreState = {
   isOpen: boolean;
   content: ReactNode | null;
   ariaLabel?: string;
   closeOnOverlayClick: boolean;
   closeOnEsc: boolean;
-  openModal: (params: OpenModalParams) => void;
-  closeModal: () => void;
+  openOverlay: (params: OpenOverlayParams) => void;
+  closeOverlay: () => void;
 };
 
 const DEFAULT_OPTIONS = {
@@ -25,14 +25,34 @@ const DEFAULT_OPTIONS = {
   closeOnEsc: true,
 } as const;
 
-const useModalStore = create<ModalStoreState>((set) => ({
+/**
+ * ## useOverlayStore
+ *
+ * 전역 overlay의 열림 상태와 렌더링할 콘텐츠를 관리하는 Zustand store입니다.
+ *
+ * @remarks
+ * - `OverlayRoot`를 앱 최상단에 한 번 렌더링한 뒤 사용합니다.
+ * - `openOverlay`에 전달한 `content`가 전역 overlay 내부에 렌더링됩니다.
+ *
+ * @example
+ * ```tsx
+ * const openOverlay = useOverlayStore((s) => s.openOverlay);
+ *
+ * openOverlay({
+ *   ariaLabel: '예약 취소 확인',
+ *   content: <ConfirmDialogContent />,
+ *   closeOnEsc: true,
+ * });
+ * ```
+ */
+const useOverlayStore = create<OverlayStoreState>((set) => ({
   isOpen: false,
   content: null,
   ariaLabel: undefined,
   closeOnOverlayClick: DEFAULT_OPTIONS.closeOnOverlayClick,
   closeOnEsc: DEFAULT_OPTIONS.closeOnEsc,
 
-  openModal: ({ content, ariaLabel, closeOnOverlayClick, closeOnEsc }) =>
+  openOverlay: ({ content, ariaLabel, closeOnOverlayClick, closeOnEsc }) =>
     set({
       isOpen: true,
       content,
@@ -41,7 +61,7 @@ const useModalStore = create<ModalStoreState>((set) => ({
       closeOnEsc: closeOnEsc ?? DEFAULT_OPTIONS.closeOnEsc,
     }),
 
-  closeModal: () =>
+  closeOverlay: () =>
     set({
       isOpen: false,
       content: null,
@@ -51,4 +71,4 @@ const useModalStore = create<ModalStoreState>((set) => ({
     }),
 }));
 
-export default useModalStore;
+export default useOverlayStore;

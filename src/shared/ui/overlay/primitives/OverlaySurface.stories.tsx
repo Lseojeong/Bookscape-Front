@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import OverlaySurface from '@/shared/ui/overlay/primitives/OverlaySurface';
 
 const meta: Meta<typeof OverlaySurface> = {
-  title: 'Shared/OverlaySurface',
+  title: 'Shared/Overlay/Primitives/OverlaySurface',
   component: OverlaySurface,
   tags: ['autodocs'],
   parameters: {

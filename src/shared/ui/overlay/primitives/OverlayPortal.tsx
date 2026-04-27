@@ -18,7 +18,19 @@ type OverlayPortalProps = {
  * @remarks
  * - 기본 컨테이너는 `#modal-root`입니다.
  * - 컨테이너가 없으면 `document.body` 하단에 자동 생성합니다. (Storybook 등)
- * - SSR 환경에서는 `document`가 없으므로 렌더링하지 않습니다.
+ *
+ * @example
+ * ```tsx
+ * <OverlayPortal>
+ *   <div role="presentation" className="fixed inset-0 layer-modal">
+ *     <OverlayBackdrop onClick={handleClose} />
+ *
+ *     <OverlaySurface position="center" variant="dialog" tone="surface" elevation="card">
+ *       <div className="p-30">Dialog Content</div>
+ *     </OverlaySurface>
+ *   </div>
+ * </OverlayPortal>
+ * ```
  */
 export default function OverlayPortal({
   children,

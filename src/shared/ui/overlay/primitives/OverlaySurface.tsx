@@ -127,6 +127,10 @@ export type OverlaySurfaceProps = WithChildren &
  * Surface의 기본 형태(크기/레이아웃)입니다.
  * - `'dialog' | 'sheet' | 'panel'`
  *
+ * @param props.tone
+ * Surface의 배경 처리 방식입니다.
+ * - `'surface' | 'transparent'`
+ *
  * @param props.elevation
  * Surface의 그림자 스타일입니다.
  * - `'card' | 'none'`
@@ -136,9 +140,24 @@ export type OverlaySurfaceProps = WithChildren &
  *
  * @example
  * ```tsx
- * <OverlaySurface position="center" variant="dialog">
+ * <OverlaySurface position="center" variant="dialog" tone="surface" elevation="card">
  *   <div className="p-30">Dialog Content</div>
  * </OverlaySurface>
+ * ```
+ *
+ * `OverlayPortal`, `OverlayBackdrop`과 조합하면 실제 overlay 레이어를 구성할 수 있습니다.
+ *
+ * @example
+ * ```tsx
+ * <OverlayPortal>
+ *   <div className="fixed inset-0 layer-modal">
+ *     <OverlayBackdrop onClick={handleClose} />
+ *
+ *     <OverlaySurface position="center" variant="dialog" tone="surface" elevation="card">
+ *       <div className="p-30">Dialog Content</div>
+ *     </OverlaySurface>
+ *   </div>
+ * </OverlayPortal>
  * ```
  */
 const OverlaySurface = forwardRef<HTMLDivElement, OverlaySurfaceProps>(

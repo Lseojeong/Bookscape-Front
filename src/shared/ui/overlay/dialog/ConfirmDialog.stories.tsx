@@ -4,7 +4,7 @@ import Button from '@/shared/ui/button/Button';
 import ConfirmDialog from '@/shared/ui/overlay/dialog/ConfirmDialog';
 
 const meta: Meta<typeof ConfirmDialog> = {
-  title: 'Shared/Modal/ConfirmDialog',
+  title: 'Shared/Overlay/Dialog/ConfirmDialog',
   component: ConfirmDialog,
   tags: ['autodocs'],
   parameters: {

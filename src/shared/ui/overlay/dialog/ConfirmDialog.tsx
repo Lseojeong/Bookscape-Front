@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/shared/ui/button/Button';
-import Modal from '@/shared/ui/overlay/modal/Modal';
+import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import { cn } from '@/shared/utils/cn';
 
 export type ConfirmDialogProps = {
@@ -22,7 +22,7 @@ export type ConfirmDialogProps = {
 /**
  * ## ConfirmDialog
  *
- * Modal 기반 '예/아니오' 확인 다이얼로그 컴포넌트입니다.
+ * OverlayLayer 기반 '예/아니오' 확인 다이얼로그 컴포넌트입니다.
  *
  * @remarks
  * - `isOpen`/`onClose`로 제어하는 controlled 컴포넌트입니다.
@@ -69,12 +69,14 @@ export default function ConfirmDialog({
   };
 
   return (
-    <Modal
+    <OverlayLayer
       isOpen={isOpen}
       onClose={onClose}
       ariaLabel={ariaLabel}
+      position="center"
+      variant="dialog"
       surfaceClassName="w-80 md:w-100"
-      contentClassName="rounded-[30px]"
+      contentClassName="modal-surface-animation rounded-[30px]"
     >
       <div className={cn('flex flex-col items-center gap-4 text-center', className)}>
         <div className="space-y-2">
@@ -96,6 +98,6 @@ export default function ConfirmDialog({
           </Button>
         </div>
       </div>
-    </Modal>
+    </OverlayLayer>
   );
 }
