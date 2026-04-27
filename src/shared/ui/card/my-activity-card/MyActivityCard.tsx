@@ -7,6 +7,7 @@ import MyActivityCardInfo from '@/shared/ui/card/my-activity-card/MyActivityCard
  * - 추후 API 변경 시 영향 범위를 줄이기 위함
  */
 export type MyActivityCardData = {
+  id: number;
   title: string;
   reviewCount: number;
   rating: number;

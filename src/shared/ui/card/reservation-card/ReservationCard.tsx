@@ -35,28 +35,7 @@ export type ReservationCardProps = {
  *
  * @example
  * ```tsx
- * <ReservationCard
- *   data={{
- *     id: 1,
- *     nickname: '홍길동',
- *     userId: 10,
- *     activity: {
- *       id: 100,
- *       title: '한강 요트 체험',
- *       bannerImageUrl: 'https://example.com/image.jpg',
- *     },
- *     teamId: 'team-1',
- *     activityId: 100,
- *     scheduleId: 200,
- *     status: 'confirmed',
- *     reviewSubmitted: false,
- *     totalPrice: 70000,
- *     headCount: 2,
- *     date: '2024-04-01',
- *     startTime: '14:00',
- *     endTime: '16:00',
- *   }}
- * />
+ * <ReservationCard data={data} />
  * ```
  */
 export default function ReservationCard({ data }: ReservationCardProps) {

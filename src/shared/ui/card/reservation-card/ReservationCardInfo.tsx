@@ -13,23 +13,21 @@ import Title from '@/shared/ui/title/Title';
  *
  * @example
  * ```tsx
- * <ReservationCardInfo
- *   data={{
- *     activity: { title: '한강 요트 체험', bannerImageUrl: '', id: 1 },
- *     totalPrice: 70000,
- *     headCount: 2,
- *     status: 'confirmed',
- *     date: '2024-04-01',
- *     startTime: '14:00',
- *     endTime: '16:00',
- *     reviewSubmitted: false,
- *   }}
- * />
+ * <ReservationCardInfo data={data} />
  * ```
  */
 export default function ReservationCardInfo({ data }: ReservationCardProps) {
-  const { activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
-    data;
+  const {
+    activity,
+    totalPrice,
+    headCount,
+    status,
+    date,
+    startTime,
+    endTime,
+    reviewSubmitted,
+    activityId,
+  } = data;
   const { title } = activity;
 
   return (
@@ -54,7 +52,7 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
         {/* 예약 날짜 + 시간 */}
         <p className="flex gap-1 typo-13-medium text-gray-500 lg:typo-16-medium">
           <span className="hidden lg:inline-block">{date}</span>
-          <span className="hidden lg:inline-block"> ·</span>
+          <span className="hidden lg:inline-block">·</span>
           <span>
             {startTime} - {endTime}
           </span>
@@ -67,7 +65,12 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
         <TotalPrice totalPrice={totalPrice} headCount={headCount} showSlash={false} />
 
         {/* 예약 상태 기반 액션 버튼 */}
-        <CardActions type="reservation" status={status} reviewSubmitted={reviewSubmitted} />
+        <CardActions
+          type="reservation"
+          status={status}
+          reviewSubmitted={reviewSubmitted}
+          activityId={activityId}
+        />
       </div>
     </BaseCardInfo>
   );

@@ -11,18 +11,11 @@ import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
  *
  * @example
  * ```tsx
- * <MyActivityCardInfo
- *   data={{
- *     title: '한강에서 즐기는 요트 체험',
- *     reviewCount: 24,
- *     rating: 4.8,
- *     price: 35000,
- *   }}
- * />
+ * <MyActivityCardInfo data={data} />
  * ```
  */
 export default function MyActivityCardInfo({ data }: MyActivityCardProps) {
-  const { title, reviewCount, rating, price } = data;
+  const { id, title, reviewCount, rating, price } = data;
   return (
     <BaseCardInfo
       /**
@@ -46,7 +39,7 @@ export default function MyActivityCardInfo({ data }: MyActivityCardProps) {
         <PerPersonPrice pricePerPerson={price} />
 
         {/* 관리 액션 (수정 / 삭제) */}
-        <CardActions type="manage" />
+        <CardActions type="manage" activityId={id} />
       </div>
     </BaseCardInfo>
   );
