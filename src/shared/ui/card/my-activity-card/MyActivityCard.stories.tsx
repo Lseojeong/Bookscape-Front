@@ -51,6 +51,7 @@ const mockActivities = [
 export const MyActivity: Story = {
   args: {
     data: {
+      id: 1,
       title: '제목이 아주 길어지는 경우에는 말줄임표가 적용됩니다',
       reviewCount: 120,
       rating: 3.5,
