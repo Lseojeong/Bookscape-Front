@@ -1,7 +1,11 @@
-import { useController, FieldValues } from 'react-hook-form';
-import Input, { InputProps } from '@/shared/ui/input/Input';
+'use client';
 
-type PriceInputProps<T extends FieldValues> = Omit<InputProps<T>, 'onChange'>;
+import { useController, type FieldValues, type UseControllerProps } from 'react-hook-form';
+import { useFormField } from '@/shared/ui/form/FormField';
+import Input from '@/shared/ui/input/Input';
+
+type PriceInputProps<T extends FieldValues> = UseControllerProps<T> &
+  Omit<React.ComponentProps<'input'>, 'name' | 'value' | 'onChange'>;
 
 /**
  * React Hook Form과 연동하여 금액(숫자)을 입력받는 전용 Input 컴포넌트입니다.
@@ -12,18 +16,19 @@ type PriceInputProps<T extends FieldValues> = Omit<InputProps<T>, 'onChange'>;
  * * @example
  * ```tsx
  * import { useForm } from 'react-hook-form';
+ * import FormField from '@/shared/ui/form/FormField';
  * import PriceInput from '@/shared/ui/input/PriceInput';
- * type FormValues = {
- * price: string;
- * }
- * export default function Page() {
- * const { control } = useForm<FormValues>();
- * return (
+ * * type FormValues = { price: string; };
+ * * export default function Page() {
+ * const { control, formState: { errors } } = useForm<FormValues>();
+ * * return (
+ * <FormField label="체험 가격" errorMessage={errors.price?.message}>
  * <PriceInput<FormValues>
  * name="price"
  * control={control}
  * placeholder="금액을 입력해주세요"
  * />
+ * </FormField>
  * );
  * }
  * ```
@@ -34,26 +39,32 @@ export default function PriceInput<T extends FieldValues>({
   rules,
   ...props
 }: PriceInputProps<T>) {
-  const { field } = useController({ name, control, rules });
+  const {
+    field: { value, onChange, ...restField },
+    fieldState: { error },
+  } = useController({ name, control, rules });
 
-  // NOTE: 화면에 표시될 데이터와 실제 폼 데이터를 분리하기 위해 이벤트를 가로채어 숫자만 RHF에 전달
+  const formField = useFormField();
+  const isError = !!error || formField?.isError;
+  const inputId = props.id ?? formField?.id;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[^0-9]/g, '');
-
-    field.onChange(rawValue);
+    onChange(rawValue);
   };
 
-  const displayValue = field.value ? Number(field.value).toLocaleString() : '';
+  const displayValue = value ? Number(value).toLocaleString() : '';
 
   return (
     <Input
       {...props}
-      name={name}
-      control={control}
-      type="text"
-      inputMode="numeric"
+      {...restField}
+      id={inputId}
       value={displayValue}
       onChange={handleChange}
+      inputMode="numeric"
+      isError={isError}
+      aria-describedby={isError ? formField?.errorId : undefined}
     />
   );
 }

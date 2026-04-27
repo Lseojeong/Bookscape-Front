@@ -1,52 +1,42 @@
-import { ReactNode, useId, type ComponentProps } from 'react';
-import { useController, UseControllerProps, FieldValues } from 'react-hook-form';
-import { useFormField } from '@/shared/ui/form/FormField';
+'use client';
+
+import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-export type InputProps<T extends FieldValues> = UseControllerProps<T> &
-  Omit<ComponentProps<'input'>, 'name' | 'defaultValue'> & {
-    isError?: boolean;
-    rightElement?: ReactNode;
-  };
+type InputProps = ComponentProps<'input'> & {
+  isError?: boolean;
+  rightElement?: ReactNode;
+};
 
 /**
- * 공통 Input 컴포넌트입니다.
- * @example
+ * 기본 Input UI 컴포넌트입니다.
+ * React Hook Form 등 상태 관리 로직에 의존하지 않는 순수 UI 컴포넌트입니다.
+ * 우측에 커스텀 요소(아이콘, 버튼 등)를 추가하거나 에러 상태를 시각적으로 표시할 수 있습니다.
+ * * @example
  * ```tsx
- * <Input name="email" control={control} rules={{ required: true }} />
+ * // 기본 사용
+ * <Input placeholder="이름을 입력하세요" />
+ * * // 우측 커스텀 요소 및 에러 상태 적용
+ * <Input
+ * isError={true}
+ * placeholder="비밀번호 입력"
+ * rightElement={<button>보기</button>}
+ * />
  * ```
  */
-export default function Input<T extends FieldValues>({
+export default function Input({
   className,
   disabled,
   rightElement,
-  id,
-  isError: isErrorProp,
-  name,
-  control,
-  rules,
-  shouldUnregister,
+  isError,
   ...props
-}: InputProps<T>) {
-  const {
-    field,
-    fieldState: { error },
-  } = useController({ name, control, rules, shouldUnregister });
-
-  const formField = useFormField();
-  const isError = isErrorProp || !!error || !!formField?.isError;
-  const fallbackId = useId();
-  const inputId = id ?? formField?.id ?? fallbackId;
-
+}: InputProps) {
   return (
     <div className="relative w-full">
       <input
-        {...field}
         {...props}
-        id={inputId}
         disabled={disabled}
-        aria-invalid={isError}
-        aria-describedby={isError ? formField?.errorId : undefined}
+        aria-invalid={isError || undefined}
         className={cn(
           'h-13.5 w-full rounded-2xl px-5 transition-colors outline-none',
           'border border-gray-100 bg-white typo-16-medium text-gray-950 placeholder:text-gray-400',

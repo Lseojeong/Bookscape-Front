@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ReservationStatusIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
+import FormInput from '@/shared/ui/form/FormInput';
 import Input from '@/shared/ui/input/Input';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
 import PriceInput from '@/shared/ui/input/PriceInput';
@@ -50,7 +51,7 @@ export const Playground: Story = {
       return (
         <div className="w-100 rounded-xl bg-gray-50 p-8">
           <FormField label={label} labelWeight={labelWeight} errorMessage={errorMessage}>
-            <Input<PlaygroundForm> {...args} name="playgroundInput" control={control} />
+            <FormInput<PlaygroundForm> {...args} name="playgroundInput" control={control} />
           </FormField>
         </div>
       );
@@ -71,7 +72,7 @@ export const StateTest: Story = {
         <div className="flex w-100 flex-col gap-8 rounded-xl bg-gray-50 p-8">
           {/* 기본/타이핑 상태 테스트 */}
           <FormField label="이메일">
-            <Input<StateForm> name="normal" control={control} placeholder="example@bookscape.com" />
+            <FormInput<StateForm> name="normal" control={control} placeholder="test@email.com" />
           </FormField>
 
           {/* 에러 상태 테스트 */}
@@ -81,7 +82,7 @@ export const StateTest: Story = {
 
           {/* 비활성화 상태 테스트 */}
           <FormField label="이메일">
-            <Input<StateForm> name="disabled" control={control} disabled />
+            <FormInput<StateForm> name="disabled" control={control} disabled />
           </FormField>
         </div>
       );
@@ -107,7 +108,7 @@ export const IconTest: Story = {
           </FormField>
 
           <FormField label="날짜">
-            <Input<IconForm>
+            <FormInput<IconForm>
               name="date"
               control={control}
               type="text"
@@ -148,7 +149,7 @@ export const LabelActionTest: Story = {
               </Button>
             }
           >
-            <Input<ActionForm>
+            <FormInput<ActionForm>
               name="address"
               control={control}
               placeholder="주소를 입력해 주세요"

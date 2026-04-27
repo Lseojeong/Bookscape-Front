@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useId, type ReactNode } from 'react';
 import FormErrorMessage from '@/shared/ui/form/FormErrorMessage';
 import FormLabel from '@/shared/ui/form/FormLabel';
@@ -20,17 +22,22 @@ type FormFieldProps = {
 };
 
 /**
- * Input, Textarea, Dropdown 등을 감싸 라벨과 에러 메시지를 함께 렌더링하는 제어용 Wrapper 컴포넌트입니다.
- * @example
+ * 폼 입력 요소(Input, Textarea, Dropdown 등)를 감싸 라벨과 에러 메시지를 함께 렌더링하는 제어용 Wrapper 컴포넌트입니다.
+ * 내부적으로 고유 ID를 생성하여 하위 요소들에게 Context로 제공하므로, 명시적으로 id를 부여하지 않아도 접근성이 자동으로 연결됩니다.
+ * * @example
  * ```tsx
- * <FormField label="이메일" errorMessage="이메일 형식으로 작성해 주세요.">
- * <Input placeholder="이메일 입력" />
+ * <FormField
+ * label="주소"
+ * errorMessage={errors.address?.message}
+ * labelAction={<button type="button">우편번호 찾기</button>}
+ * >
+ * <FormInput name="address" control={control} />
  * </FormField>
  * ```
  */
 export default function FormField({
   label,
-  labelWeight,
+  labelWeight = 'medium',
   errorMessage,
   className,
   labelClassName,
@@ -43,7 +50,7 @@ export default function FormField({
   const errorId = `error-${uniqueId}`;
 
   return (
-    <FormFieldContext.Provider value={{ id: fieldId, errorId: errorId, isError: !!errorMessage }}>
+    <FormFieldContext.Provider value={{ id: fieldId, errorId, isError: !!errorMessage }}>
       <div className={cn('flex flex-col', className)}>
         {(label || labelAction) && (
           <div className={cn('mb-2.5 flex items-center justify-between', labelClassName)}>
