@@ -31,9 +31,9 @@ const request = async <T>({
   const cookieStore = await cookies();
   const token = cookieStore.get('accessToken')?.value;
 
-  const headers = new Headers(options.headers);
+  const headers = Object.fromEntries(new Headers(options.headers).entries());
   if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
+    headers['Authorization'] = `Bearer ${token}`;
   }
 
   return coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method, headers }, query, body);
