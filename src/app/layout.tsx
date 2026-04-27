@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import QueryProvider from '@/shared/providers/QueryProvider';
+import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
 import '@/shared/styles/globals.css';
 
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body>
         <QueryProvider>{children}</QueryProvider>
         <OverlayRoot />
-        <div id="overlay-root" />
+        <div id={OVERLAY_ROOT_ID} />
       </body>
     </html>
   );

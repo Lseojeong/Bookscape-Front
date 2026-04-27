@@ -3,10 +3,11 @@
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 
 type OverlayPortalProps = {
   children: ReactNode;
-  /** portal로 렌더링할 컨테이너 id (기본값: modal-root) */
+  /** portal로 렌더링할 컨테이너 id (기본값: overlay-root) */
   containerId?: string;
 };
 
@@ -34,7 +35,7 @@ type OverlayPortalProps = {
  */
 export default function OverlayPortal({
   children,
-  containerId = 'overlay-root',
+  containerId = OVERLAY_ROOT_ID,
 }: OverlayPortalProps) {
   const [portalState] = useState(() => {
     if (typeof document === 'undefined') {
