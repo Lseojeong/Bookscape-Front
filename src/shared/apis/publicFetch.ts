@@ -1,5 +1,10 @@
-import { coreFetch, FetchRequestOptions, QueryParams, RequestConfig } from './coreFetch';
-import { ENV } from './env';
+import {
+  coreFetch,
+  FetchRequestOptions,
+  QueryParams,
+  RequestConfig,
+} from '@/shared/apis/coreFetch';
+import { ENV } from '@/shared/apis/env';
 /**
  * 토큰 없는 공개 API용 Fetch 유틸리티
  * publicFetch는 인증이 필요 없는 공개 API 요청을 위한 유틸리티 함수입니다. 이 함수는 coreFetch를 기반으로 하며, API 요청을 간편하게 수행할 수 있도록 도와줍니다.
