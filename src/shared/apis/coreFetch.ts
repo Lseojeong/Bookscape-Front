@@ -38,6 +38,13 @@ export type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
+export type RequestConfig = {
+  endpoint: string;
+  method: RequestInit['method'];
+  body?: unknown;
+  query?: QueryParams;
+} & Omit<FetchRequestOptions, 'body'>;
+
 const buildQueryString = (query?: QueryParams): string => {
   if (!query) return '';
 

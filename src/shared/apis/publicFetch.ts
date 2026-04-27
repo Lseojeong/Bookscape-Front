@@ -1,4 +1,4 @@
-import { coreFetch, FetchRequestOptions, QueryParams } from './coreFetch';
+import { coreFetch, FetchRequestOptions, QueryParams, RequestConfig } from './coreFetch';
 import { ENV } from './env';
 /**
  * 토큰 없는 공개 API용 Fetch 유틸리티
@@ -24,12 +24,12 @@ import { ENV } from './env';
 
 type BaseRequestOptions = Omit<FetchRequestOptions, 'body' | 'isFormData'>;
 
-type RequestConfig = {
-  endpoint: string;
-  method: RequestInit['method'];
-  body?: unknown;
-  query?: QueryParams;
-} & Omit<FetchRequestOptions, 'body'>;
+// type RequestConfig = {
+//   endpoint: string;
+//   method: RequestInit['method'];
+//   body?: unknown;
+//   query?: QueryParams;
+// } & Omit<FetchRequestOptions, 'body'>;
 
 const request = <T>({ endpoint, method, body, query, ...options }: RequestConfig) =>
   coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method }, query, body);
