@@ -77,7 +77,7 @@ export default function ConfirmDialog({
       position="center"
       variant="dialog"
       surfaceClassName="w-80 md:w-100"
-      contentClassName="modal-surface-animation rounded-[30px]"
+      contentClassName="dialog-surface-animation rounded-[30px]"
     >
       <div className={cn('flex flex-col items-center gap-4 text-center', className)}>
         <div className="space-y-2">

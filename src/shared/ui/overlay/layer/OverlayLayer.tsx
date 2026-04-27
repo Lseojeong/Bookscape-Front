@@ -84,7 +84,7 @@ export default function OverlayLayer({
       >
         <OverlayBackdrop
           ariaLabel="닫기"
-          className={cn('modal-backdrop', backdropClassName)}
+          className={cn('overlay-backdrop', backdropClassName)}
           onClick={closeOnOverlayClick ? onClose : undefined}
         />
 
@@ -99,7 +99,7 @@ export default function OverlayLayer({
             role="dialog"
             aria-modal="true"
             aria-label={ariaLabel}
-            className={cn('modal-surface', contentClassName)}
+            className={cn('overlay-surface', contentClassName)}
           >
             {children}
           </div>

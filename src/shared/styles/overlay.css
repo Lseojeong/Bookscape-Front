@@ -1,4 +1,4 @@
-@keyframes modalFadeIn {
+@keyframes overlayFadeIn {
   from {
     opacity: 0;
   }
@@ -7,7 +7,7 @@
   }
 }
 
-@keyframes modalSlideUp {
+@keyframes dialogSlideUp {
   from {
     opacity: 0;
     transform: translate3d(0, 40px, 0);
@@ -18,22 +18,22 @@
   }
 }
 
-.modal-backdrop {
+.overlay-backdrop {
   animation: modalFadeIn 350ms ease-out both;
 }
 
-.modal-surface {
+.overlay-surface {
   @apply w-full rounded-2xl bg-white p-6 shadow-card;
 }
 
-.modal-surface-animation {
+.dialog-surface-animation {
   will-change: transform, opacity;
-  animation: modalSlideUp 350ms ease-out both;
+  animation: dialogSlideUp 350ms ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .modal-backdrop,
-  .modal-surface-animation {
+  .overlay-backdrop,
+  .dialog-surface-animation {
     animation: none;
   }
 }
