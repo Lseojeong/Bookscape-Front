@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
 import Button from '@/shared/ui/button/Button';
-import ConfirmDialog from '@/shared/ui/overlay/dialog/ConfirmDialog';
+import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 
 const meta: Meta<typeof ConfirmDialog> = {
   title: 'Shared/Overlay/Dialog/ConfirmDialog',
