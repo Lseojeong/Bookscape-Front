@@ -76,7 +76,6 @@ export default function ConfirmDialog({
       ariaLabel={ariaLabel}
       position="center"
       variant="dialog"
-      elevation="card"
       surfaceClassName="w-80 md:w-100"
       contentClassName="modal-surface-animation rounded-[30px]"
     >
