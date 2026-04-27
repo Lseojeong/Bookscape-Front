@@ -28,7 +28,7 @@ export default function RootLayout({
       <body>
         <QueryProvider>{children}</QueryProvider>
         <OverlayRoot />
-        <div id="modal-root" />
+        <div id="overlay-root" />
       </body>
     </html>
   );

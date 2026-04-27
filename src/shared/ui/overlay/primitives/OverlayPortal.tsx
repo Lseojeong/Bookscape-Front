@@ -34,7 +34,7 @@ type OverlayPortalProps = {
  */
 export default function OverlayPortal({
   children,
-  containerId = 'modal-root',
+  containerId = 'overlay-root',
 }: OverlayPortalProps) {
   const [portalState] = useState(() => {
     if (typeof document === 'undefined') {
