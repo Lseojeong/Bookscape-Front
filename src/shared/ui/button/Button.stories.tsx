@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import Link from 'next/link';
+import { useState } from 'react';
 import { PlusIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 
@@ -16,6 +17,9 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: ['lg', 'md', 'sm', 'icon'],
     },
+    isLoading: {
+      control: 'boolean',
+    },
   },
 };
 
@@ -28,6 +32,58 @@ export const Playground: Story = {
     theme: 'primary',
     size: 'md',
     disabled: false,
+    isLoading: false,
+  },
+};
+
+export const Loading: Story = {
+  render: () => {
+    const [loadingKey, setLoadingKey] = useState<'primary' | 'secondary' | 'gray' | 'icon' | null>(
+      null
+    );
+
+    const run = (key: NonNullable<typeof loadingKey>) => {
+      setLoadingKey(key);
+      window.setTimeout(() => setLoadingKey(null), 1200);
+    };
+
+    return (
+      <div className="flex flex-col items-start gap-4 rounded-xl bg-gray-100 p-8">
+        <Button
+          theme="primary"
+          size="md"
+          isLoading={loadingKey === 'primary'}
+          onClick={() => run('primary')}
+        >
+          Primary Loading
+        </Button>
+        <Button
+          theme="secondary"
+          size="lg"
+          isLoading={loadingKey === 'secondary'}
+          onClick={() => run('secondary')}
+        >
+          Secondary Loading
+        </Button>
+        <Button
+          theme="gray"
+          size="md"
+          isLoading={loadingKey === 'gray'}
+          onClick={() => run('gray')}
+        >
+          Gray Loading
+        </Button>
+        <Button
+          theme="primary"
+          size="icon"
+          aria-label="Icon loading"
+          isLoading={loadingKey === 'icon'}
+          onClick={() => run('icon')}
+        >
+          <PlusIcon />
+        </Button>
+      </div>
+    );
   },
 };
 
