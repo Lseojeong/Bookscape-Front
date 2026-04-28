@@ -1,6 +1,6 @@
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import { cardImageStyles, cardWrapStyles } from '@/shared/ui/card/cardStyles';
-import MyActivityCardInfo from '@/shared/ui/card/my-activity-card/MyActivityCardInfo';
+import MyActivityCardInfo from '@/shared/ui/card/MyActivityCardInfo';
 import { cn } from '@/shared/utils/cn';
 
 /**

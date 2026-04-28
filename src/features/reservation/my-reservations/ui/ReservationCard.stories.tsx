@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import ReservationCard, {
   ReservationCardData,
-} from '@/features/reservation/ui/reservation-card/ReservationCard';
+} from '@/features/reservation/my-reservations/ui/ReservationCard';
 
 const meta: Meta<typeof ReservationCard> = {
-  title: 'Shared/Card/ReservationCard',
+  title: 'Features/Card/ReservationCard',
   component: ReservationCard,
   tags: ['autodocs'],
 };

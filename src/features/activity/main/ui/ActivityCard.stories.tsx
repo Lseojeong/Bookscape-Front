@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import ActivityCard from '@/features/main/ui/activity-card/ActivityCard';
+import ActivityCard from '@/features/activity/main/ui/ActivityCard';
 
 const meta: Meta<typeof ActivityCard> = {
-  title: 'Shared/Card/ActivityCard',
+  title: 'Features/Card/ActivityCard',
   component: ActivityCard,
   tags: ['autodocs'],
 };

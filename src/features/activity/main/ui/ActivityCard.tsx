@@ -1,4 +1,4 @@
-import ActivityCardInfo from '@/shared/ui/card/activity-card/ActivityCardInfo';
+import ActivityCardInfo from '@/shared/ui/card/ActivityCardInfo';
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import { cardWrapStyles } from '@/shared/ui/card/cardStyles';

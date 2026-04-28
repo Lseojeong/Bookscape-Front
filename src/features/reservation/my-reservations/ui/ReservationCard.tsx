@@ -1,6 +1,6 @@
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import { cardImageStyles, cardWrapStyles } from '@/shared/ui/card/cardStyles';
-import ReservationCardInfo from '@/shared/ui/card/reservation-card/ReservationCardInfo';
+import ReservationCardInfo from '@/shared/ui/card/ReservationCardInfo';
 import { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 import { cn } from '@/shared/utils/cn';
 
