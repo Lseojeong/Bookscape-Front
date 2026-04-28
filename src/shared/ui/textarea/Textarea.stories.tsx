@@ -1,30 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
+import { useForm } from 'react-hook-form';
+import FormField from '@/shared/ui/form/FormField';
+import FormTextarea from '@/shared/ui/form/FormTextarea';
 import Textarea from '@/shared/ui/textarea/Textarea';
 
-/**
- * 폼 입력을 위한 다목적 Textarea 컴포넌트입니다.
- *
- * `variants`를 통해 체험 등록용(기본)과 리뷰용 스타일을 제공하며,
- * `maxLength` 속성을 전달하면 우측 하단에 실시간 글자 수 카운터가 자동으로 생성됩니다.
- *
- * @example
- * ```tsx
- * // 기본형
- * <Textarea
- * placeholder="체험에 대한 설명을 입력해 주세요"
- * />
- *
- * // 글자 수 제한 및 카운터 표시
- * <Textarea
- * variants="review"
- * maxLength={100}
- * placeholder="체험에서 느낀 경험을 자유롭게 남겨주세요"
- * />
- * ```
- */
-const meta: Meta<typeof Textarea> = {
+type TextareaPlaygroundProps = React.ComponentProps<typeof Textarea> & {
+  label?: string;
+  errorMessage?: string;
+};
+
+const meta: Meta<TextareaPlaygroundProps> = {
   title: 'Shared/Textarea',
-  component: Textarea,
+  component: Textarea as unknown as React.ComponentType<TextareaPlaygroundProps>,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -40,16 +27,42 @@ const meta: Meta<typeof Textarea> = {
       control: 'text',
       description: '입력 전 표시될 안내 문구',
     },
+    label: { control: 'text', description: '라벨' },
+    errorMessage: { control: 'text', description: '에러 메시지' },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Textarea>;
+type Story = StoryObj<TextareaPlaygroundProps>;
 
 export const Activity: Story = {
   args: {
     variant: 'activity',
     placeholder: '체험에 대한 설명을 입력해 주세요',
+    label: '상세 설명',
+    errorMessage: '',
+  },
+  render: ({ label, errorMessage, variant, placeholder, maxLength }) => {
+    type ActivityForm = { description: string };
+
+    function ActivityWrapper() {
+      const { control } = useForm<ActivityForm>({ defaultValues: { description: '' } });
+
+      return (
+        <div className="w-100 rounded-xl bg-gray-50 p-8">
+          <FormField label={label} errorMessage={errorMessage}>
+            <FormTextarea<ActivityForm>
+              variant={variant}
+              placeholder={placeholder}
+              maxLength={maxLength}
+              name="description"
+              control={control}
+            />
+          </FormField>
+        </div>
+      );
+    }
+    return <ActivityWrapper />;
   },
 };
 
@@ -58,5 +71,30 @@ export const Review: Story = {
     variant: 'review',
     maxLength: 100,
     placeholder: '체험에서 느낀 경험을 자유롭게 남겨주세요',
+    label: '리뷰 작성',
+    errorMessage: '',
+    isError: false,
+  },
+  render: ({ label, errorMessage, variant, placeholder, maxLength }) => {
+    type ReviewForm = { review: string };
+
+    function ReviewWrapper() {
+      const { control } = useForm<ReviewForm>({ defaultValues: { review: '' } });
+
+      return (
+        <div className="w-100 rounded-xl bg-gray-50 p-8">
+          <FormField label={label} errorMessage={errorMessage}>
+            <FormTextarea<ReviewForm>
+              variant={variant}
+              placeholder={placeholder}
+              maxLength={maxLength}
+              name="review"
+              control={control}
+            />
+          </FormField>
+        </div>
+      );
+    }
+    return <ReviewWrapper />;
   },
 };

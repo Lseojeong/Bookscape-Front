@@ -28,7 +28,14 @@ type TextareaProps = ComponentProps<'textarea'> &
     wrapperClassName?: string;
   };
 
-// TODO: 폼 로직 PR 머지 후, UseControllerProps를 확장하여 react-hook-form(useController) 및 FormFieldContext 연동 방식으로 리팩토링 필요.
+/**
+ * 다중 행 텍스트 입력을 위한 순수 UI Textarea 컴포넌트입니다.
+ * `maxLength` 속성을 전달하면 우측 하단에 글자 수 카운터가 표시됩니다.
+ * @example
+ * ```tsx
+ * <Textarea variant="review" maxLength={500} placeholder="리뷰를 작성해주세요." />
+ * ```
+ */
 export default function Textarea({
   variant,
   maxLength,
@@ -63,7 +70,7 @@ export default function Textarea({
   const hasCounter = maxLength !== undefined && maxLength > 0;
 
   return (
-    <div className={cn('flex w-full flex-col', wrapperClassName)}>
+    <div className={cn('relative flex w-full flex-col', wrapperClassName)}>
       <div
         className={cn(
           containerVariants({ variant }),
@@ -91,7 +98,10 @@ export default function Textarea({
       </div>
 
       {hasCounter && (
-        <div aria-hidden="true" className="mt-2 text-right typo-14-medium text-gray-600">
+        <div
+          aria-hidden="true"
+          className="absolute top-full right-0 mt-2 text-right typo-14-medium text-gray-600"
+        >
           {charCount}/{maxLength}
         </div>
       )}
