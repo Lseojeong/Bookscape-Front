@@ -3,10 +3,11 @@
 import { cva } from 'class-variance-authority';
 import type { ElementType, MouseEvent } from 'react';
 import type { PolymorphicButtonProps } from '@/shared/ui/button/types';
+import { Loading } from '@/shared/ui/loading/Loading';
 import { cn } from '@/shared/utils/cn';
 
 const buttonStyle = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-[14px] border transition-colors cursor-pointer aria-disabled:cursor-not-allowed',
+  'relative inline-flex items-center justify-center whitespace-nowrap rounded-[14px] border transition-colors cursor-pointer aria-disabled:cursor-not-allowed',
   {
     variants: {
       theme: {
@@ -47,16 +48,31 @@ export default function Button<T extends ElementType = 'button'>({
   size = 'md',
   type = 'button',
   disabled = false,
+  isLoading = false,
   className,
   onClick,
   ...props
 }: PolymorphicButtonProps<T>) {
   const Component = as || 'button';
   const isButtonElement = Component === 'button';
+  const isDisabled = disabled || isLoading;
+
+  const loadingSizeMap = {
+    lg: 20,
+    md: 16,
+    sm: 14,
+    icon: 14,
+  } as const;
+
+  const loadingColorMap = {
+    primary: 'white',
+    secondary: 'var(--color-gray-600)',
+    gray: 'var(--color-gray-600)',
+  } as const;
 
   // NOTE: disabled 상태일 때 강제로 onClick 이벤트가 발생하는 것을 브라우저 단에서 차단
   const handleClick = (e: MouseEvent<HTMLElement>) => {
-    if (disabled) {
+    if (isDisabled) {
       e.preventDefault();
       return;
     }
@@ -65,13 +81,21 @@ export default function Button<T extends ElementType = 'button'>({
 
   return (
     <Component
-      aria-disabled={disabled}
+      aria-disabled={isDisabled}
+      aria-busy={isLoading || undefined}
       className={cn(buttonStyle({ theme, size }), className)}
       onClick={handleClick}
-      {...(isButtonElement ? { type, disabled } : { tabIndex: disabled ? -1 : undefined })}
+      {...(isButtonElement
+        ? { type, disabled: isDisabled }
+        : { tabIndex: isDisabled ? -1 : undefined })}
       {...props}
     >
-      {children}
+      <span className={cn(isLoading && 'opacity-0')}>{children}</span>
+      {isLoading && (
+        <span className="absolute inset-0 inline-flex items-center justify-center">
+          <Loading size={loadingSizeMap[size]} color={loadingColorMap[theme]} />
+        </span>
+      )}
     </Component>
   );
 }
