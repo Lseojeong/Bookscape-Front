@@ -17,6 +17,7 @@ type FormFieldProps = {
   errorMessage?: string;
   className?: string;
   labelClassName?: string;
+  labelTextClassName?: string;
   labelAction?: ReactNode;
   children: ReactNode;
 };
@@ -41,6 +42,7 @@ export default function FormField({
   errorMessage,
   className,
   labelClassName,
+  labelTextClassName,
   labelAction,
   children,
 }: FormFieldProps) {
@@ -55,7 +57,11 @@ export default function FormField({
         {(label || labelAction) && (
           <div className={cn('mb-2.5 flex items-center justify-between', labelClassName)}>
             {label && (
-              <FormLabel htmlFor={fieldId} weight={labelWeight} className="mb-0">
+              <FormLabel
+                htmlFor={fieldId}
+                weight={labelWeight}
+                className={cn('mb-0', labelTextClassName)}
+              >
                 {label}
               </FormLabel>
             )}

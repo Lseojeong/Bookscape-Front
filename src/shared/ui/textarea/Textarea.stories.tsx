@@ -7,12 +7,16 @@ import Textarea from '@/shared/ui/textarea/Textarea';
 type TextareaPlaygroundProps = React.ComponentProps<typeof Textarea> & {
   label?: string;
   errorMessage?: string;
+  isError?: boolean;
 };
 
 const meta: Meta<TextareaPlaygroundProps> = {
   title: 'Shared/Textarea',
   component: Textarea as unknown as React.ComponentType<TextareaPlaygroundProps>,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'padded',
+  },
   argTypes: {
     variant: {
       control: 'radio',
@@ -29,6 +33,7 @@ const meta: Meta<TextareaPlaygroundProps> = {
     },
     label: { control: 'text', description: '라벨' },
     errorMessage: { control: 'text', description: '에러 메시지' },
+    isError: { control: 'boolean', description: '에러 상태 강제 토글' },
   },
 };
 
@@ -39,30 +44,29 @@ export const Activity: Story = {
   args: {
     variant: 'activity',
     placeholder: '체험에 대한 설명을 입력해 주세요',
-    label: '상세 설명',
+    label: '설명',
     errorMessage: '',
+    isError: undefined,
   },
-  render: ({ label, errorMessage, variant, placeholder, maxLength }) => {
-    type ActivityForm = { description: string };
+  render: function Render(args) {
+    const { control } = useForm<{ description: string }>({
+      defaultValues: { description: '' },
+    });
 
-    function ActivityWrapper() {
-      const { control } = useForm<ActivityForm>({ defaultValues: { description: '' } });
-
-      return (
-        <div className="w-100 rounded-xl bg-gray-50 p-8">
-          <FormField label={label} errorMessage={errorMessage}>
-            <FormTextarea<ActivityForm>
-              variant={variant}
-              placeholder={placeholder}
-              maxLength={maxLength}
-              name="description"
-              control={control}
-            />
-          </FormField>
-        </div>
-      );
-    }
-    return <ActivityWrapper />;
+    return (
+      <div className="w-full max-w-100 rounded-xl bg-gray-50 p-8">
+        <FormField label={args.label} errorMessage={args.errorMessage}>
+          <FormTextarea
+            variant={args.variant}
+            placeholder={args.placeholder}
+            maxLength={args.maxLength}
+            name="description"
+            control={control}
+            isError={args.isError}
+          />
+        </FormField>
+      </div>
+    );
   },
 };
 
@@ -71,30 +75,35 @@ export const Review: Story = {
     variant: 'review',
     maxLength: 100,
     placeholder: '체험에서 느낀 경험을 자유롭게 남겨주세요',
-    label: '리뷰 작성',
+    label: '소중한 경험을 들려주세요',
     errorMessage: '',
-    isError: false,
+    isError: undefined,
   },
-  render: ({ label, errorMessage, variant, placeholder, maxLength }) => {
-    type ReviewForm = { review: string };
+  // 💡 수정: 동일하게 내부 Wrapper 선언을 제거합니다.
+  render: function Render(args) {
+    const { control } = useForm<{ review: string }>({
+      defaultValues: { review: '' },
+    });
 
-    function ReviewWrapper() {
-      const { control } = useForm<ReviewForm>({ defaultValues: { review: '' } });
-
-      return (
-        <div className="w-100 rounded-xl bg-gray-50 p-8">
-          <FormField label={label} errorMessage={errorMessage}>
-            <FormTextarea<ReviewForm>
-              variant={variant}
-              placeholder={placeholder}
-              maxLength={maxLength}
-              name="review"
-              control={control}
-            />
-          </FormField>
-        </div>
-      );
-    }
-    return <ReviewWrapper />;
+    return (
+      <div className="w-full max-w-100 rounded-xl bg-gray-50 p-8">
+        <FormField
+          label={args.label}
+          errorMessage={args.errorMessage}
+          labelClassName="mb-3 md:mb-4"
+          labelWeight="bold"
+          labelTextClassName="md:typo-18-bold"
+        >
+          <FormTextarea
+            variant={args.variant}
+            placeholder={args.placeholder}
+            maxLength={args.maxLength}
+            name="review"
+            control={control}
+            isError={args.isError}
+          />
+        </FormField>
+      </div>
+    );
   },
 };
