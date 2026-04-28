@@ -10,7 +10,7 @@ export default function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
 
   return (
-    <div className="fixed right-0 bottom-10 left-0 z-50 flex justify-center px-4 md:justify-end md:px-10">
+    <div className="fixed right-0 bottom-10 left-0 layer-toast flex justify-center px-4 md:justify-end md:px-10">
       <div className="flex flex-col gap-2 md:w-auto md:items-end">
         {toasts.map((toast) => (
           <Toast
