@@ -1,0 +1,28 @@
+import FooterNav from '@/shared/ui/footer/FooterNav';
+import Logo from '@/shared/ui/logo/Logo';
+
+const COPYRIGHT = '©FE22-PART4-TEAM1';
+
+/**
+ * 푸터 컴포넌트입니다.
+ *
+ * 로고, 카피라이트, SNS 네비게이션으로 구성됩니다.
+ *
+ * @example
+ * ```tsx
+ *  <Footer />
+ *  ```
+ */
+export default function Footer() {
+  return (
+    <footer className="w-full border-t border-gray-50 bg-white py-10">
+      <div className="shell-inner">
+        <div className="flex flex-col gap-5">
+          <Logo className="h-5 w-21" />
+          <small className="text-13 text-gray-400">{COPYRIGHT}</small>
+        </div>
+        <FooterNav />
+      </div>
+    </footer>
+  );
+}
