@@ -2,9 +2,11 @@ import ActivityIcon from './ic-activity.svg';
 import ArrowLeftIcon from './ic-arrow-left.svg';
 import ArrowRightIcon from './ic-arrow-right.svg';
 import BackIcon from './ic-back.svg';
+import CancelIcon from './ic-cancel.svg';
 import CaretDownIcon from './ic-caret-down.svg';
 import CaretLeftIcon from './ic-caret-left.svg';
 import CaretRightIcon from './ic-caret-right.svg';
+import CheckIcon from './ic-check.svg';
 import ChevronLeftIcon from './ic-chevron-left.svg';
 import ChevronRightIcon from './ic-chevron-right.svg';
 import DeleteIcon from './ic-delete.svg';
@@ -25,6 +27,7 @@ import ReservationListIcon from './ic-reservation-list.svg';
 import ReservationStatusIcon from './ic-reservation-status.svg';
 import SearchIcon from './ic-search.svg';
 import StarIcon from './ic-star.svg';
+import WarningIcon from './ic-warning.svg';
 
 export * from './home-category';
 
@@ -33,9 +36,11 @@ export {
   ArrowLeftIcon,
   ArrowRightIcon,
   BackIcon,
+  CancelIcon,
   CaretDownIcon,
   CaretLeftIcon,
   CaretRightIcon,
+  CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   DeleteIcon,
@@ -56,4 +61,5 @@ export {
   ReservationStatusIcon,
   SearchIcon,
   StarIcon,
+  WarningIcon,
 };
