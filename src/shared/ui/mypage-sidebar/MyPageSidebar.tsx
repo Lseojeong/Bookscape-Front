@@ -20,7 +20,7 @@ import TabNav from '@/shared/ui/tab-bar/TabNav';
 
 const MYPAGE_TABS = [
   { id: 'info', label: '내 정보', href: '/mypage/info' },
-  { id: 'resevation-list', label: '예약내역', href: '/mypage/reservation-list' },
+  { id: 'reservation-list', label: '예약내역', href: '/mypage/reservation-list' },
   { id: 'activity', label: '내 체험 관리', href: '/mypage/activity' },
   { id: 'reservation-status', label: '예약 현황', href: '/mypage/reservation-status' },
 ];
