@@ -10,15 +10,17 @@ export default function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
 
   return (
-    <div className="fixed bottom-10 left-1/2 z-50 flex -translate-x-1/2 flex-col gap-2">
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          type={toast.type}
-          message={toast.message}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
+    <div className="fixed right-0 bottom-10 left-0 z-50 flex justify-center px-4 md:justify-end md:px-10">
+      <div className="flex flex-col gap-2 md:w-auto md:items-end">
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            type={toast.type}
+            message={toast.message}
+            onClose={() => removeToast(toast.id)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
