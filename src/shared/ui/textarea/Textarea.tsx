@@ -48,19 +48,23 @@ export default function Textarea({
   ref,
   ...props
 }: TextareaProps) {
-  const [internalValue, setInternalValue] = useState(String(value ?? defaultValue ?? ''));
-  const currentText = value !== undefined ? String(value) : internalValue;
+  // 제어 컴포넌트 여부 확인 및 상태 분리
+  const isControlled = value !== undefined;
+  const [internalValue, setInternalValue] = useState(String(defaultValue ?? ''));
+  const currentText = isControlled ? String(value) : internalValue;
   const charCount = currentText.length;
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    let newValue = e.target.value;
+    const newValue = e.target.value;
 
     if (maxLength !== undefined && newValue.length > maxLength) {
-      newValue = newValue.slice(0, maxLength);
-      e.target.value = newValue;
+      return;
     }
 
-    setInternalValue(newValue);
+    // 비제어 컴포넌트일 때만 내부 상태 업데이트
+    if (!isControlled) {
+      setInternalValue(newValue);
+    }
 
     if (onChange) {
       onChange(e);
