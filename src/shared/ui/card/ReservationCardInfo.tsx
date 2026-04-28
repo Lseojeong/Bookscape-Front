@@ -1,4 +1,4 @@
-import { ReservationCardProps } from '@/features/reservation/my-reservations/ui/ReservationCard';
+import { ReservationCardProps } from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
 import { cardInfoStyles } from '@/shared/ui/card/cardStyles';

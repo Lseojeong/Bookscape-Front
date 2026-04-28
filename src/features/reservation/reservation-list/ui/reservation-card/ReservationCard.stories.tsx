@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import ReservationCard, {
   ReservationCardData,
-} from '@/features/reservation/my-reservations/ui/ReservationCard';
+} from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
 
 const meta: Meta<typeof ReservationCard> = {
   title: 'Features/Card/ReservationCard',

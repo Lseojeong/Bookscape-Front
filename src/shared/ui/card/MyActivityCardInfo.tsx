@@ -1,4 +1,4 @@
-import { MyActivityCardProps } from '@/features/my-page/my-activities/ui/MyActivityCard';
+import { MyActivityCardProps } from '@/features/my-page/my-activity/ui/my-activity-card/MyActivityCard';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
 import { cardInfoStyles } from '@/shared/ui/card/cardStyles';
