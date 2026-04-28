@@ -1,4 +1,3 @@
-import { ReservationCardProps } from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
 import { cardInfoStyles } from '@/shared/ui/card/cardStyles';
@@ -6,6 +5,7 @@ import TotalPrice from '@/shared/ui/price/TotalPrice';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
+import type { ReservationCardProps } from './ReservationCard';
 
 /**
  * 예약 카드의 "정보 영역"을 구성하는 컴포넌트입니다.

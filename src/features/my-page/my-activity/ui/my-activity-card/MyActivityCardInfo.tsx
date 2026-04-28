@@ -1,4 +1,3 @@
-import { MyActivityCardProps } from '@/features/my-page/my-activity/ui/my-activity-card/MyActivityCard';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
 import { cardInfoStyles } from '@/shared/ui/card/cardStyles';
@@ -6,6 +5,7 @@ import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
+import type { MyActivityCardProps } from './MyActivityCard';
 
 /**
  * 내가 등록한 체험 카드의 "정보 영역"을 구성하는 컴포넌트입니다.
