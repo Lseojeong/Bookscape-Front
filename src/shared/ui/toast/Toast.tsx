@@ -47,19 +47,21 @@ export default function Toast({ type, message, onClose }: ToastProps) {
       aria-live="polite"
       onTransitionEnd={isClosing ? onClose : undefined}
       className={cn(
-        'flex items-center rounded-full bg-gray-700 px-7 py-3 transition-opacity duration-300',
+        'flex w-full max-w-[min(420px,calc(100vw-2rem))] items-center rounded-full bg-gray-700 px-4 py-3 transition-opacity duration-300 md:px-7',
         isClosing ? 'opacity-0' : 'opacity-100'
       )}
     >
       {icon}
-      <span className="ml-3 typo-18-medium text-gray-25">{message}</span>
+      <span className="ml-3 min-w-0 flex-1 typo-14-medium wrap-break-word text-gray-25 md:typo-16-medium">
+        {message}
+      </span>
       <button
         type="button"
         onClick={handleClose}
         aria-label="토스트 닫기"
-        className="ml-5 cursor-pointer"
+        className="ml-3 shrink-0 cursor-pointer md:ml-5"
       >
-        <DeleteIcon className="h-8 w-8 text-gray-100" />
+        <DeleteIcon className="h-6 w-6 text-gray-100 md:h-8 md:w-8" />
       </button>
     </div>
   );
