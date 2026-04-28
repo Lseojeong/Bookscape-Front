@@ -79,7 +79,6 @@ export const Review: Story = {
     errorMessage: '',
     isError: undefined,
   },
-  // 💡 수정: 동일하게 내부 Wrapper 선언을 제거합니다.
   render: function Render(args) {
     const { control } = useForm<{ review: string }>({
       defaultValues: { review: '' },
@@ -93,6 +92,7 @@ export const Review: Story = {
           labelClassName="mb-3 md:mb-4"
           labelWeight="bold"
           labelTextClassName="md:typo-18-bold"
+          errorMessageClassName="pr-10"
         >
           <FormTextarea
             variant={args.variant}
