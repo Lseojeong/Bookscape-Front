@@ -1,6 +1,6 @@
 'use client';
 
-import { useToastStore } from '@/shared/stores/useToastStore';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import Toast from './Toast';
 
 /**
