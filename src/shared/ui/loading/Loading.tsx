@@ -29,9 +29,9 @@ type LoadingProps = {
  * <Loading />
  *
  * @example
- * <Loading size={20} color="white)" />
+ * <Loading size={20} color="var(--color-gray-600)" />
  */
-export const Loading = ({ size = 16, color = 'white' }: LoadingProps) => {
+export default function Loading({ size = 16, color = 'white' }: LoadingProps) {
   const dotSize = size * 0.25;
   const gap = size * 0.15;
   const containerStyle: LoadingStyle = {
@@ -55,4 +55,4 @@ export const Loading = ({ size = 16, color = 'white' }: LoadingProps) => {
       ))}
     </div>
   );
-};
+}

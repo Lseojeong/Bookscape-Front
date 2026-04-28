@@ -3,7 +3,7 @@
 import { cva } from 'class-variance-authority';
 import type { ElementType, MouseEvent } from 'react';
 import type { PolymorphicButtonProps } from '@/shared/ui/button/types';
-import { Loading } from '@/shared/ui/loading/Loading';
+import Loading from '@/shared/ui/loading/Loading';
 import { cn } from '@/shared/utils/cn';
 
 const buttonStyle = cva(
@@ -31,6 +31,19 @@ const buttonStyle = cva(
   }
 );
 
+const loadingSizeMap = {
+  lg: 20,
+  md: 16,
+  sm: 14,
+  icon: 14,
+} as const;
+
+const loadingColorMap = {
+  primary: 'white',
+  secondary: 'var(--color-gray-600)',
+  gray: 'var(--color-gray-600)',
+} as const;
+
 /**
  * 다형성을 지원하는 공통 버튼 컴포넌트입니다.
  * @example
@@ -56,19 +69,6 @@ export default function Button<T extends ElementType = 'button'>({
   const Component = as || 'button';
   const isButtonElement = Component === 'button';
   const isDisabled = disabled || isLoading;
-
-  const loadingSizeMap = {
-    lg: 20,
-    md: 16,
-    sm: 14,
-    icon: 14,
-  } as const;
-
-  const loadingColorMap = {
-    primary: 'white',
-    secondary: 'var(--color-gray-600)',
-    gray: 'var(--color-gray-600)',
-  } as const;
 
   // NOTE: disabled 상태일 때 강제로 onClick 이벤트가 발생하는 것을 브라우저 단에서 차단
   const handleClick = (e: MouseEvent<HTMLElement>) => {
