@@ -81,7 +81,7 @@ export default function Textarea({
           ref={ref}
           maxLength={maxLength}
           value={value}
-          defaultValue={defaultValue}
+          defaultValue={value === undefined ? defaultValue : undefined}
           onChange={handleChange}
           aria-invalid={isError}
           className={cn(
