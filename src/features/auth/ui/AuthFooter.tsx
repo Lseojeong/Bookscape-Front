@@ -31,10 +31,10 @@ export default function AuthFooter() {
       {/* 카카오 버튼 및 링크 이동 */}
       <div className="flex flex-col justify-center gap-6">
         <Button theme="secondary" size="lg" className="h-13.5 w-full bg-kakao-bg text-gray-900">
-          <p className="flex gap-1.5">
+          <span className="flex gap-1.5">
             <KakaoIcon />
             카카오 {linkConfig.pathname}
-          </p>
+          </span>
         </Button>
         <p className="text-center text-gray-400">
           {linkConfig.description}{' '}
