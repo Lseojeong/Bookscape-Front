@@ -49,7 +49,7 @@ export default function SignupPage() {
 
         <FormField label="비밀번호 확인" className={labelStyle}>
           <PasswordInput
-            name="password-confirm"
+            name="passwordConfirm"
             control={control}
             placeholder="비밀번호를 한 번 더 입력해 주세요"
           />
