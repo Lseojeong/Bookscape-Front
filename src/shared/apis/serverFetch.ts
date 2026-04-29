@@ -10,7 +10,7 @@ import { ENV } from '@/shared/apis/env';
 /**
  * 서버 사이드 전용 Fetch 함수 (Server Components, Route Handlers, Server Actions 전용)
  *
- * - Base URL: process.env.API_URL
+ * - Base URL: process.env.NEXT_PUBLIC_BASE_URL
  * - 인증: 서버 쿠키에서 읽은 Bearer 토큰을 Authorization 헤더에 주입
  *
  * @example
