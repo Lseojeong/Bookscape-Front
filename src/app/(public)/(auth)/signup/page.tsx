@@ -6,7 +6,7 @@ import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
 
-const labelStyle = 'mb-4 typo-16-medium text-gray-950 md:mb-5';
+const LABEL_STYLE = 'mb-4 typo-16-medium text-gray-950 md:mb-5';
 
 /**
  * 회원가입 페이지 컴포넌트입니다.
@@ -25,7 +25,7 @@ export default function SignupPage() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col">
-        <FormField label="이메일" className={labelStyle}>
+        <FormField label="이메일" className={LABEL_STYLE}>
           <FormInput
             type="email"
             name="email"
@@ -34,7 +34,7 @@ export default function SignupPage() {
           />
         </FormField>
 
-        <FormField label="닉네임" className={labelStyle}>
+        <FormField label="닉네임" className={LABEL_STYLE}>
           <FormInput
             type="text"
             name="nickname"
@@ -43,11 +43,11 @@ export default function SignupPage() {
           />
         </FormField>
 
-        <FormField label="비밀번호" className={labelStyle}>
+        <FormField label="비밀번호" className={LABEL_STYLE}>
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
 
-        <FormField label="비밀번호 확인" className={labelStyle}>
+        <FormField label="비밀번호 확인" className={LABEL_STYLE}>
           <PasswordInput
             name="passwordConfirm"
             control={control}
