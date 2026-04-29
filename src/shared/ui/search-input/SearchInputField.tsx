@@ -9,10 +9,6 @@ type SearchInputUiProps = {
   name?: string;
 };
 
-// TODO: inputBase 상수로 분리
-const inputBase =
-  'w-full rounded-2xl border border-gray-100 bg-white transition-colors outline-none placeholder:text-gray-400 focus:border-[1.5px] focus:border-primary-500 focus:placeholder-transparent';
-
 /**
  * 검색 인풋 UI 컴포넌트입니다.
  * 검색 실행 핸들러는 onSubmit prop으로 주입받아 실행합니다.
@@ -32,7 +28,7 @@ const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
           placeholder={placeholder}
           aria-label="검색어 입력"
           className={cn(
-            inputBase,
+            'input-base',
             'h-15.5 rounded-[20px] px-5 py-5.5 pr-14 typo-14-medium text-gray-950 shadow-drop md:h-17.5 md:rounded-3xl md:px-8 md:py-6 md:pr-22 md:typo-18-medium'
           )}
         />
