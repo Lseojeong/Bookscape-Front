@@ -92,10 +92,7 @@ export default function Textarea({
           className={cn(
             'h-full w-full resize-none bg-transparent text-gray-950 outline-none placeholder:text-gray-400',
             'typo-14-medium md:typo-16-medium',
-            // 스크롤바 커스텀
-            '[&::-webkit-scrollbar]:w-0.75',
-            '[&::-webkit-scrollbar-track]:bg-transparent',
-            '[&::-webkit-scrollbar-thumb]:rounded-xs [&::-webkit-scrollbar-thumb]:bg-gray-200',
+            'scrollbar-mini',
             className
           )}
           {...props}
