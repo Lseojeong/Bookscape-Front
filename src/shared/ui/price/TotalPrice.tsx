@@ -3,6 +3,7 @@ import PriceDisplay from '@/shared/ui/price/PriceDisplay';
 export type TotalPriceProps = {
   totalPrice: number;
   headCount: number;
+  showSlash?: boolean;
   priceClassName?: string;
   unitClassName?: string;
 };
@@ -23,6 +24,7 @@ export type TotalPriceProps = {
 export default function TotalPrice({
   totalPrice,
   headCount,
+  showSlash = true,
   priceClassName,
   unitClassName,
 }: TotalPriceProps) {
@@ -30,6 +32,7 @@ export default function TotalPrice({
     <PriceDisplay
       price={totalPrice}
       unit={`${headCount}명`}
+      showSlash={showSlash}
       priceClassName={priceClassName}
       unitClassName={unitClassName}
     />
