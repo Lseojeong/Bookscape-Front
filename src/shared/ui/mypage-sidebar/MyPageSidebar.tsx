@@ -41,7 +41,7 @@ export default function MyPageSidebar({ user }: MyPageSidebarProps) {
         </div>
         <MyPageNav />
       </aside>
-      <div className="sticky top-22 mb-6 bg-white sm:hidden sm:pt-10">
+      <div className="sticky top-12 mb-6 bg-white pt-3 sm:hidden">
         <TabNav tabs={MYPAGE_TABS} tabClassName="flex-1" />
       </div>
     </>
