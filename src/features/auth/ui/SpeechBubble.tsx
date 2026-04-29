@@ -8,6 +8,10 @@ type SpeechBubbleProps = Omit<ImageProps, 'src' | 'alt'> & {
   children: React.ReactNode;
 };
 
+/**
+ * 로그인 및 회원가입 페이지 브랜딩 영역에서 사용자 후기를 표시하는 말풍선 컴포넌트입니다.
+ * flip prop으로 말풍선 방향을 좌우 반전할 수 있습니다.
+ */
 export default function SpeechBubble({ flip, className, children }: SpeechBubbleProps) {
   return (
     <div className={cn('relative', flip && '-scale-x-100', className)}>

@@ -2,6 +2,11 @@ import Image, { ImageProps } from 'next/image';
 import SpeechBubble from '@/features/auth/ui/SpeechBubble';
 import { SkyImage } from '@/shared/assets/images';
 
+/**
+ * 로그인 및 회원가입 페이지 우측에 표시되는 브랜딩 컴포넌트입니다.
+ * 배경 이미지 위에 서비스 소개 문구와 사용자 후기 말풍선을 오버레이로 렌더링합니다.
+ * lg 브레이크 포인트 이상에서만 표시됩니다.
+ */
 export default function AuthBranding(props: Omit<ImageProps, 'src' | 'alt'>) {
   return (
     <div className="relative h-dvh">

@@ -8,6 +8,11 @@ import PasswordInput from '@/shared/ui/input/PasswordInput';
 
 const labelStyle = 'mb-4 typo-16-medium text-gray-950 md:mb-5';
 
+/**
+ * 회원가입 페이지 컴포넌트입니다.
+ * 이메일, 닉네임, 비밀번호, 비밀번호 확인 입력 폼을 제공하며, react-hook-form으로 폼 상태를 관리합니다.
+ * 하단에 카카오 회원가입 및 로그인 페이지 이동 링크가 포함됩니다.
+ */
 export default function SignupPage() {
   const { control } = useForm({
     defaultValues: {

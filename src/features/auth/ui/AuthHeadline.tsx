@@ -1,5 +1,9 @@
 import Logo from '@/shared/ui/logo/Logo';
 
+/**
+ * 로그인 및 회원가입 폼 상단에 표시되는 헤드라인 컴포넌트입니다.
+ * 북스케이프 로고와 브랜드 슬로건 문구를 렌더링합니다.
+ */
 export default function AuthHeadline() {
   return (
     <div className="flex flex-col">

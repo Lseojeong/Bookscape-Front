@@ -4,6 +4,12 @@ import { usePathname } from 'next/navigation';
 import { KakaoIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 
+/**
+ * 로그인 및 회원가입 폼 하단에 공통으로 사용되는 컴포넌트입니다.
+ * 현재 경로(pathname)에 따라 카카오 버튼 텍스트와 페이지 이동 링크가 동적으로 변경됩니다.
+ * - 로그인 페이지: 카카오 로그인 버튼 + 회원가입 페이지 이동 링크
+ * - 회원가입 페이지: 카카오 회원가입 버튼 + 로그인 페이지 이동 링크
+ */
 export default function AuthFooter() {
   const isLogin = usePathname() === '/login';
 
