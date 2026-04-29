@@ -75,7 +75,7 @@ export default function Header({ isLoggedIn = false, user, className }: HeaderPr
   const LogoWrapper = pathname === '/' || pathname === '/search' ? 'h1' : 'div';
 
   return (
-    <header className={cn('sticky top-0 z-50', headerVariants({ theme }), className)}>
+    <header className={cn('sticky top-0 layer-header', headerVariants({ theme }), className)}>
       <div className="shell-inner">
         <LogoWrapper className="leading-none">
           <Logo variant={logoVariantByTheme[theme]} className="h-6 md:h-7" />

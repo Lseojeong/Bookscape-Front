@@ -9,12 +9,17 @@
 @theme {
   /* Z-Index */
   /* 10 단위 스케일 (max: 100) */
+  --z-index-background: 0; /* Background */
   --z-index-base: 10; /* Base Content */
   --z-index-header: 20; /* Navigation & Layout */
   --z-index-dropdown: 30; /* Floating UI */
   --z-index-modal-backdrop: 40; /* Full-screen Overlays */
   --z-index-modal: 50; /* Full-screen Overlays */
   --z-index-toast: 60; /* Toast */
+}
+
+@utility layer-background {
+  z-index: var(--z-index-background);
 }
 
 @utility layer-base {

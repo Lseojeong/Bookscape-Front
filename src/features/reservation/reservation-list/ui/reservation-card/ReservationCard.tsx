@@ -46,7 +46,7 @@ export default function ReservationCard({ data }: ReservationCardProps) {
       {/* 이미지 */}
       <BaseCardImage containerClassName={cardImageStyles} alt={data.activity.title} />
       {/* 정보 영역 */}
-      <div className="relative z-10 w-full">
+      <div className="relative layer-base w-full">
         <ReservationCardInfo data={data} />
       </div>
     </div>

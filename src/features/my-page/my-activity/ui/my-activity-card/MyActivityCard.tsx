@@ -38,7 +38,7 @@ export default function MyActivityCard({ data }: MyActivityCardProps) {
       <BaseCardImage alt={title} containerClassName={cardImageStyles} />
 
       {/* 정보 영역 */}
-      <div className="relative z-10 w-full">
+      <div className="relative layer-base w-full">
         <MyActivityCardInfo data={data} />
       </div>
     </div>
