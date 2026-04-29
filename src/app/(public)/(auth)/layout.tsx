@@ -12,7 +12,7 @@ export default function AuthLayout({
         <AuthHeadline />
         <div className="">{children}</div>
       </div>
-      <div className="hidden shrink-0 transition-all lg:block xl:w-200 2xl:w-250">
+      <div className="hidden shrink-0 transition-all lg:block lg:w-130 xl:w-200 2xl:w-250">
         <AuthBranding />
       </div>
     </main>
