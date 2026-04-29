@@ -1,3 +1,41 @@
+'use client';
+import { useForm } from 'react-hook-form';
+import AuthFooter from '@/features/auth/ui/AuthFooter';
+import Button from '@/shared/ui/button/Button';
+import FormField from '@/shared/ui/form/FormField';
+import FormInput from '@/shared/ui/form/FormInput';
+import PasswordInput from '@/shared/ui/input/PasswordInput';
+
+const labelStyle = 'mb-4 typo-16-medium text-gray-950 md:mb-5';
+
 export default function LoginPage() {
-  return <div>로그인 페이지입니다.</div>;
+  const { control } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-col">
+        <FormField label="이메일" className={labelStyle}>
+          <FormInput
+            type="email"
+            name="email"
+            control={control}
+            placeholder="이메일을 입력해 주세요"
+          />
+        </FormField>
+
+        <FormField label="비밀번호" className={labelStyle}>
+          <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
+        </FormField>
+
+        <Button theme="gray" size="lg" className="h-13.5 w-full bg-gray-200 text-gray-50">
+          로그인 하기
+        </Button>
+      </div>
+      <AuthFooter />
+    </div>
+  );
 }

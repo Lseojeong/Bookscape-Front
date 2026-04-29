@@ -10,6 +10,7 @@ export default function AuthBranding(props: Omit<ImageProps, 'src' | 'alt'>) {
         src={SkyImage}
         alt="하늘 이미지"
         fill
+        priority
         className="object-cover object-bottom"
         {...props}
       />

@@ -1,3 +1,58 @@
+'use client';
+import { useForm } from 'react-hook-form';
+import AuthFooter from '@/features/auth/ui/AuthFooter';
+import Button from '@/shared/ui/button/Button';
+import FormField from '@/shared/ui/form/FormField';
+import FormInput from '@/shared/ui/form/FormInput';
+import PasswordInput from '@/shared/ui/input/PasswordInput';
+
+const labelStyle = 'mb-4 typo-16-medium text-gray-950 md:mb-5';
+
 export default function SignupPage() {
-  return <div>회원가입 페이지입니다.</div>;
+  const { control } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-col">
+        <FormField label="이메일" className={labelStyle}>
+          <FormInput
+            type="email"
+            name="email"
+            control={control}
+            placeholder="이메일을 입력해 주세요"
+          />
+        </FormField>
+
+        <FormField label="닉네임" className={labelStyle}>
+          <FormInput
+            type="text"
+            name="nickname"
+            control={control}
+            placeholder="닉네임을 입력해 주세요"
+          />
+        </FormField>
+
+        <FormField label="비밀번호" className={labelStyle}>
+          <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
+        </FormField>
+
+        <FormField label="비밀번호 확인" className={labelStyle}>
+          <PasswordInput
+            name="password-confirm"
+            control={control}
+            placeholder="비밀번호를 한 번 더 입력해 주세요"
+          />
+        </FormField>
+
+        <Button theme="gray" size="lg" className="h-13.5 w-full bg-gray-200 text-gray-50">
+          회원가입 하기
+        </Button>
+      </div>
+      <AuthFooter />
+    </div>
+  );
 }
