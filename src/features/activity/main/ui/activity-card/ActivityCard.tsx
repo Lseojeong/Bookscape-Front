@@ -1,8 +1,8 @@
-import ActivityCardInfo from '@/shared/ui/card/ActivityCardInfo';
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import { cardWrapStyles } from '@/shared/ui/card/cardStyles';
 import { cn } from '@/shared/utils/cn';
+import ActivityCardInfo from './ActivityCardInfo';
 
 /**
  * TODO: 임시 타입 정의 (삭제 예정)
