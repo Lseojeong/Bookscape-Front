@@ -92,7 +92,6 @@ export const Review: Story = {
           labelClassName="mb-3 md:mb-4"
           labelWeight="bold"
           labelTextClassName="md:typo-18-bold"
-          errorMessageClassName="pr-10"
         >
           <FormTextarea
             variant={args.variant}

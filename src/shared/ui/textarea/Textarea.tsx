@@ -74,9 +74,10 @@ export default function Textarea({
   const hasCounter = maxLength !== undefined && maxLength > 0;
 
   return (
-    <div className={cn('relative flex w-full flex-col', wrapperClassName)}>
+    <div className={cn('w-full', wrapperClassName)}>
       <div
         className={cn(
+          'relative',
           containerVariants({ variant }),
           isError && 'border-error focus-within:border-error'
         )}
@@ -99,16 +100,16 @@ export default function Textarea({
           )}
           {...props}
         />
-      </div>
 
-      {hasCounter && (
-        <div
-          aria-hidden="true"
-          className="absolute top-full right-0 mt-2 text-right typo-13-medium text-gray-600 md:typo-14-medium"
-        >
-          {charCount}/{maxLength}
-        </div>
-      )}
+        {hasCounter && (
+          <div
+            aria-hidden="true"
+            className="absolute right-5 bottom-0 flex h-5 items-center justify-end text-right typo-13-medium text-gray-600 md:typo-14-medium"
+          >
+            {charCount}/{maxLength}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
