@@ -9,7 +9,7 @@ import { SkyImage } from '@/shared/assets/images';
  */
 export default function AuthBranding(props: Omit<ImageProps, 'src' | 'alt'>) {
   return (
-    <div className="relative h-dvh">
+    <div className="relative h-full min-h-dvh">
       {/* 배경 이미지 */}
       <Image
         src={SkyImage}
