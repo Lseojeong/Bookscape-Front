@@ -1,7 +1,7 @@
-import { ActivityCardProps } from '@/features/activity/main/ui/ActivityCard';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
 import Title from '@/shared/ui/title/Title';
+import type { ActivityCardProps } from './ActivityCard';
 
 /**
  * 체험 카드 컴포넌트입니다.

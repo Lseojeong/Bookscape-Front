@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import StatusFilter from '@/features/reservation/ui/status-filter/StatusFilter';
+import StatusFilter from '@/features/reservation/reservation-list/ui/status-filter/StatusFilter';
 
 const meta: Meta<typeof StatusFilter> = {
   title: 'Features/Reservation/StatusFilter',

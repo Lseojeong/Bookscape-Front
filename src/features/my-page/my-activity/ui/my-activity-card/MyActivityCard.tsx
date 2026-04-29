@@ -1,7 +1,7 @@
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import { cardImageStyles, cardWrapStyles } from '@/shared/ui/card/cardStyles';
-import MyActivityCardInfo from '@/shared/ui/card/MyActivityCardInfo';
 import { cn } from '@/shared/utils/cn';
+import MyActivityCardInfo from './MyActivityCardInfo';
 
 /**
  * MyActivityCard에서 사용하는 데이터 타입

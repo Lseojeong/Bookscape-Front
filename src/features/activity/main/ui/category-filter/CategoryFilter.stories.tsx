@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import CategoryFilter from '@/features/activity/ui/category-filter/CategoryFilter';
+import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 
 const meta: Meta<typeof CategoryFilter> = {
   title: 'Features/Activity/CategoryFilter',

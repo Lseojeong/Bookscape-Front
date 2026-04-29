@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import ActivityCard from '@/features/activity/main/ui/ActivityCard';
+import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
 
 const meta: Meta<typeof ActivityCard> = {
   title: 'Features/Card/ActivityCard',
