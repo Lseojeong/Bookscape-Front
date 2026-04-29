@@ -28,7 +28,10 @@ export default function AuthBranding(props: Omit<ImageProps, 'src' | 'alt'>) {
           <SpeechBubble className="translate-x-[26%] -translate-y-[10%] transition-all xl:translate-x-[50%]">
             체험 예약을 관리하는게 편리해요😆
           </SpeechBubble>
-          <SpeechBubble flip className="-translate-x-[26%] transition-all xl:-translate-x-[50%]">
+          <SpeechBubble
+            isFlipped
+            className="-translate-x-[26%] transition-all xl:-translate-x-[50%]"
+          >
             새로운 액티비티 찾기 좋아요👍
           </SpeechBubble>
           <SpeechBubble className="translate-x-[26%] translate-y-[10%] transition-all xl:translate-x-[50%]">
