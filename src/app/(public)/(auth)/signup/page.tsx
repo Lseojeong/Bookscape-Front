@@ -12,7 +12,9 @@ export default function SignupPage() {
   const { control } = useForm({
     defaultValues: {
       email: '',
+      nickname: '',
       password: '',
+      passwordConfirm: '',
     },
   });
   return (
