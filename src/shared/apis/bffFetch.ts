@@ -31,7 +31,13 @@ const request = <T>({
   query,
   ...options
 }: RequestConfig): Promise<T | null> => {
-  return coreFetch<T>(BFF_BASE_URL, endpoint, { ...options, method }, query, body);
+  return coreFetch<T>(
+    BFF_BASE_URL,
+    endpoint,
+    { ...options, method, credentials: 'include' },
+    query,
+    body
+  );
 };
 
 /** HTTP 메서드 유틸리티 */
