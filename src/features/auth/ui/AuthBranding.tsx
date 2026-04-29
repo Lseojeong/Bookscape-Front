@@ -24,7 +24,7 @@ export default function AuthBranding(props: Omit<ImageProps, 'src' | 'alt'>) {
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-23.75 text-white">
         <p className="typo-24-medium">체험이 한곳에 모여 있는 곳이 있다?</p>
 
-        <div className="">
+        <div>
           <SpeechBubble className="translate-x-[26%] -translate-y-[10%] transition-all xl:translate-x-[50%]">
             체험 예약을 관리하는게 편리해요😆
           </SpeechBubble>
