@@ -1,0 +1,39 @@
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialogSlideUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.overlay-backdrop {
+  animation: overlayFadeIn 350ms ease-out both;
+}
+
+.overlay-surface {
+  @apply w-full rounded-2xl bg-white p-6 shadow-card;
+}
+
+.dialog-surface-animation {
+  will-change: transform, opacity;
+  animation: dialogSlideUp 350ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay-backdrop,
+  .dialog-surface-animation {
+    animation: none;
+  }
+}
