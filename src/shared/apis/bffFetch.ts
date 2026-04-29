@@ -5,8 +5,7 @@ import {
   QueryParams,
 } from '@/shared/apis/coreFetch';
 
-/** BFF 요청이므로 별도의 도메인 없이 상대 경로 사용 */
-const BFF_BASE_URL = '';
+const BFF_BASE_URL = '/api';
 
 /**
  * BFF(Backend For Frontend) 호출 전용 Fetch 함수
