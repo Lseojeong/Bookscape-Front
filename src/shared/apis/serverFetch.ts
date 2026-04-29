@@ -41,7 +41,7 @@ const request = async <T>({
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  return coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method, headers }, query, body);
+  return coreFetch<T>(ENV.SERVER_API_URL, endpoint, { ...options, method, headers }, query, body);
 };
 
 /** HTTP 메서드 유틸리티 */
