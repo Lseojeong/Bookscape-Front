@@ -29,13 +29,6 @@ import { ENV } from '@/shared/apis/env';
 
 type BaseRequestOptions = Omit<FetchRequestOptions, 'body' | 'isFormData'>;
 
-// type RequestConfig = {
-//   endpoint: string;
-//   method: RequestInit['method'];
-//   body?: unknown;
-//   query?: QueryParams;
-// } & Omit<FetchRequestOptions, 'body'>;
-
 const request = <T>({ endpoint, method, body, query, ...options }: RequestConfig) =>
   coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method }, query, body);
 
