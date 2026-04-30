@@ -45,7 +45,7 @@ const request = async <T>({
 
   const mergedOptions: FetchRequestOptions = {
     ...options,
-    headers,
+    headers: Object.fromEntries(headers.entries()),
   };
 
   // method에 따라 분기
