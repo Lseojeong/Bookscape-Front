@@ -10,11 +10,11 @@ import { ENV } from '@/shared/apis/env';
  * 서버 사이드 전용 Fetch 함수 (Server Components, Route Handlers, Server Actions 전용)
  *
  * - ENV.SERVER_API_URL을 베이스로 coreFetch를 호출하는 것만 담당
- * - 인증, 쿠키, body 변환 등 BFF 관심사는 proxyFetch가 담당
+ * - 인증이 필요한 요청은 proxyFetch를 통해서 사용
  *
  * @example
  * ```ts
- * const data = await serverFetch.get<Product[]>('/products', { category });
+ *  const data = await serverFetch.post<LoginResponse>('/auth/login', body);
  * ```
  */
 
