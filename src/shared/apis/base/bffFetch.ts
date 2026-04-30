@@ -3,35 +3,45 @@ import {
   FetchRequestOptions,
   QueryParams,
   RequestConfig,
-} from '@/shared/apis/coreFetch';
-import { ENV } from '@/shared/apis/env';
+} from '@/shared/apis/base/coreFetch';
+
+const BFF_BASE_URL = '/api';
 
 /**
- * 서버 사이드 전용 Fetch 함수 (Server Components, Route Handlers, Server Actions 전용)
- *
- * - ENV.SERVER_API_URL을 베이스로 coreFetch를 호출하는 것만 담당
- * - 인증이 필요한 요청은 proxyFetch를 통해서 사용
+ * BFF(Backend For Frontend) 호출 전용 Fetch 함수
+ * Next.js API Route(BFF)로 요청을 보냅니다.
+ * 별도의 도메인 없이 상대 경로를 사용합니다.
+ * 인증 정보(쿠키)는 브라우저에 의해 자동으로 요청 헤더에 포함됩니다.
  *
  * @example
  * ```ts
- *  const data = await serverFetch.post<LoginResponse>('/auth/login', body);
+ * // GET 요청
+ * const user = await bffFetch.get<User>('/api/users', { id: userId });
+ *
+ * // POST 요청
+ * const result = await bffFetch.post<{ id: string }>('/api/posts', newPost);
  * ```
  */
 
-/** serverFetch 내부 공통 요청 함수 */
-const request = async <T>({
+/** bffFetch 내부 공통 요청 함수 */
+const request = <T>({
   endpoint,
   method,
   body,
   query,
-  headers,
   ...options
 }: RequestConfig): Promise<T | null> => {
-  return coreFetch<T>(ENV.SERVER_API_URL, endpoint, { ...options, method, headers }, query, body);
+  return coreFetch<T>(
+    BFF_BASE_URL,
+    endpoint,
+    { ...options, method, credentials: 'include' },
+    query,
+    body
+  );
 };
 
 /** HTTP 메서드 유틸리티 */
-export const serverFetch = {
+export const bffFetch = {
   get: <T>(endpoint: string, query?: QueryParams, options?: FetchRequestOptions) =>
     request<T>({ endpoint, method: 'GET', query, ...options }),
 

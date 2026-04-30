@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
-import { FetchRequestOptions, RequestConfig } from '@/shared/apis/coreFetch';
-import { serverFetch } from '@/shared/apis/serverFetch';
+import { FetchRequestOptions, QueryParams, RequestConfig } from '@/shared/apis/base/coreFetch';
+import { serverFetch } from '@/shared/apis/base/serverFetch';
 
 /**
  *
@@ -17,20 +17,16 @@ import { serverFetch } from '@/shared/apis/serverFetch';
  * @example
  * ``` ts
  * // GET 요청
- * const data = await proxyFetch<User>({
- *   endpoint: '/users/me',
- *   method: 'GET',
- * });
+ * const data = await proxyFetch.get<User>('/users/me');
  *
  * // POST 요청
- * const result = await proxyFetch({
- *   endpoint: '/reservations',
- *   method: 'POST',
- *   body: { date: '2025-01-01' },
+ * const data = await proxyFetch.patch<Reservation>(`/my-reservation/${userId}`, {
+ *  status,
  * });
  * ```
  */
-export const proxyFetch = async <T>({
+
+const request = async <T>({
   endpoint,
   method,
   body,
@@ -72,4 +68,22 @@ export const proxyFetch = async <T>({
     default:
       throw new Error(`Unsupported method: ${method}`);
   }
+};
+
+/** HTTP 메서드 유틸리티 */
+export const proxyFetch = {
+  get: <T>(endpoint: string, query?: QueryParams, options?: FetchRequestOptions) =>
+    request<T>({ endpoint, method: 'GET', query, ...options }),
+
+  post: <T>(endpoint: string, body?: unknown, options?: FetchRequestOptions) =>
+    request<T>({ endpoint, method: 'POST', body, ...options }),
+
+  put: <T>(endpoint: string, body?: unknown, options?: FetchRequestOptions) =>
+    request<T>({ endpoint, method: 'PUT', body, ...options }),
+
+  patch: <T>(endpoint: string, body?: unknown, options?: FetchRequestOptions) =>
+    request<T>({ endpoint, method: 'PATCH', body, ...options }),
+
+  delete: <T>(endpoint: string, options?: FetchRequestOptions) =>
+    request<T>({ endpoint, method: 'DELETE', ...options }),
 };
