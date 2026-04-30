@@ -1,12 +1,27 @@
 import { z } from 'zod';
 import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/constants/category';
-import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
+import {
+  ACTIVITY_ERROR_MESSAGES,
+  IMAGE_RULES,
+} from '@/features/my-page/activity-form/constants/validation';
 
 export const scheduleSchema = z.object({
   date: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
   startTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
   endTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
 });
+
+/**
+ * 이미지 파일 유효성 검사 스키마
+ * 새롭게 업로드되는 File 객체의 용량과 확장자를 검사합니다.
+ */
+export const imageFileSchema = z
+  .instanceof(File)
+  .refine((file) => file.size <= IMAGE_RULES.MAX_SIZE, ACTIVITY_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED)
+  .refine(
+    (file) => (IMAGE_RULES.ACCEPTED_TYPES as readonly string[]).includes(file.type),
+    ACTIVITY_ERROR_MESSAGES.IMAGE_TYPE_INVALID
+  );
 
 /**
  * 체험 등록 및 수정 폼 유효성 검사 스키마입니다.
@@ -64,12 +79,19 @@ export const activityFormSchema = z.object({
       }
     }),
   bannerImage: z
-    .any()
+    // string(수정 시 기존 URL) 또는 File(신규 업로드) 둘 다 허용
+    .union([z.string(), imageFileSchema])
+    .optional()
+    .nullable()
     .refine(
-      (file) => file !== undefined && file !== null && file !== '',
+      (val) => val !== undefined && val !== null && val !== '',
       ACTIVITY_ERROR_MESSAGES.BANNER_REQUIRED
     ),
-  subImages: z.array(z.any()).max(4).optional(),
+
+  subImages: z
+    .array(z.union([z.string(), imageFileSchema]))
+    .max(4)
+    .optional(),
 });
 
 export type ActivityFormValues = z.infer<typeof activityFormSchema>;
