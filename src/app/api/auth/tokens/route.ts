@@ -1,12 +1,15 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { ENV } from '@/shared/apis/env';
-import { serverFetch } from '@/shared/apis/serverFetch';
+import { serverFetch } from '@/shared/apis/base/serverFetch';
 
 type RefreshResponse = {
   accessToken: string;
-  refreshToken?: string;
+  refreshToken: string;
 };
+
+// 쿠키 만료 시간
+const ACCESS_TOKEN_MAX_AGE = 60 * 60; // 1시간
+const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7; // 7일
 
 /**
  * POST /api/auth/tokens
@@ -14,9 +17,9 @@ type RefreshResponse = {
  *
  * [동작 흐름]
  * 1. HttpOnly 쿠키에 저장된 refreshToken을 가져온다.
- * 2. 해당 refreshToken을 사용하여 백엔드에 토큰 재발급을 요청한다.
+ * 2. refreshToken을 사용하여 백엔드에 토큰 재발급을 요청한다.
  * 3. 재발급된 accessToken을 HttpOnly 쿠키로 저장한다.
- * 4. 새로운 refreshToken이 함께 내려온 경우, 기존 refreshToken을 갱신한다.
+ * 4. 새로운 refreshToken으로 기존 refreshToken을 갱신한다.
  *
  */
 export async function POST() {
@@ -25,46 +28,47 @@ export async function POST() {
     const cookieStore = await cookies();
     const refreshToken = cookieStore.get('refreshToken')?.value;
 
-    // refreshToken이 없으면 재발급 불가 → 401 반환
     if (!refreshToken) {
       return NextResponse.json({ message: 'Refresh token이 없습니다.' }, { status: 401 });
     }
 
     // 2. 백엔드에 토큰 재발급 요청
-    const data = await serverFetch.post<RefreshResponse>(ENV.SERVER_API_URL, '/auth/tokens', {
+    const data = await serverFetch.post<RefreshResponse>('/auth/tokens', {
       headers: {
         Authorization: `Bearer ${refreshToken}`,
       },
     });
 
-    // accessToken이 없으면 재발급 실패로 간주
+    // accessToken이 없으면 재발급 실패
     if (!data?.accessToken) {
       return NextResponse.json({ message: '토큰 재발급 실패' }, { status: 401 });
     }
 
-    // 3. 새로운 accessToken을 쿠키에 저장
+    // 응답 객체 생성 및 공통 쿠키 설정
     const response = NextResponse.json({ success: true });
-    response.cookies.set('accessToken', data.accessToken, {
+    const cookieOptions = {
       httpOnly: true,
       secure: true,
+      sameSite: 'strict' as const,
       path: '/',
-      sameSite: 'lax',
+    };
+
+    // 3. accessToken 갱신
+    response.cookies.set('accessToken', data.accessToken, {
+      ...cookieOptions,
+      maxAge: ACCESS_TOKEN_MAX_AGE,
     });
 
-    // 4. refreshToken이 새로 내려온 경우 함께 갱신
-    if (data.refreshToken) {
-      response.cookies.set('refreshToken', data.refreshToken, {
-        httpOnly: true,
-        secure: true,
-        path: '/',
-        sameSite: 'lax',
-      });
-    }
+    // 4. refreshToken 갱신
+    response.cookies.set('refreshToken', data.refreshToken, {
+      ...cookieOptions,
+      maxAge: REFRESH_TOKEN_MAX_AGE,
+    });
 
     return response;
   } catch (error) {
     // 서버 또는 네트워크 에러
-    console.error('[POST /api/auth/refresh]', error);
+    console.error('[POST /api/auth/tokens]', error);
     return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
   }
 }
