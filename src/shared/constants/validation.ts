@@ -23,6 +23,7 @@ export const COMMON_ERROR_MESSAGES = {
   PASSWORD_CHARS: '비밀번호는 영문, 숫자, 특수문자만 사용해주세요',
   PASSWORD_FORMAT: '비밀번호는 숫자, 영문, 특수문자를 모두 포함해주세요',
   PASSWORD_MISMATCH: '비밀번호가 일치하지 않습니다',
+  PASSWORD_CONFIRM_REQUIRED: '비밀번호 확인을 작성해주세요',
   NICKNAME_REQUIRED: '닉네임을 작성해주세요',
   NICKNAME_LENGTH: '닉네임은 최대 6자 이내로 작성해주세요',
   NICKNAME_FORMAT: '닉네임은 영어, 한글로만 작성해주세요',
