@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import {
   coreFetch,
   FetchRequestOptions,
@@ -10,18 +9,12 @@ import { ENV } from '@/shared/apis/env';
 /**
  * 서버 사이드 전용 Fetch 함수 (Server Components, Route Handlers, Server Actions 전용)
  *
- * - Base URL: process.env.NEXT_PUBLIC_BASE_URL
- * - 인증: 서버 쿠키에서 읽은 Bearer 토큰을 Authorization 헤더에 주입
+ * - ENV.SERVER_API_URL을 베이스로 coreFetch를 호출하는 것만 담당
+ * - 인증, 쿠키, body 변환 등 BFF 관심사는 proxyFetch가 담당
  *
  * @example
  * ```ts
- * // GET 요청
- * const user = await serverFetch.get<User>('/users/me');
- *
- * // POST 요청
- * const data = await serverFetch.post<{ accessToken: string }>(
- *  '/auth/tokens', { email, password }
- * );
+ * const data = await serverFetch.get<Product[]>('/products', { category });
  * ```
  */
 
@@ -31,16 +24,9 @@ const request = async <T>({
   method,
   body,
   query,
+  headers,
   ...options
 }: RequestConfig): Promise<T | null> => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('accessToken')?.value;
-
-  const headers = Object.fromEntries(new Headers(options.headers).entries());
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
   return coreFetch<T>(ENV.SERVER_API_URL, endpoint, { ...options, method, headers }, query, body);
 };
 
