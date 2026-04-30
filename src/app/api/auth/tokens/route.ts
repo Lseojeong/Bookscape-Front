@@ -33,7 +33,7 @@ export async function POST() {
     }
 
     // 2. 백엔드에 토큰 재발급 요청
-    const data = await serverFetch.post<RefreshResponse>('/auth/tokens', {
+    const data = await serverFetch.post<RefreshResponse>('/auth/tokens', undefined, {
       headers: {
         Authorization: `Bearer ${refreshToken}`,
       },
