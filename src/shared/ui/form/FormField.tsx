@@ -17,7 +17,9 @@ type FormFieldProps = {
   errorMessage?: string;
   className?: string;
   labelClassName?: string;
+  labelTextClassName?: string;
   labelAction?: ReactNode;
+  errorMessageClassName?: string;
   children: ReactNode;
 };
 
@@ -41,7 +43,9 @@ export default function FormField({
   errorMessage,
   className,
   labelClassName,
+  labelTextClassName,
   labelAction,
+  errorMessageClassName,
   children,
 }: FormFieldProps) {
   // 컴포넌트가 렌더링될 때마다 인풋과 연결할 고유한 ID 생성
@@ -55,7 +59,11 @@ export default function FormField({
         {(label || labelAction) && (
           <div className={cn('mb-2.5 flex items-center justify-between', labelClassName)}>
             {label && (
-              <FormLabel htmlFor={fieldId} weight={labelWeight} className="mb-0">
+              <FormLabel
+                htmlFor={fieldId}
+                weight={labelWeight}
+                className={cn('mb-0', labelTextClassName)}
+              >
                 {label}
               </FormLabel>
             )}
@@ -66,7 +74,7 @@ export default function FormField({
         {children}
 
         {errorMessage && (
-          <FormErrorMessage id={errorId} className="mt-1.5">
+          <FormErrorMessage id={errorId} className={cn('mt-1.5', errorMessageClassName)}>
             {errorMessage}
           </FormErrorMessage>
         )}
