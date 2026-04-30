@@ -21,9 +21,12 @@ export const activityFormSchema = z.object({
     message: ACTIVITY_ERROR_MESSAGES.CATEGORY_REQUIRED,
   }),
   description: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.DESCRIPTION_REQUIRED),
-  price: z.coerce
-    .number({ message: ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED })
-    .min(0, ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED),
+  price: z.preprocess(
+    (val) => (val === '' ? undefined : val),
+    z.coerce
+      .number({ message: ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED })
+      .min(0, ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED)
+  ),
   address: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.ADDRESS_REQUIRED),
   detailAddress: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.DETAIL_ADDRESS_REQUIRED),
   schedules: z
