@@ -101,7 +101,7 @@ export default function Textarea({
         {hasCounter && (
           <div
             aria-hidden="true"
-            className="absolute right-5 bottom-0 flex h-5 items-center justify-end text-right typo-13-medium text-gray-600 md:typo-14-medium"
+            className="absolute right-5 bottom-2 flex h-5 items-center justify-end text-right typo-13-medium text-gray-600 md:typo-14-medium"
           >
             {charCount}/{maxLength}
           </div>
