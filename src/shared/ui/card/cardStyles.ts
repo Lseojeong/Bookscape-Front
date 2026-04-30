@@ -15,4 +15,4 @@ export const cardWrapStyles =
  */
 export const cardInfoStyles =
   'mr-26.75 flex w-[calc(100%-107px)] flex-col rounded-3xl px-5 py-5 md:w-[calc(100%-157px)] lg:w-[calc(100%-155px)] lg:px-10 lg:py-7.5';
-export const cardImageStyles = 'absolute right-0 z-0 w-36.25 md:w-44.25 lg:w-45.25';
+export const cardImageStyles = 'absolute right-0 layer-background w-36.25 md:w-44.25 lg:w-45.25';

@@ -16,3 +16,20 @@
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: var(--color-gray-300);
 }
+
+.scrollbar-mini::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scrollbar-mini::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-mini::-webkit-scrollbar-thumb {
+  background: var(--color-gray-200);
+  border-radius: 2px;
+}
+
+.scrollbar-mini::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-300);
+}
