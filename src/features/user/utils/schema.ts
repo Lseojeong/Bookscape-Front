@@ -35,7 +35,7 @@ export const profileSchema = z
     if (data.newPassword !== '' && data.passwordConfirm === '') {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: '비밀번호 확인을 작성해주세요',
+        message: COMMON_ERROR_MESSAGES.PASSWORD_CONFIRM_REQUIRED,
         path: ['passwordConfirm'],
       });
     }

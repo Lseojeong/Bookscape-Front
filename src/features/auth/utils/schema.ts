@@ -39,7 +39,7 @@ export const signupSchema = z
       .min(8, COMMON_ERROR_MESSAGES.PASSWORD_LENGTH)
       .regex(REGEX.PASSWORD_CHARS, COMMON_ERROR_MESSAGES.PASSWORD_CHARS)
       .regex(REGEX.PASSWORD_COMBINATION, COMMON_ERROR_MESSAGES.PASSWORD_FORMAT),
-    passwordConfirm: z.string().trim().min(1, '비밀번호 확인을 작성해주세요'),
+    passwordConfirm: z.string().trim().min(1, COMMON_ERROR_MESSAGES.PASSWORD_CONFIRM_REQUIRED),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     path: ['passwordConfirm'],
