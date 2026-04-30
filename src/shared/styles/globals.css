@@ -3,6 +3,6 @@
 @import './base/colors.css';
 @import './base/z-index.css';
 @import './base/scroll.css';
-@import './base/input.css';
+@import './input.css';
 @import './layout.css';
 @import './overlay.css';
