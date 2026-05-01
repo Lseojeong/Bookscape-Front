@@ -96,6 +96,9 @@ export default function ReviewModal({
       setIsSubmitting(true);
       await onSubmit?.({ rating, content });
       handleClose();
+    } catch (error) {
+      // TODO: 리뷰 제출 API 연동 시 에러 처리/토스트 추가
+      throw error;
     } finally {
       setIsSubmitting(false);
     }
@@ -166,10 +169,6 @@ export default function ReviewModal({
           disabled={!canSubmit || isSubmitting}
           isLoading={isSubmitting}
           className="h-14 w-full rounded-2xl"
-          onClick={() => {
-            // NOTE: 제출은 form onSubmit에서 처리됩니다.
-            // TODO: 리뷰 제출 API 연동 시 에러 처리/토스트 추가
-          }}
         >
           작성하기
         </Button>
