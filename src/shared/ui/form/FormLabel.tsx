@@ -68,7 +68,7 @@ export default function FormLabel({
   return (
     <button
       type={type ?? 'button'}
-      className={cn(baseClassName, 'w-fit text-left')}
+      className={cn(baseClassName, 'w-fit cursor-pointer border-none bg-transparent p-0 text-left')}
       {...buttonProps}
     >
       {children}
