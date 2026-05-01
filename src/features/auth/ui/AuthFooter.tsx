@@ -5,7 +5,7 @@ import Button from '@/shared/ui/button/Button';
 import KaKaoButton from '@/shared/ui/button/KaKaoButton';
 
 type AuthFooterProps = {
-  isPending?: boolean;
+  isLoading?: boolean;
   disabled?: boolean;
   onKakaoClick?: () => void;
 };
@@ -16,12 +16,12 @@ type AuthFooterProps = {
  * - 로그인 페이지: 카카오 로그인 버튼 + 회원가입 페이지 이동 링크
  * - 회원가입 페이지: 카카오 회원가입 버튼 + 로그인 페이지 이동 링크
  *
- * @param isPending - 메인 버튼(로그인/회원가입)의 로딩 상태
+ * @param isLoading - 메인 버튼(로그인/회원가입)의 로딩 상태
  * @param disabled - 메인 버튼의 비활성화 상태
  * @param onKakaoClick - 카카오 버튼 클릭 핸들러
  */
 export default function AuthFooter({
-  isPending = false,
+  isLoading = false,
   disabled = false,
   onKakaoClick,
 }: AuthFooterProps) {
@@ -40,7 +40,7 @@ export default function AuthFooter({
         type="submit"
         theme="primary"
         size="lg"
-        isLoading={isPending}
+        isLoading={isLoading}
         disabled={disabled}
         className="h-13.5 w-full rounded-2xl"
       >
@@ -60,7 +60,7 @@ export default function AuthFooter({
         <p className="text-center text-gray-400">
           {linkConfig.description}{' '}
           <Link href={linkConfig.href}>
-            <span className="underline">{linkConfig.label}하기</span>
+            <span className="underline hover:text-gray-700">{linkConfig.label}하기</span>
           </Link>
         </p>
       </div>
