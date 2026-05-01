@@ -17,7 +17,7 @@ export const commonSchemas = {
     .max(6, COMMON_ERROR_MESSAGES.NICKNAME_LENGTH)
     // 특수문자나 숫자 있는지 검사
     .regex(REGEX.NICKNAME_NO_SPECIAL_CHARS, COMMON_ERROR_MESSAGES.NICKNAME_FORMAT)
-    // 완전한 한글인지 검사
+    // 완성된 한글 형태인지 검사
     .regex(REGEX.NICKNAME_COMPLETE_HANGUL, COMMON_ERROR_MESSAGES.NICKNAME_INCOMPLETE),
   password: z
     .string()

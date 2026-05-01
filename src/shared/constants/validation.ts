@@ -8,7 +8,7 @@ export const REGEX = {
   PASSWORD_COMBINATION: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+~`|{}[\]:;?><,./\-=]).+$/,
   // 영문, 한글, 자음/모음 허용
   NICKNAME_NO_SPECIAL_CHARS: /^[a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]+$/,
-  // 영문 및 완전한 한글 (자음, 모음 단독 사용 불가)
+  // 영문 및 완성된 한글 (자음, 모음 단독 사용 불가)
   NICKNAME_COMPLETE_HANGUL: /^[a-zA-Z가-힣]+$/,
 };
 
@@ -27,5 +27,5 @@ export const COMMON_ERROR_MESSAGES = {
   NICKNAME_REQUIRED: '닉네임을 작성해주세요',
   NICKNAME_LENGTH: '닉네임은 최대 6자 이내로 작성해주세요',
   NICKNAME_FORMAT: '닉네임은 영어, 한글로만 작성해주세요',
-  NICKNAME_INCOMPLETE: '완전한 한글로 작성해주세요',
+  NICKNAME_INCOMPLETE: '완성된 한글 형태로 작성해주세요',
 };
