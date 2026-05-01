@@ -168,7 +168,7 @@ export default function ReviewModal({
           type="submit"
           disabled={!canSubmit || isSubmitting}
           isLoading={isSubmitting}
-          className="h-14 w-full rounded-2xl"
+          className="h-13.5 w-full rounded-2xl"
         >
           작성하기
         </Button>
