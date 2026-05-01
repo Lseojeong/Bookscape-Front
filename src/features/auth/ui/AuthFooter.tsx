@@ -35,7 +35,7 @@ export default function AuthFooter({
     description: isLogin ? '회원이 아니신가요?' : '이미 회원이신가요?',
   };
   return (
-    <div className="flex flex-col gap-7.5">
+    <div className="mt-2.5 flex flex-col gap-7.5">
       <Button
         type="submit"
         theme="primary"

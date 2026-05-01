@@ -1,11 +1,10 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
+import AuthForm from '@/features/auth/ui/AuthForm';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
-
-const LABEL_STYLE = 'typo-16-medium text-gray-950 ';
 
 /**
  * 회원가입 페이지 컴포넌트입니다.
@@ -21,40 +20,41 @@ export default function SignupPage() {
       passwordConfirm: '',
     },
   });
+
+  const handleSignup = () => {};
+
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col">
-        <FormField label="이메일" className={LABEL_STYLE}>
-          <FormInput
-            type="email"
-            name="email"
-            control={control}
-            placeholder="이메일을 입력해 주세요"
-          />
-        </FormField>
+    <AuthForm onSubmit={handleSignup}>
+      <FormField label="이메일">
+        <FormInput
+          type="email"
+          name="email"
+          control={control}
+          placeholder="이메일을 입력해 주세요"
+        />
+      </FormField>
 
-        <FormField label="닉네임" className={LABEL_STYLE}>
-          <FormInput
-            type="text"
-            name="nickname"
-            control={control}
-            placeholder="닉네임을 입력해 주세요"
-          />
-        </FormField>
+      <FormField label="닉네임">
+        <FormInput
+          type="text"
+          name="nickname"
+          control={control}
+          placeholder="닉네임을 입력해 주세요"
+        />
+      </FormField>
 
-        <FormField label="비밀번호" className={LABEL_STYLE}>
-          <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
-        </FormField>
+      <FormField label="비밀번호">
+        <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
+      </FormField>
 
-        <FormField label="비밀번호 확인" className={LABEL_STYLE}>
-          <PasswordInput
-            name="passwordConfirm"
-            control={control}
-            placeholder="비밀번호를 한 번 더 입력해 주세요"
-          />
-        </FormField>
-        <AuthFooter />
-      </div>
-    </div>
+      <FormField label="비밀번호 확인">
+        <PasswordInput
+          name="passwordConfirm"
+          control={control}
+          placeholder="비밀번호를 한 번 더 입력해 주세요"
+        />
+      </FormField>
+      <AuthFooter />
+    </AuthForm>
   );
 }

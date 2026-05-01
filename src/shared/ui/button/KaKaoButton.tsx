@@ -16,7 +16,7 @@ export default function KaKaoButton({
     <button
       type={type}
       className={cn(
-        'flex h-13.5 w-full items-center justify-center gap-2 rounded-2xl border border-gray-200 bg-kakao-bg py-3',
+        'flex h-13.5 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl border border-gray-200 bg-kakao-bg py-3',
         className
       )}
       {...props}
