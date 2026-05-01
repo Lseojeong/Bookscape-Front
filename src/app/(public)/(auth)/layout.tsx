@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
+import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
 import AuthBranding from '@/features/auth/ui/AuthBranding';
-import AuthHeadline from '@/features/auth/ui/AuthHeadline';
 import { cn } from '@/shared/utils/cn';
 
 /**
