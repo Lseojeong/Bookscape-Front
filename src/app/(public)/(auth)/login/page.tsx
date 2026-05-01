@@ -1,7 +1,6 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
-import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
@@ -35,16 +34,8 @@ export default function LoginPage() {
         <FormField label="비밀번호" className={LABEL_STYLE}>
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
-
-        <Button
-          theme="gray"
-          size="lg"
-          className="h-13.5 w-full rounded-2xl bg-gray-200 text-gray-50"
-        >
-          로그인 하기
-        </Button>
+        <AuthFooter />
       </div>
-      <AuthFooter />
     </div>
   );
 }

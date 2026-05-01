@@ -1,12 +1,11 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
-import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
 
-const LABEL_STYLE = 'mb-4 typo-16-medium text-gray-950 md:mb-5';
+const LABEL_STYLE = 'typo-16-medium text-gray-950 ';
 
 /**
  * 회원가입 페이지 컴포넌트입니다.
@@ -54,16 +53,8 @@ export default function SignupPage() {
             placeholder="비밀번호를 한 번 더 입력해 주세요"
           />
         </FormField>
-
-        <Button
-          theme="gray"
-          size="lg"
-          className="h-13.5 w-full rounded-2xl bg-gray-200 text-gray-50"
-        >
-          회원가입 하기
-        </Button>
+        <AuthFooter />
       </div>
-      <AuthFooter />
     </div>
   );
 }
