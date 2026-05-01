@@ -79,12 +79,8 @@ export const activityFormSchema = z.object({
   bannerImage: z
     // string(수정 시 기존 URL) 또는 File(신규 업로드) 둘 다 허용
     .union([z.string(), imageFileSchema])
-    .optional()
     .nullable()
-    .refine(
-      (val) => val !== undefined && val !== null && val !== '',
-      ACTIVITY_ERROR_MESSAGES.BANNER_REQUIRED
-    ),
+    .refine((val) => val !== null && val !== '', ACTIVITY_ERROR_MESSAGES.BANNER_REQUIRED),
 
   subImages: z
     .array(z.union([z.string(), imageFileSchema]))
