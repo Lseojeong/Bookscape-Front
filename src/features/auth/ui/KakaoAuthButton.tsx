@@ -2,21 +2,22 @@ import { ButtonHTMLAttributes } from 'react';
 import { KakaoIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
-type KaKaoButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type KakaoAuthButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string; // '로그인' | '회원가입';
   className?: string;
 };
-export default function KaKaoButton({
+export default function KakaoAuthButton({
   label,
   className,
   type = 'button',
   ...props
-}: KaKaoButtonProps) {
+}: KakaoAuthButtonProps) {
   return (
     <button
       type={type}
       className={cn(
-        'flex h-13.5 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl border border-gray-200 bg-kakao-bg py-3',
+        'flex h-13.5 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl',
+        'border border-gray-200 bg-kakao-bg py-3 hover:bg-[#fbd604]',
         className
       )}
       {...props}

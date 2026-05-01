@@ -1,8 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import KakaoAuthButton from '@/features/auth/ui/KakaoAuthButton';
 import Button from '@/shared/ui/button/Button';
-import KaKaoButton from '@/shared/ui/button/KaKaoButton';
 
 type AuthFooterProps = {
   isLoading?: boolean;
@@ -56,7 +56,7 @@ export default function AuthFooter({
 
       {/* 카카오 버튼 및 링크 이동 */}
       <div className="flex flex-col justify-center gap-6">
-        <KaKaoButton type="button" label={linkConfig.pathname} onClick={onKakaoClick} />
+        <KakaoAuthButton type="button" label={linkConfig.pathname} onClick={onKakaoClick} />
         <p className="text-center text-gray-400">
           {linkConfig.description}{' '}
           <Link href={linkConfig.href}>
