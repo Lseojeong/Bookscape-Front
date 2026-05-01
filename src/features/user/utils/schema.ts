@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { REGEX, COMMON_ERROR_MESSAGES } from '@/shared/constants/validation';
+import { COMMON_ERROR_MESSAGES } from '@/shared/constants/validation';
+import { commonSchemas } from '@/shared/utils/schema';
 
 /**
  * 내 정보 수정 폼 유효성 검사 스키마입니다.
@@ -7,27 +8,8 @@ import { REGEX, COMMON_ERROR_MESSAGES } from '@/shared/constants/validation';
  */
 export const profileSchema = z
   .object({
-    nickname: z
-      .string()
-      .trim()
-      .min(1, COMMON_ERROR_MESSAGES.NICKNAME_REQUIRED)
-      .max(6, COMMON_ERROR_MESSAGES.NICKNAME_LENGTH)
-      .regex(REGEX.NICKNAME_NO_SPECIAL_CHARS, COMMON_ERROR_MESSAGES.NICKNAME_FORMAT)
-      .regex(REGEX.NICKNAME_COMPLETE_HANGUL, COMMON_ERROR_MESSAGES.NICKNAME_INCOMPLETE),
-
-    newPassword: z
-      .string()
-      .trim()
-      .refine((val) => val === '' || val.length >= 8, COMMON_ERROR_MESSAGES.PASSWORD_LENGTH)
-      .refine(
-        (val) => val === '' || REGEX.PASSWORD_CHARS.test(val),
-        COMMON_ERROR_MESSAGES.PASSWORD_CHARS
-      )
-      .refine(
-        (val) => val === '' || REGEX.PASSWORD_COMBINATION.test(val),
-        COMMON_ERROR_MESSAGES.PASSWORD_FORMAT
-      ),
-
+    nickname: commonSchemas.nickname,
+    newPassword: z.literal('').or(commonSchemas.password),
     passwordConfirm: z.string().trim(),
   })
   .superRefine((data, ctx) => {
