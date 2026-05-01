@@ -25,13 +25,13 @@ export type UseStarKeyboardNavigationParams = {
  *
  * @returns `idx`별로 바인딩할 `onKeyDown` 핸들러 생성 함수
  */
-export default function useStarKeyboardNavigation({
+const useStarKeyboardNavigation = ({
   max,
   rating,
   isInteractive,
   commit,
   focusStar,
-}: UseStarKeyboardNavigationParams) {
+}: UseStarKeyboardNavigationParams) => {
   return useCallback(
     (idx: number) => (e: KeyboardEvent<HTMLButtonElement>) => {
       if (!isInteractive || e.defaultPrevented) return;
@@ -73,4 +73,6 @@ export default function useStarKeyboardNavigation({
     },
     [commit, focusStar, isInteractive, max, rating]
   );
-}
+};
+
+export default useStarKeyboardNavigation;
