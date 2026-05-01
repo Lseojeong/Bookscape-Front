@@ -34,7 +34,7 @@ const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
         />
         <button
           type="submit"
-          className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
+          className="absolute top-1/2 right-5 -translate-y-1/2"
           aria-label="검색"
         >
           <SearchIcon />
