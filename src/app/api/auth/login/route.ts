@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
+import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE } from '@/shared/constants/auth';
 
 type LoginRequest = {
   email: string;
@@ -10,10 +11,6 @@ type LoginResponse = {
   accessToken: string;
   refreshToken: string;
 };
-
-// 쿠키 만료 시간
-const ACCESS_TOKEN_MAX_AGE = 60 * 60; // 1시간
-const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 7; // 7일
 
 /**
  * POST /api/auth/login
