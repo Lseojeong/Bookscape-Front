@@ -5,7 +5,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import Star from '@/features/reservation/reservation-list/ui/review-modal/Star';
 import { DeleteIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
-import FormLabel from '@/shared/ui/form/FormLabel';
+import FormField from '@/shared/ui/form/FormField';
 import FormTextarea from '@/shared/ui/form/FormTextarea';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import Title from '@/shared/ui/title/Title';
@@ -116,63 +116,62 @@ export default function ReviewModal({
       closeOnOverlayClick={!shouldBlockAutoClose}
       closeOnEsc={!shouldBlockAutoClose}
     >
-      <form onSubmit={submit} className={cn('flex flex-col gap-7.5', className)}>
-        <div className="flex flex-col">
-          <div className="flex justify-end">
-            <button
-              type="button"
-              aria-label="닫기"
-              onClick={handleClose}
-              disabled={isSubmitting}
-              className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-            >
-              <DeleteIcon className="h-6 w-6 text-gray-950" aria-hidden="true" />
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center text-center">
-            <Title as="h2" size="16" weight="bold" color="text-gray-950">
-              {activityTitle}
-            </Title>
-            <p className="mt-3.5 typo-14-medium text-gray-500">{scheduleText}</p>
-
-            <div className="mt-6">
-              <Star value={rating} onChange={setRating} ariaLabel="별점 선택" />
-            </div>
-          </div>
+      <div className={cn('flex flex-col gap-7.5', className)}>
+        <div className="flex justify-end">
+          <button
+            type="button"
+            aria-label="닫기"
+            onClick={handleClose}
+            disabled={isSubmitting}
+            className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+          >
+            <DeleteIcon className="h-6 w-6 text-gray-950" aria-hidden="true" />
+          </button>
         </div>
 
-        <div>
+        <div className="flex flex-col items-center text-center">
+          <Title as="h2" size="16" weight="bold" color="text-gray-950">
+            {activityTitle}
+          </Title>
+          <p className="mt-3.5 typo-14-medium text-gray-500">{scheduleText}</p>
+        </div>
+
+        <form onSubmit={submit} className="flex flex-col gap-7.5">
+          <div className="flex justify-center">
+            <Star value={rating} onChange={setRating} ariaLabel="별점 선택" />
+          </div>
+
           <div className="flex justify-center">
             <div className="w-81.25">
-              <FormLabel htmlFor="reviewContent" className="typo-18-bold text-gray-950">
-                소중한 경험을 들려주세요
-              </FormLabel>
-              <div className="mt-4">
-                <FormTextarea
-                  id="reviewContent"
-                  name="content"
-                  control={control}
-                  variant="review"
-                  placeholder="체험에서 느낀 경험을 자유롭게 남겨주세요"
-                  maxLength={100}
-                />
-              </div>
+              <FormField
+                label="소중한 경험을 들려주세요"
+                labelTextClassName="typo-18-bold text-gray-950"
+              >
+                <div className="mt-4">
+                  <FormTextarea
+                    name="content"
+                    control={control}
+                    variant="review"
+                    placeholder="체험에서 느낀 경험을 자유롭게 남겨주세요"
+                    maxLength={100}
+                  />
+                </div>
+              </FormField>
             </div>
           </div>
-        </div>
 
-        <Button
-          theme="primary"
-          size="lg"
-          type="submit"
-          disabled={!canSubmit || isSubmitting}
-          isLoading={isSubmitting}
-          className="h-13.5 w-full rounded-2xl"
-        >
-          작성하기
-        </Button>
-      </form>
+          <Button
+            theme="primary"
+            size="lg"
+            type="submit"
+            disabled={!canSubmit || isSubmitting}
+            isLoading={isSubmitting}
+            className="h-13.5 w-full rounded-2xl"
+          >
+            작성하기
+          </Button>
+        </form>
+      </div>
     </OverlayLayer>
   );
 }
