@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE } from '@/shared/constants/auth';
 
@@ -66,6 +67,10 @@ export async function POST() {
   } catch (error) {
     // 서버 또는 네트워크 에러
     console.error('[POST /api/auth/tokens]', error);
+
+    if (error instanceof ApiError) {
+      return NextResponse.json({ message: error.message }, { status: error.status });
+    }
     return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
   }
 }
