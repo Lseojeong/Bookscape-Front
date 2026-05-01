@@ -1,9 +1,7 @@
 import { z } from 'zod';
 import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/constants/category';
-import {
-  ACTIVITY_ERROR_MESSAGES,
-  IMAGE_RULES,
-} from '@/features/my-page/activity-form/constants/validation';
+import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
+import { IMAGE_RULES } from '@/shared/constants/file';
 
 export const scheduleSchema = z.object({
   date: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
