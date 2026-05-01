@@ -55,7 +55,11 @@ export default function SignupPage() {
           />
         </FormField>
 
-        <Button theme="gray" size="lg" className="h-13.5 w-full bg-gray-200 text-gray-50">
+        <Button
+          theme="gray"
+          size="lg"
+          className="h-13.5 w-full rounded-2xl bg-gray-200 text-gray-50"
+        >
           회원가입 하기
         </Button>
       </div>

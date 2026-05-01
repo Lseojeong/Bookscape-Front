@@ -1,8 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { KakaoIcon } from '@/shared/assets/icons';
-import Button from '@/shared/ui/button/Button';
+import KaKaoButton from '@/shared/ui/button/KaKaoButton';
 
 /**
  * 로그인 및 회원가입 폼 하단에 공통으로 사용되는 컴포넌트입니다.
@@ -14,9 +13,9 @@ export default function AuthFooter() {
   const isLogin = usePathname() === '/login';
 
   const linkConfig = {
-    pathname: isLogin ? '로그인' : '회원가입',
+    pathname: isLogin ? '로그인' : '회원가입', // 현재 페이지
     href: isLogin ? '/signup' : '/login',
-    label: isLogin ? '회원가입' : '로그인',
+    label: isLogin ? '회원가입' : '로그인', // 이동할 페이지의 이름
     description: isLogin ? '회원이 아니신가요?' : '이미 회원이신가요?',
   };
   return (
@@ -30,12 +29,7 @@ export default function AuthFooter() {
 
       {/* 카카오 버튼 및 링크 이동 */}
       <div className="flex flex-col justify-center gap-6">
-        <Button theme="secondary" size="lg" className="h-13.5 w-full bg-kakao-bg text-gray-900">
-          <span className="flex gap-1.5">
-            <KakaoIcon />
-            카카오 {linkConfig.pathname}
-          </span>
-        </Button>
+        <KaKaoButton mode={linkConfig.pathname} />
         <p className="text-center text-gray-400">
           {linkConfig.description}{' '}
           <Link href={linkConfig.href}>

@@ -36,7 +36,11 @@ export default function LoginPage() {
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
 
-        <Button theme="gray" size="lg" className="h-13.5 w-full bg-gray-200 text-gray-50">
+        <Button
+          theme="gray"
+          size="lg"
+          className="h-13.5 w-full rounded-2xl bg-gray-200 text-gray-50"
+        >
           로그인 하기
         </Button>
       </div>
