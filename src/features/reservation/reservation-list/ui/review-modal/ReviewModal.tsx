@@ -128,7 +128,7 @@ export default function ReviewModal({
           </div>
 
           <div className="flex flex-col items-center text-center">
-            <Title as="h2" size="18" weight="bold" color="text-gray-950" className="typo-16-bold">
+            <Title as="h2" size="16" weight="bold" color="text-gray-950">
               {activityTitle}
             </Title>
             <p className="mt-3.5 typo-14-medium text-gray-500">{scheduleText}</p>
