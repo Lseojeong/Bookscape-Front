@@ -16,7 +16,7 @@ button:disabled {
 }
 
 button[data-disabled='true'] {
-  cursor: default;
+  cursor: not-allowed;
 }
 
 button[data-loading='true'] {
