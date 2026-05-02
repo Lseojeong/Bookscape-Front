@@ -13,7 +13,11 @@ export default function AuthForm({ children, onSubmit, className, ...props }: Au
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cn('flex flex-col gap-5', className)} {...props}>
+    <form
+      onSubmit={handleSubmit}
+      className={cn('flex flex-col gap-4 md:gap-5', className)}
+      {...props}
+    >
       {children}
     </form>
   );

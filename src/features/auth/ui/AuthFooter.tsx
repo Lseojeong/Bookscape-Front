@@ -2,11 +2,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import KakaoAuthButton from '@/features/auth/ui/KakaoAuthButton';
-import Button from '@/shared/ui/button/Button';
 
 type AuthFooterProps = {
-  isLoading?: boolean;
-  disabled?: boolean;
   onKakaoClick?: () => void;
 };
 
@@ -16,15 +13,9 @@ type AuthFooterProps = {
  * - 로그인 페이지: 카카오 로그인 버튼 + 회원가입 페이지 이동 링크
  * - 회원가입 페이지: 카카오 회원가입 버튼 + 로그인 페이지 이동 링크
  *
- * @param isLoading - 메인 버튼(로그인/회원가입)의 로딩 상태
- * @param disabled - 메인 버튼의 비활성화 상태
  * @param onKakaoClick - 카카오 버튼 클릭 핸들러
  */
-export default function AuthFooter({
-  isLoading = false,
-  disabled = false,
-  onKakaoClick,
-}: AuthFooterProps) {
+export default function AuthFooter({ onKakaoClick }: AuthFooterProps) {
   const pathname = usePathname();
   const isLogin = pathname === '/login';
 
@@ -35,18 +26,7 @@ export default function AuthFooter({
     description: isLogin ? '회원이 아니신가요?' : '이미 회원이신가요?',
   };
   return (
-    <div className="mt-2.5 flex flex-col gap-7.5">
-      <Button
-        type="submit"
-        theme="primary"
-        size="lg"
-        isLoading={isLoading}
-        disabled={disabled}
-        className="h-13.5 w-full rounded-2xl"
-      >
-        {linkConfig.pathname} 하기
-      </Button>
-
+    <div className="mt-5 flex flex-col gap-4 md:mt-7.5 md:gap-7.5">
       {/* 구분선 (or) */}
       <div className="flex items-center gap-3.5 px-1">
         <div className="h-px flex-1 bg-gray-100" />
@@ -55,7 +35,7 @@ export default function AuthFooter({
       </div>
 
       {/* 카카오 버튼 및 링크 이동 */}
-      <div className="flex flex-col justify-center gap-6">
+      <div className="flex flex-col justify-center gap-6 md:gap-7.5">
         <KakaoAuthButton type="button" label={linkConfig.pathname} onClick={onKakaoClick} />
         <p className="text-center text-gray-400">
           {linkConfig.description}{' '}
