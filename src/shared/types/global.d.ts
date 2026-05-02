@@ -1,6 +1,17 @@
 /**
  * 우편번호 검색 완료 시 콜백으로 들어오는 데이터의 타입입니다.
  * 카카오 우편번호 서비스 공식 문서에 기반하여 자주 사용하는 속성들을 정의했습니다.
+ *
+ * @example
+ * ```tsx
+ * const data: KakaoPostcodeData = {
+ *   address: '서울 강남구...',
+ *   zonecode: '06000',
+ *   addressType: 'R',
+ *   bname: '역삼동',
+ *   buildingName: '...'
+ * };
+ * ```
  */
 export type KakaoPostcodeData = {
   /** 검색된 기본 주소 */
