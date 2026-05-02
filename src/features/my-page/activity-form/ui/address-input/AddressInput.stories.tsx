@@ -4,7 +4,10 @@ import { useForm, FormProvider, useFormContext } from 'react-hook-form';
 import { AddressInput } from '@/features/my-page/activity-form/ui/address-input/AddressInput';
 import Button from '@/shared/ui/button/Button';
 
-const ErrorTrigger = () => {
+/**
+ * 스토리북 테스트를 위해 강제로 에러를 발생시키는 컴포넌트입니다.
+ */
+function ErrorTrigger() {
   const { setError } = useFormContext();
 
   useEffect(() => {
@@ -13,7 +16,7 @@ const ErrorTrigger = () => {
   }, [setError]);
 
   return null;
-};
+}
 
 const meta: Meta<typeof AddressInput> = {
   title: 'Features/MyPage/AddressInput',
