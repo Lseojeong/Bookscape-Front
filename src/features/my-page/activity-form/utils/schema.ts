@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/constants/category';
 import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
-import { IMAGE_RULES } from '@/shared/constants/file';
+import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 
 export const scheduleSchema = z.object({
   date: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
@@ -15,10 +15,10 @@ export const scheduleSchema = z.object({
  */
 export const imageFileSchema = z
   .instanceof(File)
-  .refine((file) => file.size <= IMAGE_RULES.MAX_SIZE, ACTIVITY_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED)
+  .refine((file) => file.size <= IMAGE_RULES.MAX_SIZE, IMAGE_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED)
   .refine(
     (file) => (IMAGE_RULES.ACCEPTED_TYPES as readonly string[]).includes(file.type),
-    ACTIVITY_ERROR_MESSAGES.IMAGE_TYPE_INVALID
+    IMAGE_ERROR_MESSAGES.IMAGE_TYPE_INVALID
   );
 
 /**

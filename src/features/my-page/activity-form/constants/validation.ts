@@ -11,8 +11,6 @@ export const ACTIVITY_ERROR_MESSAGES = {
   DETAIL_ADDRESS_REQUIRED: '상세 주소를 작성해주세요',
   SCHEDULE_REQUIRED: '날짜와 시간 모두 선택해주세요',
   BANNER_REQUIRED: '배너 이미지를 등록해주세요',
-  IMAGE_SIZE_EXCEEDED: '이미지 용량은 5MB를 초과할 수 없습니다',
-  IMAGE_TYPE_INVALID: 'JPG, JPEG, PNG, WEBP 파일만 업로드 가능합니다',
   SCHEDULE_OVERLAP: (date: string, start: string, end: string) =>
     `${date} ${start} - ${end}이 중복입니다`,
 };
