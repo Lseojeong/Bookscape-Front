@@ -86,9 +86,7 @@ export function AddressInput() {
           control={control}
           placeholder="주소를 입력해 주세요"
           readOnly
-          tabIndex={-1}
-          onFocus={(e) => e.target.blur()}
-          className="cursor-default"
+          className="cursor-default focus:border focus:border-gray-100 focus:ring-0 focus:placeholder:text-gray-400"
         />
       </FormField>
 
