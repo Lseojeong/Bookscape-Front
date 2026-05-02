@@ -30,25 +30,6 @@
 
 @utility field-control {
   background-color: transparent;
-  color: var(--color-gray-950);
-  outline: none;
-
-  &::placeholder {
-    color: var(--color-gray-400);
-  }
-
-  &:focus::placeholder {
-    color: transparent;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    color: var(--color-gray-400);
-  }
-
-  &[aria-invalid='true'] {
-    border-color: var(--color-error);
-  }
 }
 
 @utility field-input {

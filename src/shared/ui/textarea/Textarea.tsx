@@ -87,7 +87,7 @@ export default function Textarea({
           onChange={handleChange}
           aria-invalid={isError}
           className={cn(
-            'h-full w-full field-control resize-none',
+            'h-full w-full field-input resize-none field-control',
             'typo-14-medium md:typo-16-medium',
             'scrollbar-mini',
             className
