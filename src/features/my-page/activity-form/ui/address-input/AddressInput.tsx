@@ -34,6 +34,7 @@ export function AddressInput() {
   const {
     control,
     setValue,
+    setFocus,
     formState: { errors },
   } = useFormContext();
 
@@ -55,7 +56,7 @@ export function AddressInput() {
         // 선택한 주소를 필드에 덮어씌움
         setValue('address', data.address, { shouldValidate: true, shouldDirty: true });
         // 상세 주소 입력창으로 자동 포커스
-        document.getElementById('detailAddress')?.focus();
+        setFocus('detailAddress');
       },
     }).open();
   };
