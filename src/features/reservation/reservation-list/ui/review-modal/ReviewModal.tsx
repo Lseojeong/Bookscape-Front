@@ -116,7 +116,7 @@ export default function ReviewModal({
       closeOnOverlayClick={!shouldBlockAutoClose}
       closeOnEsc={!shouldBlockAutoClose}
     >
-      <div className={cn('flex flex-col gap-7.5', className)}>
+      <div className={cn('flex flex-col', className)}>
         <div className="flex justify-end">
           <button
             type="button"
@@ -129,16 +129,18 @@ export default function ReviewModal({
           </button>
         </div>
 
-        <div className="flex flex-col items-center text-center">
-          <Title as="h2" size="16" weight="bold" color="text-gray-950">
-            {activityTitle}
-          </Title>
-          <p className="mt-3.5 typo-14-medium text-gray-500">{scheduleText}</p>
-        </div>
-
         <form onSubmit={submit} className="flex flex-col gap-7.5">
-          <div className="flex justify-center">
-            <Star value={rating} onChange={setRating} ariaLabel="별점 선택" />
+          <div className="flex flex-col gap-3.5">
+            <div className="flex flex-col items-center text-center">
+              <Title as="h2" size="16" weight="bold" color="text-gray-950">
+                {activityTitle}
+              </Title>
+              <p className="mt-1 typo-14-medium text-gray-500">{scheduleText}</p>
+            </div>
+
+            <div className="flex justify-center">
+              <Star value={rating} onChange={setRating} ariaLabel="별점 선택" />
+            </div>
           </div>
 
           <div className="flex justify-center">
