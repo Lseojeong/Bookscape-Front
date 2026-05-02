@@ -5,20 +5,17 @@ import { useState, type ChangeEvent, type ComponentProps, type Ref } from 'react
 import { cn } from '@/shared/utils/cn';
 
 // NOTE: 스크롤바를 패딩 안쪽에 위치시키기 위해 textarea가 아닌 wrapper에 border와 padding을 적용
-const containerVariants = cva(
-  'flex w-full flex-col bg-white border border-gray-100 transition-colors focus-within:border-[1.5px] focus-within:border-primary-500',
-  {
-    variants: {
-      variant: {
-        review: 'h-44.75 rounded-xl px-5 py-5',
-        activity: 'h-35 rounded-2xl px-5 py-4 md:h-50',
-      },
+const containerVariants = cva('field-surface flex w-full flex-col', {
+  variants: {
+    variant: {
+      review: 'h-44.75 rounded-xl px-5 py-5',
+      activity: 'h-35 rounded-2xl px-5 py-4 md:h-50',
     },
-    defaultVariants: {
-      variant: 'activity',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'activity',
+  },
+});
 
 type TextareaProps = ComponentProps<'textarea'> &
   VariantProps<typeof containerVariants> & {
@@ -90,7 +87,7 @@ export default function Textarea({
           onChange={handleChange}
           aria-invalid={isError}
           className={cn(
-            'h-full w-full resize-none bg-transparent text-gray-950 outline-none placeholder:text-gray-400',
+            'h-full w-full field-control resize-none',
             'typo-14-medium md:typo-16-medium',
             'scrollbar-mini',
             className
