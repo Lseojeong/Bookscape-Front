@@ -73,11 +73,8 @@ export default function Textarea({
   return (
     <div className={cn('w-full', wrapperClassName)}>
       <div
-        className={cn(
-          'relative',
-          containerVariants({ variant }),
-          isError && 'border-error focus-within:border-error'
-        )}
+        data-error={isError || undefined}
+        className={cn('relative', containerVariants({ variant }))}
       >
         <textarea
           ref={ref}
