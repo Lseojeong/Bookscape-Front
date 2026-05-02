@@ -2,8 +2,7 @@
 
 import { useCallback } from 'react';
 import type { KeyboardEvent } from 'react';
-
-const clampRating = (value: number, max: number) => Math.max(0, Math.min(max, Math.round(value)));
+import clampRating from '../utils/clampRating';
 
 export type UseStarKeyboardNavigationParams = {
   max: number;

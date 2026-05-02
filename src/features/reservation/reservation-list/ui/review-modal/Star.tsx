@@ -4,6 +4,7 @@ import { useId, useMemo, useRef, useState } from 'react';
 import { StarIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 import useStarKeyboardNavigation from './hooks/useStarKeyboardNavigation';
+import clampRating from './utils/clampRating';
 
 /**
  * `Star` 컴포넌트 props입니다.
@@ -29,11 +30,6 @@ export type StarProps = {
   size?: number;
   ariaLabel?: string;
 };
-
-function clampRating(value: number, max: number) {
-  if (!Number.isFinite(value)) return 0;
-  return Math.max(0, Math.min(max, Math.round(value)));
-}
 
 /**
  * ### Star
