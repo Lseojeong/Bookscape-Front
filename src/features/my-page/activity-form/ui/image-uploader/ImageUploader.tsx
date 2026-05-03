@@ -56,7 +56,8 @@ export function ImageUploader({
             isError ? 'border-error' : 'border-gray-100',
             isDisabled
               ? 'cursor-not-allowed bg-gray-25 shadow-[0_1px_10px_rgba(0,0,0,0.1)]'
-              : 'cursor-pointer bg-white'
+              : 'cursor-pointer bg-white',
+            'outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2'
           )}
         >
           <Button
@@ -90,7 +91,7 @@ export function ImageUploader({
 
           <input
             type="file"
-            className="hidden"
+            className="sr-only"
             accept={IMAGE_RULES.ACCEPTED_TYPES.join(',')}
             disabled={isDisabled}
             onChange={onChange}
