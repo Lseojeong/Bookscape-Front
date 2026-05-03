@@ -1,17 +1,8 @@
 import { NextResponse } from 'next/server';
 import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
+import { LoginRequest, LoginResponse } from '@/features/auth/types';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-
-type LoginRequest = {
-  email: string;
-  password: string;
-};
-
-type LoginResponse = {
-  accessToken: string;
-  refreshToken: string;
-};
 
 /**
  * POST /api/auth/login

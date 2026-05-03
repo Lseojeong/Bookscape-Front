@@ -1,13 +1,9 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
+import { RefreshResponse } from '@/features/auth/types';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-
-type RefreshResponse = {
-  accessToken: string;
-  refreshToken: string;
-};
 
 /**
  * POST /api/auth/tokens
