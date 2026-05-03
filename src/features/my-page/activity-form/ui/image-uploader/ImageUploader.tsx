@@ -2,16 +2,11 @@
 
 import Image from 'next/image';
 import { PlusIcon } from '@/shared/assets/icons';
+import { IMAGE_RULES } from '@/shared/constants/file';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import { cn } from '@/shared/utils/cn';
 import DeleteButton from './DeleteButton';
-
-// TODO: 유효성 검사 로직이 머지되면 아래 임시 상수를 지우고 import 해서 사용할 것!
-const IMAGE_RULES = {
-  MAX_SIZE: 5 * 1024 * 1024, // 5MB
-  ACCEPTED_TYPES: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
-} as const;
 
 export type ImageUploaderProps = {
   label?: string;
