@@ -2,7 +2,6 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
-import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE } from '@/shared/constants/auth';
 
 type RefreshResponse = {
   accessToken: string;
@@ -54,13 +53,11 @@ export async function POST() {
     // 3. accessToken 갱신
     response.cookies.set('accessToken', data.accessToken, {
       ...cookieOptions,
-      maxAge: ACCESS_TOKEN_MAX_AGE,
     });
 
     // 4. refreshToken 갱신
     response.cookies.set('refreshToken', data.refreshToken, {
       ...cookieOptions,
-      maxAge: REFRESH_TOKEN_MAX_AGE,
     });
 
     return response;
