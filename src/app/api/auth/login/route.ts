@@ -36,9 +36,9 @@ export async function POST(request: Request) {
       password,
     });
 
-    // 로그인 실패
+    // accessToken 또는 refreshToken이 정상적으로 내려오지 않은 경우
     if (!data?.accessToken || !data?.refreshToken) {
-      return NextResponse.json({ message: '로그인에 실패했습니다.' }, { status: 401 });
+      return NextResponse.json({ message: '로그인에 실패했습니다.' }, { status: 500 });
     }
 
     // 응답 객체 생성 및 공통 쿠키 설정
