@@ -1,3 +1,5 @@
+'use client';
+
 import type { MouseEvent } from 'react';
 import { DeleteIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
