@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { AUTH_API_MESSAGE, COMMON_MESSAGE } from '@/features/auth/constants/authMessage';
 import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
 import { RefreshResponse } from '@/features/auth/types';
 import { ApiError } from '@/shared/apis/apiError';
@@ -23,7 +24,7 @@ export async function POST() {
     const refreshToken = cookieStore.get('refreshToken')?.value;
 
     if (!refreshToken) {
-      return NextResponse.json({ message: 'Refresh token이 없습니다.' }, { status: 401 });
+      return NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_ERROR }, { status: 401 });
     }
 
     // 2. 백엔드에 토큰 재발급 요청
@@ -33,9 +34,9 @@ export async function POST() {
       },
     });
 
-    // accessToken이 없으면 재발급 실패
-    if (!data?.accessToken) {
-      return NextResponse.json({ message: '토큰 재발급 실패' }, { status: 401 });
+    // accessToken 또는 refreshToken이 정상적으로 내려오지 않은 경우
+    if (!data?.accessToken || !data?.refreshToken) {
+      return NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_ERROR }, { status: 401 });
     }
 
     // 응답 객체 생성 및 공통 쿠키 설정
@@ -57,8 +58,13 @@ export async function POST() {
     console.error('[POST /api/auth/tokens]', error);
 
     if (error instanceof ApiError) {
-      return NextResponse.json({ message: error.message }, { status: error.status });
+      return NextResponse.json(
+        { message: error.message || AUTH_API_MESSAGE.LOGIN.ERROR },
+        { status: error.status }
+      );
     }
-    return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
+
+    // 네트워크 장애 에러
+    return NextResponse.json({ message: COMMON_MESSAGE.ERROR.NETWORK }, { status: 500 });
   }
 }

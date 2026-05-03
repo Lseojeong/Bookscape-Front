@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { COMMON_MESSAGE } from '@/features/auth/constants/authMessage';
 
 /**
  * POST /api/auth/logout
@@ -19,6 +20,7 @@ export async function POST() {
   } catch (error) {
     console.error('[POST /api/auth/logout]', error);
 
-    return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
+    // 네트워크 장애 에러
+    return NextResponse.json({ message: COMMON_MESSAGE.ERROR.NETWORK }, { status: 500 });
   }
 }
