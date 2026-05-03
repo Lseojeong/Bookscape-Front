@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
@@ -42,21 +43,15 @@ export async function POST(request: Request) {
 
     // 응답 객체 생성 및 공통 쿠키 설정
     const response = NextResponse.json({ success: true });
-    const cookieOptions = {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'strict' as const,
-      path: '/',
-    };
 
     // 3. accessToken 쿠키 저장
     response.cookies.set('accessToken', data.accessToken, {
-      ...cookieOptions,
+      ...COOKIE_OPTIONS,
     });
 
     // 4. refreshToken 쿠키 저장
     response.cookies.set('refreshToken', data.refreshToken, {
-      ...cookieOptions,
+      ...COOKIE_OPTIONS,
     });
 
     return response;
