@@ -5,7 +5,7 @@ import { create } from 'zustand';
  */
 type User = {
   /** 사용자의 고유 식별자 (UUID) */
-  id: string;
+  id: number;
   /** 사용자 이메일 계정 */
   email: string;
   /** 사용자 닉네임 */
@@ -21,13 +21,13 @@ type AuthState = {
   /** 액세스 토큰의 만료 시각 */
   expiresAt: number | null;
   /**
-   * 사용자 정보와 만료 시각을 스토어에 저장합니다.
+   * 사용자 정보와 만료 시각을 스토어에 저장
    * @param user - 저장할 사용자 객체
    * @param expiresAt - 토큰 만료 시각 (Timestamp)
    */
   setAuth: (user: User, expiresAt: number) => void;
   /**
-   * 스토어에 저장된 인증 정보를 초기화(로그아웃 처리)합니다.
+   * 스토어에 저장된 인증 정보를 초기화(로그아웃 처리)
    */
   clearAuth: () => void;
 };
