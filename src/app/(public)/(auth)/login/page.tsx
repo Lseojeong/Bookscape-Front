@@ -13,18 +13,23 @@ import PasswordInput from '@/shared/ui/input/PasswordInput';
  * 하단에 카카오 로그인 및 회원가입 페이지 이동 링크가 포함됩니다.
  */
 export default function LoginPage() {
-  const { control } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, isValid },
+  } = useForm({
     defaultValues: {
       email: '',
       password: '',
     },
+    mode: 'onChange',
   });
 
   const handleLogin = () => {};
 
   return (
     <>
-      <AuthForm onSubmit={handleLogin}>
+      <AuthForm onSubmit={handleSubmit(handleLogin)}>
         <FormField label="이메일">
           <FormInput
             type="email"
@@ -41,8 +46,8 @@ export default function LoginPage() {
           type="submit"
           theme="primary"
           size="lg"
-          // isLoading={isLoading}
-          // disabled={disabled}
+          isLoading={isSubmitting}
+          disabled={!isValid || isSubmitting}
           className="mt-2 h-13.5 w-full rounded-2xl md:mt-2.5"
         >
           로그인 하기
