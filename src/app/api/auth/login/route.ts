@@ -29,11 +29,6 @@ export async function POST(request: Request) {
     const body: LoginRequest = await request.json();
     const { email, password } = body;
 
-    // 필수 값 검증
-    if (!email || !password) {
-      return NextResponse.json({ message: '이메일과 비밀번호를 입력해주세요.' }, { status: 400 });
-    }
-
     // 2. 로그인 API 호출
     const data = await serverFetch.post<LoginResponse>('/auth/login', {
       email,
