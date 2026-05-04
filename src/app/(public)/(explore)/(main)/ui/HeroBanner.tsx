@@ -18,7 +18,7 @@ export default function HeroBanner(props: Omit<ImageProps, 'src' | 'alt'>) {
         {...props}
       />
       {/* 헤드라인 및 검색 인풋 */}
-      <div className="absolute inset-0 mx-auto mt-22 flex max-w-260 flex-col items-center justify-between text-white md:mt-13.25 lg:mt-20.75">
+      <div className="absolute inset-0 mx-auto mt-22 flex max-w-260 flex-col items-center justify-between px-9 text-white md:mt-13.25 md:px-8 lg:mt-20.75 xl:px-0">
         <div className="flex w-full items-center justify-between">
           <div className="max-w-2xl grow">
             <p className="mb-10.25 typo-16-medium md:mb-6.25">Search</p>
@@ -40,7 +40,7 @@ export default function HeroBanner(props: Omit<ImageProps, 'src' | 'alt'>) {
           </div>
           <Logo variant="white" className="hidden shrink-0 lg:block lg:w-60" />
         </div>
-        <div className="w-full translate-y-1/2">
+        <div className="w-full translate-y-1/2 px-0 md:px-5">
           <SearchInput />
         </div>
       </div>
