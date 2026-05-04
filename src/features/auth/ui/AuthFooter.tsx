@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import KakaoAuthButton from '@/features/auth/ui/KakaoAuthButton';
+import KakaoAuthButton from '@/features/auth/oauth/ui/KakaoAuthButton';
 
 type AuthFooterProps = {
   onKakaoClick?: () => void;
