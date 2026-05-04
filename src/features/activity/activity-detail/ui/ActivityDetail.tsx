@@ -7,6 +7,16 @@ type ActivityDetailProps = {
   id: number;
 };
 
+/**
+ * 체험 상세 페이지 컨테이너 컴포넌트입니다.
+ *
+ * 체험 상세 데이터를 패칭하고 하위 컴포넌트에 전달합니다.
+ *
+ * @example
+ * ```tsx
+ * <<ActivityDetail id={ActivityId} />
+ * ```
+ */
 export default function ActivityDetail({ id }: ActivityDetailProps) {
   const { data: activity } = useActivityDetail(id);
 
