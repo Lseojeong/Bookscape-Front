@@ -2,10 +2,10 @@ import type { UserResponse } from '@/features/user/types';
 
 export type OauthProvider = 'kakao';
 
-export interface SignInWithOauthRequestBody {
+export type SignInWithOauthRequestBody = {
   redirectUri?: string;
   token: string;
-}
+};
 
 export type SignUpWithOauthRequestBody = SignInWithOauthRequestBody & {
   nickname: string;
