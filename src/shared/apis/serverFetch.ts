@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { AUTH_COOKIE_KEYS } from '@/features/auth/constants/cookies';
 import {
   coreFetch,
   FetchRequestOptions,
@@ -34,7 +35,7 @@ const request = async <T>({
   ...options
 }: RequestConfig): Promise<T | null> => {
   const cookieStore = await cookies();
-  const token = cookieStore.get('accessToken')?.value;
+  const token = cookieStore.get(AUTH_COOKIE_KEYS.ACCESS_TOKEN)?.value;
 
   const headers = Object.fromEntries(new Headers(options.headers).entries());
   if (token) {
