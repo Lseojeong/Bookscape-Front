@@ -44,13 +44,10 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
   }, [emblaApi]);
 
   return (
-    <div ref={emblaRef} className="relative w-full overflow-hidden">
+    <div ref={emblaRef} className="relative w-full overflow-hidden rounded-3xl">
       <div className="flex">
         {images.map((src, index) => (
-          <div
-            key={index}
-            className="relative h-100 min-w-0 flex-[0_0_100%] overflow-hidden rounded-3xl"
-          >
+          <div key={index} className="relative h-100 min-w-0 flex-[0_0_100%]">
             <Image src={src} alt={`체험 이미지 ${index + 1}`} fill className="object-cover" />
           </div>
         ))}
