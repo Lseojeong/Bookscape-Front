@@ -28,13 +28,13 @@ const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
           placeholder={placeholder}
           aria-label="검색어 입력"
           className={cn(
-            'input-base',
+            'field-surface field-input',
             'h-15.5 rounded-[20px] px-5 py-5.5 pr-14 typo-14-medium shadow-drop md:h-17.5 md:rounded-3xl md:px-8 md:py-6 md:pr-22 md:typo-18-medium'
           )}
         />
         <button
           type="submit"
-          className="absolute top-1/2 right-5 -translate-y-1/2 cursor-pointer"
+          className="absolute top-1/2 right-5 -translate-y-1/2"
           aria-label="검색"
         >
           <SearchIcon />
