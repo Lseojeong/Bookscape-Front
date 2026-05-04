@@ -3,6 +3,7 @@ import {
   coreFetch,
   FetchRequestOptions,
   QueryParams,
+  buildQueryString,
 } from '@/shared/apis/coreFetch';
 
 const BFF_BASE_URL = '/api';
@@ -31,13 +32,8 @@ const request = <T>({
   query,
   ...options
 }: RequestConfig): Promise<T | null> => {
-  return coreFetch<T>(
-    BFF_BASE_URL,
-    endpoint,
-    { ...options, method, credentials: 'include' },
-    query,
-    body
-  );
+  const url = `${BFF_BASE_URL}${endpoint}${buildQueryString(query)}`;
+  return coreFetch<T>(url, { ...options, method, credentials: 'include' }, body);
 };
 
 /** HTTP 메서드 유틸리티 */

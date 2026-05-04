@@ -3,6 +3,7 @@ import {
   FetchRequestOptions,
   QueryParams,
   RequestConfig,
+  buildQueryString,
 } from '@/shared/apis/coreFetch';
 import { ENV } from '@/shared/apis/env';
 /**
@@ -29,8 +30,13 @@ import { ENV } from '@/shared/apis/env';
 
 type BaseRequestOptions = Omit<FetchRequestOptions, 'body' | 'isFormData'>;
 
+const buildAbsoluteUrl = (baseUrl: string, endpoint: string, query?: QueryParams): string => {
+  const base = baseUrl.replace(/\/+$/, '');
+  return `${base}${endpoint}${buildQueryString(query)}`;
+};
+
 const request = <T>({ endpoint, method, body, query, ...options }: RequestConfig) =>
-  coreFetch<T>(ENV.API_BASE_URL, endpoint, { ...options, method }, query, body);
+  coreFetch<T>(buildAbsoluteUrl(ENV.API_BASE_URL, endpoint, query), { ...options, method }, body);
 
 export const get = <T>(endpoint: string, query?: QueryParams, options?: BaseRequestOptions) =>
   request<T>({ endpoint, method: 'GET', query, ...options });

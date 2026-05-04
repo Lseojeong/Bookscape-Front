@@ -5,6 +5,7 @@ import {
   FetchRequestOptions,
   QueryParams,
   RequestConfig,
+  buildQueryString,
 } from '@/shared/apis/coreFetch';
 import { ENV } from '@/shared/apis/env';
 
@@ -42,7 +43,9 @@ const request = async <T>({
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  return coreFetch<T>(ENV.SERVER_API_URL, endpoint, { ...options, method, headers }, query, body);
+  const base = ENV.SERVER_API_URL.replace(/\/+$/, '');
+  const url = `${base}${endpoint}${buildQueryString(query)}`;
+  return coreFetch<T>(url, { ...options, method, headers }, body);
 };
 
 /** HTTP 메서드 유틸리티 */

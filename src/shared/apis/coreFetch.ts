@@ -15,7 +15,7 @@ import { ApiError } from './apiError';
  *
  * async function fetchData() {
  *   try {
- *     const data = await coreFetch('https://api.example.com', '/data', {
+ *     const data = await coreFetch('https://api.example.com/data', {
  *       method: 'GET',
  *     });
  *     console.log(data);
@@ -45,7 +45,7 @@ export type RequestConfig = {
   query?: QueryParams;
 } & Omit<FetchRequestOptions, 'body'>;
 
-const buildQueryString = (query?: QueryParams): string => {
+export const buildQueryString = (query?: QueryParams): string => {
   if (!query) return '';
 
   const params = new URLSearchParams();
@@ -57,23 +57,6 @@ const buildQueryString = (query?: QueryParams): string => {
   });
 
   return params.toString() ? `?${params.toString()}` : '';
-};
-
-const buildRequestUrl = (baseUrl: string, endpoint: string, query?: QueryParams) => {
-  // Absolute base URL (e.g. https://api.example.com)
-  if (/^https?:\/\//i.test(baseUrl)) {
-    const base = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-    const url = new URL(endpoint.replace(/^\//, ''), base);
-    if (query) {
-      url.search = buildQueryString(query).replace(/^\?/, '');
-    }
-    return url.toString();
-  }
-
-  // Relative base URL (e.g. /api) for same-origin requests
-  const basePath = baseUrl.startsWith('/') ? baseUrl : `/${baseUrl}`;
-  const fullPath = `${basePath.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
-  return `${fullPath}${buildQueryString(query)}`;
 };
 
 const parseBody = (
@@ -98,13 +81,10 @@ const parseResponse = (text: string, isJson: boolean) => {
 };
 
 export async function coreFetch<T>(
-  baseUrl: string,
-  endpoint: string,
+  url: string,
   options: FetchRequestOptions = {},
-  query?: QueryParams,
   body?: unknown
 ): Promise<T | null> {
-  const url = buildRequestUrl(baseUrl, endpoint, query);
   const { isFormData = false, ...requestOptions } = options;
 
   const controller = new AbortController();
