@@ -36,6 +36,6 @@ export async function POST(request: NextRequest) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     }
-    return NextResponse.json({ message: 'UNKNOWN_ERROR' }, { status: 500 });
+    return NextResponse.json({ message: '카카오 회원가입에 실패했습니다.' }, { status: 500 });
   }
 }
