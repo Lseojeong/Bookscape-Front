@@ -1,13 +1,13 @@
 'use client';
 
-import { useActivityDetail } from '../queries/useActivityDetail';
+import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
 import ImageCarousel from './ImageCarousel';
 
-type Props = {
+type ActivityDetailProps = {
   id: number;
 };
 
-export default function ActivityDetail({ id }: Props) {
+export default function ActivityDetail({ id }: ActivityDetailProps) {
   const { data: activity } = useActivityDetail(id);
 
   if (!activity) return null;
@@ -18,7 +18,6 @@ export default function ActivityDetail({ id }: Props) {
       {/* 카테고리, 제목, 별점, 위치 */}
       {/* 탭바 */}
       {/* 체험 설명 */}
-      왼쪽 영역
     </div>
   );
 }
