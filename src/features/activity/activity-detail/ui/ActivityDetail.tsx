@@ -1,6 +1,6 @@
 'use client';
 
-import { useActivityDetail } from '../hooks/useActivityDetail';
+import { useActivityDetail } from '../queries/useActivityDetail';
 import ImageCarousel from './ImageCarousel';
 
 type Props = {
