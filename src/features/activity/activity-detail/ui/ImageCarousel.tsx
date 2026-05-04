@@ -2,8 +2,13 @@
 
 import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel from 'embla-carousel-react';
+import Image from 'next/image';
 import { startTransition, useEffect, useState } from 'react';
 import { cn } from '@/shared/utils/cn';
+
+type ImageCarouselProps = {
+  images: string[];
+};
 
 /**
  * 이미지 캐러셀 컴포넌트입니다.
@@ -15,7 +20,7 @@ import { cn } from '@/shared/utils/cn';
  * <ImageCarousel />
  * ```
  */
-export default function ImageCarousel() {
+export default function ImageCarousel({ images }: ImageCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
@@ -38,11 +43,13 @@ export default function ImageCarousel() {
 
   return (
     <div ref={emblaRef} className="relative w-full overflow-hidden">
-      {/* Mock 데이터 */}
       <div className="flex">
-        {['이미지1', '이미지2', '이미지3'].map((item) => (
-          <div key={item} className="h-100 min-w-0 flex-[0_0_100%] bg-gray-200">
-            {item}
+        {images.map((src, index) => (
+          <div
+            key={index}
+            className="relative h-100 min-w-0 flex-[0_0_100%] overflow-hidden rounded-3xl"
+          >
+            <Image src={src} alt={`체험 이미지 ${index + 1}`} fill className="object-cover" />
           </div>
         ))}
       </div>
