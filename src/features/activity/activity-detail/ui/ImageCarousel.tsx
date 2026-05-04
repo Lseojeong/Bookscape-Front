@@ -17,7 +17,7 @@ type ImageCarouselProps = {
  *
  * @example
  * ```tsx
- * <ImageCarousel />
+ * <ImageCarousel images={['https://...', 'https://...']} />
  * ```
  */
 export default function ImageCarousel({ images }: ImageCarouselProps) {
