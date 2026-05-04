@@ -1,12 +1,11 @@
 'use client';
 
-import Image from 'next/image';
+import ImagePreviewItem from '@/features/my-page/activity-form/ui/image-uploader/ImagePreviewItem';
 import { PlusIcon } from '@/shared/assets/icons';
 import { IMAGE_RULES } from '@/shared/constants/file';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import { cn } from '@/shared/utils/cn';
-import DeleteButton from './DeleteButton';
 
 export type ImageUploaderProps = {
   label?: string;
@@ -16,6 +15,13 @@ export type ImageUploaderProps = {
   showCounter?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: (index: number) => void;
+};
+
+// File 객체나 string URL로부터 고유한 문자열 생성
+const getUniqueKey = (img: File | string) => {
+  if (typeof img === 'string') return img;
+  // 파일명, 크기, 마지막 수정 시간을 조합하여 고유한 키 생성
+  return `${img.name}-${img.size}-${img.lastModified}`;
 };
 
 /**
@@ -46,13 +52,6 @@ export default function ImageUploader({
   const count = images.length;
   const isDisabled = count >= maxCount;
   const isError = !!errorMessage;
-
-  // File 객체나 string URL로부터 고유한 문자열 생성
-  const getUniqueKey = (img: File | string) => {
-    if (typeof img === 'string') return img;
-    // 파일명, 크기, 마지막 수정 시간을 조합하여 고유한 키 생성
-    return `${img.name}-${img.size}-${img.lastModified}`;
-  };
 
   return (
     <FormField label={label} labelWeight="bold" errorMessage={errorMessage}>
@@ -105,35 +104,14 @@ export default function ImageUploader({
           />
         </label>
 
-        {images.map((img, idx) => {
-          const imgSrc = typeof img === 'string' ? img : URL.createObjectURL(img);
-          return (
-            <div key={getUniqueKey(img)} className="relative h-20 w-20 md:h-32 md:w-32">
-              <div
-                className={cn(
-                  'relative h-full w-full overflow-hidden rounded-lg border md:rounded-2xl',
-                  isError ? 'border-error' : 'border-gray-100'
-                )}
-              >
-                <Image
-                  src={imgSrc}
-                  alt={`preview-${idx}`}
-                  fill
-                  className="object-cover"
-                  unoptimized={typeof img !== 'string'}
-                />
-              </div>
-
-              <DeleteButton
-                className="absolute -top-1 -right-1 layer-base"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onRemove(idx);
-                }}
-              />
-            </div>
-          );
-        })}
+        {images.map((img, idx) => (
+          <ImagePreviewItem
+            key={getUniqueKey(img)}
+            img={img}
+            isError={isError}
+            onRemove={() => onRemove(idx)}
+          />
+        ))}
       </div>
     </FormField>
   );
