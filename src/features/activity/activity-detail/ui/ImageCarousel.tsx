@@ -57,7 +57,9 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
+            type="button"
             onClick={() => emblaApi?.scrollTo(index)}
+            aria-label={`${index + 1}번 이미지로 이동`}
             className={cn(
               'h-2 w-2 cursor-pointer rounded-full',
               index === selectedIndex ? 'bg-gray-700' : 'bg-gray-300'

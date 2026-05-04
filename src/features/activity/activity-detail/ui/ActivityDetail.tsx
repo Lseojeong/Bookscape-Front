@@ -14,7 +14,7 @@ type ActivityDetailProps = {
  *
  * @example
  * ```tsx
- * <<ActivityDetail id={ActivityId} />
+ * <ActivityDetail id={ActivityId} />
  * ```
  */
 export default function ActivityDetail({ id }: ActivityDetailProps) {
