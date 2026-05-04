@@ -7,6 +7,7 @@ import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownCon
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
+import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import ReservationCalendar from './components/ReservationCalendar';
 import ReservationPanel from './components/ReservationPanel';
@@ -18,6 +19,9 @@ const MOCK_ACTIVITIES = [
   { id: 2, title: '한강 야경 보며 즐기는 요트 파티' },
   { id: 3, title: '초보자를 위한 서핑 클래스' },
 ];
+
+//체험이 없을 경우 TODO: api 연결 후 삭제
+// const MOCK_ACTIVITIES: { id: number; title: string }[] = [];
 
 // TODO: API 연결 후 삭제 - 달력용 (월별 예약 현황)
 const MOCK_CALENDAR_SCHEDULES: Record<number, CalendarSchedule[]> = {
@@ -634,39 +638,49 @@ export default function ReservationStatusPage() {
         description="내 체험에 예약된 내역들을 한 눈에 확인할 수 있습니다."
         onBack={() => router.back()}
       />
-      <SelectDropdown
-        value={String(selectedActivityId ?? '')}
-        onChangeValue={(id) => setSelectedActivityId(Number(id))}
-      >
-        <SelectDropdownTrigger>
-          <SelectDropdownValue
-            render={(value) => MOCK_ACTIVITIES.find((a) => String(a.id) === value)?.title}
+
+      {MOCK_ACTIVITIES.length === 0 ? (
+        <EmptyState
+          type="experience"
+          mainText={'아직 등록한 체험이 없어요.\n새로운 체험을 등록해보세요!'}
+        />
+      ) : (
+        <>
+          <SelectDropdown
+            value={String(selectedActivityId ?? '')}
+            onChangeValue={(id) => setSelectedActivityId(Number(id))}
+          >
+            <SelectDropdownTrigger>
+              <SelectDropdownValue
+                render={(value) => MOCK_ACTIVITIES.find((a) => String(a.id) === value)?.title}
+              />
+            </SelectDropdownTrigger>
+            <SelectDropdownContent>
+              {MOCK_ACTIVITIES.map((activity) => (
+                <SelectDropdownItem key={activity.id} value={String(activity.id)}>
+                  {activity.title}
+                </SelectDropdownItem>
+              ))}
+            </SelectDropdownContent>
+          </SelectDropdown>
+
+          <ReservationCalendar
+            month={month}
+            onMonthChange={setMonth}
+            schedules={currentCalendarSchedules}
+            onDateClick={handleDateClick}
           />
-        </SelectDropdownTrigger>
-        <SelectDropdownContent>
-          {MOCK_ACTIVITIES.map((activity) => (
-            <SelectDropdownItem key={activity.id} value={String(activity.id)}>
-              {activity.title}
-            </SelectDropdownItem>
-          ))}
-        </SelectDropdownContent>
-      </SelectDropdown>
 
-      <ReservationCalendar
-        month={month}
-        onMonthChange={setMonth}
-        schedules={currentCalendarSchedules}
-        onDateClick={handleDateClick}
-      />
-
-      <ReservationPanel
-        key={selectedDateStr ?? ''}
-        isOpen={panelOpen}
-        onClose={() => setPanelOpen(false)}
-        date={selectedDate}
-        schedules={currentPanelSchedules}
-        reservations={currentReservations}
-      />
+          <ReservationPanel
+            key={selectedDateStr ?? ''}
+            isOpen={panelOpen}
+            onClose={() => setPanelOpen(false)}
+            date={selectedDate}
+            schedules={currentPanelSchedules}
+            reservations={currentReservations}
+          />
+        </>
+      )}
     </div>
   );
 }
