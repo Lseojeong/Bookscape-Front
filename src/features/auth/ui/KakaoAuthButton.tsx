@@ -1,19 +1,17 @@
 import { AnchorHTMLAttributes } from 'react';
+import type { OAuthMode } from '@/features/auth/constants/oauthMode';
 import { KakaoIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
-type KakaoAuthButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  label: string; // '로그인' | '회원가입';
+type KakaoAuthButtonProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
+  mode: OAuthMode;
   className?: string;
-  href: string;
 };
 
-export default function KakaoAuthButton({
-  label,
-  className,
-  href,
-  ...props
-}: KakaoAuthButtonProps) {
+export default function KakaoAuthButton({ mode, className, ...props }: KakaoAuthButtonProps) {
+  const label = mode === 'signin' ? '로그인' : '회원가입';
+  const href = `/api/oauth/kakao/authorization?mode=${mode}`;
+
   return (
     <a
       href={href}
