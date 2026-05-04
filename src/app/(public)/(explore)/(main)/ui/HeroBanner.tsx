@@ -22,7 +22,7 @@ export default function HeroBanner(props: Omit<ImageProps, 'src' | 'alt'>) {
         <div className="flex w-full items-center justify-between">
           <div className="max-w-2xl grow">
             <p className="mb-10.25 typo-16-medium md:mb-6.25">Search</p>
-            <p className="mb-10.25 typo-20-medium md:mb-8.75 lg:mb-13.25">
+            <p className="mb-10.25 typo-20-medium leading-tight md:mb-8.75 md:typo-32-medium lg:mb-13.25">
               체험을 만들고, 찾고, 예약까지 한 번에
               <br />
               북스케이프에서 경험해보세요!
@@ -31,7 +31,7 @@ export default function HeroBanner(props: Omit<ImageProps, 'src' | 'alt'>) {
               href="/activities"
               aria-label="체험 페이지로 이동"
               className={cn(
-                'inline-block w-full rounded-4xl bg-white py-4 text-center typo-13-medium text-primary-700 md:w-86.5',
+                'inline-block w-full rounded-4xl bg-white py-4 text-center typo-13-medium text-primary-700 md:w-86.5 md:typo-20-medium',
                 'transition-transform hover:scale-105'
               )}
             >
