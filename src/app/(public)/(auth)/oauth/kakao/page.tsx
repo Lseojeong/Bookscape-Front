@@ -118,11 +118,8 @@ function KakaoOauthCallbackInner() {
   }, [code, isParamError, mode, redirectUri, router]);
 
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 px-4">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center">
       <Loading size={20} color="var(--color-gray-700)" />
-      <p className="text-sm text-gray-600">
-        {mode === 'signup' ? '카카오 회원가입 중…' : '카카오 로그인 중…'}
-      </p>
     </div>
   );
 }
