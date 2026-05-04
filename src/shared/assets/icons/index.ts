@@ -27,6 +27,7 @@ import ReservationListIcon from './ic-reservation-list.svg';
 import ReservationStatusIcon from './ic-reservation-status.svg';
 import SearchIcon from './ic-search.svg';
 import StarIcon from './ic-star.svg';
+import TrashIcon from './ic-trash.svg';
 import WarningIcon from './ic-warning.svg';
 
 export * from './home-category';
@@ -62,4 +63,5 @@ export {
   SearchIcon,
   StarIcon,
   WarningIcon,
+  TrashIcon,
 };
