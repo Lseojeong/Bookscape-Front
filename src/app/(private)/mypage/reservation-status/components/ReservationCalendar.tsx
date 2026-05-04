@@ -5,26 +5,20 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { CaretLeftIcon, CaretRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
-
-export type Schedule = {
-  date: string;
-  reservations: {
-    completed: number;
-    confirmed: number;
-    pending: number;
-  };
-};
+import type { CalendarSchedule } from '../types/reservation';
 
 type ReservationCalendarProps = {
   month: Date;
   onMonthChange: (month: Date) => void;
-  schedules: Schedule[];
+  schedules: CalendarSchedule[];
+  onDateClick?: (date: Date) => void;
 };
 
 export default function ReservationCalendar({
   month,
   onMonthChange,
   schedules,
+  onDateClick,
 }: ReservationCalendarProps) {
   return (
     <div className="-mx-6 w-screen bg-white md:mx-0 md:w-full md:rounded-2xl md:pt-5 md:shadow-card">
@@ -34,9 +28,8 @@ export default function ReservationCalendar({
         onMonthChange={onMonthChange}
         showOutsideDays
         classNames={{
-          root: 'w-full relative ',
+          root: 'w-full relative',
           months: 'w-full',
-          // TODO: z-index 머지 후 nav 수정
           nav: 'absolute inset-x-0 flex justify-center gap-25 md:gap-40 z-1',
           month_caption: 'flex justify-center items-center relative mb-7.5',
           caption_label: 'typo-16-bold md:typo-20-bold',
@@ -51,13 +44,12 @@ export default function ReservationCalendar({
           today: 'bg-blue-50',
         }}
         components={{
-          Chevron: ({ orientation }) => {
-            return orientation === 'left' ? (
+          Chevron: ({ orientation }) =>
+            orientation === 'left' ? (
               <CaretLeftIcon className="h-5 w-5 md:h-6 md:w-6" />
             ) : (
               <CaretRightIcon className="h-5 w-5 md:h-6 md:w-6" />
-            );
-          },
+            ),
           Day: ({ day, modifiers, ...props }) => {
             const isToday = modifiers.today;
             const isOutside = day.outside;
@@ -69,12 +61,20 @@ export default function ReservationCalendar({
                 schedule.reservations.confirmed > 0 ||
                 schedule.reservations.pending > 0);
 
+            const handleClick = () => {
+              if (!isOutside && onDateClick) {
+                onDateClick(day.date);
+              }
+            };
+
             return (
               <td
                 {...props}
+                onClick={handleClick}
                 className={cn(
                   'flex h-full min-h-31 w-full flex-col items-center gap-1 border-b border-gray-50 p-1 px-3 py-4.5 typo-16-medium',
-                  isToday && 'bg-blue-50'
+                  isToday && 'bg-blue-50',
+                  !isOutside && 'cursor-pointer hover:bg-gray-25' // hasReservation 조건 제거
                 )}
               >
                 <span className={cn(isOutside ? 'text-gray-300' : 'text-gray-800', 'relative')}>
@@ -90,14 +90,14 @@ export default function ReservationCalendar({
                         완료 {schedule.reservations.completed}
                       </span>
                     )}
-                    {schedule.reservations.confirmed > 0 && (
+                    {schedule.reservations.pending > 0 && (
                       <span className="flex items-center justify-center rounded bg-blue-100 pt-px text-primary-500 md:pt-0">
-                        예약 {schedule.reservations.confirmed}
+                        예약 {schedule.reservations.pending}
                       </span>
                     )}
-                    {schedule.reservations.pending > 0 && (
+                    {schedule.reservations.confirmed > 0 && (
                       <span className="flex items-center justify-center rounded bg-orange-100 pt-px text-orange-400 md:pt-0">
-                        승인 {schedule.reservations.pending}
+                        승인 {schedule.reservations.confirmed}
                       </span>
                     )}
                   </div>
