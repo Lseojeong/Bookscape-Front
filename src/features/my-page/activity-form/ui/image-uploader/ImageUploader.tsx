@@ -47,6 +47,13 @@ export default function ImageUploader({
   const isDisabled = count >= maxCount;
   const isError = !!errorMessage;
 
+  // File 객체나 string URL로부터 고유한 문자열 생성
+  const getUniqueKey = (img: File | string) => {
+    if (typeof img === 'string') return img;
+    // 파일명, 크기, 마지막 수정 시간을 조합하여 고유한 키 생성
+    return `${img.name}-${img.size}-${img.lastModified}`;
+  };
+
   return (
     <FormField label={label} labelWeight="bold" errorMessage={errorMessage}>
       <div className="flex flex-wrap gap-3 md:gap-3.5">
@@ -101,7 +108,7 @@ export default function ImageUploader({
         {images.map((img, idx) => {
           const imgSrc = typeof img === 'string' ? img : URL.createObjectURL(img);
           return (
-            <div key={idx} className="relative h-20 w-20 md:h-32 md:w-32">
+            <div key={getUniqueKey(img)} className="relative h-20 w-20 md:h-32 md:w-32">
               <div
                 className={cn(
                   'relative h-full w-full overflow-hidden rounded-lg border md:rounded-2xl',
