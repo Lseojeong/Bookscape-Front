@@ -60,12 +60,20 @@ const buildQueryString = (query?: QueryParams): string => {
 };
 
 const buildRequestUrl = (baseUrl: string, endpoint: string, query?: QueryParams) => {
-  const base = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-  const url = new URL(endpoint.replace(/^\//, ''), base);
-  if (query) {
-    url.search = buildQueryString(query).replace(/^\?/, '');
+  // Absolute base URL (e.g. https://api.example.com)
+  if (/^https?:\/\//i.test(baseUrl)) {
+    const base = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+    const url = new URL(endpoint.replace(/^\//, ''), base);
+    if (query) {
+      url.search = buildQueryString(query).replace(/^\?/, '');
+    }
+    return url.toString();
   }
-  return url.toString();
+
+  // Relative base URL (e.g. /api) for same-origin requests
+  const basePath = baseUrl.startsWith('/') ? baseUrl : `/${baseUrl}`;
+  const fullPath = `${basePath.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
+  return `${fullPath}${buildQueryString(query)}`;
 };
 
 const parseBody = (
