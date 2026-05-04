@@ -45,8 +45,6 @@ export default function MainCategoryList() {
           const Icon = category.iconSrc;
           // 1. 첫 줄 (index 0,1,2): 6칸 중 2칸씩 차지 (3개 배치)
           // 2. 둘째 줄 (index 3,4):
-          //    - 4번째 아이템(index 3)에 왼쪽 여백 1칸 부여 (col-start-2)
-          //    - 각각 2칸씩 차지
           let gridClasses = 'col-span-2 flex justify-center';
           if (index === 3) gridClasses += ' col-start-2';
 
