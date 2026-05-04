@@ -34,7 +34,7 @@ export type ImageUploaderProps = {
  * />
  * ```
  */
-export function ImageUploader({
+export default function ImageUploader({
   label,
   errorMessage,
   images = [],

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import React, { useState } from 'react';
-import { ImageUploader } from './ImageUploader';
+import ImageUploader from '@/features/my-page/activity-form/ui/image-uploader/ImageUploader';
 
 const meta: Meta<typeof ImageUploader> = {
   title: 'Features/MyPage/ImageUploader',
