@@ -23,11 +23,11 @@ export default function ActivityDetail({ id }: ActivityDetailProps) {
   if (!activity) return null;
 
   return (
-    <div className="lg:w-167.5">
+    <section className="lg:w-167.5">
       <ImageCarousel images={activity.images} />
       {/* 카테고리, 제목, 별점, 위치 */}
       {/* 탭바 */}
       {/* 체험 설명 */}
-    </div>
+    </section>
   );
 }
