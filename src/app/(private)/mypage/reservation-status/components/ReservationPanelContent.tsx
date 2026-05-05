@@ -152,10 +152,14 @@ export default function ReservationPanelContent({
       {/* 헤더 */}
       <div className="shrink-0">
         <p className="typo-18-bold lg:typo-24-bold">{formatDate(date)}</p>
-        <DeleteIcon
-          className="absolute top-4 right-4 h-8 w-8 cursor-pointer text-gray-500 hover:text-gray-700 lg:top-5 lg:right-5"
+        <button
+          type="button"
           onClick={onClose}
-        />
+          className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 lg:top-5 lg:right-5"
+          aria-label="닫기"
+        >
+          <DeleteIcon className="h-8 w-8" />
+        </button>
       </div>
 
       {/* 탭 */}
