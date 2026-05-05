@@ -47,7 +47,7 @@ export default function ReservationCard({
             <span className="typo-16-medium">{reservation.headCount}명</span>
           </div>
         </div>
-        {isConfirmed && <StateBadge status="confirmed" />}
+        {isConfirmed && <StateBadge status="pending" />}
         {isDeclined && <StateBadge status="declined" />}
       </div>
 
