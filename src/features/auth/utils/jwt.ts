@@ -16,9 +16,24 @@ type JwtPayload = {
  * @returns JwtPayload
  */
 const parseJwtPayload = (token: string): JwtPayload => {
-  const payloadBase64 = token.split('.')[1];
-  const payloadJson = Buffer.from(payloadBase64, 'base64').toString('utf-8');
-  return JSON.parse(payloadJson) as JwtPayload;
+  try {
+    const parts = token.split('.');
+    if (parts.length < 2) return { exp: 0, iat: 0 };
+
+    const payloadBase64 = parts[1];
+    if (!payloadBase64) return { exp: 0, iat: 0 };
+
+    // JWT는 base64url을 사용합니다.
+    const payloadJson = Buffer.from(payloadBase64, 'base64url').toString('utf-8');
+    const payload = JSON.parse(payloadJson) as Partial<JwtPayload>;
+
+    return {
+      exp: typeof payload.exp === 'number' ? payload.exp : 0,
+      iat: typeof payload.iat === 'number' ? payload.iat : 0,
+    };
+  } catch {
+    return { exp: 0, iat: 0 };
+  }
 };
 
 /**
