@@ -1,23 +1,14 @@
 import { create } from 'zustand';
+import { UserData } from '@/features/auth/types/auth';
 
-/**
- * 사용자 기본 정보 타입
- */
-type User = {
-  /** 사용자의 고유 식별자 (UUID) */
-  id: number;
-  /** 사용자 이메일 계정 */
-  email: string;
-  /** 사용자 닉네임 */
-  nickname: string;
-};
+type UserInfoData = Pick<UserData, 'id' | 'email' | 'nickname'>;
 
 /**
  * 인증 관련 전역 상태 및 액션 객체 타입
  */
 type AuthState = {
   /** 현재 로그인한 사용자 정보 (비로그인 시 null) */
-  user: User | null;
+  user: UserInfoData | null;
   /** 액세스 토큰의 만료 시각 */
   expiresAt: number | null;
   /**
@@ -25,7 +16,7 @@ type AuthState = {
    * @param user - 저장할 사용자 객체
    * @param expiresAt - 토큰 만료 시각 (Timestamp)
    */
-  setAuth: (user: User, expiresAt: number) => void;
+  setAuth: (user: UserInfoData, expiresAt: number) => void;
   /**
    * 스토어에 저장된 인증 정보를 초기화(로그아웃 처리)
    */
