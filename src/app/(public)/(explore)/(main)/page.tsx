@@ -2,7 +2,7 @@ import HeroBanner from '@/app/(public)/(explore)/(main)/ui/HeroBanner';
 import MainCategoryList from '@/app/(public)/(explore)/(main)/ui/MainCategoryList';
 import MainActivityList from '@/features/activity/main/ui/MainActivityList';
 
-export default function Home() {
+export default function MainPage() {
   return (
     <div>
       <HeroBanner />
