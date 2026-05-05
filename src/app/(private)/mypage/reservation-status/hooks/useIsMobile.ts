@@ -11,13 +11,13 @@ function subscribe(callback: () => void) {
   return () => mql.removeEventListener('change', callback);
 }
 
-function getSnapshot() {
+const getSnapshot = () => {
   return window.matchMedia(`(max-width: ${MD_BREAKPOINT - 1}px)`).matches;
-}
+};
 
-function getServerSnapshot() {
+const getServerSnapshot = () => {
   return false;
-}
+};
 /**
  * 현재 뷰포트가 모바일인지 여부를 반환하는 훅.
  *
@@ -33,6 +33,8 @@ function getServerSnapshot() {
  * return isMobile ? <MobileLayout /> : <DesktopLayout />;
  * ```
  */
-export default function useIsMobile() {
+const useIsMobile = () => {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-}
+};
+
+export default useIsMobile;
