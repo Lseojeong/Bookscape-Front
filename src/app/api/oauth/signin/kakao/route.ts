@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import type { OauthAuthResponse, SignInWithOauthRequestBody } from '@/features/auth/types/oauth';
 import {
   createOAuthSessionResponse,
@@ -35,6 +36,9 @@ export async function POST(request: NextRequest) {
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     }
-    return NextResponse.json({ message: '카카오 로그인에 실패했습니다.' }, { status: 500 });
+    return NextResponse.json(
+      { message: AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNIN.ERROR },
+      { status: 500 }
+    );
   }
 }

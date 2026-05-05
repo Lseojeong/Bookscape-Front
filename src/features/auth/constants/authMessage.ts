@@ -12,6 +12,16 @@ export const AUTH_API_MESSAGE = {
   SIGNUP: {
     ERROR: '회원가입에 실패했습니다.',
   },
+  OAUTH: {
+    KAKAO: {
+      SIGNIN: {
+        ERROR: '카카오 로그인에 실패했습니다.',
+      },
+      SIGNUP: {
+        ERROR: '카카오 회원가입에 실패했습니다.',
+      },
+    },
+  },
   LOGOUT: {
     SUCCESS: '로그아웃 되었습니다.',
     ERROR: '로그아웃에 실패했습니다.',
