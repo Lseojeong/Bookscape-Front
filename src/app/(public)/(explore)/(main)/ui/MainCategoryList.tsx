@@ -9,6 +9,15 @@ const CATEGORY_OPTIONS = [
   { value: '웰빙', label: '웰빙', iconSrc: WellbeingIcon },
 ];
 
+/**
+ * 메인 페이지 카테고리 목록 컴포넌트입니다.
+ * 카테고리 아이콘 클릭 시 해당 카테고리 체험 목록 페이지로 이동합니다.
+ *
+ * @example
+ * ```tsx
+ * <MainCategoryList />
+ * ```
+ */
 export default function MainCategoryList() {
   return (
     <section className="flex flex-col gap-5">

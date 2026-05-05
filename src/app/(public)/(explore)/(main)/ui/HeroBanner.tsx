@@ -6,6 +6,15 @@ import Logo from '@/shared/ui/logo/Logo';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
 import { cn } from '@/shared/utils/cn';
 
+/**
+ * 메인 페이지 상단 히어로 배너 컴포넌트입니다.
+ * 배경 이미지, 헤드라인, 체험 페이지 이동 링크, 검색 인풋을 포함합니다.
+ *
+ * @example
+ * ```tsx
+ * <HeroBanner />
+ * ```
+ */
 export default function HeroBanner(props: Omit<ImageProps, 'src' | 'alt'>) {
   return (
     <section className="relative h-105 w-full overflow-visible">

@@ -8,6 +8,15 @@ import { get } from '@/shared/apis/base/publicFetch';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
+/**
+ * 메인 페이지 인기 체험 목록 컴포넌트입니다.
+ * 리뷰 많은 순으로 체험 목록을 조회하며, 가로 슬라이드 및 드래그 스크롤을 지원합니다.
+ *
+ * @example
+ * ```tsx
+ * <MainActivityList />
+ * ```
+ */
 export default function MainActivityList() {
   const [activityData, setActivityData] = useState<ActivityData[]>([]);
 
@@ -15,8 +24,9 @@ export default function MainActivityList() {
     const fetchActivityData = async () => {
       try {
         // TODO : 호출 개수 정해야함!
+        const ACTIVITY_FETCH_LIMIT = 8;
         const result = await get<ActivityResponse>(
-          '/activities?method=offset&sort=most_reviewed&size=8'
+          `/activities?method=offset&sort=most_reviewed&size=${ACTIVITY_FETCH_LIMIT}`
         );
         setActivityData(result?.activities ?? []);
       } catch {}

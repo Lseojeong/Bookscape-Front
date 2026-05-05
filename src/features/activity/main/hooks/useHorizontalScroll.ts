@@ -1,7 +1,26 @@
 'use client';
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+/**
+ * 가로 스크롤 컨테이너의 버튼 클릭 및 마우스 드래그 스크롤 기능을 제공하는 훅입니다.
+ *
+ * @param count - 스크롤 대상 아이템 수 (아이템 수 변경 시 스크롤 상태 재계산에 사용)
+ * @returns scrollRef - 스크롤 컨테이너에 연결할 ref
+ * @returns scrollState - 좌우 버튼 활성화 여부 ({ canLeft, canRight })
+ * @returns handleScroll - 버튼 클릭 시 좌우 스크롤 이동 함수
+ * @returns updateScrollState - 스크롤 상태 수동 업데이트 함수
+ * @returns dragEvents - 마우스 드래그 이벤트 핸들러 모음
+ *
+ * @example
+ * ```tsx
+ * const { scrollRef, scrollState, handleScroll, updateScrollState, dragEvents } =
+ *   useHorizontalScroll(items.length);
+ *
+ * <div ref={scrollRef} onScroll={updateScrollState} {...dragEvents}>
+ *   ...
+ * </div>
+ * ```
+ */
 export default function useHorizontalScroll(count: number) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState({ canLeft: false, canRight: false });
