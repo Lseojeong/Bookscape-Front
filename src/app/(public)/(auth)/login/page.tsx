@@ -47,7 +47,7 @@ export default function LoginPage() {
 
           // 토큰 만료 시간 계산 (현재 시간 기준 30분)
           const EXPIRE_TIME = 1000 * 60 * 30;
-          const expiresIn = Date.now() + EXPIRE_TIME;
+          const expiresAt = Date.now() + EXPIRE_TIME;
 
           // 전역 상태(Zustand) 업데이트
           setAuth(
@@ -56,7 +56,7 @@ export default function LoginPage() {
               email: user.email,
               nickname: user.nickname,
             },
-            expiresIn
+            expiresAt
           );
 
           // 쿠키 상태 동기화를 위해 refresh 후 이동
