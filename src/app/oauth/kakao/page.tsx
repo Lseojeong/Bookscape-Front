@@ -49,20 +49,6 @@ function KakaoOauthCallbackInner() {
       return;
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-      // React StrictMode(dev)에서 mount/unmount로 effect가 2번 실행될 수 있어서
-      // 동일한 인가 코드로 중복 요청이 나가지 않도록 sessionStorage로 한 번 더 가드한다.
-      const processedKey = `oauth:kakao:processed:${code}`;
-      try {
-        if (sessionStorage.getItem(processedKey)) {
-          return;
-        }
-        sessionStorage.setItem(processedKey, '1');
-      } catch {
-        // ignore (storage unavailable)
-      }
-    }
-
     hasProcessedRef.current = true;
 
     const run = async () => {
