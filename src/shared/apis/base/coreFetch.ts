@@ -132,7 +132,7 @@ export async function coreFetch<T>(
     }
 
     if (error instanceof TypeError) {
-      throw new ApiError(0, COMMON_MESSAGE.ERROR.NETWORK);
+      throw new ApiError(503, COMMON_MESSAGE.ERROR.NETWORK);
     }
 
     throw error;
