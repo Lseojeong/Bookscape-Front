@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { AUTH_API_MESSAGE, COMMON_MESSAGE } from '@/features/auth/constants/authMessage';
+import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
 import { LoginRequest, LoginResponse } from '@/features/auth/types';
 import { ApiError } from '@/shared/apis/apiError';
@@ -57,7 +57,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // 네트워크 장애 에러
-    return NextResponse.json({ message: COMMON_MESSAGE.ERROR.NETWORK }, { status: 500 });
+    return NextResponse.json({ message: AUTH_API_MESSAGE.LOGIN.ERROR }, { status: 500 });
   }
 }
