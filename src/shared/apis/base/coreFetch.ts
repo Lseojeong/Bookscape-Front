@@ -1,4 +1,5 @@
 import { ApiError } from '@/shared/apis/apiError';
+import { COMMON_MESSAGE } from '@/shared/constants/message';
 
 /**
  * 핵심 fetch 엔진
@@ -121,6 +122,20 @@ export async function coreFetch<T>(
     }
 
     return data;
+  } catch (error) {
+    // Fetch 자체 실패(네트워크/타임아웃 abort 등)는 네트워크 에러 메세지로 통일
+    if (error instanceof ApiError) throw error;
+
+    const errorName = (error as { name?: unknown } | null)?.name;
+    if (errorName === 'AbortError') {
+      throw new ApiError(408, COMMON_MESSAGE.ERROR.NETWORK);
+    }
+
+    if (error instanceof TypeError) {
+      throw new ApiError(0, COMMON_MESSAGE.ERROR.NETWORK);
+    }
+
+    throw error;
   } finally {
     clearTimeout(timeoutId);
   }
