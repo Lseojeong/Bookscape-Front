@@ -76,3 +76,8 @@ export type CreateMyReservationReviewResponse = {
   teamId: string;
   id: number;
 };
+
+export type CreateActivityReservationRequestBody = {
+  scheduleId: number;
+  headCount: number;
+};
