@@ -87,24 +87,25 @@ export default function LoginPage() {
         <FormField label="비밀번호">
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
+        <div className="mt-1 md:mt-2">
+          {/* API 에러 메시지 */}
+          {errors.root && (
+            <p className="typo-13-medium text-red-500" role="alert">
+              {errors.root.message}
+            </p>
+          )}
 
-        {/* API 에러 메시지 */}
-        {errors.root && (
-          <p className="translate-y-3 typo-13-medium text-red-500" role="alert">
-            {errors.root.message}
-          </p>
-        )}
-
-        <Button
-          type="submit"
-          theme="primary"
-          size="lg"
-          isLoading={isSubmitting}
-          disabled={!isValid || isSubmitting}
-          className={cn('h-13.5 w-full rounded-2xl md:mt-2.5', errors.root ? 'mt-0' : 'mt-2')}
-        >
-          로그인 하기
-        </Button>
+          <Button
+            type="submit"
+            theme="primary"
+            size="lg"
+            isLoading={isSubmitting}
+            disabled={!isValid || isSubmitting}
+            className={cn('mt-1 h-13.5 w-full rounded-2xl', errors.root ? '' : 'md:mt-2')}
+          >
+            로그인 하기
+          </Button>
+        </div>
       </AuthForm>
       <AuthFooter />
     </>
