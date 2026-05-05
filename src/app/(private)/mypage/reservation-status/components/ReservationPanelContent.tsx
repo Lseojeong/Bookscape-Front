@@ -1,6 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import ReservationCard from '@/app/(private)/mypage/reservation-status/components/ReservationCard';
+import type {
+  Schedule,
+  Reservation,
+  ReservationStatus,
+} from '@/app/(private)/mypage/reservation-status/types/reservation';
 import { DeleteIcon } from '@/shared/assets/icons';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
@@ -9,8 +15,6 @@ import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTri
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import FormLabel from '@/shared/ui/form/FormLabel';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
-import type { Schedule, Reservation, ReservationStatus } from '../types/reservation';
-import ReservationCard from './ReservationCard';
 
 type ReservationPanelContentProps = {
   date: Date;

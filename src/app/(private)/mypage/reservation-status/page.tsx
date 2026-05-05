@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import ReservationCalendar from '@/app/(private)/mypage/reservation-status/components/ReservationCalendar';
+import ReservationPanel from '@/app/(private)/mypage/reservation-status/components/ReservationPanel';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
@@ -9,8 +11,6 @@ import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTri
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
-import ReservationCalendar from './components/ReservationCalendar';
-import ReservationPanel from './components/ReservationPanel';
 import {
   MOCK_ACTIVITIES,
   MOCK_CALENDAR_SCHEDULES,

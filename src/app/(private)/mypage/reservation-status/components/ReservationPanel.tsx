@@ -1,13 +1,16 @@
 'use client';
 
+import ReservationPanelContent from '@/app/(private)/mypage/reservation-status/components/ReservationPanelContent';
+import type {
+  Schedule,
+  Reservation,
+} from '@/app/(private)/mypage/reservation-status/types/reservation';
 import useBodyScrollLock from '@/shared/ui/overlay/hooks/useBodyScrollLock';
 import useEscapeKey from '@/shared/ui/overlay/hooks/useEscapeKey';
 import OverlayBackdrop from '@/shared/ui/overlay/primitives/OverlayBackdrop';
 import OverlayPortal from '@/shared/ui/overlay/primitives/OverlayPortal';
 import OverlaySurface from '@/shared/ui/overlay/primitives/OverlaySurface';
 import useIsMobile from '../hooks/useIsMobile';
-import type { Schedule, Reservation } from '../types/reservation';
-import ReservationPanelContent from './ReservationPanelContent';
 
 type ReservationPanelProps = {
   isOpen: boolean;

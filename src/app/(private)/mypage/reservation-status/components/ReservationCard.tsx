@@ -1,6 +1,6 @@
+import type { Reservation } from '@/app/(private)/mypage/reservation-status/types/reservation';
 import Button from '@/shared/ui/button/Button';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
-import type { Reservation } from '../types/reservation';
 
 type ReservationCardProps = {
   reservation: Reservation;

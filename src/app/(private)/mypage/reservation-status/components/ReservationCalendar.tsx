@@ -3,9 +3,9 @@
 import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import type { CalendarSchedule } from '@/app/(private)/mypage/reservation-status/types/reservation';
 import { CaretLeftIcon, CaretRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
-import type { CalendarSchedule } from '../types/reservation';
 
 type ReservationCalendarProps = {
   month: Date;
