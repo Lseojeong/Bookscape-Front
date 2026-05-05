@@ -51,7 +51,12 @@ const parseRequestBody = async (request: Request): Promise<unknown> => {
   if (contentType.includes('application/json')) {
     // body가 비어있을 때 request.json()이 throw할 수 있어 text 기반 파싱 사용
     const text = await request.text();
-    return text ? (JSON.parse(text) as unknown) : undefined;
+    if (!text) return undefined;
+    try {
+      return JSON.parse(text) as unknown;
+    } catch {
+      throw new ApiError(400, '요청 본문이 올바른 JSON 형식이 아닙니다.');
+    }
   }
 
   return undefined;
@@ -82,8 +87,8 @@ export const createAuthorizedRoute = <
 >(
   handler: (ctx: AuthorizedHandlerContextWithParams<TBody, TParams>) => Promise<unknown>,
   options: CreateAuthorizedRouteOptions = {}
-) => {
-  return async (request: Request, context?: { params?: RouteHandlerParams }) => {
+): ((request: Request, context?: { params?: TParams }) => Promise<Response>) => {
+  return async (request: Request, context?: { params?: TParams }) => {
     const cookieStore = await cookies();
     const accessTokenCookieKey = options.accessTokenCookieKey ?? 'accessToken';
     const accessToken = cookieStore.get(accessTokenCookieKey)?.value;
@@ -102,7 +107,7 @@ export const createAuthorizedRoute = <
         accessToken,
         body,
         request,
-        params: context?.params as TParams | undefined,
+        params: context?.params,
       });
 
       if (result instanceof Response) return result;
