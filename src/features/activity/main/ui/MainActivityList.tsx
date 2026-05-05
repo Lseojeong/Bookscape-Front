@@ -2,22 +2,15 @@
 import Link from 'next/link';
 import useHorizontalScroll from '@/features/activity/main/hooks/useHorizontalScroll';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
+import { ActivityData } from '@/features/activity/types';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
-type ActivityResponse = {
-  id: number;
-  bannerImageUrl: string;
-  title: string;
-  reviewCount: number;
-  rating: number;
-  price: number;
-};
 type HotActivityListProps = {
-  activities: ActivityResponse[];
+  activities: ActivityData[];
 };
 
-export default function MainActivityList({ activities = [] }: HotActivityListProps) {
+export default function MainActivityList({ activities }: HotActivityListProps) {
   const { scrollRef, scrollState, handleScroll, updateScrollState, dragEvents } =
     useHorizontalScroll(activities.length);
 
