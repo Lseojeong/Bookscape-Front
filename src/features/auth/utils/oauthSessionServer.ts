@@ -3,6 +3,7 @@ import type { OauthSessionResponseBody } from '@/features/auth/types/oauth';
 import { setAuthCookies } from '@/features/auth/utils/cookies';
 import { getJwtExpiresAt } from '@/features/auth/utils/jwt';
 import type { UserResponse } from '@/features/user/types';
+import { ENV } from '@/shared/apis/env';
 
 /**
  * OAuth 로그인/회원가입 성공 시, 세션 쿠키를 설정한 뒤 응답 바디를 반환합니다.
@@ -32,9 +33,5 @@ export const createOAuthSessionResponse = (params: {
  * @throws `KAKAO_REDIRECT_URI_NOT_SET` - `KAKAO_REDIRECT_URI`가 설정되지 않은 경우
  */
 export const getRequiredKakaoRedirectUri = (): string => {
-  const redirectUri = process.env.KAKAO_REDIRECT_URI;
-  if (!redirectUri) {
-    throw new Error('KAKAO_REDIRECT_URI_NOT_SET');
-  }
-  return redirectUri;
+  return ENV.KAKAO_REDIRECT_URI;
 };

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { DEFAULT_OAUTH_MODE, isOAuthMode } from '@/features/auth/constants/oauthMode';
 import type { OAuthMode } from '@/features/auth/constants/oauthMode';
+import { ENV } from '@/shared/apis/env';
 
 const KAKAO_OAUTH_AUTHORIZE_URL = 'https://kauth.kakao.com/oauth/authorize';
 
@@ -10,22 +11,8 @@ export function GET(request: Request) {
   const oauthModeParam = url.searchParams.get('mode');
   const oauthMode: OAuthMode = isOAuthMode(oauthModeParam) ? oauthModeParam : DEFAULT_OAUTH_MODE;
 
-  const clientId = process.env.KAKAO_REST_API_KEY;
-  const redirectUri = process.env.KAKAO_REDIRECT_URI;
-
-  if (!clientId) {
-    return NextResponse.json(
-      { message: 'KAKAO_REST_API_KEY 환경 변수가 설정되지 않았습니다.' },
-      { status: 500 }
-    );
-  }
-
-  if (!redirectUri) {
-    return NextResponse.json(
-      { message: 'KAKAO_REDIRECT_URI 환경 변수가 설정되지 않았습니다.' },
-      { status: 500 }
-    );
-  }
+  const clientId = ENV.KAKAO_REST_API_KEY;
+  const redirectUri = ENV.KAKAO_REDIRECT_URI;
 
   const authorizeUrl = new URL(KAKAO_OAUTH_AUTHORIZE_URL);
 
