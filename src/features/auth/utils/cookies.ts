@@ -1,9 +1,9 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { AUTH_COOKIE_KEYS, COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
+import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
 import { getJwtMaxAge } from '@/features/auth/utils/jwt';
 
-export type AuthToken = (typeof AUTH_COOKIE_KEYS)[keyof typeof AUTH_COOKIE_KEYS];
+export type AuthToken = 'accessToken' | 'refreshToken';
 
 /**
  * ## getAuthCookie
@@ -39,12 +39,12 @@ export const setAuthCookies = ({
   accessToken,
   refreshToken,
 }: SetAuthCookiesOptions): void => {
-  response.cookies.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, accessToken, {
+  response.cookies.set('accessToken', accessToken, {
     ...COOKIE_OPTIONS,
     maxAge: getJwtMaxAge(accessToken),
   });
 
-  response.cookies.set(AUTH_COOKIE_KEYS.REFRESH_TOKEN, refreshToken, {
+  response.cookies.set('refreshToken', refreshToken, {
     ...COOKIE_OPTIONS,
     maxAge: getJwtMaxAge(refreshToken),
   });
@@ -59,7 +59,7 @@ export const setAuthCookies = ({
 export const clearAuthCookies = async (): Promise<void> => {
   const cookieStore = await cookies();
 
-  cookieStore.set(AUTH_COOKIE_KEYS.ACCESS_TOKEN, '', { ...COOKIE_OPTIONS, maxAge: 0 });
+  cookieStore.set('accessToken', '', { ...COOKIE_OPTIONS, maxAge: 0 });
 
-  cookieStore.set(AUTH_COOKIE_KEYS.REFRESH_TOKEN, '', { ...COOKIE_OPTIONS, maxAge: 0 });
+  cookieStore.set('refreshToken', '', { ...COOKIE_OPTIONS, maxAge: 0 });
 };
