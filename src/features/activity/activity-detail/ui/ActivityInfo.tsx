@@ -1,5 +1,9 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { LocationIcon, MenuIcon, StarIcon } from '@/shared/assets/icons';
+import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import {
   ActionDropdown,
   ActionDropdownContent,
@@ -42,6 +46,7 @@ export default function ActivityInfo({
   address,
 }: ActivityInfoProps) {
   const router = useRouter();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
     <div>
@@ -53,17 +58,33 @@ export default function ActivityInfo({
         {/* TODO: 로그인 유저 id와 비교하여 본인 체험일 때만 노출 */}
         {/* 케밥 버튼 */}
         <ActionDropdown>
-          <ActionDropdownTrigger ariaLabel="메뉴 열기" className="flex items-center">
+          <ActionDropdownTrigger ariaLabel="메뉴 열기" className="flex cursor-pointer items-center">
             <MenuIcon aria-hidden />
           </ActionDropdownTrigger>
           <ActionDropdownContent className="right-0 left-auto">
             <ActionDropdownItem onClick={() => router.push(`/activity/${id}/edit`)}>
               수정하기
             </ActionDropdownItem>
-            <ActionDropdownItem onClick={() => {}}>삭제하기</ActionDropdownItem>
+            <ActionDropdownItem onClick={() => setIsDeleteModalOpen(true)}>
+              삭제하기
+            </ActionDropdownItem>
           </ActionDropdownContent>
         </ActionDropdown>
       </div>
+      <ConfirmDialog
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        title="체험을 삭제하시겠습니까?"
+        description="삭제할 경우, 다시 되돌릴 수 없습니다."
+        confirmText="삭제하기"
+        cancelText="아니오"
+        onCancel={() => setIsDeleteModalOpen(false)}
+        onConfirm={async () => {
+          // TODO: 로그인 구현 후 삭제 API 연결
+          // TODO: 삭제 완료 토스트
+          router.push('/activities');
+        }}
+      />
       {/* 타이틀 */}
       <Title as="h1" size="18" weight="bold" color="text-gray-950" className="mb-4 md:typo-24-bold">
         {title}
