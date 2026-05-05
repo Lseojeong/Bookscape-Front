@@ -6,6 +6,7 @@ import { signInWithOauth, signUpWithOauth } from '@/features/auth/apis/oauth';
 import { DEFAULT_OAUTH_MODE, isOAuthMode } from '@/features/auth/constants/oauthMode';
 import type { OAuthMode } from '@/features/auth/constants/oauthMode';
 import { ApiError } from '@/shared/apis/apiError';
+import { useUserStore } from '@/shared/stores/userStore';
 import Loading from '@/shared/ui/loading/Loading';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -74,6 +75,9 @@ function KakaoOauthCallbackInner() {
           router.replace(mode === 'signup' ? '/signup' : '/login');
           return;
         }
+
+        // 세션 쿠키는 BFF에서 설정되지만, UI 즉시 반영을 위해 user store도 갱신합니다.
+        useUserStore.getState().setUser(res.user);
       } catch (err: unknown) {
         if (mode === 'signin' && err instanceof ApiError && err.status === 404) {
           window.location.replace(START_SIGNUP_URL);

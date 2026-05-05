@@ -6,7 +6,7 @@ import type {
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 
 /**
- * OAuth 기반 간편 회원가입 API (BFF)
+ * ## OAuth 기반 간편 회원가입 API (BFF)
  *
  * - Backend: `POST /{teamId}/oauth/sign-up/kakao`
  * - BFF: `POST /api/oauth/signup/kakao`
@@ -16,7 +16,7 @@ export const signUpWithOauth = (data: SignUpWithOauthRequestBody) => {
 };
 
 /**
- * OAuth 기반 간편 로그인 API (BFF)
+ * ## OAuth 기반 간편 로그인 API (BFF)
  *
  * - Backend: `POST /{teamId}/oauth/sign-in/kakao`
  * - BFF: `POST /api/oauth/signin/kakao`
