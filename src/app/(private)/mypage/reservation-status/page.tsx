@@ -31,6 +31,12 @@ const MOCK_SCHEDULES: Record<number, Schedule[]> = {
   ],
   3: [{ date: '2026-05-25', reservations: { completed: 0, confirmed: 0, pending: 4 } }],
 };
+/**
+ * 예약 현황 페이지 컴포넌트.
+ *
+ * - 드롭다운으로 체험을 선택하면 해당 체험의 월별 예약 현황을 캘린더로 표시합니다.
+ * - 체험 목록과 예약 데이터는 API 연결 전까지 목 데이터로 동작합니다.
+ */
 export default function ReservationStatusPage() {
   const router = useRouter();
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(
