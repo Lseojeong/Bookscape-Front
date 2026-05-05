@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginRequest, LoginResponse } from '@/features/auth/types';
+import { LoginRequest, LoginResponse } from '@/features/auth/types/auth';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
