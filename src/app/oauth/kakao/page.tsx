@@ -100,7 +100,7 @@ function KakaoOauthCallbackInner() {
             ? AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNUP.SUCCESS
             : AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNIN.SUCCESS
         );
-      router.replace(mode === 'signup' ? '/login' : '/');
+      router.replace('/');
     };
 
     void run();
