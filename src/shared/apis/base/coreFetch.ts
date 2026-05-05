@@ -40,6 +40,11 @@ export type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
+const isAbortError = (error: unknown): error is { name: 'AbortError' } => {
+  const errorName = (error as { name?: unknown } | null)?.name;
+  return errorName === 'AbortError';
+};
+
 export type RequestConfig = {
   endpoint: string;
   method: RequestInit['method'];
@@ -90,7 +95,11 @@ export async function coreFetch<T>(
   const { isFormData = false, ...requestOptions } = options;
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+  let abortedByTimeout = false;
+  const timeoutId = setTimeout(() => {
+    abortedByTimeout = true;
+    controller.abort();
+  }, REQUEST_TIMEOUT);
   const signal = options.signal
     ? AbortSignal.any([controller.signal, options.signal])
     : controller.signal;
@@ -126,16 +135,15 @@ export async function coreFetch<T>(
     // Fetch 자체 실패(네트워크/타임아웃 abort 등)는 네트워크 에러 메세지로 통일
     if (error instanceof ApiError) throw error;
 
-    const errorName = (error as { name?: unknown } | null)?.name;
-    if (errorName === 'AbortError') {
-      throw new ApiError(408, COMMON_MESSAGE.ERROR.NETWORK);
+    if (isAbortError(error)) {
+      if (abortedByTimeout) {
+        throw new Error(COMMON_MESSAGE.ERROR.NETWORK);
+      }
+      // 외부 취소(라우트 변경, 수동 abort 등)
+      throw new Error('요청이 취소되었습니다.');
     }
 
-    if (error instanceof TypeError) {
-      throw new ApiError(503, COMMON_MESSAGE.ERROR.NETWORK);
-    }
-
-    throw error;
+    throw new ApiError(500, COMMON_MESSAGE.ERROR.INTERNAL);
   } finally {
     clearTimeout(timeoutId);
   }
