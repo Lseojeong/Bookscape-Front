@@ -1,5 +1,6 @@
 import Image, { ImageProps } from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { HeroBannerImage } from '@/shared/assets/images';
 import Logo from '@/shared/ui/logo/Logo';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
@@ -41,7 +42,9 @@ export default function HeroBanner(props: Omit<ImageProps, 'src' | 'alt'>) {
           <Logo variant="white" className="hidden shrink-0 lg:block lg:w-60" />
         </div>
         <div className="w-full translate-y-1/2 px-0 md:px-5">
-          <SearchInput />
+          <Suspense fallback={<div>...</div>}>
+            <SearchInput />
+          </Suspense>
         </div>
       </div>
     </section>
