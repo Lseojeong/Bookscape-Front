@@ -9,9 +9,11 @@ export const AUTH_API_MESSAGE = {
   OAUTH: {
     KAKAO: {
       SIGNIN: {
+        SUCCESS: '카카오 로그인에 성공했습니다.',
         ERROR: '카카오 로그인에 실패했습니다.',
       },
       SIGNUP: {
+        SUCCESS: '카카오 회원가입이 완료되었습니다.',
         ERROR: '카카오 회원가입에 실패했습니다.',
       },
     },

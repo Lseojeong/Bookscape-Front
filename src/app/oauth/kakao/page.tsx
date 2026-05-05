@@ -3,24 +3,19 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useRef } from 'react';
 import { signInWithOauth, signUpWithOauth } from '@/features/auth/apis/oauth';
+import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import { DEFAULT_OAUTH_MODE, isOAuthMode } from '@/features/auth/constants/oauthMode';
 import type { OAuthMode } from '@/features/auth/constants/oauthMode';
+import {
+  generateKakaoTempNickname,
+  isAlreadyRegisteredKakaoUserError,
+  KAKAO_OAUTH_START_SIGNIN_URL,
+  KAKAO_OAUTH_START_SIGNUP_URL,
+} from '@/features/auth/utils/kakaoOauthClient';
 import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import Loading from '@/shared/ui/loading/Loading';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
-
-const START_SIGNIN_URL = '/api/oauth/kakao/authorization?mode=signin';
-const START_SIGNUP_URL = '/api/oauth/kakao/authorization?mode=signup';
-
-const generateTempNickname = () => {
-  const rand = Math.random().toString(36).slice(2, 6);
-  return `kakao${rand}`;
-};
-
-const isAlreadyRegisteredUserError = (message: string) => {
-  return message.includes('이미') && (message.includes('등록') || message.includes('가입'));
-};
 
 function KakaoOauthCallbackInner() {
   const router = useRouter();
@@ -45,7 +40,7 @@ function KakaoOauthCallbackInner() {
     if (hasProcessedRef.current) return;
     if (isParamError) {
       hasProcessedRef.current = true;
-      useToastStore.getState().showToast('cancel', '카카오 로그인에 실패했습니다.');
+      useToastStore.getState().showToast('cancel', AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNIN.ERROR);
       router.replace('/login');
       return;
     }
@@ -58,7 +53,7 @@ function KakaoOauthCallbackInner() {
           mode === 'signup'
             ? await signUpWithOauth({
                 token: code,
-                nickname: generateTempNickname(),
+                nickname: generateKakaoTempNickname(),
                 redirectUri,
               })
             : await signInWithOauth({ token: code, redirectUri });
@@ -69,8 +64,8 @@ function KakaoOauthCallbackInner() {
             .showToast(
               'cancel',
               mode === 'signup'
-                ? '카카오 회원가입에 실패했습니다.'
-                : '카카오 로그인에 실패했습니다.'
+                ? AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNUP.ERROR
+                : AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNIN.ERROR
             );
           router.replace(mode === 'signup' ? '/signup' : '/login');
           return;
@@ -80,16 +75,18 @@ function KakaoOauthCallbackInner() {
         useUserStore.getState().setUser(res.user);
       } catch (err: unknown) {
         if (mode === 'signin' && err instanceof ApiError && err.status === 404) {
-          window.location.replace(START_SIGNUP_URL);
+          window.location.replace(KAKAO_OAUTH_START_SIGNUP_URL);
           return;
         }
         const errorMessage = err instanceof Error ? err.message : '';
-        if (mode === 'signup' && isAlreadyRegisteredUserError(errorMessage)) {
-          window.location.replace(START_SIGNIN_URL);
+        if (mode === 'signup' && isAlreadyRegisteredKakaoUserError(errorMessage)) {
+          window.location.replace(KAKAO_OAUTH_START_SIGNIN_URL);
           return;
         }
         const fallbackMessage =
-          mode === 'signup' ? '카카오 회원가입에 실패했습니다.' : '카카오 로그인에 실패했습니다.';
+          mode === 'signup'
+            ? AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNUP.ERROR
+            : AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNIN.ERROR;
         useToastStore.getState().showToast('cancel', fallbackMessage);
         router.replace(mode === 'signup' ? '/signup' : '/login');
         return;
@@ -99,7 +96,9 @@ function KakaoOauthCallbackInner() {
         .getState()
         .showToast(
           'check',
-          mode === 'signup' ? '카카오 회원가입이 완료되었습니다.' : '카카오 로그인에 성공했습니다.'
+          mode === 'signup'
+            ? AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNUP.SUCCESS
+            : AUTH_API_MESSAGE.OAUTH.KAKAO.SIGNIN.SUCCESS
         );
       router.replace(mode === 'signup' ? '/login' : '/');
     };
