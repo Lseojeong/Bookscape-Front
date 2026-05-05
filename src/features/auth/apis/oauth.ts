@@ -3,7 +3,7 @@ import type {
   SignInWithOauthRequestBody,
   SignUpWithOauthRequestBody,
 } from '@/features/auth/types/oauth';
-import { bffFetch } from '@/shared/apis/bffFetch';
+import { bffFetch } from '@/shared/apis/base/bffFetch';
 
 /**
  * OAuth 기반 간편 회원가입 API (BFF)

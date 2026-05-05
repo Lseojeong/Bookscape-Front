@@ -59,7 +59,7 @@ export default function Toast({ type, message, onClose }: ToastProps) {
         type="button"
         onClick={handleClose}
         aria-label="토스트 닫기"
-        className="ml-3 shrink-0 cursor-pointer md:ml-5"
+        className="ml-3 shrink-0 md:ml-5"
       >
         <DeleteIcon className="h-6 w-6 text-gray-100 md:h-8 md:w-8" />
       </button>

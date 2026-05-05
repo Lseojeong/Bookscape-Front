@@ -4,7 +4,7 @@ import {
   QueryParams,
   RequestConfig,
   buildQueryString,
-} from '@/shared/apis/coreFetch';
+} from '@/shared/apis/base/coreFetch';
 import { ENV } from '@/shared/apis/env';
 /**
  * 토큰 없는 공개 API용 Fetch 유틸리티

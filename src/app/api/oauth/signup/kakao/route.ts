@@ -6,7 +6,7 @@ import {
   getRequiredKakaoRedirectUri,
 } from '@/features/auth/utils/oauthSession';
 import { ApiError } from '@/shared/apis/apiError';
-import { serverFetch } from '@/shared/apis/serverFetch';
+import { serverFetch } from '@/shared/apis/base/serverFetch';
 
 export async function POST(request: NextRequest) {
   try {

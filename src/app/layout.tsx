@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import Script from 'next/script';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
@@ -30,6 +31,10 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           {children}
+          <Script
+            src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+            strategy="lazyOnload"
+          />
           <ToastContainer />
         </QueryProvider>
         <OverlayRoot />
