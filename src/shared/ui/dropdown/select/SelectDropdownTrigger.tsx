@@ -11,10 +11,8 @@ import { cn } from '@/shared/utils/cn';
 const selectDropdownTriggerVariants = cva('flex items-center', {
   variants: {
     variants: {
-      basic:
-        'w-full justify-between rounded-2xl border border-gray-100 bg-white px-4 h-13.5 outline-none focus-within:border-[1.5px] focus-within:border-primary-500',
-      shadow:
-        'gap-4 border border-gray-100 shadow rounded-lg px-4 py-2 typo-16-medium focus-within:border-[1.5px]',
+      basic: 'field-surface w-full justify-between rounded-2xl px-4 h-13.5',
+      shadow: 'field-surface gap-4 shadow rounded-lg px-4 py-2 typo-16-medium',
     },
   },
   defaultVariants: {

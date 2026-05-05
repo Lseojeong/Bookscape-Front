@@ -8,6 +8,7 @@ import {
   SelectDropdownTrigger,
   SelectDropdownValue,
 } from '@/shared/ui/dropdown/select';
+import FormLabel from '@/shared/ui/form/FormLabel';
 
 type ActivityCategory = '' | '문화 · 예술' | '식음료' | '투어' | '관광' | '웰빙';
 
@@ -183,16 +184,13 @@ Label과 함께 사용하는 SelectDropdown 예시입니다.
   render: (args) => {
     const [{ value }, updateArgs] = useArgs<{ value: ActivityCategory | '' }>();
     const triggerRef = useRef<HTMLButtonElement>(null);
+    const labelId = 'category-label';
 
     return (
       <div className="flex h-90 w-90 flex-col gap-2">
-        <button
-          type="button"
-          className="w-fit text-left font-medium"
-          onClick={() => triggerRef.current?.focus()}
-        >
+        <FormLabel id={labelId} weight="medium" onClick={() => triggerRef.current?.focus()}>
           카테고리
-        </button>
+        </FormLabel>
 
         <SelectDropdown
           {...args}
@@ -201,7 +199,7 @@ Label과 함께 사용하는 SelectDropdown 예시입니다.
             updateArgs({ value: nextValue as ActivityCategory | '' });
           }}
         >
-          <SelectDropdownTrigger ref={triggerRef}>
+          <SelectDropdownTrigger ref={triggerRef} ariaLabelledBy={labelId}>
             <SelectDropdownValue
               placeholder="카테고리 선택"
               render={(value: string) => CATEGORY_OPTIONS.find((opt) => opt.value === value)?.label}
