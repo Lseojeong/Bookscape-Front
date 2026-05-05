@@ -1,4 +1,4 @@
-import { get } from '@/shared/apis/publicFetch';
+import { get } from '@/shared/apis/base/publicFetch';
 import { ActivityDetailSchema } from './types';
 
 export const getActivityDetail = async (id: number) => {
