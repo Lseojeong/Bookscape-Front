@@ -101,7 +101,7 @@ export default function LoginPage() {
             size="lg"
             isLoading={isSubmitting}
             disabled={!isValid || isSubmitting}
-            className={cn('mt-1 h-13.5 w-full rounded-2xl', errors.root ? '' : 'md:mt-2')}
+            className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
           >
             로그인 하기
           </Button>
