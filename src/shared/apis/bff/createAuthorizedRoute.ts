@@ -17,6 +17,15 @@ export type AuthorizedHandlerContext<TBody = unknown> = {
   request: Request;
 };
 
+export type RouteHandlerParams = Record<string, string | string[]>;
+
+export type AuthorizedHandlerContextWithParams<
+  TBody = unknown,
+  TParams extends RouteHandlerParams = RouteHandlerParams,
+> = AuthorizedHandlerContext<TBody> & {
+  params?: TParams;
+};
+
 type CreateAuthorizedRouteOptions = {
   /**
    * accessToken 쿠키가 없을 때 반환할 메시지
@@ -62,15 +71,19 @@ const parseRequestBody = async (request: Request): Promise<unknown> => {
  * - handler 실행 중 발생한 에러를 HTTP Response로 변환합니다.
  *
  * @template TBody - handler에서 사용할 요청 body 타입
+ * @template TParams - handler에서 사용할 params 타입 (동적 라우트용)
  * @param handler - 인증 및 body 파싱이 완료된 후 실행될 함수
  * @param options - 쿠키 키/401 메시지 커스터마이징 옵션
  * @returns - Next.js Route Handler 함수
  */
-export const createAuthorizedRoute = <TBody = unknown>(
-  handler: (ctx: AuthorizedHandlerContext<TBody>) => Promise<unknown>,
+export const createAuthorizedRoute = <
+  TBody = unknown,
+  TParams extends RouteHandlerParams = RouteHandlerParams,
+>(
+  handler: (ctx: AuthorizedHandlerContextWithParams<TBody, TParams>) => Promise<unknown>,
   options: CreateAuthorizedRouteOptions = {}
 ) => {
-  return async (request: Request) => {
+  return async (request: Request, context?: { params?: RouteHandlerParams }) => {
     const cookieStore = await cookies();
     const accessTokenCookieKey = options.accessTokenCookieKey ?? 'accessToken';
     const accessToken = cookieStore.get(accessTokenCookieKey)?.value;
@@ -89,6 +102,7 @@ export const createAuthorizedRoute = <TBody = unknown>(
         accessToken,
         body,
         request,
+        params: context?.params as TParams | undefined,
       });
 
       if (result instanceof Response) return result;
