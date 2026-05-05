@@ -117,11 +117,7 @@ function KakaoOauthCallbackInner() {
     void run();
   }, [code, isParamError, mode, redirectUri, router]);
 
-  return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center">
-      <Loading size={20} color="var(--color-gray-700)" />
-    </div>
-  );
+  return null;
 }
 
 export default function KakaoOauthCallbackPage() {
