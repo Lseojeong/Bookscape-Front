@@ -1,4 +1,5 @@
-import { ApiError } from './apiError';
+import { ApiError } from '@/shared/apis/apiError';
+
 /**
  * 핵심 fetch 엔진
  * coreFetch는 API 요청을 수행하는 유틸리티 함수입니다. 이 함수는 Fetch API를 사용하여 HTTP 요청을 보내고, 응답을 처리합니다.
