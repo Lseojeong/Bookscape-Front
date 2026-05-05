@@ -5,7 +5,7 @@ import type { OauthAuthResponse, SignUpWithOauthRequestBody } from '@/features/a
 import {
   createOAuthSessionResponse,
   getRequiredKakaoRedirectUri,
-} from '@/features/auth/utils/oauthSession';
+} from '@/features/auth/utils/oauthSessionServer';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
