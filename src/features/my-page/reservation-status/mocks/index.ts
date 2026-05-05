@@ -2,7 +2,7 @@ import type {
   CalendarSchedule,
   Schedule,
   Reservation,
-} from '@/app/(private)/mypage/reservation-status/types/reservation';
+} from '@/features/my-page/reservation-status/types/reservation';
 
 // TODO: API 연결 후 삭제
 export const MOCK_ACTIVITIES = [
