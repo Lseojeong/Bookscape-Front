@@ -1,6 +1,7 @@
 'use client';
 
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
+import ActivityInfo from './ActivityInfo';
 import ImageCarousel from './ImageCarousel';
 
 type ActivityDetailProps = {
@@ -26,6 +27,13 @@ export default function ActivityDetail({ id }: ActivityDetailProps) {
     <section className="lg:w-167.5">
       <ImageCarousel images={activity.images} />
       {/* 카테고리, 제목, 별점, 위치 */}
+      <ActivityInfo
+        category="문화 · 예술"
+        title="함께 배우면 즐거운 스트릿 댄스"
+        rating={4.9}
+        reviewCount={293}
+        address="서울 중구 청계천로 100 10F"
+      />
       {/* 탭바 */}
       {/* 체험 설명 */}
     </section>
