@@ -8,6 +8,7 @@ import CaretLeftIcon from './ic-caret-left.svg';
 import CaretRightIcon from './ic-caret-right.svg';
 import CheckIcon from './ic-check.svg';
 import ChevronLeftIcon from './ic-chevron-left.svg';
+import ChevronRightBlueIcon from './ic-chevron-right-blue.svg';
 import ChevronRightIcon from './ic-chevron-right.svg';
 import DeleteIcon from './ic-delete.svg';
 import EditIcon from './ic-edit.svg';
@@ -42,6 +43,7 @@ export {
   CaretRightIcon,
   CheckIcon,
   ChevronLeftIcon,
+  ChevronRightBlueIcon,
   ChevronRightIcon,
   DeleteIcon,
   EditIcon,

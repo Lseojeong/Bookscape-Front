@@ -1,5 +1,12 @@
 import Link from 'next/link';
-import { ArtIcon, FoodIcon, SightseeingIcon, TourIcon, WellbeingIcon } from '@/shared/assets/icons';
+import {
+  ArtIcon,
+  ChevronRightBlueIcon,
+  FoodIcon,
+  SightseeingIcon,
+  TourIcon,
+  WellbeingIcon,
+} from '@/shared/assets/icons';
 
 const CATEGORY_OPTIONS = [
   { value: '문화 · 예술', label: '문화 · 예술', iconSrc: ArtIcon },
@@ -28,23 +35,8 @@ export default function MainCategoryList() {
           className="hidden items-center typo-20-medium text-primary-700 md:inline-flex"
         >
           전체 보기
-          <span>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="-translate-y-0.5 rotate-180"
-            >
-              <path
-                d="M15 18L9 12L15 6"
-                stroke="#4b7997"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <span className="-translate-y-0.5">
+            <ChevronRightBlueIcon />
           </span>
         </Link>
       </div>
