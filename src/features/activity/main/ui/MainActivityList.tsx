@@ -1,18 +1,31 @@
 'use client';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import useHorizontalScroll from '@/features/activity/main/hooks/useHorizontalScroll';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
-import { ActivityData } from '@/features/activity/types';
+import { ActivityData, ActivityResponse } from '@/features/activity/types';
+import { get } from '@/shared/apis/base/publicFetch';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
-type HotActivityListProps = {
-  activities: ActivityData[];
-};
+export default function MainActivityList() {
+  const [activityData, setActivityData] = useState<ActivityData[]>([]);
 
-export default function MainActivityList({ activities }: HotActivityListProps) {
+  useEffect(() => {
+    const fetchActivityData = async () => {
+      try {
+        // TODO : 호출 개수 정해야함!
+        const result = await get<ActivityResponse>(
+          '/activities?method=offset&sort=most_reviewed&size=8'
+        );
+        setActivityData(result?.activities ?? []);
+      } catch {}
+    };
+    fetchActivityData();
+  }, []);
+
   const { scrollRef, scrollState, handleScroll, updateScrollState, dragEvents } =
-    useHorizontalScroll(activities.length);
+    useHorizontalScroll(activityData.length);
 
   // 이전/다음 버튼 공통 스타일
   const btnBaseStyle =
@@ -42,7 +55,7 @@ export default function MainActivityList({ activities }: HotActivityListProps) {
           {...dragEvents}
         >
           <ul className="flex gap-4 md:gap-5 lg:gap-6">
-            {activities.map((data) => {
+            {activityData.map((data) => {
               return (
                 <li
                   key={data.id}
