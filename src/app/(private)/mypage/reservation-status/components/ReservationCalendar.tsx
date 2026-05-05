@@ -13,7 +13,24 @@ type ReservationCalendarProps = {
   schedules: CalendarSchedule[];
   onDateClick?: (date: Date) => void;
 };
-
+/**
+ * 월별 예약 현황을 캘린더 형태로 표시하는 컴포넌트.
+ *
+ * - 각 날짜 셀에 완료 / 예약(pending) / 승인(confirmed) 건수를 뱃지로 표시합니다.
+ * - 예약이 하나라도 있는 날짜는 날짜 숫자 옆에 빨간 점으로 표시됩니다.
+ * - 달력 바깥 날짜(이전/다음 달)는 클릭 및 예약 뱃지 표시가 비활성화됩니다.
+ * - `react-day-picker`의 `Day` 컴포넌트를 커스텀하여 예약 현황을 인라인으로 렌더링합니다.
+ *
+ * @example
+ * ```tsx
+ * <ReservationCalendar
+ *   month={month}
+ *   onMonthChange={setMonth}
+ *   schedules={calendarSchedules}
+ *   onDateClick={handleDateClick}
+ * />
+ * ```
+ */
 export default function ReservationCalendar({
   month,
   onMonthChange,

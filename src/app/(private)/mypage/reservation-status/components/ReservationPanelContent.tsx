@@ -33,7 +33,14 @@ const getInitialTab = (reservations: Reservation[]): ReservationStatus => {
   if (reservations.some((r) => r.status === 'declined')) return 'declined';
   return 'pending';
 };
-
+/**
+ * 예약 목록을 기준으로 초기 활성 탭을 결정합니다.
+ * `'pending'` → `'confirmed'` → `'declined'` 순으로 우선순위를 적용하며,
+ * 해당 상태의 예약이 하나라도 존재하면 그 탭을 반환합니다.
+ *
+ * @param reservations - 전체 예약 목록
+ * @returns 초기 활성 탭의 상태값
+ */
 const getInitialScheduleId = (
   schedules: Schedule[],
   reservations: Reservation[],
@@ -45,6 +52,24 @@ const getInitialScheduleId = (
   return first?.scheduleId ?? schedules[0]?.scheduleId ?? 0;
 };
 
+/**
+ * 예약 패널의 실제 콘텐츠를 렌더링하는 컴포넌트.
+ *
+ * - 상태별 탭(신청 / 승인 / 거절)으로 예약을 분류합니다.
+ * - 드롭다운으로 시간대(스케줄)를 선택하면 해당 시간대의 예약 카드 목록이 표시됩니다.
+ * - 탭 변경 시 해당 상태의 예약이 있는 첫 번째 스케줄로 자동 이동합니다.
+ * - 승인 / 거절 처리는 API 연결 전까지 로컬 상태로 관리됩니다.
+ *
+ * @example
+ * ```tsx
+ * <ReservationPanelContent
+ *   date={selectedDate}
+ *   schedules={schedules}
+ *   reservations={reservations}
+ *   onClose={handleClose}
+ * />
+ * ```
+ */
 export default function ReservationPanelContent({
   date,
   schedules,

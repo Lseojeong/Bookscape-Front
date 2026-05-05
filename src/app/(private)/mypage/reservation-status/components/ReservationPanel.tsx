@@ -17,6 +17,27 @@ type ReservationPanelProps = {
   reservations: Reservation[];
 };
 
+/**
+ * 특정 날짜의 예약 목록을 슬라이드 패널로 표시하는 컴포넌트.
+ *
+ * - 모바일: 화면 하단에서 올라오는 바텀 시트
+ * - 데스크톱: 화면 우측에서 밀려오는 사이드 패널
+ *
+ * 패널이 열린 동안 body 스크롤이 잠기며, Esc 키로 닫을 수 있습니다.
+ * `date`가 `null`이면 아무것도 렌더링하지 않습니다.
+ *
+ * @example
+ * ```tsx
+ * <ReservationPanel
+ *   isOpen={panelOpen}
+ *   onClose={() => setPanelOpen(false)}
+ *   date={selectedDate}
+ *   schedules={schedules}
+ *   reservations={reservations}
+ * />
+ * ```
+ */
+
 export default function ReservationPanel({
   isOpen,
   onClose,
