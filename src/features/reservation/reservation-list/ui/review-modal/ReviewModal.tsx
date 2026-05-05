@@ -148,16 +148,15 @@ export default function ReviewModal({
               <FormField
                 label="소중한 경험을 들려주세요"
                 labelTextClassName="typo-18-bold text-gray-950"
+                labelClassName="mb-4"
               >
-                <div className="mt-4">
-                  <FormTextarea
-                    name="content"
-                    control={control}
-                    variant="review"
-                    placeholder="체험에서 느낀 경험을 자유롭게 남겨주세요"
-                    maxLength={100}
-                  />
-                </div>
+                <FormTextarea
+                  name="content"
+                  control={control}
+                  variant="review"
+                  placeholder="체험에서 느낀 경험을 자유롭게 남겨주세요"
+                  maxLength={100}
+                />
               </FormField>
             </div>
           </div>
