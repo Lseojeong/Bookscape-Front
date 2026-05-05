@@ -3,7 +3,7 @@
 import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import type { CalendarSchedule } from '@/app/(private)/mypage/reservation-status/types/reservation';
+import type { CalendarSchedule } from '@/features/my-page/reservation-status/types/reservation';
 import { CaretLeftIcon, CaretRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
