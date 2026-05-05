@@ -5,7 +5,9 @@ import { useForm } from 'react-hook-form';
 import { LoginRequest, UserData } from '@/features/auth/types/auth';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
+import { ApiError } from '@/shared/apis/apiError';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
+import { COMMON_MESSAGE } from '@/shared/constants/message';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
@@ -63,12 +65,20 @@ export default function LoginPage() {
           router.push('/');
           router.refresh();
         }
-      } catch {
-        // react-hook-form의 root 에러 설정
-        setError('root', {
-          type: 'server',
-          message: '이메일 또는 비밀번호가 일치하지 않습니다.',
-        });
+      } catch (error) {
+        if (error instanceof ApiError) {
+          // 서버에서 내려온 에러 (401, 400 등)
+          setError('root', {
+            type: 'server',
+            message: error.message,
+          });
+        } else {
+          // 네트워크 에러 등
+          setError('root', {
+            type: 'server',
+            message: COMMON_MESSAGE.ERROR.NETWORK,
+          });
+        }
       }
     },
     [router, setAuth, setError]
