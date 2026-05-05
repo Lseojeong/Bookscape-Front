@@ -29,6 +29,7 @@ export default function ActivityDetail({ id }: ActivityDetailProps) {
       <ImageCarousel images={activity.images} />
       {/* 카테고리, 제목, 별점, 위치 */}
       <ActivityInfo
+        id={activity.id}
         category={activity.category}
         title={activity.title}
         rating={activity.rating}

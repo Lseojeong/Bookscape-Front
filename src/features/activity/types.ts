@@ -6,6 +6,7 @@ export const SubImageSchema = z.object({
 });
 
 export const ActivityDetailSchema = z.object({
+  id: z.number(),
   bannerImageUrl: z.string(),
   subImages: z.array(SubImageSchema),
   category: z.string(),

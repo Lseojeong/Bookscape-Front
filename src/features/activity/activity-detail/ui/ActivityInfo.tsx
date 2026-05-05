@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { LocationIcon, MenuIcon, StarIcon } from '@/shared/assets/icons';
 import {
   ActionDropdown,
@@ -8,6 +9,7 @@ import {
 import Title from '@/shared/ui/title/Title';
 
 type ActivityInfoProps = {
+  id: number;
   category: string;
   title: string;
   rating: number;
@@ -23,21 +25,24 @@ type ActivityInfoProps = {
  * @example
  * ```tsx
  * <ActivityInfo
- *   category="문화 · 예술"
- *   title="함께 배우면 즐거운 스트릿 댄스"
- *   rating={4.9}
- *   reviewCount={293}
- *   address="서울 중구 청계천로 100 10F"
+ *   id={activity.id}
+ *   category={activity.category}
+ *   title={activity.title}
+ *   rating={activity.rating}
+ *   reviewCount={activity.reviewCount}
+ *   address={activity.address}
  * />
- * ```
  */
 export default function ActivityInfo({
+  id,
   category,
   title,
   rating,
   reviewCount,
   address,
 }: ActivityInfoProps) {
+  const router = useRouter();
+
   return (
     <div>
       <div className="mb-1 flex items-center justify-between md:mb-2.5">
@@ -52,7 +57,9 @@ export default function ActivityInfo({
             <MenuIcon aria-hidden />
           </ActionDropdownTrigger>
           <ActionDropdownContent className="right-0 left-auto">
-            <ActionDropdownItem onClick={() => {}}>수정하기</ActionDropdownItem>
+            <ActionDropdownItem onClick={() => router.push(`/activity/${id}/edit`)}>
+              수정하기
+            </ActionDropdownItem>
             <ActionDropdownItem onClick={() => {}}>삭제하기</ActionDropdownItem>
           </ActionDropdownContent>
         </ActionDropdown>
