@@ -24,10 +24,10 @@ const pageButtonVariants = cva(
   {
     variants: {
       state: {
-        page: 'typo-14-medium text-gray-300 cursor-pointer hover:text-gray-600', // 일반 숫자 버튼
+        page: 'typo-14-medium text-gray-300 hover:text-gray-600', // 일반 숫자 버튼
         pageActive: 'typo-14-bold text-gray-950 border-b-2 border-primary-500', // 현재 페이지 숫자 버튼
-        arrow: 'text-gray-950 cursor-pointer hover:text-primary-700', // 활성 화살표 버튼
-        arrowDisabled: 'text-gray-300 cursor-not-allowed', // 비활성 화살표 버튼
+        arrow: 'text-gray-950 hover:text-primary-700', // 활성 화살표 버튼
+        arrowDisabled: 'text-gray-300', // 비활성 화살표 버튼
       },
     },
     defaultVariants: {
