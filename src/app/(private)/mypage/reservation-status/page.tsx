@@ -2,13 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import ReservationCalendar, {
+  type Schedule,
+} from '@/features/my-page/reservation-status/ui/ReservationCalendar';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
-import ReservationCalendar, { type Schedule } from './ReservationCalendar';
 
 // TODO: API 연결 후 삭제
 const MOCK_ACTIVITIES = [
