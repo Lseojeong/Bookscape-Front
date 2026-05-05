@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     }
 
     // 응답 객체 생성 및 공통 쿠키 설정
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true, user: data.user });
 
     // 3. accessToken 쿠키 저장
     response.cookies.set('accessToken', data.accessToken, {

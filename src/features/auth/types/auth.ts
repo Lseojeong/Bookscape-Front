@@ -1,5 +1,5 @@
 /** 사용자 기본 정보 타입 */
-type User = {
+export type UserData = {
   id: number;
   email: string;
   nickname: string;
@@ -12,7 +12,7 @@ type User = {
 export type LoginResponse = {
   accessToken: string;
   refreshToken: string;
-  user: User;
+  user: UserData;
 };
 
 /** POST /auth/login 리퀘스트 */

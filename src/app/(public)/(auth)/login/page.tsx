@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginRequest, LoginResponse } from '@/features/auth/types/auth';
+import { LoginRequest, UserData } from '@/features/auth/types/auth';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
@@ -38,8 +38,10 @@ export default function LoginPage() {
   const handleLogin = useCallback(
     async (formData: LoginRequest) => {
       try {
-        const response = await bffFetch.post<LoginResponse>('/auth/login', formData);
-
+        const response = await bffFetch.post<{ success: boolean; user: UserData }>(
+          '/auth/login',
+          formData
+        );
         if (response) {
           const { user } = response;
 
