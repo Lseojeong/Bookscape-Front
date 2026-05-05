@@ -34,7 +34,7 @@ export default function SearchInput() {
     }
 
     // 변경된 query로 URL 이동 (검색 상태 반영)
-    router.replace(`?${params.toString()}`);
+    router.replace(`search/?${params.toString()}`);
   };
 
   return <SearchInputUi onSubmit={handleSubmit} defaultValue={keyword} />;
