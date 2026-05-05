@@ -4,6 +4,7 @@ import type {
 } from '@/features/reservation/types';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
+import { requireParams } from '@/shared/apis/bff/requireParams';
 
 /**
  * ## 체험 예약 신청 변경 API (BFF)
@@ -20,6 +21,6 @@ export const PATCH = createAuthorizedRoute<
   UpdateMyReservationApplicationRequestBody,
   { reservationId: string }
 >(async ({ params, body }) => {
-  const reservationId = params!.reservationId;
+  const { reservationId } = requireParams(params);
   return proxyFetch.patch<MyReservationItem>(`/my-reservations/${reservationId}/application`, body);
 });

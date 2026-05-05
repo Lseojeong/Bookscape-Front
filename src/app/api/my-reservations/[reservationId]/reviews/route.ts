@@ -4,6 +4,7 @@ import type {
 } from '@/features/reservation/types';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
+import { requireParams } from '@/shared/apis/bff/requireParams';
 
 /**
  * ## 내 예약 리뷰 작성 API (BFF)
@@ -20,7 +21,7 @@ export const POST = createAuthorizedRoute<
   CreateMyReservationReviewRequestBody,
   { reservationId: string }
 >(async ({ params, body }) => {
-  const reservationId = params!.reservationId;
+  const { reservationId } = requireParams(params);
   return proxyFetch.post<CreateMyReservationReviewResponse>(
     `/my-reservations/${reservationId}/reviews`,
     body
