@@ -1,6 +1,8 @@
 'use client';
 
+import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { useMemo } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { CaretLeftIcon, CaretRightIcon } from '@/shared/assets/icons';
@@ -42,6 +44,8 @@ export default function ReservationCalendar({
   onMonthChange,
   schedules,
 }: ReservationCalendarProps) {
+  const scheduleMap = useMemo(() => new Map(schedules.map((s) => [s.date, s])), [schedules]);
+
   return (
     <div className="-mx-6 w-screen bg-white md:mx-0 md:w-full md:rounded-2xl md:pt-5 md:shadow-card">
       <DayPicker
@@ -77,8 +81,8 @@ export default function ReservationCalendar({
           Day: ({ day, modifiers, ...props }) => {
             const isToday = modifiers.today;
             const isOutside = day.outside;
-            const dateStr = `${day.date.getFullYear()}-${String(day.date.getMonth() + 1).padStart(2, '0')}-${String(day.date.getDate()).padStart(2, '0')}`;
-            const schedule = schedules.find((s) => s.date === dateStr);
+            const dateStr = format(day.date, 'yyyy-MM-dd');
+            const schedule = scheduleMap.get(dateStr);
             const hasReservation =
               schedule &&
               (schedule.reservations.completed > 0 ||
