@@ -6,3 +6,13 @@ export type UserResponse = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type UpdateMyProfileRequestBody = {
+  nickname?: string;
+  profileImageUrl?: string;
+  newPassword?: string;
+};
+
+export type CreateMyProfileImageUrlResponse = {
+  profileImageUrl: string;
+};
