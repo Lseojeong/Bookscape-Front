@@ -4,4 +4,5 @@
  */
 export const QUERY_KEYS = {
   ACTIVITY_DETAIL: (id: number) => ['activity', id] as const,
+  HOT_ACTIVITY: (size: number) => ['activities', 'hot', size] as const,
 } as const;

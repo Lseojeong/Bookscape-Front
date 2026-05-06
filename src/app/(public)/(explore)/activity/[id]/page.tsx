@@ -1,7 +1,7 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import { notFound } from 'next/navigation';
+import { prefetchActivityDetail } from '@/features/activity/activity-detail/queries/prefetchActivityDetail';
 import ActivityDetail from '@/features/activity/activity-detail/ui/ActivityDetail';
-import { getActivityDetail } from '@/features/activity/apis';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 type Props = {
@@ -13,10 +13,11 @@ export default async function ActivityDetailPage({ params }: Props) {
   const activityId = Number(id);
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: QUERY_KEYS.ACTIVITY_DETAIL(activityId),
-    queryFn: () => getActivityDetail(activityId),
-  });
+  if (isNaN(activityId) || activityId <= 0) {
+    notFound();
+  }
+
+  await prefetchActivityDetail(queryClient, activityId);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

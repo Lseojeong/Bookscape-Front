@@ -39,7 +39,7 @@ export default function RatingSummary({
       className="flex items-center gap-1"
       aria-label={`별점 ${ratingText}점, 리뷰 ${totalCount}개`}
     >
-      <StarIcon className="h-5 w-5 -translate-y-px" aria-hidden="true" />
+      <StarIcon className="h-5 w-5 -translate-y-px text-yellow-500" aria-hidden="true" />
       <div className="flex items-center gap-0.5 leading-none">
         <span className={cn('typo-14-medium text-gray-700', ratingClassName)}>{ratingText}</span>
         <span className={cn('typo-14-medium text-gray-700', countClassName)}>

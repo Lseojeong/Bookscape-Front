@@ -3,7 +3,7 @@
 import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
-import { startTransition, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/shared/utils/cn';
 
 type ImageCarouselProps = {
@@ -30,17 +30,24 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
   useEffect(() => {
     if (!emblaApi) return;
 
-    startTransition(() => {
+    const updateScrollSnaps = () => {
       setScrollSnaps(emblaApi.scrollSnapList());
-    });
+    };
 
-    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+
+    updateScrollSnaps();
+    onSelect();
+
     emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', () => {
-      startTransition(() => {
-        setScrollSnaps(emblaApi.scrollSnapList());
-      });
-    });
+    emblaApi.on('reInit', updateScrollSnaps);
+
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', updateScrollSnaps);
+    };
   }, [emblaApi]);
 
   return (
@@ -53,19 +60,21 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
         ))}
       </div>
       {/* dot 네비게이션 */}
-      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
-        {scrollSnaps.map((_, index) => (
-          <button
-            key={index}
-            type="button"
-            onClick={() => emblaApi?.scrollTo(index)}
-            aria-label={`${index + 1}번 이미지로 이동`}
-            className={cn(
-              'h-2 w-2 cursor-pointer rounded-full',
-              index === selectedIndex ? 'bg-gray-700' : 'bg-gray-300'
-            )}
-          />
-        ))}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
+        <div className="flex gap-2 rounded-full bg-white/30 px-3 py-2 shadow-sm backdrop-blur-md">
+          {scrollSnaps.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => emblaApi?.scrollTo(index)}
+              aria-label={`${index + 1}번 이미지로 이동`}
+              className={cn(
+                'h-2.5 w-2.5 cursor-pointer rounded-full bg-gray-100',
+                index === selectedIndex && 'bg-primary-500'
+              )}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
