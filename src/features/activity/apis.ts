@@ -18,8 +18,10 @@ export const deleteActivity = async (id: number) => {
 };
 
 export const getHotActivityData = async (size: number) => {
-  const result = await get<ActivityResponse>(
-    `/activities?method=offset&sort=most_reviewed&size=${size}`
-  );
+  const result = await get<ActivityResponse>('/activities', {
+    method: 'offset',
+    sort: 'most_reviewed',
+    size,
+  });
   return result?.activities ?? [];
 };
