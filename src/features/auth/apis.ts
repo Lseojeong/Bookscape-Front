@@ -3,5 +3,8 @@ import { UserResponse } from '@/features/user/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 
 export const loginUser = async (formData: LoginFormValues) => {
-  return await bffFetch.post<{ success: boolean; user: UserResponse }>('/auth/login', formData);
+  return await bffFetch.post<{ success: boolean; user: UserResponse; expiresAt: number }>(
+    '/auth/login',
+    formData
+  );
 };

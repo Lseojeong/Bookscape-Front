@@ -45,11 +45,7 @@ export default function LoginPage() {
         const response = await loginUser(formData);
 
         if (response) {
-          const { user } = response;
-
-          // 토큰 만료 시간 계산 (현재 시간 기준 30분)
-          const EXPIRE_TIME = 1000 * 60 * 30;
-          const expiresAt = Date.now() + EXPIRE_TIME;
+          const { user, expiresAt } = response;
 
           // 전역 상태(Zustand) 업데이트
           setAuth(
