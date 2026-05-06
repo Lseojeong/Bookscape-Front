@@ -8,7 +8,6 @@ import {
 } from '@/features/my-page/activity-form/utils/schedule';
 
 type UseScheduleCardProps = {
-  dateString: string;
   slots: Slot[];
   onAddSlot: (slot: Slot) => void;
 };
@@ -32,7 +31,6 @@ type UseScheduleCardProps = {
 export const useScheduleCard = ({ slots, onAddSlot }: UseScheduleCardProps) => {
   const [tempStartTime, setTempStartTime] = useState<string>('');
   const [tempDuration, setTempDuration] = useState<number | ''>('');
-  const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [overlapError, setOverlapError] = useState<string>('');
 
   // 시작 시간과 체험 시간이 모두 입력되었을 때 유효성을 검증하고, 통과 시 상태 초기화
@@ -93,8 +91,6 @@ export const useScheduleCard = ({ slots, onAddSlot }: UseScheduleCardProps) => {
   return {
     tempStartTime,
     tempDuration,
-    isExpanded,
-    setIsExpanded,
     overlapError,
     handleStartTimeChange,
     handleDurationChange,
