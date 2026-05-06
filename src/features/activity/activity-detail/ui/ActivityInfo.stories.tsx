@@ -12,6 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    id: 1,
     category: '문화 · 예술',
     title: '함께 배우면 즐거운 스트릿 댄스',
     rating: 4.9,
