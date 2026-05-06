@@ -4,6 +4,7 @@ import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import type { CalendarSchedule } from '@/features/my-page/reservation-status/types/reservation';
+import ReservationBadge from '@/features/my-page/reservation-status/ui/ReservationBadge';
 import { CaretLeftIcon, CaretRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
@@ -101,22 +102,10 @@ export default function ReservationCalendar({
                   )}
                 </span>
                 {schedule && !isOutside && (
-                  <div className="flex w-full flex-col gap-1 text-center typo-12-medium md:typo-14-medium">
-                    {schedule.reservations.completed > 0 && (
-                      <span className="flex items-center justify-center rounded bg-gray-50 pt-px text-gray-500 md:pt-0">
-                        완료 {schedule.reservations.completed}
-                      </span>
-                    )}
-                    {schedule.reservations.pending > 0 && (
-                      <span className="flex items-center justify-center rounded bg-blue-100 pt-px text-primary-500 md:pt-0">
-                        예약 {schedule.reservations.pending}
-                      </span>
-                    )}
-                    {schedule.reservations.confirmed > 0 && (
-                      <span className="flex items-center justify-center rounded bg-orange-100 pt-px text-orange-400 md:pt-0">
-                        승인 {schedule.reservations.confirmed}
-                      </span>
-                    )}
+                  <div className="flex w-full flex-col gap-1 text-center">
+                    <ReservationBadge type="completed" count={schedule.reservations.completed} />
+                    <ReservationBadge type="pending" count={schedule.reservations.pending} />
+                    <ReservationBadge type="confirmed" count={schedule.reservations.confirmed} />
                   </div>
                 )}
               </td>
