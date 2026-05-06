@@ -16,8 +16,7 @@ import { proxyFetch } from '@/shared/apis/bff/proxy';
  *
  * @returns 사용자 정보 (`UserResponse`)
  */
-export const GET = createAuthorizedRoute(async ({ accessToken }) => {
-  void accessToken;
+export const GET = createAuthorizedRoute(async () => {
   return proxyFetch.get<UserResponse>('/users/me');
 });
 
