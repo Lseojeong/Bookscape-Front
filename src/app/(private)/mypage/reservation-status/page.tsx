@@ -2,49 +2,53 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import ReservationCalendar, {
-  type Schedule,
-} from '@/features/my-page/reservation-status/ui/ReservationCalendar';
+import {
+  MOCK_ACTIVITIES,
+  MOCK_CALENDAR_SCHEDULES,
+  MOCK_PANEL_SCHEDULES,
+  MOCK_RESERVATIONS,
+} from '@/features/my-page/reservation-status/mocks/index';
+import ReservationCalendar from '@/features/my-page/reservation-status/ui/ReservationCalendar';
+import ReservationPanel from '@/features/my-page/reservation-status/ui/ReservationPanel';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
+import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 
-// TODO: API 연결 후 삭제
-const MOCK_ACTIVITIES = [
-  { id: 1, title: '함께 배우면 즐거운 스트릿 댄스' },
-  { id: 2, title: '한강 야경 보며 즐기는 요트 파티' },
-  { id: 3, title: '초보자를 위한 서핑 클래스' },
-];
+const toDateStr = (date: Date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
-// TODO: API 연결 후 삭제
-const MOCK_SCHEDULES: Record<number, Schedule[]> = {
-  1: [
-    { date: '2026-05-09', reservations: { completed: 10, confirmed: 0, pending: 0 } },
-    { date: '2026-05-10', reservations: { completed: 0, confirmed: 2, pending: 0 } },
-    { date: '2026-05-11', reservations: { completed: 0, confirmed: 2, pending: 8 } },
-    { date: '2026-05-12', reservations: { completed: 0, confirmed: 10, pending: 0 } },
-  ],
-  2: [
-    { date: '2026-05-15', reservations: { completed: 0, confirmed: 3, pending: 0 } },
-    { date: '2026-05-20', reservations: { completed: 5, confirmed: 0, pending: 2 } },
-  ],
-  3: [{ date: '2026-05-25', reservations: { completed: 0, confirmed: 0, pending: 4 } }],
-};
-/**
- * 예약 현황 페이지 컴포넌트.
- *
- * - 드롭다운으로 체험을 선택하면 해당 체험의 월별 예약 현황을 캘린더로 표시합니다.
- * - 체험 목록과 예약 데이터는 API 연결 전까지 목 데이터로 동작합니다.
- */
 export default function ReservationStatusPage() {
   const router = useRouter();
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(
     MOCK_ACTIVITIES[0]?.id ?? null
   );
   const [month, setMonth] = useState(new Date());
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
+
+  const activityId = selectedActivityId ?? 1;
+  const currentCalendarSchedules = MOCK_CALENDAR_SCHEDULES[activityId] ?? [];
+  const currentPanelSchedules = selectedDateStr
+    ? (MOCK_PANEL_SCHEDULES[activityId]?.[selectedDateStr] ?? [])
+    : [];
+  const currentReservations = selectedDateStr
+    ? (MOCK_RESERVATIONS[activityId]?.[selectedDateStr] ?? [])
+    : [];
+
+  const handleDateClick = (date: Date) => {
+    const dateStr = toDateStr(date);
+    setSelectedDate(date);
+    setSelectedDateStr(dateStr);
+    requestAnimationFrame(() => {
+      setPanelOpen(true);
+    });
+  };
+
   return (
     <div className="mb-10 flex w-full flex-col gap-6 md:w-119 lg:w-160">
       <PageHeader
@@ -52,29 +56,49 @@ export default function ReservationStatusPage() {
         description="내 체험에 예약된 내역들을 한 눈에 확인할 수 있습니다."
         onBack={() => router.back()}
       />
-      <SelectDropdown
-        value={String(selectedActivityId ?? '')}
-        onChangeValue={(id) => setSelectedActivityId(Number(id))}
-      >
-        <SelectDropdownTrigger>
-          <SelectDropdownValue
-            render={(value) => MOCK_ACTIVITIES.find((a) => String(a.id) === value)?.title}
-          />
-        </SelectDropdownTrigger>
-        <SelectDropdownContent>
-          {MOCK_ACTIVITIES.map((activity) => (
-            <SelectDropdownItem key={activity.id} value={String(activity.id)}>
-              {activity.title}
-            </SelectDropdownItem>
-          ))}
-        </SelectDropdownContent>
-      </SelectDropdown>
 
-      <ReservationCalendar
-        month={month}
-        onMonthChange={setMonth}
-        schedules={MOCK_SCHEDULES[selectedActivityId ?? 1] ?? []}
-      />
+      {MOCK_ACTIVITIES.length === 0 ? (
+        <EmptyState
+          type="experience"
+          mainText={'아직 등록한 체험이 없어요.\n새로운 체험을 등록해보세요!'}
+        />
+      ) : (
+        <>
+          <SelectDropdown
+            value={String(selectedActivityId ?? '')}
+            onChangeValue={(id) => setSelectedActivityId(Number(id))}
+          >
+            <SelectDropdownTrigger>
+              <SelectDropdownValue
+                render={(value) => MOCK_ACTIVITIES.find((a) => String(a.id) === value)?.title}
+              />
+            </SelectDropdownTrigger>
+            <SelectDropdownContent>
+              {MOCK_ACTIVITIES.map((activity) => (
+                <SelectDropdownItem key={activity.id} value={String(activity.id)}>
+                  {activity.title}
+                </SelectDropdownItem>
+              ))}
+            </SelectDropdownContent>
+          </SelectDropdown>
+
+          <ReservationCalendar
+            month={month}
+            onMonthChange={setMonth}
+            schedules={currentCalendarSchedules}
+            onDateClick={handleDateClick}
+          />
+
+          <ReservationPanel
+            key={selectedDateStr ?? ''}
+            isOpen={panelOpen}
+            onClose={() => setPanelOpen(false)}
+            date={selectedDate}
+            schedules={currentPanelSchedules}
+            reservations={currentReservations}
+          />
+        </>
+      )}
     </div>
   );
 }
