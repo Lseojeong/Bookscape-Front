@@ -3,7 +3,7 @@
 import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
-import { startTransition, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/shared/utils/cn';
 
 type ImageCarouselProps = {
@@ -30,17 +30,24 @@ export default function ImageCarousel({ images }: ImageCarouselProps) {
   useEffect(() => {
     if (!emblaApi) return;
 
-    startTransition(() => {
+    const updateScrollSnaps = () => {
       setScrollSnaps(emblaApi.scrollSnapList());
-    });
+    };
 
-    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+
+    updateScrollSnaps();
+    onSelect();
+
     emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', () => {
-      startTransition(() => {
-        setScrollSnaps(emblaApi.scrollSnapList());
-      });
-    });
+    emblaApi.on('reInit', updateScrollSnaps);
+
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', updateScrollSnaps);
+    };
   }, [emblaApi]);
 
   return (
