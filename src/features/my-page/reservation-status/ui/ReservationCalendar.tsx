@@ -47,7 +47,7 @@ export default function ReservationCalendar({
         classNames={{
           root: 'w-full relative',
           months: 'w-full',
-          nav: 'absolute inset-x-0 flex justify-center gap-25 md:gap-40 z-1',
+          nav: 'absolute inset-x-0 flex justify-center gap-25 md:gap-40 layer-base',
           month_caption: 'flex justify-center items-center relative mb-7.5',
           caption_label: 'typo-16-bold md:typo-20-bold',
           button_previous: 'cursor-pointer',
@@ -91,7 +91,7 @@ export default function ReservationCalendar({
                 className={cn(
                   'flex h-full min-h-31 w-full flex-col items-center gap-1 border-b border-gray-50 p-1 px-3 py-4.5 typo-16-medium',
                   isToday && 'bg-blue-50',
-                  !isOutside && 'cursor-pointer hover:bg-gray-25' // hasReservation 조건 제거
+                  !isOutside && 'cursor-pointer hover:bg-gray-25'
                 )}
               >
                 <span className={cn(isOutside ? 'text-gray-300' : 'text-gray-800', 'relative')}>
