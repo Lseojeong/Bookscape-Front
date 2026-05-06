@@ -1,5 +1,26 @@
 import { z } from 'zod';
 
+/** 체험 상세 서브 이미지 */
+export const SubImageSchema = z.object({
+  id: z.number(),
+  imageUrl: z.string(),
+});
+
+/** 체험 상세 조회 응답 */
+export const ActivityDetailSchema = z.object({
+  id: z.number(),
+  bannerImageUrl: z.string(),
+  subImages: z.array(SubImageSchema),
+  category: z.string(),
+  title: z.string(),
+  rating: z.number(),
+  reviewCount: z.number(),
+  address: z.string(),
+});
+
+export type SubImage = z.infer<typeof SubImageSchema>;
+export type ActivityDetail = z.infer<typeof ActivityDetailSchema>;
+
 /** 체험 리스트 조회 */
 export const ActivityDataSchema = z.object({
   id: z.number(),
