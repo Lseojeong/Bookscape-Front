@@ -2,12 +2,12 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { COMMON_MESSAGE } from '@/features/auth/constants/authMessage';
 import { LoginRequest, UserData } from '@/features/auth/types/auth';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
 import { ApiError } from '@/shared/apis/apiError';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
-import { COMMON_MESSAGE } from '@/shared/constants/message';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
@@ -62,8 +62,8 @@ export default function LoginPage() {
           );
 
           // 쿠키 상태 동기화를 위해 refresh 후 이동
-          router.push('/');
           router.refresh();
+          router.push('/');
         }
       } catch (error) {
         if (error instanceof ApiError) {
