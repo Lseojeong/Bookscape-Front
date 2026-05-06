@@ -11,8 +11,7 @@ export const ACTIVITY_ERROR_MESSAGES = {
   DETAIL_ADDRESS_REQUIRED: '상세 주소를 작성해주세요',
   SCHEDULE_REQUIRED: '날짜와 시간 모두 선택해주세요',
   BANNER_REQUIRED: '배너 이미지를 등록해주세요',
-  SCHEDULE_OVERLAP: (date: string, start: string, end: string) =>
-    `${date} ${start} - ${end}이 중복입니다`,
+  SCHEDULE_OVERLAP: (start: string, end: string) => `${start} - ${end}이 중복입니다`,
   DATE_ALREADY_ADDED: '이미 추가된 날짜입니다',
   TIME_EXCEEDS_MIDNIGHT: '자정(24:00)을 초과하는 시간대는 등록할 수 없습니다',
 };

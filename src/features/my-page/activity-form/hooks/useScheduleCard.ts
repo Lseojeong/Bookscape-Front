@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
 import { Slot } from '@/features/my-page/activity-form/types';
 import {
@@ -29,7 +29,7 @@ type UseScheduleCardProps = {
  *   onAddSlot: (newSlot) => appendSlot(newSlot)
  * });
  */
-export const useScheduleCard = ({ dateString, slots, onAddSlot }: UseScheduleCardProps) => {
+export const useScheduleCard = ({ slots, onAddSlot }: UseScheduleCardProps) => {
   const [tempStartTime, setTempStartTime] = useState<string>('');
   const [tempDuration, setTempDuration] = useState<number | ''>('');
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -51,9 +51,7 @@ export const useScheduleCard = ({ dateString, slots, onAddSlot }: UseScheduleCar
       const overlapStart = start > overlapSlot.startTime ? start : overlapSlot.startTime;
       const overlapEnd = endTime < overlapSlot.endTime ? endTime : overlapSlot.endTime;
 
-      setOverlapError(
-        ACTIVITY_ERROR_MESSAGES.SCHEDULE_OVERLAP(dateString, overlapStart, overlapEnd)
-      );
+      setOverlapError(ACTIVITY_ERROR_MESSAGES.SCHEDULE_OVERLAP(overlapStart, overlapEnd));
     } else {
       setOverlapError('');
       onAddSlot({ startTime: start, endTime });
@@ -64,6 +62,20 @@ export const useScheduleCard = ({ dateString, slots, onAddSlot }: UseScheduleCar
     }
   };
 
+  // 에러가 떠 있고, 시작시간과 체험시간이 입력된 상태라면 유효성 검사 재실행
+  useEffect(() => {
+    if (overlapError && tempStartTime && tempDuration) {
+      const timer = setTimeout(() => {
+        handleAttemptAddSlot(tempStartTime, tempDuration);
+      }, 0);
+
+      // 언마운트 시 타이머 정리해서 메모리 누수 방지
+      return () => clearTimeout(timer);
+    }
+    //NOTE: 사용자가 슬롯을 삭제했을 때만 로직을 실행해야 하기 때문에 모든 함수를 배열에 넣지 못함
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slots]);
+
   // 시작 시간 선택 드롭다운의 onChange 핸들러
   const handleStartTimeChange = (val: string) => {
     setOverlapError('');
@@ -72,7 +84,7 @@ export const useScheduleCard = ({ dateString, slots, onAddSlot }: UseScheduleCar
   };
 
   // 체험 시간 선택 드롭다운의 onChange 핸들러
-  const handleDurationChange = (val: number) => {
+  const handleDurationChange = (val: number | '') => {
     setOverlapError('');
     setTempDuration(val);
     handleAttemptAddSlot(tempStartTime, val);
