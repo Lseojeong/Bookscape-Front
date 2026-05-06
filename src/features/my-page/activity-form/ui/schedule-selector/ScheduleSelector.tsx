@@ -1,5 +1,6 @@
 'use client';
 
+import '@/features/my-page/activity-form/ui/schedule-selector/schedule-calendar.css';
 import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -56,77 +57,6 @@ export default function ScheduleSelector() {
 
               {isCalendarOpen && (
                 <div className="absolute top-[110%] right-0 z-50 w-max rounded-2xl border border-gray-100 bg-white p-3 shadow-lg sm:p-4">
-                  <style>{`
-                  /* 달력 사이즈 (모바일) */
-                  #schedule-calendar-wrapper .rdp-root { margin: 0; }
-                  #schedule-calendar-wrapper .rdp-caption_label { font-size: 15px; }
-                  #schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell,
-                  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
-                  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button,
-                  #schedule-calendar-wrapper nav.rdp-nav button {
-                    width: 32px; height: 32px; min-width: 32px; min-height: 32px;
-                    max-width: 32px; max-height: 32px; padding: 0; margin: 0;
-                  }
-                  #schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell {
-                    font-size: 12px; padding-bottom: 8px;
-                  }
-                  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
-                  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button {
-                    font-size: 13px;
-                  }
-
-                  /* 꺾쇠 아이콘 색상 변경 */
-                  #schedule-calendar-wrapper .rdp-chevron {
-                    fill: var(--color-primary-500);
-                  }
-
-                  /* 오늘 날짜 텍스트 색상 및 굵기 변경 */
-                  #schedule-calendar-wrapper .rdp-today .rdp-day_button {
-                    color: var(--color-primary-600);
-                    font-weight: 700;
-                  }
-
-                  /* 클릭 가능한 날짜 호버 시 배경색 적용 */
-                  #schedule-calendar-wrapper .rdp-day:not(.rdp-disabled) .rdp-day_button:hover {
-                    background-color: var(--color-primary-100);
-                    border-radius: 100%;
-                    transition: background-color 0.2s ease;
-                  }
-
-                  /* 💡 [수정] 포커스 링을 "달력 내부의 날짜 버튼"에만 둥글게 적용합니다. */
-                  #schedule-calendar-wrapper .rdp-day_button:focus-visible {
-                    outline: 2px solid var(--color-primary-500);
-                    outline-offset: 2px;
-                    border-radius: 100%;
-                  }
-
-                  /* 💡 [수정] 포커스 링을 "달력 내부의 꺾쇠 버튼"에만 네모낳게 적용합니다. */
-                  #schedule-calendar-wrapper nav.rdp-nav button:focus-visible {
-                    outline: 2px solid var(--color-primary-500);
-                    outline-offset: 2px;
-                    border-radius: 6px;
-                  }
-
-                  /* 달력 사이즈 (태블릿, 데스크탑) */
-                  @media (min-width: 640px) {
-                    #schedule-calendar-wrapper .rdp-caption_label { font-size: 18px; }
-                    #schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell,
-                    #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
-                    #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button,
-                    #schedule-calendar-wrapper nav.rdp-nav button {
-                      width: 44px; height: 44px; min-width: 44px; min-height: 44px;
-                      max-width: 44px; max-height: 44px;
-                    }
-                    #schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell {
-                      font-size: 14px;
-                    }
-                    #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
-                    #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button {
-                      font-size: 15px;
-                    }
-                  }
-                `}</style>
-
                   <DayPicker
                     mode="single"
                     locale={ko}
