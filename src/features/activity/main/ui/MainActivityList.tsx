@@ -19,8 +19,21 @@ export default function MainActivityList() {
     useMainActivityCarousel();
 
   // 이전/다음 버튼 공통 스타일
-  const btnBaseStyle =
-    'absolute top-1/2 z-10 hidden sm:flex h-13.5 w-13.5 -translate-y-1/2 items-center justify-center rounded-full border border-gray-100 bg-white shadow-lg transition-opacity hover:bg-gray-50';
+  const btnBaseStyle = cn(
+    // 레이아웃
+    'absolute top-1/2 z-10 -translate-y-1/2',
+    // 크기 & 모양
+    'h-13.5 w-13.5 rounded-full',
+    // 색상 & 테두리
+    'border border-gray-100 bg-white',
+    // 효과
+    'shadow-lg transition-opacity',
+    // 반응형
+    'hidden items-center justify-center sm:flex',
+    // 상태
+    'hover:bg-gray-50',
+    'disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-50 disabled:opacity-50'
+  );
 
   return (
     <section className="flex w-full flex-col gap-5 py-8">
@@ -29,17 +42,17 @@ export default function MainActivityList() {
       </h2>
       <div className="group relative">
         {/* 왼쪽 버튼 */}
-        {canScrollPrev && (
-          <button
-            type="button"
-            onClick={scrollPrev}
-            disabled={!canScrollPrev}
-            className={cn(btnBaseStyle, '-left-5')}
-            aria-label="이전"
-          >
-            <ArrowLeftIcon />
-          </button>
-        )}
+        {/* {canScrollPrev && ( */}
+        <button
+          type="button"
+          onClick={scrollPrev}
+          disabled={!canScrollPrev}
+          className={cn(btnBaseStyle, '-left-5')}
+          aria-label="이전"
+        >
+          <ArrowLeftIcon />
+        </button>
+        {/* )} */}
         <div ref={emblaRef} className="overflow-hidden pb-4">
           <ul className="flex gap-4 md:gap-5 lg:gap-6">
             {activityData.map((data) => {
@@ -57,17 +70,17 @@ export default function MainActivityList() {
           </ul>
         </div>
         {/* 오른쪽 버튼 */}
-        {canScrollNext && (
-          <button
-            type="button"
-            onClick={scrollNext}
-            disabled={!canScrollNext}
-            className={cn(btnBaseStyle, '-right-5')}
-            aria-label="다음"
-          >
-            <ArrowRightIcon />
-          </button>
-        )}
+        {/* {canScrollNext && ( */}
+        <button
+          type="button"
+          onClick={scrollNext}
+          disabled={!canScrollNext}
+          className={cn(btnBaseStyle, '-right-5')}
+          aria-label="다음"
+        >
+          <ArrowRightIcon />
+        </button>
+        {/* )} */}
       </div>
     </section>
   );
