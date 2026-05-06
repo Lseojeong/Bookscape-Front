@@ -32,7 +32,6 @@ type ScheduleCardProps = {
  * @example
  * <ScheduleCard
  *   date={new Date()}
- *   dateString="2026-05-12"
  *   slots={[{ startTime: '09:00', endTime: '11:00' }]}
  *   onRemoveCard={() => handleRemoveGroup('2026-05-12')}
  *   onAddSlot={(newSlot) => handleAddSlot(index, newSlot)}

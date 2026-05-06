@@ -23,7 +23,6 @@ type UseScheduleCardProps = {
  *   overlapError,
  *   handleStartTimeChange
  * } = useScheduleCard({
- *   dateString: '2026-05-12',
  *   slots: currentSlots,
  *   onAddSlot: (newSlot) => appendSlot(newSlot)
  * });
