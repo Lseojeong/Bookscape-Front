@@ -2,9 +2,9 @@
 import Link from 'next/link';
 import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActivityCarousel';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
+import CarouselArrowButton from '@/features/activity/main/ui/CarouselArrowButton';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
-import { cn } from '@/shared/utils/cn';
 
 /**
  * 메인 페이지 인기 체험 목록 컴포넌트입니다.
@@ -19,23 +19,6 @@ export default function MainActivityList() {
   const { emblaRef, activityData, canScrollPrev, canScrollNext, scrollPrev, scrollNext } =
     useMainActivityCarousel();
 
-  // 이전/다음 버튼 공통 스타일
-  const btnBaseStyle = cn(
-    // 레이아웃
-    'absolute top-1/2 z-10 -translate-y-1/2',
-    // 크기 & 모양
-    'h-13.5 w-13.5 rounded-full',
-    // 색상 & 테두리
-    'border border-gray-100 bg-white',
-    // 효과
-    'shadow-lg transition-opacity',
-    // 반응형
-    'hidden items-center justify-center sm:flex',
-    // 상태
-    'hover:bg-gray-50',
-    'disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-50 disabled:opacity-50'
-  );
-
   return (
     <section className="flex w-full flex-col gap-5 py-8">
       <Title as="h2" size="18" weight="bold" className="text-gray-950 md:typo-32-bold">
@@ -43,15 +26,14 @@ export default function MainActivityList() {
       </Title>
       <div className="group relative">
         {/* 왼쪽 버튼 */}
-        <button
-          type="button"
+        <CarouselArrowButton
+          className="-left-5"
           onClick={scrollPrev}
           disabled={!canScrollPrev}
-          className={cn(btnBaseStyle, '-left-5')}
-          aria-label="이전"
+          ariaLabel="이전"
         >
           <ArrowLeftIcon />
-        </button>
+        </CarouselArrowButton>
 
         {/* 이미지 캐러셀 */}
         <div ref={emblaRef} className="overflow-hidden pb-4">
@@ -72,15 +54,14 @@ export default function MainActivityList() {
         </div>
 
         {/* 오른쪽 버튼 */}
-        <button
-          type="button"
+        <CarouselArrowButton
           onClick={scrollNext}
           disabled={!canScrollNext}
-          className={cn(btnBaseStyle, '-right-5')}
-          aria-label="다음"
+          className="-right-5"
+          ariaLabel="다음"
         >
           <ArrowRightIcon />
-        </button>
+        </CarouselArrowButton>
       </div>
     </section>
   );
