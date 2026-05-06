@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { ApiError } from '@/shared/apis/apiError';
 import { COMMON_MESSAGE } from '@/shared/constants/message';
@@ -87,8 +88,8 @@ export const createAuthorizedRoute = <
 >(
   handler: (ctx: AuthorizedHandlerContextWithParams<TBody, TParams>) => Promise<unknown>,
   options: CreateAuthorizedRouteOptions = {}
-): ((request: Request, context?: { params?: TParams }) => Promise<Response>) => {
-  return async (request: Request, context?: { params?: TParams }) => {
+): ((request: NextRequest, context?: { params?: Promise<TParams> }) => Promise<Response>) => {
+  return async (request: NextRequest, context?: { params?: Promise<TParams> }) => {
     const cookieStore = await cookies();
     const accessTokenCookieKey = options.accessTokenCookieKey ?? 'accessToken';
     const accessToken = cookieStore.get(accessTokenCookieKey)?.value;
@@ -102,12 +103,13 @@ export const createAuthorizedRoute = <
 
     try {
       const body = (await parseRequestBody(request)) as TBody;
+      const params = await context?.params;
 
       const result = await handler({
         accessToken,
         body,
         request,
-        params: context?.params,
+        params,
       });
 
       if (result instanceof Response) return result;
