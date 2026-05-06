@@ -1,5 +1,5 @@
+import { ActivityDetailSchema, ActivityResponse } from '@/features/activity/types';
 import { get } from '@/shared/apis/base/publicFetch';
-import { ActivityDetailSchema } from './types';
 
 export const getActivityDetail = async (id: number) => {
   const data = await get(`/activities/${id}`);
@@ -9,4 +9,11 @@ export const getActivityDetail = async (id: number) => {
   const images = [activity.bannerImageUrl, ...activity.subImages.map((img) => img.imageUrl)];
 
   return { ...activity, images };
+};
+
+export const getHotActivityData = async (size: number) => {
+  const result = await get<ActivityResponse>(
+    `/activities?method=offset&sort=most_reviewed&size=${size}`
+  );
+  return result?.activities ?? [];
 };
