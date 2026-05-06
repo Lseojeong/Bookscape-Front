@@ -1,10 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import useHorizontalScroll from '@/features/activity/main/hooks/useHorizontalScroll';
+import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActivityCarousel';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
-import { ActivityData, ActivityResponse } from '@/features/activity/types';
-import { get } from '@/shared/apis/base/publicFetch';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 
@@ -18,24 +15,8 @@ import { cn } from '@/shared/utils/cn';
  * ```
  */
 export default function MainActivityList() {
-  const [activityData, setActivityData] = useState<ActivityData[]>([]);
-
-  useEffect(() => {
-    const fetchActivityData = async () => {
-      try {
-        // TODO : 호출 개수 정해야함!
-        const ACTIVITY_FETCH_LIMIT = 8;
-        const result = await get<ActivityResponse>(
-          `/activities?method=offset&sort=most_reviewed&size=${ACTIVITY_FETCH_LIMIT}`
-        );
-        setActivityData(result?.activities ?? []);
-      } catch {}
-    };
-    fetchActivityData();
-  }, []);
-
-  const { scrollRef, scrollState, handleScroll, updateScrollState, dragEvents } =
-    useHorizontalScroll(activityData.length);
+  const { emblaRef, activityData, canScrollPrev, canScrollNext, scrollPrev, scrollNext } =
+    useMainActivityCarousel();
 
   // 이전/다음 버튼 공통 스타일
   const btnBaseStyle =
@@ -48,22 +29,18 @@ export default function MainActivityList() {
       </h2>
       <div className="group relative">
         {/* 왼쪽 버튼 */}
-        {scrollState.canLeft && (
+        {canScrollPrev && (
           <button
             type="button"
-            onClick={() => handleScroll('left')}
+            onClick={scrollPrev}
+            disabled={!canScrollPrev}
             className={cn(btnBaseStyle, '-left-5')}
             aria-label="이전"
           >
             <ArrowLeftIcon />
           </button>
         )}
-        <div
-          ref={scrollRef}
-          className="scrollbar-hide overflow-x-auto pb-4"
-          onScroll={updateScrollState}
-          {...dragEvents}
-        >
+        <div ref={emblaRef} className="overflow-hidden pb-4">
           <ul className="flex gap-4 md:gap-5 lg:gap-6">
             {activityData.map((data) => {
               return (
@@ -80,10 +57,11 @@ export default function MainActivityList() {
           </ul>
         </div>
         {/* 오른쪽 버튼 */}
-        {scrollState.canRight && (
+        {canScrollNext && (
           <button
             type="button"
-            onClick={() => handleScroll('right')}
+            onClick={scrollNext}
+            disabled={!canScrollNext}
             className={cn(btnBaseStyle, '-right-5')}
             aria-label="다음"
           >
