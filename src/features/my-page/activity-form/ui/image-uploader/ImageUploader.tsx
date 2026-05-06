@@ -60,9 +60,7 @@ export default function ImageUploader({
           className={cn(
             'group relative flex h-20 w-20 flex-col items-center justify-center rounded-lg border transition-colors md:h-32 md:w-32 md:rounded-2xl',
             isError ? 'border-error' : 'border-gray-100',
-            isDisabled
-              ? 'cursor-not-allowed bg-gray-25 shadow-[0_1px_10px_rgba(0,0,0,0.1)]'
-              : 'cursor-pointer bg-white',
+            isDisabled ? 'cursor-not-allowed bg-gray-25' : 'cursor-pointer bg-white',
             'outline-none focus-within:ring-2 focus-within:ring-primary-500 focus-within:ring-offset-2'
           )}
         >
