@@ -18,7 +18,7 @@ export default function ActivityDescription({ description }: ActivityDescription
       <Title as="h2" size="16" weight="bold" color="text-gray-950" className="mb-2 md:typo-18-bold">
         체험 설명
       </Title>
-      <p className="typo-16-body-medium text-gray-950">{description}</p>
+      <p className="typo-16-body-medium whitespace-pre-wrap text-gray-950">{description}</p>
     </div>
   );
 }
