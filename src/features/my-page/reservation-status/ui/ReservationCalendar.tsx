@@ -1,5 +1,6 @@
 'use client';
 
+import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -71,7 +72,7 @@ export default function ReservationCalendar({
           Day: ({ day, modifiers, ...props }) => {
             const isToday = modifiers.today;
             const isOutside = day.outside;
-            const dateStr = `${day.date.getFullYear()}-${String(day.date.getMonth() + 1).padStart(2, '0')}-${String(day.date.getDate()).padStart(2, '0')}`;
+            const dateStr = format(day.date, 'yyyy-MM-dd');
             const schedule = schedules.find((s) => s.date === dateStr);
             const hasReservation =
               schedule &&
