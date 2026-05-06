@@ -73,7 +73,7 @@ export type MyActivityReservation = {
   teamId: string;
   activityId: number;
   scheduleId: number;
-  status: string;
+  status: SellerReservationStatus;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;
@@ -100,7 +100,7 @@ export type UpdateMyActivityReservationStatusResponse = {
   userId: number;
   activityId: number;
   scheduleId: number;
-  status: string;
+  status: SellerReservationStatus;
   reviewSubmitted: boolean;
   totalPrice: number;
   headCount: number;
