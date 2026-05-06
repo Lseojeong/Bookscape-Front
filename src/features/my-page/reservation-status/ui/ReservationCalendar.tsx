@@ -94,7 +94,7 @@ export default function ReservationCalendar({
                 {...props}
                 className={cn(
                   'flex h-full min-h-31 w-full flex-col items-center gap-1 border-b border-gray-50 p-1 px-3 py-4.5 typo-16-medium',
-                  isToday && 'bg-blue-50'
+                  isToday && 'bg-primary-50'
                 )}
               >
                 <span className={cn(isOutside ? 'text-gray-300' : 'text-gray-800', 'relative')}>
