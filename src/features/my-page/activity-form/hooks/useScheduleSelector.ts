@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
 import { ScheduleGroup, Slot } from '@/features/my-page/activity-form/types';
+import useOutsideClick from '@/shared/hooks/useOutsideClick';
 
 type ScheduleFieldError = {
   root?: { message?: string };
@@ -31,15 +32,7 @@ export const useScheduleSelector = () => {
   const [dateInputError, setDateInputError] = useState<string>('');
 
   // 달력 외부 영역 클릭 시 달력 닫기
-  useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (calendarRef.current && !calendarRef.current.contains(e.target as Node)) {
-        setIsCalendarOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, []);
+  useOutsideClick(calendarRef, () => setIsCalendarOpen(false), isCalendarOpen);
 
   // 로컬 상태를 RHF 상태로 동기화
   useEffect(() => {
