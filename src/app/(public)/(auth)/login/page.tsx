@@ -27,7 +27,7 @@ export default function LoginPage() {
     control,
     handleSubmit,
     setError,
-    formState: { isSubmitting, isValid, errors },
+    formState: { isSubmitting, errors, isDirty },
   } = useForm({
     defaultValues: {
       email: '',
@@ -112,7 +112,7 @@ export default function LoginPage() {
             theme="primary"
             size="lg"
             isLoading={isSubmitting}
-            disabled={!isValid || isSubmitting}
+            disabled={!isDirty || isSubmitting}
             className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
           >
             로그인 하기
