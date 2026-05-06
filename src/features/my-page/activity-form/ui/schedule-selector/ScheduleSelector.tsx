@@ -10,6 +10,12 @@ import FormField from '@/shared/ui/form/FormField';
 import Input from '@/shared/ui/input/Input';
 import { cn } from '@/shared/utils/cn';
 
+/**
+ * 예약 가능한 날짜를 달력에서 선택하고, 선택된 날짜들의 스케줄 카드 목록을 렌더링하는 부모 컴포넌트입니다.
+ *
+ * @example
+ * <ScheduleSelector />
+ */
 export default function ScheduleSelector() {
   const {
     calendarRef,
@@ -140,7 +146,6 @@ export default function ScheduleSelector() {
           <ScheduleCard
             key={group.dateString}
             date={group.date}
-            dateString={group.dateString}
             slots={group.slots}
             onRemoveCard={() => handleRemoveGroup(group.dateString)}
             onAddSlot={(newSlot) => handleAddSlot(index, newSlot)}
