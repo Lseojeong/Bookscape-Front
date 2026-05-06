@@ -1,7 +1,5 @@
-import Image, { ImageProps } from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { HeroBannerImage } from '@/shared/assets/images';
 import Logo from '@/shared/ui/logo/Logo';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
 import { cn } from '@/shared/utils/cn';
@@ -15,18 +13,12 @@ import { cn } from '@/shared/utils/cn';
  * <HeroBanner />
  * ```
  */
-export default function HeroBanner(props: Omit<ImageProps, 'src' | 'alt'>) {
+export default function HeroBanner() {
   return (
     <section className="relative h-105 w-full overflow-visible">
-      {/* 배경 이미지 */}
-      <Image
-        src={HeroBannerImage}
-        alt="배너 이미지"
-        fill
-        priority
-        className="object-cover"
-        {...props}
-      />
+      {/* 그라데이션 배경 */}
+      <div className="h-full bg-linear-to-b from-primary-500 to-primary-100" />
+
       {/* 헤드라인 및 검색 인풋 */}
       <div className="absolute inset-0 mx-auto mt-22 flex max-w-260 flex-col items-center justify-between px-9 text-white md:mt-13.25 md:px-8 lg:mt-20.75 xl:px-0">
         <div className="flex w-full items-center justify-between">
