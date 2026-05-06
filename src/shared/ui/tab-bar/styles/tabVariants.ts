@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const tabVariants = cva(
-  'h-10 cursor-pointer flex items-center justify-center -mb-px', // 모든 탭에 공통으로 적용될 스타일
+  'h-10 flex items-center justify-center -mb-px', // 모든 탭에 공통으로 적용될 스타일
   {
     variants: {
       state: {
