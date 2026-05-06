@@ -3,6 +3,7 @@ import Link from 'next/link';
 import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActivityCarousel';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
+import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 
 /**
@@ -37,9 +38,9 @@ export default function MainActivityList() {
 
   return (
     <section className="flex w-full flex-col gap-5 py-8">
-      <h2 className="typo-18-bold text-gray-950 md:typo-32-bold">
+      <Title as="h2" size="18" weight="bold" className="text-gray-950 md:typo-32-bold">
         🔥 <span className="text-secondary-500">HOT</span> 인기 체험
-      </h2>
+      </Title>
       <div className="group relative">
         {/* 왼쪽 버튼 */}
         <button

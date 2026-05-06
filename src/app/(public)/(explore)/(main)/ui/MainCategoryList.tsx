@@ -7,6 +7,7 @@ import {
   TourIcon,
   WellbeingIcon,
 } from '@/shared/assets/icons';
+import Title from '@/shared/ui/title/Title';
 
 const CATEGORY_OPTIONS = [
   { value: '문화 · 예술', label: '문화 · 예술', iconSrc: ArtIcon },
@@ -29,7 +30,9 @@ export default function MainCategoryList() {
   return (
     <section className="flex flex-col gap-5">
       <div className="flex items-center">
-        <h2 className="grow typo-18-bold text-gray-950 md:typo-32-bold">⚡️카테고리</h2>
+        <Title as="h2" size="18" weight="bold" className="grow text-gray-950 md:typo-32-bold">
+          ⚡️ 카테고리
+        </Title>
         <Link
           href="/activities"
           className="hidden items-center typo-20-medium text-primary-700 md:inline-flex"
