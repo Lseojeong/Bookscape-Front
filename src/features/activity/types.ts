@@ -16,6 +16,7 @@ export const ActivityDetailSchema = z.object({
   rating: z.number(),
   reviewCount: z.number(),
   address: z.string(),
+  description: z.string(),
 });
 
 export type SubImage = z.infer<typeof SubImageSchema>;
