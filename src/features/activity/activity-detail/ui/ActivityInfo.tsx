@@ -36,7 +36,7 @@ type ActivityInfoProps = {
  *   reviewCount={activity.reviewCount}
  *   address={activity.address}
  * />
- * ```
+ *
  */
 export default function ActivityInfo({
   id,
@@ -92,7 +92,7 @@ export default function ActivityInfo({
       </Title>
       {/* 별점 */}
       <div className="mb-2.5 flex items-center gap-1.5">
-        <StarIcon aria-hidden />
+        <StarIcon aria-hidden className="text-yellow-500" />
         <span
           className="typo-14-medium text-gray-700"
           aria-label={`별점 ${rating}점, 리뷰 ${reviewCount}개`}
