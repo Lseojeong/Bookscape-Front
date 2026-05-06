@@ -1,6 +1,15 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // INFO: Next.js Image 외부 도메인 허용 설정
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
+      },
+    ],
+  },
   turbopack: {
     // INFO: Turbopack 설정
     rules: {

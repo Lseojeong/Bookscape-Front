@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
-import { LoginRequest, LoginResponse } from '@/features/auth/types';
+import { LoginRequest, LoginResponse } from '@/features/auth/types/auth';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
