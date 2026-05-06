@@ -34,6 +34,23 @@ export const useScheduleSelector = () => {
   // 달력 외부 영역 클릭 시 달력 닫기
   useOutsideClick(calendarRef, () => setIsCalendarOpen(false), isCalendarOpen);
 
+  // 전역에서 esc키 감지해서 달력 닫기
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isCalendarOpen) {
+        setIsCalendarOpen(false);
+      }
+    };
+
+    if (isCalendarOpen) {
+      document.addEventListener('keydown', handleGlobalKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleGlobalKeyDown);
+    };
+  }, [isCalendarOpen]);
+
   // 로컬 상태를 RHF 상태로 동기화
   useEffect(() => {
     const flatSchedules = groupedSchedules.flatMap((group) =>
