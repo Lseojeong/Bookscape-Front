@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { COMMON_MESSAGE } from '@/features/auth/constants/authMessage';
+import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import { LoginRequest, UserData } from '@/features/auth/types/auth';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
@@ -13,6 +13,7 @@ import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
 
 /**
@@ -23,6 +24,7 @@ import { cn } from '@/shared/utils/cn';
 export default function LoginPage() {
   const router = useRouter();
   const { setAuth } = useAuthStore();
+  const { showToast } = useToastStore();
   const {
     control,
     handleSubmit,
@@ -61,6 +63,9 @@ export default function LoginPage() {
             expiresAt
           );
 
+          // 로그인 성공 토스트
+          showToast('check', AUTH_API_MESSAGE.LOGIN.SUCCESS);
+
           // 쿠키 상태 동기화를 위해 refresh 후 이동
           router.refresh();
           router.push('/');
@@ -74,14 +79,11 @@ export default function LoginPage() {
           });
         } else {
           // 네트워크 에러 등
-          setError('root', {
-            type: 'server',
-            message: COMMON_MESSAGE.ERROR.NETWORK,
-          });
+          showToast('cancel', '로그인 중 오류가 발생했습니다.');
         }
       }
     },
-    [router, setAuth, setError]
+    [router, setAuth, setError, showToast]
   );
 
   return (
