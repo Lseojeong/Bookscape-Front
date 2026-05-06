@@ -1,20 +1,27 @@
-import { UserResponse } from '@/features/user/types';
+import { z } from 'zod';
 
-/** POST /auth/login 응답  */
-export type LoginResponse = {
-  accessToken: string;
-  refreshToken: string;
-  user: UserResponse;
-};
+export const UserResponseSchema = z.object({
+  id: z.number(),
+  email: z.string().email(),
+  nickname: z.string(),
+  profileImageUrl: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
 
-/** POST /auth/login 리퀘스트 */
-export type LoginRequest = {
-  email: string;
-  password: string;
-};
+/** POST /auth/login 응답 */
+export const LoginResponseSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+  user: UserResponseSchema,
+});
 
-/** POST /auth/tokens 응답  */
-export type RefreshResponse = {
-  accessToken: string;
-  refreshToken: string;
-};
+/** POST /auth/tokens 응답 */
+export const RefreshResponseSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
+
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;
+export type UserResponse = z.infer<typeof UserResponseSchema>;
+export type RefreshResponse = z.infer<typeof RefreshResponseSchema>;

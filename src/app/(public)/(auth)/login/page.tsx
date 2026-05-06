@@ -2,13 +2,12 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { loginUser } from '@/features/auth/apis';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
-import { LoginRequest } from '@/features/auth/types/auth';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
-import { UserResponse } from '@/features/user/types';
+import { LoginFormValues } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
-import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
@@ -41,12 +40,10 @@ export default function LoginPage() {
 
   /** 로그인 요청 핸들러 */
   const handleLogin = useCallback(
-    async (formData: LoginRequest) => {
+    async (formData: LoginFormValues) => {
       try {
-        const response = await bffFetch.post<{ success: boolean; user: UserResponse }>(
-          '/auth/login',
-          formData
-        );
+        const response = await loginUser(formData);
+
         if (response) {
           const { user } = response;
 
