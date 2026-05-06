@@ -35,7 +35,6 @@ export default function ActivityTabSection({ description }: ActivityTabSectionPr
         onTabChange={setActiveTab}
         tabClassName="flex-1 md:flex-none md:w-32.5"
       />
-      {/* TODO: 체험 설명 */}
       {activeTab === 'description' && <ActivityDescription description={description} />}
       {/* TODO: 오시는 길 */}
       {/* TODO: 체험 후기 */}
