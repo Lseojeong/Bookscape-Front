@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { UserData } from '@/features/auth/types/auth';
 
 type UserInfoData = Pick<UserData, 'id' | 'email' | 'nickname'>;
@@ -36,10 +37,14 @@ type AuthState = {
  * const { user } = useAuthStore();
  * ```
  */
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  expiresAt: null,
-
-  setAuth: (user, expiresAt) => set({ user, expiresAt }),
-  clearAuth: () => set({ user: null, expiresAt: null }),
-}));
+export const useAuthStore = create<AuthState>()(
+  devtools(
+    (set) => ({
+      user: null,
+      expiresAt: null,
+      setAuth: (user, expiresAt) => set({ user, expiresAt }, false, 'setAuth'),
+      clearAuth: () => set({ user: null, expiresAt: null }, false, 'clearAuth'),
+    }),
+    { name: 'AuthStore' }
+  )
+);
