@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { UserData } from '@/features/auth/types/auth';
+import { UserResponse } from '@/features/user/types';
 
-type UserInfoData = Pick<UserData, 'id' | 'email' | 'nickname'>;
+type UserInfoData = Pick<UserResponse, 'id' | 'email' | 'nickname'>;
 
 /**
  * 인증 관련 전역 상태 및 액션 객체 타입

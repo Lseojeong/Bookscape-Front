@@ -1,18 +1,10 @@
-/** 사용자 기본 정보 타입 */
-export type UserData = {
-  id: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
+import { UserResponse } from '@/features/user/types';
 
 /** POST /auth/login 응답  */
 export type LoginResponse = {
   accessToken: string;
   refreshToken: string;
-  user: UserData;
+  user: UserResponse;
 };
 
 /** POST /auth/login 리퀘스트 */
