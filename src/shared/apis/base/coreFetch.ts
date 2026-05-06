@@ -1,4 +1,5 @@
 import { ApiError } from '@/shared/apis/apiError';
+import { COMMON_MESSAGE } from '@/shared/constants/message';
 
 /**
  * 핵심 fetch 엔진
@@ -16,7 +17,7 @@ import { ApiError } from '@/shared/apis/apiError';
  *
  * async function fetchData() {
  *   try {
- *     const data = await coreFetch('https://api.example.com', '/data', {
+ *     const data = await coreFetch('https://api.example.com/data', {
  *       method: 'GET',
  *     });
  *     console.log(data);
@@ -39,6 +40,11 @@ export type FetchRequestOptions = RequestInit & {
   isFormData?: boolean;
 };
 
+const isAbortError = (error: unknown): error is { name: 'AbortError' } => {
+  const errorName = (error as { name?: unknown } | null)?.name;
+  return errorName === 'AbortError';
+};
+
 export type RequestConfig = {
   endpoint: string;
   method: RequestInit['method'];
@@ -46,7 +52,7 @@ export type RequestConfig = {
   query?: QueryParams;
 } & Omit<FetchRequestOptions, 'body'>;
 
-const buildQueryString = (query?: QueryParams): string => {
+export const buildQueryString = (query?: QueryParams): string => {
   if (!query) return '';
 
   const params = new URLSearchParams();
@@ -58,15 +64,6 @@ const buildQueryString = (query?: QueryParams): string => {
   });
 
   return params.toString() ? `?${params.toString()}` : '';
-};
-
-const buildRequestUrl = (baseUrl: string, endpoint: string, query?: QueryParams) => {
-  const base = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-  const url = new URL(endpoint.replace(/^\//, ''), base);
-  if (query) {
-    url.search = buildQueryString(query).replace(/^\?/, '');
-  }
-  return url.toString();
 };
 
 const parseBody = (
@@ -91,17 +88,18 @@ const parseResponse = (text: string, isJson: boolean) => {
 };
 
 export async function coreFetch<T>(
-  baseUrl: string,
-  endpoint: string,
+  url: string,
   options: FetchRequestOptions = {},
-  query?: QueryParams,
   body?: unknown
 ): Promise<T | null> {
-  const url = buildRequestUrl(baseUrl, endpoint, query);
   const { isFormData = false, ...requestOptions } = options;
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+  let abortedByTimeout = false;
+  const timeoutId = setTimeout(() => {
+    abortedByTimeout = true;
+    controller.abort();
+  }, REQUEST_TIMEOUT);
   const signal = options.signal
     ? AbortSignal.any([controller.signal, options.signal])
     : controller.signal;
@@ -133,6 +131,19 @@ export async function coreFetch<T>(
     }
 
     return data;
+  } catch (error) {
+    // Fetch 자체 실패(네트워크/타임아웃 abort 등)는 네트워크 에러 메세지로 통일
+    if (error instanceof ApiError) throw error;
+
+    if (isAbortError(error)) {
+      if (abortedByTimeout) {
+        throw new Error(COMMON_MESSAGE.ERROR.NETWORK);
+      }
+      // 외부 취소(라우트 변경, 수동 abort 등)
+      throw new Error('요청이 취소되었습니다.');
+    }
+
+    throw new ApiError(500, COMMON_MESSAGE.ERROR.INTERNAL);
   } finally {
     clearTimeout(timeoutId);
   }

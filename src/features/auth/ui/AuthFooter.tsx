@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { OAuthMode } from '@/features/auth/constants/oauthMode';
 import KakaoAuthButton from '@/features/auth/ui/KakaoAuthButton';
 
 type AuthFooterProps = {
@@ -18,9 +19,9 @@ type AuthFooterProps = {
 export default function AuthFooter({ onKakaoClick }: AuthFooterProps) {
   const pathname = usePathname();
   const isLogin = pathname === '/login';
+  const oauthMode: OAuthMode = isLogin ? 'signin' : 'signup';
 
   const linkConfig = {
-    pathname: isLogin ? '로그인' : '회원가입', // 현재 페이지
     href: isLogin ? '/signup' : '/login',
     label: isLogin ? '회원가입' : '로그인', // 이동할 페이지의 이름
     description: isLogin ? '회원이 아니신가요?' : '이미 회원이신가요?',
@@ -36,7 +37,7 @@ export default function AuthFooter({ onKakaoClick }: AuthFooterProps) {
 
       {/* 카카오 버튼 및 링크 이동 */}
       <div className="flex flex-col justify-center gap-6 md:gap-7.5">
-        <KakaoAuthButton type="button" label={linkConfig.pathname} onClick={onKakaoClick} />
+        <KakaoAuthButton mode={oauthMode} onClick={onKakaoClick} />
         <p className="text-center text-gray-400">
           {linkConfig.description}{' '}
           <Link href={linkConfig.href}>

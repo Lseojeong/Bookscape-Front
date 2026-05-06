@@ -14,4 +14,14 @@ export const ENV = {
   get SERVER_API_URL() {
     return requireEnv('API_URL', process.env.API_URL);
   },
+
+  /** 카카오 OAuth REST API 키 (서버 전용) */
+  get KAKAO_REST_API_KEY() {
+    return requireEnv('KAKAO_REST_API_KEY', process.env.KAKAO_REST_API_KEY);
+  },
+
+  /** 카카오 OAuth redirect uri (서버 전용) */
+  get KAKAO_REDIRECT_URI() {
+    return requireEnv('KAKAO_REDIRECT_URI', process.env.KAKAO_REDIRECT_URI);
+  },
 } as const;
