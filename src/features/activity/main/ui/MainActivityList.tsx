@@ -42,7 +42,6 @@ export default function MainActivityList() {
       </h2>
       <div className="group relative">
         {/* 왼쪽 버튼 */}
-        {/* {canScrollPrev && ( */}
         <button
           type="button"
           onClick={scrollPrev}
@@ -52,7 +51,8 @@ export default function MainActivityList() {
         >
           <ArrowLeftIcon />
         </button>
-        {/* )} */}
+
+        {/* 이미지 캐러셀 */}
         <div ref={emblaRef} className="overflow-hidden pb-4">
           <ul className="flex gap-4 md:gap-5 lg:gap-6">
             {activityData.map((data) => {
@@ -69,8 +69,8 @@ export default function MainActivityList() {
             })}
           </ul>
         </div>
+
         {/* 오른쪽 버튼 */}
-        {/* {canScrollNext && ( */}
         <button
           type="button"
           onClick={scrollNext}
@@ -80,7 +80,6 @@ export default function MainActivityList() {
         >
           <ArrowRightIcon />
         </button>
-        {/* )} */}
       </div>
     </section>
   );
