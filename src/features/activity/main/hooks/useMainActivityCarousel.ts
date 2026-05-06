@@ -15,26 +15,23 @@ export default function useMainActivityCarousel() {
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      align: 'start',
-      dragFree: true,
-      duration: 30, // 낮을수록 빠름 (기본값: 25)
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    dragFree: true,
+    duration: 30, // 낮을수록 빠름 (기본값: 25)
 
-      // 브레이크포인트 옵션 : 모바일은 버튼이 없어서 미작성
-      breakpoints: {
-        // 768px (md) 이상일 때 적용
-        '(min-width: 768px)': {
-          slidesToScroll: 2,
-        },
-        // 1024px (lg) 이상일 때 적용
-        '(min-width: 1024px)': {
-          slidesToScroll: 4,
-        },
+    // 브레이크포인트 옵션 : 모바일은 버튼이 없어서 미작성
+    breakpoints: {
+      // 768px (md) 이상일 때 적용
+      '(min-width: 768px)': {
+        slidesToScroll: 2,
+      },
+      // 1024px (lg) 이상일 때 적용
+      '(min-width: 1024px)': {
+        slidesToScroll: 4,
       },
     },
-    []
-  );
+  });
 
   /**
    * [Handler] 스크롤 버튼 활성화 상태 업데이트
@@ -50,6 +47,9 @@ export default function useMainActivityCarousel() {
     });
   }, [emblaApi]);
 
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
   /**
    * [Effect] 초기 데이터 패칭
    * - 컴포넌트 마운트 시 인기 체험 데이터를 가져옵니다.
@@ -62,7 +62,7 @@ export default function useMainActivityCarousel() {
         );
         setActivityData(result?.activities ?? []);
       } catch (error) {
-        console.error('활동 데이터를 불러오는 중 에러가 발생했습니다:', error);
+        console.error('데이터를 불러오는 중 에러가 발생했습니다:', error);
       }
     };
     fetchActivityData();
@@ -103,9 +103,7 @@ export default function useMainActivityCarousel() {
     activityData,
     canScrollPrev,
     canScrollNext,
-    // [Handler] 이전 버튼 클릭 시 이동
-    scrollPrev: useCallback(() => emblaApi?.scrollPrev(), [emblaApi]),
-    // [Handler] 다음 버튼 클릭 시 이동
-    scrollNext: useCallback(() => emblaApi?.scrollNext(), [emblaApi]),
+    scrollPrev,
+    scrollNext,
   };
 }
