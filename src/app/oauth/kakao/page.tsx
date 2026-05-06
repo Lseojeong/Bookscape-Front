@@ -9,6 +9,7 @@ import type { OAuthMode } from '@/features/auth/constants/oauthMode';
 import {
   generateKakaoTempNickname,
   isAlreadyRegisteredKakaoUserError,
+  isNotRegisteredKakaoUserError,
   KAKAO_OAUTH_START_SIGNIN_URL,
   KAKAO_OAUTH_START_SIGNUP_URL,
 } from '@/features/auth/utils/kakaoOauthClient';
@@ -74,11 +75,15 @@ function KakaoOauthCallbackInner() {
         // 세션 쿠키는 BFF에서 설정되지만, UI 즉시 반영을 위해 user store도 갱신합니다.
         useUserStore.getState().setUser(res.user);
       } catch (err: unknown) {
-        if (mode === 'signin' && err instanceof ApiError && err.status === 404) {
+        const errorMessage = err instanceof Error ? err.message : '';
+        if (
+          mode === 'signin' &&
+          err instanceof ApiError &&
+          (err.status === 404 || isNotRegisteredKakaoUserError(errorMessage))
+        ) {
           window.location.replace(KAKAO_OAUTH_START_SIGNUP_URL);
           return;
         }
-        const errorMessage = err instanceof Error ? err.message : '';
         if (mode === 'signup' && isAlreadyRegisteredKakaoUserError(errorMessage)) {
           window.location.replace(KAKAO_OAUTH_START_SIGNIN_URL);
           return;

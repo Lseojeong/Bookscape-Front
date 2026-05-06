@@ -27,3 +27,21 @@ export const generateKakaoTempNickname = (): string => {
 export const isAlreadyRegisteredKakaoUserError = (message: string): boolean => {
   return message.includes('이미') && (message.includes('등록') || message.includes('가입'));
 };
+
+/**
+ * 로그인 요청 중 "미가입 사용자"로 판단되는 에러 메시지인지 확인합니다.
+ *
+ * @remarks
+ * 서버 메시지 포맷이 고정되어 있지 않아 키워드 포함 여부로 판단합니다.
+ */
+export const isNotRegisteredKakaoUserError = (message: string): boolean => {
+  const normalized = message.trim();
+  if (!normalized) return false;
+
+  return (
+    normalized.includes('미가입') ||
+    normalized.includes('가입되지') ||
+    normalized.includes('등록되지') ||
+    normalized.includes('존재하지')
+  );
+};
