@@ -1,8 +1,8 @@
 'use client';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useState, useEffect, useCallback, startTransition } from 'react';
-import { ActivityData, ActivityResponse } from '@/features/activity/types';
-import { get } from '@/shared/apis/base/publicFetch';
+import { getHotActivityData } from '@/features/activity/apis';
+import { ActivityData } from '@/features/activity/types';
 
 // TODO : 호출 개수 정해야함!
 const ACTIVITY_FETCH_LIMIT = 8;
@@ -57,10 +57,8 @@ export default function useMainActivityCarousel() {
   useEffect(() => {
     const fetchActivityData = async () => {
       try {
-        const result = await get<ActivityResponse>(
-          `/activities?method=offset&sort=most_reviewed&size=${ACTIVITY_FETCH_LIMIT}`
-        );
-        setActivityData(result?.activities ?? []);
+        const activities = await getHotActivityData(ACTIVITY_FETCH_LIMIT);
+        setActivityData(activities);
       } catch (error) {
         console.error('데이터를 불러오는 중 에러가 발생했습니다:', error);
       }
