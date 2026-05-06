@@ -36,6 +36,7 @@ type ActivityInfoProps = {
  *   reviewCount={activity.reviewCount}
  *   address={activity.address}
  * />
+ * ```
  */
 export default function ActivityInfo({
   id,
