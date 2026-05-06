@@ -37,7 +37,11 @@ export default function Input({
         {...props}
         disabled={disabled}
         aria-invalid={isError || undefined}
-        className={cn('input-base typo-16-medium', rightElement && 'pr-12', className)}
+        className={cn(
+          'input-size-base field-surface field-input typo-16-medium',
+          rightElement && 'pr-12',
+          className
+        )}
       />
       {rightElement && (
         <div className="absolute top-1/2 right-5 flex -translate-y-1/2 items-center justify-center text-gray-400">

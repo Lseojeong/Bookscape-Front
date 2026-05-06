@@ -7,7 +7,7 @@ import Loading from '@/shared/ui/loading/Loading';
 import { cn } from '@/shared/utils/cn';
 
 const buttonStyle = cva(
-  'relative inline-flex items-center justify-center whitespace-nowrap rounded-[14px] border transition-colors cursor-pointer aria-disabled:cursor-not-allowed',
+  'relative inline-flex items-center justify-center whitespace-nowrap rounded-[14px] border transition-colors',
   {
     variants: {
       theme: {
@@ -83,6 +83,8 @@ export default function Button<T extends ElementType = 'button'>({
     <Component
       aria-disabled={isDisabled}
       aria-busy={isLoading || undefined}
+      data-disabled={isDisabled || undefined}
+      data-loading={isLoading || undefined}
       className={cn(buttonStyle({ theme, size }), className)}
       onClick={handleClick}
       {...(isButtonElement

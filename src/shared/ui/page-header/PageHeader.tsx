@@ -39,12 +39,7 @@ export default function PageHeader({ title, description, onBack }: PageHeaderPro
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
-        <button
-          type="button"
-          onClick={onBack}
-          aria-label="이전 페이지로 이동"
-          className="cursor-pointer"
-        >
+        <button type="button" onClick={onBack} aria-label="이전 페이지로 이동">
           <BackIcon />
         </button>
         <Title as="h1" size="18" weight="bold">
