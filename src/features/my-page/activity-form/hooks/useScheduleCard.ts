@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
 import { Slot } from '@/features/my-page/activity-form/types';
 import {
@@ -33,31 +33,34 @@ export const useScheduleCard = ({ slots, onAddSlot }: UseScheduleCardProps) => {
   const [overlapError, setOverlapError] = useState<string>('');
 
   // 시작 시간과 체험 시간이 모두 입력되었을 때 유효성을 검증하고, 통과 시 상태 초기화
-  const handleAttemptAddSlot = (start: string, duration: number | '') => {
-    if (!start || !duration) return;
+  const handleAttemptAddSlot = useCallback(
+    (start: string, duration: number | '') => {
+      if (!start || !duration) return;
 
-    if (isExceedingMidnight(start, Number(duration))) {
-      setOverlapError(ACTIVITY_ERROR_MESSAGES.TIME_EXCEEDS_MIDNIGHT);
-      return;
-    }
+      if (isExceedingMidnight(start, Number(duration))) {
+        setOverlapError(ACTIVITY_ERROR_MESSAGES.TIME_EXCEEDS_MIDNIGHT);
+        return;
+      }
 
-    const endTime = calculateEndTime(start, Number(duration));
-    const overlapSlot = findOverlapSlot(slots, start, endTime);
+      const endTime = calculateEndTime(start, Number(duration));
+      const overlapSlot = findOverlapSlot(slots, start, endTime);
 
-    if (overlapSlot) {
-      const overlapStart = start > overlapSlot.startTime ? start : overlapSlot.startTime;
-      const overlapEnd = endTime < overlapSlot.endTime ? endTime : overlapSlot.endTime;
+      if (overlapSlot) {
+        const overlapStart = start > overlapSlot.startTime ? start : overlapSlot.startTime;
+        const overlapEnd = endTime < overlapSlot.endTime ? endTime : overlapSlot.endTime;
 
-      setOverlapError(ACTIVITY_ERROR_MESSAGES.SCHEDULE_OVERLAP(overlapStart, overlapEnd));
-    } else {
-      setOverlapError('');
-      onAddSlot({ startTime: start, endTime });
+        setOverlapError(ACTIVITY_ERROR_MESSAGES.SCHEDULE_OVERLAP(overlapStart, overlapEnd));
+      } else {
+        setOverlapError('');
+        onAddSlot({ startTime: start, endTime });
 
-      // 추가 성공 시 입력 필드 초기화
-      setTempStartTime('');
-      setTempDuration('');
-    }
-  };
+        // 추가 성공 시 입력 필드 초기화
+        setTempStartTime('');
+        setTempDuration('');
+      }
+    },
+    [slots, onAddSlot]
+  );
 
   // 에러가 떠 있고, 시작시간과 체험시간이 입력된 상태라면 유효성 검사 재실행
   useEffect(() => {
@@ -66,12 +69,9 @@ export const useScheduleCard = ({ slots, onAddSlot }: UseScheduleCardProps) => {
         handleAttemptAddSlot(tempStartTime, tempDuration);
       }, 0);
 
-      // 언마운트 시 타이머 정리해서 메모리 누수 방지
       return () => clearTimeout(timer);
     }
-    //NOTE: 사용자가 슬롯을 삭제했을 때만 로직을 실행해야 하기 때문에 모든 함수를 배열에 넣지 못함
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slots]);
+  }, [overlapError, tempStartTime, tempDuration, handleAttemptAddSlot]);
 
   // 시작 시간 선택 드롭다운의 onChange 핸들러
   const handleStartTimeChange = (val: string) => {
