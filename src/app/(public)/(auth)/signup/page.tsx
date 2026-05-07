@@ -39,7 +39,7 @@ export default function SignupPage() {
   });
 
   // 비밀번호 확인 필드 값 감지
-  const passwordConfirm = useWatch({ control, name: 'passwordConfirm' });
+  const password = useWatch({ control, name: 'password' });
 
   // 모든 필드 입력 감지
   const formValues = useWatch({ control });
@@ -104,7 +104,7 @@ export default function SignupPage() {
             placeholder="비밀번호를 한 번 더 입력해 주세요"
             rules={{
               validate: (value) =>
-                value === passwordConfirm || '비밀번호가 일치하지 않습니다. 다시 입력해 주세요',
+                value === password || '비밀번호가 일치하지 않습니다. 다시 입력해 주세요',
             }}
           />
         </FormField>
