@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
+import AuthSessionSync from '@/shared/providers/AuthSessionSync';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendard.variable}`}>
       <body>
         <QueryProvider>
+          <AuthSessionSync />
           {children}
           <Script
             src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
