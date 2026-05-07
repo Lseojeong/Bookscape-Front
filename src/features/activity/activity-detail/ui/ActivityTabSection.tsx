@@ -28,7 +28,7 @@ export default function ActivityTabSection({ description }: ActivityTabSectionPr
   const [activeTab, setActiveTab] = useState(TABS[0].id);
 
   return (
-    <div>
+    <>
       <TabBar
         tabs={TABS}
         activeTab={activeTab}
@@ -38,6 +38,6 @@ export default function ActivityTabSection({ description }: ActivityTabSectionPr
       {activeTab === 'description' && <ActivityDescription description={description} />}
       {/* TODO: 오시는 길 */}
       {/* TODO: 체험 후기 */}
-    </div>
+    </>
   );
 }
