@@ -8,7 +8,7 @@ export default function SearchPage() {
       {/* 히어로 배너 */}
       <HeroBanner />
       {/* 검색 결과 */}
-      <MainSectionLayout>
+      <MainSectionLayout className="md:mt-28.75">
         <SearchResultSection />
       </MainSectionLayout>
     </>

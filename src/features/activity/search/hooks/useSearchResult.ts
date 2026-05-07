@@ -43,6 +43,7 @@ export const useSearchResult = () => {
     });
   }, [pageSize]);
 
+  // 검색 카테고리
   const { data } = useSearchActivityData({
     keyword,
     category: category === '전체' ? '' : category,
@@ -56,6 +57,13 @@ export const useSearchResult = () => {
   // totalCount를 pageSize로 나눠 총 페이지 수 계산
   const totalPages = Math.ceil(totalCount / pageSize);
 
+  // 전체 검색 결과 수(카테고리 상관없이)
+  const { data: totalData } = useSearchActivityData({
+    keyword,
+    size: 1,
+  });
+  const totalResultCount = totalData?.totalCount ?? 0;
+
   return {
     keyword,
     page,
@@ -65,5 +73,6 @@ export const useSearchResult = () => {
     activities,
     totalCount,
     totalPages,
+    totalResultCount,
   };
 };

@@ -24,18 +24,18 @@ export default function SearchResultSection() {
     category,
     handleChangeCategory,
     activities,
-    totalCount,
     totalPages,
+    totalResultCount,
   } = useSearchResult();
 
   return (
-    <article>
-      <div className="mb-5 md:mb-10">
+    <>
+      <div className="mb-5 md:mb-7 lg:mb-10">
         <Title as="h2" size="18" weight="medium" className="text-gray-950 md:typo-24-medium">
           <span className="typo-18-bold md:typo-24-bold">{keyword}</span>으로 검색한 결과입니다.
         </Title>
         <p className="typo-14-medium text-gray-700 md:typo-18-medium">
-          총 <span>{totalCount}</span>개의 결과
+          총 <span>{totalResultCount}</span>개의 결과
         </p>
       </div>
       <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
@@ -48,6 +48,6 @@ export default function SearchResultSection() {
           <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
         </div>
       )}
-    </article>
+    </>
   );
 }
