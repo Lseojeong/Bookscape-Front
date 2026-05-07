@@ -63,11 +63,7 @@ export const activityFormSchema = z.object({
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 // 교집합 시간을 띄움
-                message: ACTIVITY_ERROR_MESSAGES.SCHEDULE_OVERLAP(
-                  s1.date,
-                  overlapStart,
-                  overlapEnd
-                ),
+                message: ACTIVITY_ERROR_MESSAGES.SCHEDULE_OVERLAP(overlapStart, overlapEnd),
                 path: [],
               });
               return;
