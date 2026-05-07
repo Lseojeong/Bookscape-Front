@@ -1,6 +1,7 @@
 'use client';
 import { useSearchParams, useRouter } from 'next/navigation';
 import SearchInputUi from '@/shared/ui/search-input/SearchInputField';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 /**
  * 검색 인풋 컴포넌트입니다.
@@ -16,6 +17,7 @@ export default function SearchInput() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const keyword = searchParams.get('keyword') ?? '';
+  const { showToast } = useToastStore();
 
   /** 검색 실행 - keyword query 업데이트 */
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -24,6 +26,12 @@ export default function SearchInput() {
     // form 내부 input(name="keyword") 값 추출
     const formData = new FormData(e.currentTarget);
     const value = (formData.get('keyword')?.toString() || '').trim();
+
+    // 검색어가 없을때 토스트 띄우기
+    if (!value) {
+      showToast('warning', '검색어를 입력해주세요.');
+      return;
+    }
 
     // 기존 query 유지하면서 keyword만 업데이트하기 위한 객체 생성
     const params = new URLSearchParams(searchParams.toString());
