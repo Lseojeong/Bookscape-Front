@@ -8,10 +8,16 @@ type ActivityTabSectionProps = {
   description: string;
 };
 
+const TAB_IDS = {
+  DESCRIPTION: 'description',
+  LOCATION: 'location',
+  REVIEWS: 'reviews',
+} as const;
+
 const TABS = [
-  { id: 'description', label: '체험 설명' },
-  { id: 'location', label: '오시는 길' },
-  { id: 'reviews', label: '체험 후기' },
+  { id: TAB_IDS.DESCRIPTION, label: '체험 설명' },
+  { id: TAB_IDS.LOCATION, label: '오시는 길' },
+  { id: TAB_IDS.REVIEWS, label: '체험 후기' },
 ];
 
 /**
@@ -25,11 +31,11 @@ const TABS = [
  * ```
  */
 export default function ActivityTabSection({ description }: ActivityTabSectionProps) {
-  const [activeTab, setActiveTab] = useState(TABS[0].id);
+  const [activeTab, setActiveTab] = useState<string>(TAB_IDS.DESCRIPTION);
 
   return (
     <>
-      <div className="sticky top-20 layer-header bg-white md:top-20">
+      <div className="sticky top-12 layer-header bg-white md:top-20">
         <TabBar
           tabs={TABS}
           activeTab={activeTab}
@@ -37,7 +43,7 @@ export default function ActivityTabSection({ description }: ActivityTabSectionPr
           tabClassName="flex-1 md:flex-none md:w-32.5"
         />
       </div>
-      {activeTab === 'description' && <ActivityDescription description={description} />}
+      {activeTab === TAB_IDS.DESCRIPTION && <ActivityDescription description={description} />}
       {/* TODO: 오시는 길 */}
       {/* TODO: 체험 후기 */}
     </>
