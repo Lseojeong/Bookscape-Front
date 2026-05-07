@@ -21,6 +21,10 @@ const TABS = [
  *
  * 체험 설명, 오시는 길, 체험 후기 탭으로 구성됩니다.
  *
+ * @remarks
+ * 오시는 길 탭의 카카오맵은 스토리북에서 지원되지 않습니다.
+ * 실제 동작은 로컬 서버에서 확인해주세요.
+ *
  * @example
  * ```tsx
  * <ActivityTabSection description={activity.description} address={activity.address} />
