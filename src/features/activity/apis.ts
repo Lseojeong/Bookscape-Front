@@ -1,4 +1,8 @@
-import { ActivityDetailSchema, ActivityResponse } from '@/features/activity/types';
+import {
+  ActivityDetailSchema,
+  ActivityResponse,
+  GetSearchActivityParams,
+} from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
 
@@ -24,4 +28,20 @@ export const getHotActivityData = async (size: number) => {
     size,
   });
   return result?.activities ?? [];
+};
+
+export const getSearchActivityData = async ({
+  method = 'offset',
+  category,
+  keyword,
+  page = 1,
+  size,
+}: GetSearchActivityParams) => {
+  return await get<ActivityResponse>('/activities', {
+    method,
+    ...(category && { category }),
+    keyword,
+    page,
+    size,
+  });
 };

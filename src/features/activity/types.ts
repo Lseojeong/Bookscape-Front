@@ -97,3 +97,11 @@ export type CreateActivityResponse = {
 export type CreateActivityImageUrlResponse = {
   activityImageUrl: string;
 };
+
+export type GetSearchActivityParams = {
+  method?: string;
+  category?: string;
+  keyword?: string;
+  page?: number;
+  size?: number;
+};
