@@ -10,6 +10,7 @@ import { serverFetch } from '@/shared/apis/base/serverFetch';
  * POST /api/auth/login
  * 로그인 라우트 핸들러입니다.
  *
+ *
  * [동작 흐름]
  * 1. 클라이언트로부터 이메일/비밀번호를 전달받는다.
  * 2. serverFetch를 통해 백엔드 /auth/login 호출
