@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 import ActivityDescription from './ActivityDescription';
+import ActivityLocation from './ActivityLocation';
 
 type ActivityTabSectionProps = {
   description: string;
+  address: string;
 };
 
 const TABS = [
@@ -21,10 +23,10 @@ const TABS = [
  *
  * @example
  * ```tsx
- * <ActivityTabSection description={activity.description} />
+ * <ActivityTabSection description={activity.description} address={activity.address} />
  * ```
  */
-export default function ActivityTabSection({ description }: ActivityTabSectionProps) {
+export default function ActivityTabSection({ description, address }: ActivityTabSectionProps) {
   const [activeTab, setActiveTab] = useState(TABS[0].id);
 
   return (
@@ -35,8 +37,10 @@ export default function ActivityTabSection({ description }: ActivityTabSectionPr
         onTabChange={setActiveTab}
         tabClassName="flex-1 md:flex-none md:w-32.5"
       />
+      {/* 체험 설명 */}
       {activeTab === 'description' && <ActivityDescription description={description} />}
-      {/* TODO: 오시는 길 */}
+      {/* 오시는 길 */}
+      {activeTab === 'location' && <ActivityLocation address={address} />}
       {/* TODO: 체험 후기 */}
     </div>
   );

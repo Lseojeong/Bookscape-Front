@@ -38,7 +38,7 @@ export default function ActivityDetail({ id }: ActivityDetailProps) {
         address={activity.address}
       />
       {/* 탭바 */}
-      <ActivityTabSection description={activity.description} />
+      <ActivityTabSection description={activity.description} address={activity.address} />
     </section>
   );
 }
