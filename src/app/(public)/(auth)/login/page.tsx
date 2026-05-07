@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   // 모든 필드 입력 감지
   const formValues = useWatch({ control });
-  const isAllFilled = Object.values(formValues).every((value) => value?.trim() !== '');
+  const isAllFilled = Object.values(formValues).every((value) => value.trim() !== '');
 
   // 필드 순서대로 에러 노출
   const firstError = errors.email?.message ?? errors.password?.message ?? errors.root?.message;
@@ -54,24 +54,26 @@ export default function LoginPage() {
       try {
         const response = await loginUser(formData);
 
-        const { user, expiresAt } = response;
+        if (response) {
+          const { user, expiresAt } = response;
 
-        // 전역 상태(Zustand) 업데이트
-        setAuth(
-          {
-            id: user.id,
-            email: user.email,
-            nickname: user.nickname,
-          },
-          expiresAt
-        );
+          // 전역 상태(Zustand) 업데이트
+          setAuth(
+            {
+              id: user.id,
+              email: user.email,
+              nickname: user.nickname,
+            },
+            expiresAt
+          );
 
-        // 로그인 성공 토스트
-        showToast('check', AUTH_API_MESSAGE.LOGIN.SUCCESS);
+          // 로그인 성공 토스트
+          showToast('check', AUTH_API_MESSAGE.LOGIN.SUCCESS);
 
-        // 쿠키 상태 동기화를 위해 refresh 후 이동
-        router.refresh();
-        router.push('/');
+          // 쿠키 상태 동기화를 위해 refresh 후 이동
+          router.refresh();
+          router.push('/');
+        }
       } catch (error) {
         if (error instanceof ApiError) {
           // 서버에서 내려온 에러 (401, 400 등)
@@ -104,7 +106,7 @@ export default function LoginPage() {
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
         <div className="mt-1 md:mt-2">
-          {/* 에러 메시지 */}
+          {/* API 에러 메시지 */}
           {firstError && (
             <FormErrorMessage className="typo-13-medium">{firstError}</FormErrorMessage>
           )}
