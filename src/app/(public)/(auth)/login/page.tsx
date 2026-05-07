@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { loginUser } from '@/features/auth/apis';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
@@ -29,7 +29,7 @@ export default function LoginPage() {
     control,
     handleSubmit,
     setError,
-    formState: { isSubmitting, errors, isDirty },
+    formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
       email: '',
@@ -37,6 +37,10 @@ export default function LoginPage() {
     },
     mode: 'onChange',
   });
+
+  // 모든 필드 입력 감지
+  const formValues = useWatch({ control });
+  const isAllFilled = Object.values(formValues).every((value) => value.trim() !== '');
 
   /** 로그인 요청 핸들러 */
   const handleLogin = useCallback(
@@ -108,7 +112,7 @@ export default function LoginPage() {
             theme="primary"
             size="lg"
             isLoading={isSubmitting}
-            disabled={!isDirty || isSubmitting}
+            disabled={!isAllFilled || isSubmitting}
             className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
           >
             로그인 하기
