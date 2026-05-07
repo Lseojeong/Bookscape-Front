@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
+import { cn } from '@/shared/utils/cn';
 import ActivityDescription from './ActivityDescription';
 import ActivityLocation from './ActivityLocation';
 
 type ActivityTabSectionProps = {
   description: string;
   address: string;
+  className?: string;
 };
 
 const TAB_IDS = {
@@ -37,11 +39,15 @@ const TABS = [
  * ```
  */
 
-export default function ActivityTabSection({ description, address }: ActivityTabSectionProps) {
+export default function ActivityTabSection({
+  description,
+  address,
+  className,
+}: ActivityTabSectionProps) {
   const [activeTab, setActiveTab] = useState<string>(TAB_IDS.DESCRIPTION);
 
   return (
-    <>
+    <div className={cn(className)}>
       <div className="sticky top-12 layer-header bg-white md:top-20">
         <TabBar
           tabs={TABS}
@@ -55,6 +61,6 @@ export default function ActivityTabSection({ description, address }: ActivityTab
       {/* 오시는 길 */}
       {activeTab === TAB_IDS.LOCATION && <ActivityLocation address={address} />}
       {/* TODO: 체험 후기 */}
-    </>
+    </div>
   );
 }

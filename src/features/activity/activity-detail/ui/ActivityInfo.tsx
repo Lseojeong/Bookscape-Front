@@ -11,6 +11,7 @@ import {
   ActionDropdownTrigger,
 } from '@/shared/ui/dropdown/action';
 import Title from '@/shared/ui/title/Title';
+import { cn } from '@/shared/utils/cn';
 
 type ActivityInfoProps = {
   id: number;
@@ -19,6 +20,7 @@ type ActivityInfoProps = {
   rating: number;
   reviewCount: number;
   address: string;
+  className?: string;
 };
 
 /**
@@ -45,12 +47,13 @@ export default function ActivityInfo({
   rating,
   reviewCount,
   address,
+  className,
 }: ActivityInfoProps) {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
-    <div>
+    <div className={cn(className)}>
       <div className="mb-1 flex items-center justify-between md:mb-2.5">
         {/* 카테고리 */}
         <p className="typo-13-medium text-gray-700 md:typo-14-medium md:text-gray-950">
