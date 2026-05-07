@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const DEFAULT_PAGE_SIZE = {
   mobile: 4,
@@ -10,7 +10,7 @@ type PageSizeConfig = typeof DEFAULT_PAGE_SIZE;
 
 /**
  * 브레이크포인트에 따라 페이지당 노출 아이템 수를 반환하는 훅입니다.
- * 윈도우 리사이즈 이벤트를 감지하여 현재 브레이크포인트에 맞는 페이지 크기를 반환합니다.
+ * 미디어 쿼리 변화를 감지하여 현재 브레이크포인트에 맞는 페이지 크기를 반환합니다.
  *
  * @param pageSize - 브레이크포인트별 페이지 크기 설정 (기본값: mobile 4, tablet 8, desktop 16)
  * @returns 현재 브레이크포인트에 해당하는 페이지 크기
@@ -25,19 +25,36 @@ type PageSizeConfig = typeof DEFAULT_PAGE_SIZE;
  * ```
  */
 export const usePageSize = (pageSize: PageSizeConfig = DEFAULT_PAGE_SIZE) => {
-  const [currentPageSize, setCurrentPageSize] = useState(pageSize.mobile);
+  const [currentPageSize, setCurrentPageSize] = useState<number>(pageSize.mobile);
+
+  // pageSize 객체의 참조값이 바뀌어도 이펙트가 튀지 않도록 메모이제이션
+  const config = useMemo(() => pageSize, [pageSize]);
 
   useEffect(() => {
+    // window가 없는 서버 환경에서는 동작하지 않도록 방어 로직 추가
+    if (typeof window === 'undefined') return;
+
+    const tabletQuery = window.matchMedia('(min-width: 768px)');
+    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+
     const update = () => {
-      if (window.innerWidth >= 1024) setCurrentPageSize(pageSize.desktop);
-      else if (window.innerWidth >= 768) setCurrentPageSize(pageSize.tablet);
-      else setCurrentPageSize(pageSize.mobile);
+      if (desktopQuery.matches) setCurrentPageSize(config.desktop);
+      else if (tabletQuery.matches) setCurrentPageSize(config.tablet);
+      else setCurrentPageSize(config.mobile);
     };
 
+    // 초기값 설정
     update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [pageSize]);
+
+    //  미디어 쿼리 변화 감지
+    tabletQuery.addEventListener('change', update);
+    desktopQuery.addEventListener('change', update);
+
+    return () => {
+      tabletQuery.removeEventListener('change', update);
+      desktopQuery.removeEventListener('change', update);
+    };
+  }, [config]);
 
   return currentPageSize;
 };
