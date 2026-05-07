@@ -25,3 +25,9 @@ export const RefreshResponseSchema = z.object({
 export type LoginResponse = z.infer<typeof LoginResponseSchema>;
 export type UserResponse = z.infer<typeof UserResponseSchema>;
 export type RefreshResponse = z.infer<typeof RefreshResponseSchema>;
+
+export type SignupRequestBody = {
+  email: string;
+  nickname: string;
+  password: string;
+};
