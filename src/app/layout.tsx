@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
-import AuthSessionSync from '@/shared/providers/AuthSessionSync';
+import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
