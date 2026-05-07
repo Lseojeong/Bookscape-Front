@@ -1,4 +1,5 @@
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -6,10 +7,11 @@ import { loginUser } from '@/features/auth/apis';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
-import { LoginFormValues } from '@/features/auth/utils/schema';
+import { LoginFormValues, loginSchema } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 import Button from '@/shared/ui/button/Button';
+import FormErrorMessage from '@/shared/ui/form/FormErrorMessage';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
@@ -36,11 +38,15 @@ export default function LoginPage() {
       password: '',
     },
     mode: 'onChange',
+    resolver: zodResolver(loginSchema),
   });
 
   // 모든 필드 입력 감지
   const formValues = useWatch({ control });
-  const isAllFilled = Object.values(formValues).every((value) => value.trim() !== '');
+  const isAllFilled = Object.values(formValues).every((value) => value?.trim() !== '');
+
+  // 필드 순서대로 에러 노출
+  const firstError = errors.email?.message ?? errors.password?.message ?? errors.root?.message;
 
   /** 로그인 요청 핸들러 */
   const handleLogin = useCallback(
@@ -48,26 +54,24 @@ export default function LoginPage() {
       try {
         const response = await loginUser(formData);
 
-        if (response) {
-          const { user, expiresAt } = response;
+        const { user, expiresAt } = response;
 
-          // 전역 상태(Zustand) 업데이트
-          setAuth(
-            {
-              id: user.id,
-              email: user.email,
-              nickname: user.nickname,
-            },
-            expiresAt
-          );
+        // 전역 상태(Zustand) 업데이트
+        setAuth(
+          {
+            id: user.id,
+            email: user.email,
+            nickname: user.nickname,
+          },
+          expiresAt
+        );
 
-          // 로그인 성공 토스트
-          showToast('check', AUTH_API_MESSAGE.LOGIN.SUCCESS);
+        // 로그인 성공 토스트
+        showToast('check', AUTH_API_MESSAGE.LOGIN.SUCCESS);
 
-          // 쿠키 상태 동기화를 위해 refresh 후 이동
-          router.refresh();
-          router.push('/');
-        }
+        // 쿠키 상태 동기화를 위해 refresh 후 이동
+        router.refresh();
+        router.push('/');
       } catch (error) {
         if (error instanceof ApiError) {
           // 서버에서 내려온 에러 (401, 400 등)
@@ -100,11 +104,9 @@ export default function LoginPage() {
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
         <div className="mt-1 md:mt-2">
-          {/* API 에러 메시지 */}
-          {errors.root && (
-            <p className="typo-13-medium text-red-500" role="alert">
-              {errors.root.message}
-            </p>
+          {/* 에러 메시지 */}
+          {firstError && (
+            <FormErrorMessage className="typo-13-medium">{firstError}</FormErrorMessage>
           )}
 
           <Button

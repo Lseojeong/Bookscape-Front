@@ -1,4 +1,5 @@
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -6,9 +7,10 @@ import { signupUser } from '@/features/auth/apis';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
-import { SignupFormValues } from '@/features/auth/utils/schema';
+import { SignupFormValues, signupSchema } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
 import Button from '@/shared/ui/button/Button';
+import FormErrorMessage from '@/shared/ui/form/FormErrorMessage';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
@@ -36,14 +38,20 @@ export default function SignupPage() {
       passwordConfirm: '',
     },
     mode: 'onChange',
+    resolver: zodResolver(signupSchema),
   });
-
-  // 비밀번호 확인 필드 값 감지
-  const password = useWatch({ control, name: 'password' });
 
   // 모든 필드 입력 감지
   const formValues = useWatch({ control });
-  const isAllFilled = Object.values(formValues).every((value) => value.trim() !== '');
+  const isAllFilled = Object.values(formValues).every((value) => value?.trim() !== '');
+
+  // 필드 순서대로 에러 노출
+  const firstError =
+    errors.email?.message ??
+    errors.nickname?.message ??
+    errors.password?.message ??
+    errors.passwordConfirm?.message ??
+    errors.root?.message;
 
   /** 회원가입 요청 핸들러 */
   const handleSignup = useCallback(
@@ -58,7 +66,7 @@ export default function SignupPage() {
         router.push('/login');
       } catch (error) {
         if (error instanceof ApiError) {
-          // 서버에서 내려온 에러 (401, 400 등)
+          // 서버에서 내려온 에러 (409 이메일 중복 등)
           setError('root', {
             type: 'server',
             message: error.message,
@@ -102,18 +110,12 @@ export default function SignupPage() {
             name="passwordConfirm"
             control={control}
             placeholder="비밀번호를 한 번 더 입력해 주세요"
-            rules={{
-              validate: (value) =>
-                value === password || '비밀번호가 일치하지 않습니다. 다시 입력해 주세요',
-            }}
           />
         </FormField>
         <div className="mt-1 md:mt-2">
-          {/* API 에러 메시지 */}
-          {errors.root && (
-            <p className="typo-13-medium text-red-500" role="alert">
-              {errors.root.message}
-            </p>
+          {/* 에러 메시지 */}
+          {firstError && (
+            <FormErrorMessage className="typo-13-medium">{firstError}</FormErrorMessage>
           )}
 
           <Button
