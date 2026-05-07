@@ -23,7 +23,7 @@ import { cn } from '@/shared/utils/cn';
  */
 export default function LoginPage() {
   const router = useRouter();
-  const setUser = useUserStore((state) => state.setUser);
+  const setSession = useUserStore((state) => state.setSession);
   const { showToast } = useToastStore();
   const {
     control,
@@ -45,8 +45,8 @@ export default function LoginPage() {
         const response = await loginUser(formData);
 
         if (response) {
-          const { user } = response;
-          setUser(user);
+          const { user, accessTokenExpiresAt } = response;
+          setSession({ user, accessTokenExpiresAt });
 
           // 로그인 성공 토스트
           showToast('check', AUTH_API_MESSAGE.LOGIN.SUCCESS);
@@ -68,7 +68,7 @@ export default function LoginPage() {
         }
       }
     },
-    [router, setError, setUser, showToast]
+    [router, setError, setSession, showToast]
   );
 
   return (
