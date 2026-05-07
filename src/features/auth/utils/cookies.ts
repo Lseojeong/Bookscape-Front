@@ -63,3 +63,14 @@ export const clearAuthCookies = async (): Promise<void> => {
 
   cookieStore.set('refreshToken', '', { ...COOKIE_OPTIONS, maxAge: 0 });
 };
+
+/**
+ * ## clearAuthCookiesOnResponse
+ *
+ * @description
+ * Route Handler에서 응답 객체에 access/refresh 토큰 쿠키를 만료시키는 유틸 함수
+ */
+export const clearAuthCookiesOnResponse = (response: NextResponse): void => {
+  response.cookies.set('accessToken', '', { ...COOKIE_OPTIONS, maxAge: 0 });
+  response.cookies.set('refreshToken', '', { ...COOKIE_OPTIONS, maxAge: 0 });
+};
