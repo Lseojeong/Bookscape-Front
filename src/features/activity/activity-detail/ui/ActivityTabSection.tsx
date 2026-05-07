@@ -29,12 +29,14 @@ export default function ActivityTabSection({ description }: ActivityTabSectionPr
 
   return (
     <>
-      <TabBar
-        tabs={TABS}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        tabClassName="flex-1 md:flex-none md:w-32.5"
-      />
+      <div className="sticky top-20 layer-header bg-white md:top-20">
+        <TabBar
+          tabs={TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          tabClassName="flex-1 md:flex-none md:w-32.5"
+        />
+      </div>
       {activeTab === 'description' && <ActivityDescription description={description} />}
       {/* TODO: 오시는 길 */}
       {/* TODO: 체험 후기 */}
