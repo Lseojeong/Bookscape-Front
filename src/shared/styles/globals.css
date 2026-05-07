@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+@import './base/fonts.css';
+@import './base/colors.css';
+@import './base/z-index.css';
+@import './base/scroll.css';
+@import './input.css';
+@import './layout.css';
+@import './overlay.css';
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button[data-disabled='true'] {
+  cursor: not-allowed;
+}
+
+button[data-loading='true'] {
+  cursor: wait;
+}

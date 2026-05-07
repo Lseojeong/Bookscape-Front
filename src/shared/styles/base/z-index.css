@@ -1,0 +1,47 @@
+/**
+ * App Layer (z-index) Utilities
+ *
+ * @remarks
+ * - z-index 스케일을 @theme 토큰으로 정의하고, 의미 기반 유틸로 매핑합니다.
+ * - 필요한 레이어가 늘어나면 이 파일에만 추가합니다.
+ */
+
+@theme {
+  /* Z-Index */
+  /* 10 단위 스케일 (max: 100) */
+  --z-index-background: 0; /* Background */
+  --z-index-base: 10; /* Base Content */
+  --z-index-header: 20; /* Navigation & Layout */
+  --z-index-dropdown: 30; /* Floating UI */
+  --z-index-modal-backdrop: 40; /* Full-screen Overlays */
+  --z-index-modal: 50; /* Full-screen Overlays */
+  --z-index-toast: 60; /* Toast */
+}
+
+@utility layer-background {
+  z-index: var(--z-index-background);
+}
+
+@utility layer-base {
+  z-index: var(--z-index-base);
+}
+
+@utility layer-header {
+  z-index: var(--z-index-header);
+}
+
+@utility layer-dropdown {
+  z-index: var(--z-index-dropdown);
+}
+
+@utility layer-modal-backdrop {
+  z-index: var(--z-index-modal-backdrop);
+}
+
+@utility layer-modal {
+  z-index: var(--z-index-modal);
+}
+
+@utility layer-toast {
+  z-index: var(--z-index-toast);
+}
