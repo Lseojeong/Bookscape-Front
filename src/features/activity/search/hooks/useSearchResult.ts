@@ -16,6 +16,7 @@ import { usePageSize } from '@/shared/hooks/usePageSize';
  * @returns activities - 검색된 체험 목록
  * @returns totalCount - 전체 검색 결과 수
  * @returns totalPages - 전체 페이지 수
+ * @returns totalResultCount - 카테고리 상관없이 전체 검색 결과 수
  *
  * @example
  * ```tsx
