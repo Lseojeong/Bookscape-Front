@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { signupUser } from '@/features/auth/apis';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
@@ -24,12 +24,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 export default function SignupPage() {
   const router = useRouter();
   const { showToast } = useToastStore();
-  const {
-    control,
-    handleSubmit,
-    setError,
-    formState: { isSubmitting, errors },
-  } = useForm({
+  const methods = useForm({
     defaultValues: {
       email: '',
       nickname: '',
@@ -40,17 +35,12 @@ export default function SignupPage() {
     resolver: zodResolver(signupSchema),
   });
 
-  // 모든 필드 입력 감지
-  const formValues = useWatch({ control });
-  const isAllFilled = Object.values(formValues).every((value) => value?.trim() !== '');
-
-  // 필드 순서대로 에러 노출
-  const firstError =
-    errors.email?.message ??
-    errors.nickname?.message ??
-    errors.password?.message ??
-    errors.passwordConfirm?.message ??
-    errors.root?.message;
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { isSubmitting, errors, isDirty },
+  } = methods;
 
   /** 회원가입 요청 핸들러 */
   const handleSignup = useCallback(
@@ -81,9 +71,9 @@ export default function SignupPage() {
   );
 
   return (
-    <>
+    <FormProvider {...methods}>
       <AuthForm onSubmit={handleSubmit(handleSignup)}>
-        <FormField label="이메일">
+        <FormField label="이메일" errorMessage={errors.email?.message}>
           <FormInput
             type="email"
             name="email"
@@ -92,7 +82,7 @@ export default function SignupPage() {
           />
         </FormField>
 
-        <FormField label="닉네임">
+        <FormField label="닉네임" errorMessage={errors.nickname?.message}>
           <FormInput
             type="text"
             name="nickname"
@@ -101,11 +91,11 @@ export default function SignupPage() {
           />
         </FormField>
 
-        <FormField label="비밀번호">
+        <FormField label="비밀번호" errorMessage={errors.password?.message}>
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
 
-        <FormField label="비밀번호 확인">
+        <FormField label="비밀번호 확인" errorMessage={errors.passwordConfirm?.message}>
           <PasswordInput
             name="passwordConfirm"
             control={control}
@@ -113,9 +103,9 @@ export default function SignupPage() {
           />
         </FormField>
         <div className="mt-1 md:mt-2">
-          {/* 에러 메시지 */}
-          {firstError && (
-            <FormErrorMessage className="typo-13-medium">{firstError}</FormErrorMessage>
+          {/* 백엔드 에러 메시지 */}
+          {errors.root && (
+            <FormErrorMessage className="typo-13-medium">{errors.root.message}</FormErrorMessage>
           )}
 
           <Button
@@ -123,7 +113,7 @@ export default function SignupPage() {
             theme="primary"
             size="lg"
             isLoading={isSubmitting}
-            disabled={!isAllFilled || isSubmitting}
+            disabled={!isDirty || isSubmitting}
             className="mt-2 h-13.5 w-full rounded-2xl md:mt-2.5"
           >
             회원가입 하기
@@ -131,6 +121,6 @@ export default function SignupPage() {
         </div>
       </AuthForm>
       <AuthFooter />
-    </>
+    </FormProvider>
   );
 }

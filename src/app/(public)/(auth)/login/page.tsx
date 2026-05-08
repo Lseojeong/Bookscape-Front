@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { loginUser } from '@/features/auth/apis';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
@@ -27,12 +27,7 @@ export default function LoginPage() {
   const router = useRouter();
   const { setAuth } = useAuthStore();
   const { showToast } = useToastStore();
-  const {
-    control,
-    handleSubmit,
-    setError,
-    formState: { isSubmitting, errors },
-  } = useForm({
+  const methods = useForm({
     defaultValues: {
       email: '',
       password: '',
@@ -41,12 +36,12 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-  // 모든 필드 입력 감지
-  const formValues = useWatch({ control });
-  const isAllFilled = Object.values(formValues).every((value) => value?.trim() !== '');
-
-  // 필드 순서대로 에러 노출
-  const firstError = errors.email?.message ?? errors.password?.message ?? errors.root?.message;
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { isSubmitting, isDirty, errors },
+  } = methods;
 
   /** 로그인 요청 핸들러 */
   const handleLogin = useCallback(
@@ -106,9 +101,9 @@ export default function LoginPage() {
           <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
         </FormField>
         <div className="mt-1 md:mt-2">
-          {/* API 에러 메시지 */}
-          {firstError && (
-            <FormErrorMessage className="typo-13-medium">{firstError}</FormErrorMessage>
+          {/* 백엔드 에러 메시지 */}
+          {errors.root && (
+            <FormErrorMessage className="typo-13-medium">{errors.root?.message}</FormErrorMessage>
           )}
 
           <Button
@@ -116,7 +111,7 @@ export default function LoginPage() {
             theme="primary"
             size="lg"
             isLoading={isSubmitting}
-            disabled={!isAllFilled || isSubmitting}
+            disabled={!isDirty || isSubmitting}
             className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
           >
             로그인 하기
