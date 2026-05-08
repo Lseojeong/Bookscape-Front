@@ -32,7 +32,7 @@ export default function LoginPage() {
       email: '',
       password: '',
     },
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: zodResolver(loginSchema),
   });
 

@@ -31,7 +31,7 @@ export default function SignupPage() {
       password: '',
       passwordConfirm: '',
     },
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: zodResolver(signupSchema),
   });
 
