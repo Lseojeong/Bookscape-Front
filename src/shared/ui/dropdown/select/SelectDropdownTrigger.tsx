@@ -75,10 +75,15 @@ export default function SelectDropdownTrigger({
       onClick={() => setIsOpen((prev) => !prev)}
     >
       {children}
-      <CaretDownIcon
+      <span
         aria-hidden="true"
-        className={cn('transition-transform duration-200', 'w-7', isOpen && 'rotate-180')}
-      />
+        className={cn(
+          'inline-flex size-7 shrink-0 items-center justify-center transition-transform duration-200',
+          isOpen && 'rotate-180'
+        )}
+      >
+        <CaretDownIcon className="block size-5" />
+      </span>
     </button>
   );
 }
