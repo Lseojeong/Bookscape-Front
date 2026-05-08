@@ -53,6 +53,12 @@ export default function ScheduleCard({
     <div className="flex w-full flex-col rounded-2xl border border-gray-100 bg-white">
       <div
         onClick={() => setIsExpanded((prev) => !prev)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsExpanded((prev) => !prev);
+          }
+        }}
         className={cn(
           'flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-primary-50 focus-visible:outline-none',
           isExpanded ? 'rounded-t-2xl border-b border-gray-100' : 'rounded-2xl'
