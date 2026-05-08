@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { refreshAuthTokens } from '@/features/auth/apis';
 import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 /**
  * Access Token 만료 5분 전에 자동으로 토큰을 재발급하는 컴포넌트입니다.
@@ -14,6 +15,7 @@ import { useUserStore } from '@/shared/stores/userStore';
  * 4. 401/403: clearSession으로 세션 초기화 → 재로그인 유도
  */
 export default function AuthTokenRefreshProvider() {
+  const { showToast } = useToastStore();
   const user = useUserStore((state) => state.user);
   const setSession = useUserStore((state) => state.setSession);
   const accessTokenExpiresAt = useUserStore((state) => state.accessTokenExpiresAt);
@@ -48,6 +50,7 @@ export default function AuthTokenRefreshProvider() {
       } catch (error) {
         if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
           clearSession('expired');
+          showToast('warning', '로그인 시간이 만료되었습니다. 다시 로그인해 주세요.');
           return;
         }
       } finally {
