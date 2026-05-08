@@ -1,3 +1,4 @@
+'use client';
 import { useSearchParams } from 'next/navigation';
 import { startTransition, useEffect, useState } from 'react';
 import { useSearchActivityData } from '@/features/activity/search/queries/useSearchActivityData';
