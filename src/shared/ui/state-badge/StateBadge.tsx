@@ -10,7 +10,7 @@ export type StateBadgeProps = {
 /**
  * 예약 상태별 뱃지 스타일 및 라벨 맵
  */
-const ReservationBadgeMap: Record<ReservationStatus, { label: string; className: string }> = {
+const RESERVATION_BADGE_MAP: Record<ReservationStatus, { label: string; className: string }> = {
   pending: {
     label: '예약 완료',
     className: 'bg-green-100 text-green-400',
@@ -50,7 +50,7 @@ const ReservationBadgeMap: Record<ReservationStatus, { label: string; className:
  * ```
  */
 export default function StateBadge({ status, className }: StateBadgeProps) {
-  const { label, className: badgeClassName } = ReservationBadgeMap[status];
+  const { label, className: badgeClassName } = RESERVATION_BADGE_MAP[status];
 
   return (
     <span
