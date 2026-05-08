@@ -35,11 +35,7 @@ export default function SearchInput() {
 
     // 기존 query 유지하면서 keyword만 업데이트하기 위한 객체 생성
     const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set('keyword', value);
-    } else {
-      params.delete('keyword');
-    }
+    params.set('keyword', value);
 
     // 변경된 query로 URL 이동 (검색 상태 반영)
     router.replace('/search?' + params.toString());
