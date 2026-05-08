@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { LocationIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
+import ActivityAddress from './ActivityAddress';
 
 type ActivityLocationProps = {
   address: string;
@@ -60,10 +60,7 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
       <Title as="h2" size="16" weight="bold" color="text-gray-950" className="mb-2 md:typo-18-bold">
         오시는 길
       </Title>
-      <div className="mb-2 flex items-center gap-1">
-        <LocationIcon />
-        <p className="typo-16-body-medium text-gray-700">{address}</p>
-      </div>
+      <ActivityAddress address={address} className="mb-2 typo-16-body-medium" />
       {isError ? (
         <div className="flex h-45 w-full items-center justify-center rounded-3xl bg-gray-100 md:h-75 lg:h-112.5">
           <p className="typo-16-body-medium text-gray-500">위치 정보를 찾을 수 없습니다.</p>

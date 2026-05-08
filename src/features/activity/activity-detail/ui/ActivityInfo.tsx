@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { LocationIcon, MenuIcon, StarIcon } from '@/shared/assets/icons';
+import { MenuIcon, StarIcon } from '@/shared/assets/icons';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import {
   ActionDropdown,
@@ -12,6 +12,7 @@ import {
 } from '@/shared/ui/dropdown/action';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
+import ActivityAddress from './ActivityAddress';
 
 type ActivityInfoProps = {
   id: number;
@@ -105,10 +106,7 @@ export default function ActivityInfo({
       </div>
       {/* 주소 */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-0.5">
-          <LocationIcon aria-hidden />
-          <p className="typo-14-medium text-gray-700">{address}</p>
-        </div>
+        <ActivityAddress address={address} />
         {/* TODO: 공유 버튼 영역 */}
       </div>
     </div>
