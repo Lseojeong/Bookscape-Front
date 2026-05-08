@@ -84,9 +84,8 @@ export default function Textarea({
           onChange={handleChange}
           aria-invalid={isError}
           className={cn(
-            'h-full w-full field-input resize-none field-control',
-            'typo-14-medium md:typo-16-medium',
-            'scrollbar-mini',
+            'scrollbar-mini h-full w-full field-input resize-none field-control',
+            variant === 'review' ? 'typo-14-medium md:typo-16-medium' : 'typo-16-medium',
             className
           )}
           {...props}
@@ -95,7 +94,10 @@ export default function Textarea({
         {hasCounter && (
           <div
             aria-hidden="true"
-            className="absolute right-5 bottom-2 flex h-5 items-center justify-end text-right typo-13-medium text-gray-600 md:typo-14-medium"
+            className={cn(
+              'absolute right-5 flex h-5 items-center justify-end text-right typo-13-medium text-gray-600 md:typo-14-medium',
+              variant === 'review' ? 'bottom-2' : 'bottom-0'
+            )}
           >
             {charCount}/{maxLength}
           </div>
