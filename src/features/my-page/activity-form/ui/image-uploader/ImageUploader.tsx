@@ -104,7 +104,7 @@ export default function ImageUploader({
 
         {images.map((img, idx) => (
           <ImagePreviewItem
-            key={getUniqueKey(img)}
+            key={`${getUniqueKey(img)}-${idx}`} // 동일한 이미지도 겹치지 않도록 함
             img={img}
             isError={isError}
             onRemove={() => onRemove(idx)}
