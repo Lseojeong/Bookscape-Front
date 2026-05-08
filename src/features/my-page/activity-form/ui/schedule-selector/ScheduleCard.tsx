@@ -51,8 +51,7 @@ export default function ScheduleCard({
 
   return (
     <div className="flex w-full flex-col rounded-2xl border border-gray-100 bg-white">
-      <button
-        type="button"
+      <div
         onClick={() => setIsExpanded((prev) => !prev)}
         className={cn(
           'flex w-full items-center justify-between px-5 py-4 transition-colors hover:bg-primary-50 focus-visible:outline-none',
@@ -60,6 +59,7 @@ export default function ScheduleCard({
         )}
         aria-expanded={isExpanded}
         aria-label={isExpanded ? '상세 정보 닫기' : '상세 정보 열기'}
+        tabIndex={0}
       >
         <div className="flex items-center gap-1">
           <CaretDownIcon
@@ -78,7 +78,7 @@ export default function ScheduleCard({
             <TrashIcon className="h-5 w-5 text-black" />
           </button>
         </div>
-      </button>
+      </div>
 
       {isExpanded && (
         <div className="flex flex-col px-4 py-6.25 md:px-5.5 lg:px-5 lg:py-7">
