@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
-import { SignupRequestBody } from '@/features/auth/types/auth';
 import { SignupFormValues } from '@/features/auth/utils/schema';
+import { UserResponse } from '@/features/user/types';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const { email, nickname, password } = body;
 
     // 2. 회원가입 API 호출
-    const data = await serverFetch.post<SignupRequestBody>('/users', {
+    const data = await serverFetch.post<UserResponse>('/users', {
       email,
       nickname,
       password,
