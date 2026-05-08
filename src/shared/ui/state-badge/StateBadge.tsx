@@ -24,12 +24,12 @@ const RESERVATION_BADGE_MAP: Record<ReservationStatus, { label: string; classNam
     className: 'bg-blue-100 text-blue-400',
   },
   declined: {
-    label: '예약 취소',
-    className: 'bg-gray-100 text-gray-600',
-  },
-  canceled: {
     label: '예약 거절',
     className: 'bg-red-100 text-red-400',
+  },
+  canceled: {
+    label: '예약 취소',
+    className: 'bg-gray-100 text-gray-600',
   },
 };
 

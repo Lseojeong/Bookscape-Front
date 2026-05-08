@@ -12,9 +12,9 @@ import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 const EMPTY_MAIN_TEXT_BY_STATUS: Record<ReservationStatus | '', string> = {
   '': '아직 예약한 체험이 없어요.\n새로운 체험을 예약해보세요!',
   pending: '예약 완료 내역이 없습니다.\n새로운 체험을 예약해보세요!',
-  declined: '아직 취소된 내역이 없어요.',
+  declined: '아직 거절된 내역이 없어요.',
   confirmed: '아직 승인된 내역이 없어요.',
-  canceled: '아직 거절된 내역이 없어요.',
+  canceled: '아직 취소된 내역이 없어요.',
   completed: '아직 완료된 내역이 없어요.',
 };
 

@@ -3,9 +3,9 @@ import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
 const STATUS_LIST: Array<{ id: ReservationStatus; label: string }> = [
   { id: 'pending', label: '예약 완료' },
-  { id: 'declined', label: '예약 취소' },
+  { id: 'declined', label: '예약 거절' },
   { id: 'confirmed', label: '예약 승인' },
-  { id: 'canceled', label: '예약 거절' },
+  { id: 'canceled', label: '예약 취소' },
   { id: 'completed', label: '체험 완료' },
 ];
 
