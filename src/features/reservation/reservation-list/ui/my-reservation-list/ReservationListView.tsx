@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useMyReservations } from '@/features/reservation/reservation-list/queries/useMyReservations';
+import ReservationListSection from '@/features/reservation/reservation-list/ui/my-reservation-list/ReservationListSection';
+import StatusFilter from '@/features/reservation/reservation-list/ui/status-filter/StatusFilter';
 import type { MyReservationStatus } from '@/features/reservation/types';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
-import StatusFilter from '../status-filter/StatusFilter';
-import ReservationListSection from './ReservationListSection';
 
 export default function ReservationListView() {
   const router = useRouter();
