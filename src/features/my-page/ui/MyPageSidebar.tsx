@@ -1,8 +1,8 @@
 'use client';
 
+import MyPageNav from '@/features/my-page/ui/MyPageNav';
 import { useUserStore } from '@/shared/stores/userStore';
 import Avatar from '@/shared/ui/avatar/Avatar';
-import MyPageNav from '@/shared/ui/mypage-sidebar/MyPageNav';
 import TabNav from '@/shared/ui/tab-bar/TabNav';
 
 /**

@@ -1,9 +1,7 @@
-import type { ReactNode } from 'react';
-import MyPageSidebar from '@/shared/ui/mypage-sidebar/MyPageSidebar';
+import MyPageSidebar from '@/features/my-page/ui/MyPageSidebar';
+import type { WithChildren } from '@/shared/types/common';
 
-type MyPageLayoutProps = {
-  children: ReactNode;
-};
+type MyPageLayoutProps = WithChildren;
 
 /**
  * 마이페이지 레이아웃 컴포넌트입니다.
