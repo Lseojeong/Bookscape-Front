@@ -10,6 +10,12 @@ type ScheduleFieldError = {
   message?: string;
 };
 
+type RHFScheduleItem = {
+  date: string;
+  startTime: string;
+  endTime: string;
+};
+
 /**
  * 예약 가능한 시간대 달력 선택 및 날짜별 시간대 상태를 관리하는 커스텀 훅입니다.
  *
@@ -23,13 +29,39 @@ type ScheduleFieldError = {
 export const useScheduleSelector = () => {
   const {
     setValue,
-    formState: { errors },
+    getValues,
+    formState: { errors, submitCount },
   } = useFormContext();
 
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [groupedSchedules, setGroupedSchedules] = useState<ScheduleGroup[]>([]);
   const calendarRef = useRef<HTMLDivElement>(null);
-  const [dateInputError, setDateInputError] = useState<string>('');
+
+  const [dateInputError, setDateInputError] = useState<{ message: string; count: number } | null>(
+    null
+  );
+
+  // 초기 상태 설정
+  const [groupedSchedules, setGroupedSchedules] = useState<ScheduleGroup[]>(() => {
+    const initialSchedules = getValues('schedules') as RHFScheduleItem[] | undefined;
+
+    if (!initialSchedules || initialSchedules.length === 0) {
+      return [];
+    }
+
+    const groups: Record<string, ScheduleGroup> = {};
+    initialSchedules.forEach((s) => {
+      if (!groups[s.date]) {
+        groups[s.date] = {
+          date: new Date(s.date),
+          dateString: s.date,
+          slots: [],
+        };
+      }
+      groups[s.date].slots.push({ startTime: s.startTime, endTime: s.endTime });
+    });
+
+    return Object.values(groups);
+  });
 
   // 달력 외부 영역 클릭 시 달력 닫기
   useOutsideClick(calendarRef, () => setIsCalendarOpen(false), isCalendarOpen);
@@ -60,8 +92,15 @@ export const useScheduleSelector = () => {
         endTime: slot.endTime,
       }))
     );
-    setValue('schedules', flatSchedules, { shouldValidate: true, shouldDirty: true });
-  }, [groupedSchedules, setValue]);
+
+    // 폼 제출을 한 번이라도 시도했다면, 그 이후부터는 로컬 상태 동기화 시 즉각 유효성 검사
+    const shouldValidate = submitCount > 0;
+
+    setValue('schedules', flatSchedules, {
+      shouldValidate,
+      shouldDirty: true,
+    });
+  }, [groupedSchedules, setValue, submitCount]);
 
   // 달력에서 특정 날짜를 선택했을 때의 처리
   const handleSelectDate = (date: Date | undefined) => {
@@ -70,13 +109,17 @@ export const useScheduleSelector = () => {
 
     // 이미 추가된 날짜인지 중복 검사
     if (groupedSchedules.some((g) => g.dateString === dateString)) {
-      setDateInputError(ACTIVITY_ERROR_MESSAGES.DATE_ALREADY_ADDED);
+      // 에러를 띄울 때 현재의 submitCount를 달아줌
+      setDateInputError({
+        message: ACTIVITY_ERROR_MESSAGES.DATE_ALREADY_ADDED,
+        count: submitCount,
+      });
       setIsCalendarOpen(false);
       return;
     }
 
     // 중복이 아니라면 에러를 지우고 새로운 날짜 그룹을 추가
-    setDateInputError('');
+    setDateInputError(null);
     setGroupedSchedules((prev) => [...prev, { date, dateString, slots: [] }]);
     setIsCalendarOpen(false);
   };
@@ -118,12 +161,16 @@ export const useScheduleSelector = () => {
   const schedulesErrorObj = errors.schedules as ScheduleFieldError | undefined;
   const scheduleError = schedulesErrorObj?.root?.message || schedulesErrorObj?.message;
 
+  // 렌더링 단계에서 보여줄 에러 판별 (제출 버튼을 눌러 count가 달라지면 빈 문자열 반환)
+  const displayDateError =
+    dateInputError && dateInputError.count === submitCount ? dateInputError.message : '';
+
   return {
     calendarRef,
     isCalendarOpen,
     setIsCalendarOpen,
     groupedSchedules,
-    dateInputError,
+    dateInputError: displayDateError, // 계산된 에러 문자열 내보내기
     scheduleError,
     handleSelectDate,
     handleRemoveGroup,
