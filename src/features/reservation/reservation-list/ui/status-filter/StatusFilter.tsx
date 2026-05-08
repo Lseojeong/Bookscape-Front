@@ -2,10 +2,10 @@ import FilterButton from '@/shared/ui/filter-button/FilterButton';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
 const STATUS_LIST: Array<{ id: ReservationStatus; label: string }> = [
-  { id: 'confirmed', label: '예약 완료' },
-  { id: 'canceled', label: '예약 취소' },
-  { id: 'pending', label: '예약 승인' },
-  { id: 'declined', label: '예약 거절' },
+  { id: 'pending', label: '예약 완료' },
+  { id: 'declined', label: '예약 취소' },
+  { id: 'confirmed', label: '예약 승인' },
+  { id: 'canceled', label: '예약 거절' },
   { id: 'completed', label: '체험 완료' },
 ];
 
