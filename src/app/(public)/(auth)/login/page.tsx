@@ -43,7 +43,7 @@ export default function LoginPage() {
 
   // 모든 필드 입력 감지
   const formValues = useWatch({ control });
-  const isAllFilled = Object.values(formValues).every((value) => value.trim() !== '');
+  const isAllFilled = Object.values(formValues).every((value) => value?.trim() !== '');
 
   // 필드 순서대로 에러 노출
   const firstError = errors.email?.message ?? errors.password?.message ?? errors.root?.message;
