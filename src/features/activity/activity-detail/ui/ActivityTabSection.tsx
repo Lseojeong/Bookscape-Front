@@ -24,6 +24,13 @@ const TABS = [
   { id: TAB_IDS.REVIEWS, label: '체험 후기' },
 ];
 
+const HEADER_HEIGHT = {
+  sm: 48, // top-12 (모바일)
+  md: 80, // top-20 (태블릿/데스크탑)
+} as const;
+
+const MD_BREAKPOINT = 768;
+
 /**
  * 체험 상세 탭 섹션 컴포넌트입니다.
  *
@@ -60,8 +67,8 @@ export default function ActivityTabSection({
     if (!ref.current || !tabBarRef.current) return;
     const tabBarHeight = tabBarRef.current.offsetHeight;
     // 최상단에서는 tabbar가 아직 sticky 되기 전이라 getBoundingClientRect().bottom이 부정확함
-    // → sticky 고정 위치(top-12/top-20) + 탭바 높이로 직접 계산
-    const stickyTop = window.innerWidth >= 768 ? 80 : 48;
+    // → sticky 고정 위치(HEADER_HEIGHT) + 탭바 높이로 직접 계산
+    const stickyTop = window.innerWidth >= MD_BREAKPOINT ? HEADER_HEIGHT.md : HEADER_HEIGHT.sm;
     const offset = stickyTop + tabBarHeight;
     const top = ref.current.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
