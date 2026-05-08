@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LocationIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 
@@ -20,6 +20,7 @@ type ActivityLocationProps = {
  */
 export default function ActivityLocation({ address }: ActivityLocationProps) {
   const mapRef = useRef<HTMLDivElement>(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -28,7 +29,10 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
       window.kakao.maps.load(() => {
         const geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(address, (result, status) => {
-          if (status !== window.kakao.maps.services.Status.OK || !mapRef.current) return;
+          if (status !== window.kakao.maps.services.Status.OK || !mapRef.current) {
+            setIsError(true); // 실패 시 에러 상태로 변경
+            return;
+          }
           const coords = new window.kakao.maps.LatLng(Number(result[0].y), Number(result[0].x));
           const map = new window.kakao.maps.Map(mapRef.current, { center: coords, level: 3 });
           new window.kakao.maps.Marker({ map, position: coords });
@@ -60,7 +64,13 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
         <LocationIcon />
         <p className="typo-16-body-medium text-gray-700">{address}</p>
       </div>
-      <div ref={mapRef} className="h-45 w-full rounded-3xl md:h-75 lg:h-112.5" />
+      {isError ? (
+        <div className="flex h-45 w-full items-center justify-center rounded-3xl bg-gray-100 md:h-75 lg:h-112.5">
+          <p className="typo-16-body-medium text-gray-500">위치 정보를 찾을 수 없습니다.</p>
+        </div>
+      ) : (
+        <div ref={mapRef} className="h-45 w-full rounded-3xl md:h-75 lg:h-112.5" />
+      )}
     </div>
   );
 }
