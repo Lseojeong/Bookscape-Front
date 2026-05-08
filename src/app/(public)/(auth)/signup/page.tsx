@@ -56,7 +56,8 @@ export default function SignupPage() {
   const handleSignup = useCallback(
     async (formData: SignupFormValues) => {
       try {
-        await signupUser(formData);
+        const { passwordConfirm: _, ...signupData } = formData;
+        await signupUser(signupData);
 
         // 회원가입 성공 토스트
         showToast('check', AUTH_API_MESSAGE.SIGNUP.SUCCESS);
