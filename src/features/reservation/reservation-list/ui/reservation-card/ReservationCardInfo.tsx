@@ -19,17 +19,8 @@ import type { ReservationCardProps } from './ReservationCard';
  * ```
  */
 export default function ReservationCardInfo({ data }: ReservationCardProps) {
-  const {
-    activity,
-    totalPrice,
-    headCount,
-    status,
-    date,
-    startTime,
-    endTime,
-    reviewSubmitted,
-    activityId,
-  } = data;
+  const { activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
+    data;
   const { title } = activity;
 
   return (
@@ -64,7 +55,7 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
           type="reservation"
           status={status}
           reviewSubmitted={reviewSubmitted}
-          activityId={activityId}
+          activityId={activity.id}
         />
       </div>
     </BaseCardInfo>
