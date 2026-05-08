@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+import { LOGIN_METHOD_COOKIE_KEY, type LoginMethod } from '@/features/auth/constants/loginMethod';
 import type { UpdateMyProfileRequestBody, UserResponse } from '@/features/user/types';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
@@ -17,7 +19,14 @@ import { proxyFetch } from '@/shared/apis/bff/proxy';
  * @returns 사용자 정보 (`UserResponse`)
  */
 export const GET = createAuthorizedRoute(async () => {
-  return proxyFetch.get<UserResponse>('/users/me');
+  const me = await proxyFetch.get<UserResponse>('/users/me');
+  if (!me) return me;
+
+  const cookieStore = await cookies();
+  const raw = cookieStore.get(LOGIN_METHOD_COOKIE_KEY)?.value;
+  const loginMethod: LoginMethod | null = raw === 'auth' || raw === 'oauth' ? raw : null;
+
+  return { ...me, loginMethod };
 });
 
 /**

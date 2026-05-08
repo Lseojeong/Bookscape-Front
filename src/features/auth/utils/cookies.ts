@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
+import { LOGIN_METHOD_COOKIE_KEY, type LoginMethod } from '@/features/auth/constants/loginMethod';
 import { getJwtMaxAge } from '@/features/auth/utils/jwt';
 
 export type AuthToken = 'accessToken' | 'refreshToken';
@@ -61,4 +62,16 @@ export const setAuthCookies = ({
 export const clearAuthCookies = (response: NextResponse): void => {
   response.cookies.set('accessToken', '', { ...COOKIE_OPTIONS, maxAge: 0 });
   response.cookies.set('refreshToken', '', { ...COOKIE_OPTIONS, maxAge: 0 });
+};
+
+export const setLoginMethodCookie = (params: {
+  response: NextResponse;
+  loginMethod: LoginMethod;
+}): void => {
+  const { response, loginMethod } = params;
+  response.cookies.set(LOGIN_METHOD_COOKIE_KEY, loginMethod, COOKIE_OPTIONS);
+};
+
+export const clearLoginMethodCookie = (response: NextResponse): void => {
+  response.cookies.set(LOGIN_METHOD_COOKIE_KEY, '', { ...COOKIE_OPTIONS, maxAge: 0 });
 };
