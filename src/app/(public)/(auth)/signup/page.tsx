@@ -1,5 +1,6 @@
 'use client';
 import { useForm } from 'react-hook-form';
+import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
 import Button from '@/shared/ui/button/Button';
@@ -29,49 +30,56 @@ export default function SignupPage() {
   const handleSignup = () => {};
 
   return (
-    <>
-      <AuthForm onSubmit={handleSubmit(handleSignup)}>
-        <FormField label="이메일">
-          <FormInput
-            type="email"
-            name="email"
-            control={control}
-            placeholder="이메일을 입력해 주세요"
-          />
-        </FormField>
+    <div className="py-20">
+      <AuthHeadline />
+      <div className="mt-17 md:mt-22">
+        <AuthForm onSubmit={handleSubmit(handleSignup)}>
+          <FormField label="이메일">
+            <FormInput
+              type="email"
+              name="email"
+              control={control}
+              placeholder="이메일을 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="닉네임">
-          <FormInput
-            type="text"
-            name="nickname"
-            control={control}
-            placeholder="닉네임을 입력해 주세요"
-          />
-        </FormField>
+          <FormField label="닉네임">
+            <FormInput
+              type="text"
+              name="nickname"
+              control={control}
+              placeholder="닉네임을 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="비밀번호">
-          <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
-        </FormField>
+          <FormField label="비밀번호">
+            <PasswordInput
+              name="password"
+              control={control}
+              placeholder="비밀번호를 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="비밀번호 확인">
-          <PasswordInput
-            name="passwordConfirm"
-            control={control}
-            placeholder="비밀번호를 한 번 더 입력해 주세요"
-          />
-        </FormField>
-        <Button
-          type="submit"
-          theme="primary"
-          size="lg"
-          isLoading={isSubmitting}
-          disabled={!isValid || isSubmitting}
-          className="mt-2 h-13.5 w-full rounded-2xl md:mt-2.5"
-        >
-          회원가입 하기
-        </Button>
-      </AuthForm>
-      <AuthFooter />
-    </>
+          <FormField label="비밀번호 확인">
+            <PasswordInput
+              name="passwordConfirm"
+              control={control}
+              placeholder="비밀번호를 한 번 더 입력해 주세요"
+            />
+          </FormField>
+          <Button
+            type="submit"
+            theme="primary"
+            size="lg"
+            isLoading={isSubmitting}
+            disabled={!isValid || isSubmitting}
+            className="mt-2 h-13.5 w-full rounded-2xl md:mt-2.5"
+          >
+            회원가입 하기
+          </Button>
+        </AuthForm>
+        <AuthFooter />
+      </div>
+    </div>
   );
 }

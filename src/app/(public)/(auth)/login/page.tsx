@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
 import { loginUser } from '@/features/auth/apis';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
@@ -73,40 +74,47 @@ export default function LoginPage() {
 
   return (
     <>
-      <AuthForm onSubmit={handleSubmit(handleLogin)}>
-        <FormField label="이메일">
-          <FormInput
-            type="email"
-            name="email"
-            control={control}
-            placeholder="이메일을 입력해 주세요"
-          />
-        </FormField>
+      <AuthHeadline />
+      <div className="mt-17 md:mt-22">
+        <AuthForm onSubmit={handleSubmit(handleLogin)}>
+          <FormField label="이메일">
+            <FormInput
+              type="email"
+              name="email"
+              control={control}
+              placeholder="이메일을 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="비밀번호">
-          <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
-        </FormField>
-        <div className="mt-1 md:mt-2">
-          {/* API 에러 메시지 */}
-          {errors.root && (
-            <p className="typo-13-medium text-red-500" role="alert">
-              {errors.root.message}
-            </p>
-          )}
+          <FormField label="비밀번호">
+            <PasswordInput
+              name="password"
+              control={control}
+              placeholder="비밀번호를 입력해 주세요"
+            />
+          </FormField>
+          <div className="mt-1 md:mt-2">
+            {/* API 에러 메시지 */}
+            {errors.root && (
+              <p className="typo-13-medium text-red-500" role="alert">
+                {errors.root.message}
+              </p>
+            )}
 
-          <Button
-            type="submit"
-            theme="primary"
-            size="lg"
-            isLoading={isSubmitting}
-            disabled={!isDirty || isSubmitting}
-            className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
-          >
-            로그인 하기
-          </Button>
-        </div>
-      </AuthForm>
-      <AuthFooter />
+            <Button
+              type="submit"
+              theme="primary"
+              size="lg"
+              isLoading={isSubmitting}
+              disabled={!isDirty || isSubmitting}
+              className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
+            >
+              로그인 하기
+            </Button>
+          </div>
+        </AuthForm>
+        <AuthFooter />
+      </div>
     </>
   );
 }
