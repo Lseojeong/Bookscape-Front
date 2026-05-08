@@ -36,9 +36,14 @@ export default function ActivityDetail({ id }: ActivityDetailProps) {
         rating={activity.rating}
         reviewCount={activity.reviewCount}
         address={activity.address}
+        className="mt-7"
       />
       {/* 탭바 */}
-      <ActivityTabSection description={activity.description} />
+      <ActivityTabSection
+        description={activity.description}
+        address={activity.address}
+        className="mt-7"
+      />
     </section>
   );
 }
