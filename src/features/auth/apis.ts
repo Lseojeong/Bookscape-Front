@@ -10,6 +10,14 @@ export const loginUser = async (formData: LoginFormValues) => {
   );
 };
 
+export const logoutUser = async () => {
+  return bffFetch.post<{ success: boolean }>('/auth/logout');
+};
+
+export const refreshAuthTokens = async () => {
+  return bffFetch.post<{ success: boolean; accessTokenExpiresAt: number }>('/auth/tokens');
+};
+
 export const signupUser = async (formData: Omit<SignupFormValues, 'passwordConfirm'>) => {
   return await post('/users', formData);
 };
