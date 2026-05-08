@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getSearchActivityData } from '@/features/activity/apis';
-import { GetSearchActivityParams } from '@/features/activity/types';
+import { ActivityResponse, GetSearchActivityParams } from '@/features/activity/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 /**
@@ -18,9 +18,13 @@ import { QUERY_KEYS } from '@/shared/constants/queryKey';
  * });
  * ```
  */
-export const useSearchActivityData = (params: GetSearchActivityParams) => {
+export const useSearchActivityData = (
+  params: GetSearchActivityParams,
+  options?: Omit<UseQueryOptions<ActivityResponse | null>, 'queryKey' | 'queryFn'>
+) => {
   return useQuery({
     queryKey: QUERY_KEYS.SEARCH_ACTIVITY(params),
     queryFn: () => getSearchActivityData(params),
+    ...options,
   });
 };

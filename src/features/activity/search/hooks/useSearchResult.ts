@@ -59,11 +59,11 @@ export const useSearchResult = () => {
   const totalPages = Math.ceil(totalCount / pageSize);
 
   // 전체 검색 결과 수(카테고리 상관없이)
-  const { data: totalData } = useSearchActivityData({
-    keyword,
-    size: 1,
-  });
-  const totalResultCount = totalData?.totalCount ?? 0;
+  const { data: totalData } = useSearchActivityData(
+    { keyword, size: 1 },
+    { enabled: category !== '전체' && !!keyword }
+  );
+  const totalResultCount = category === '전체' ? totalCount : (totalData?.totalCount ?? 0);
 
   return {
     keyword,
