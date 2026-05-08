@@ -1,8 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import ActivityForm from '@/features/my-page/activity-form/ui/ActivityForm';
 import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
+import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 
 /**
@@ -15,6 +17,7 @@ import PageHeader from '@/shared/ui/page-header/PageHeader';
  */
 export default function ActivityNewPage() {
   const router = useRouter();
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
   const handleCreateActivity = (data: ActivityFormValues) => {
     // 제출된 데이터가 조드 스키마 검증을 통과한 형태인지 확인
@@ -25,15 +28,37 @@ export default function ActivityNewPage() {
     // mutate(data);
   };
 
+  const handleCancelClick = () => {
+    setIsCancelModalOpen(true);
+  };
+
+  const handleConfirmLeave = () => {
+    router.back();
+  };
+
   return (
     <main className="w-full pb-15.25 md:pb-9.25">
       <div className="mx-auto w-full max-w-3xl px-4 pt-10 md:px-0 md:pt-14">
         <div className="mb-10">
-          <PageHeader title="내 체험 등록" onBack={() => router.back()} />
+          <PageHeader title="내 체험 등록" onBack={handleCancelClick} />
         </div>
 
-        <ActivityForm mode="create" onSubmitForm={handleCreateActivity} />
+        <ActivityForm
+          mode="create"
+          onSubmitForm={handleCreateActivity}
+          onCancelForm={handleCancelClick}
+        />
       </div>
+
+      <ConfirmDialog
+        isOpen={isCancelModalOpen}
+        onClose={() => setIsCancelModalOpen(false)}
+        title="아직 내용이 저장되지 않았어요."
+        description="뒤로 가면 입력한 내용이 사라집니다."
+        cancelText="나가기"
+        confirmText="계속 작성하기"
+        onCancel={handleConfirmLeave}
+      />
     </main>
   );
 }

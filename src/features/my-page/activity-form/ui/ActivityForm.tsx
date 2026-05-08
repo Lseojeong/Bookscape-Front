@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/constants/category';
@@ -34,6 +33,8 @@ type ActivityFormProps = {
   initialData?: ActivityInitialData;
   /** 부모 컴포넌트에 최종 폼 데이터를 전달하기 위한 콜백 함수입니다. */
   onSubmitForm: (data: ActivityFormValues) => void;
+  /** 폼 내의 취소 버튼을 눌렀을 때 실행될 콜백 함수입니다. */
+  onCancelForm: () => void;
 };
 
 /**
@@ -48,9 +49,12 @@ type ActivityFormProps = {
  * />
  * ```
  */
-export default function ActivityForm({ mode, initialData, onSubmitForm }: ActivityFormProps) {
-  const router = useRouter();
-
+export default function ActivityForm({
+  mode,
+  initialData,
+  onSubmitForm,
+  onCancelForm,
+}: ActivityFormProps) {
   const methods = useForm<ActivityFormValues>({
     resolver: zodResolver(activityFormSchema),
     mode: 'onTouched',
@@ -203,7 +207,7 @@ export default function ActivityForm({ mode, initialData, onSubmitForm }: Activi
             theme="secondary"
             size="md"
             className="h-12 w-39.25 md:h-10.75 md:w-30"
-            onClick={() => router.back()}
+            onClick={onCancelForm}
           >
             취소하기
           </Button>
