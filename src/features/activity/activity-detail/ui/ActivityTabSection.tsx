@@ -96,31 +96,42 @@ export default function ActivityTabSection({
   };
 
   useEffect(() => {
+    let rafId: number | null = null;
+
     const handleScroll = () => {
-      if (isScrollingRef.current) return; // 탭 클릭으로 스크롤 중이면 무시
+      if (rafId !== null) return;
 
-      const tabBarBottom = tabBarRef.current?.getBoundingClientRect().bottom ?? 0;
+      // requestAnimationFrame 기반 쓰로틀링으로 스크롤 이벤트 실행 빈도 최적화
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        if (isScrollingRef.current) return; // 탭 클릭으로 스크롤 중이면 무시
 
-      const sections: [string, React.RefObject<HTMLDivElement | null>][] = [
-        [TAB_IDS.DESCRIPTION, descriptionRef],
-        [TAB_IDS.LOCATION, locationRef],
-        [TAB_IDS.REVIEWS, reviewsRef],
-      ];
+        const tabBarBottom = tabBarRef.current?.getBoundingClientRect().bottom ?? 0;
+        const sections: [string, React.RefObject<HTMLDivElement | null>][] = [
+          [TAB_IDS.DESCRIPTION, descriptionRef],
+          [TAB_IDS.LOCATION, locationRef],
+          [TAB_IDS.REVIEWS, reviewsRef],
+        ];
 
-      // 뒤에서부터 순회하여 탭바 하단을 지나친 섹션 중 현재 보이는 섹션을 활성화
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const [id, ref] = sections[i];
-        if (!ref.current) continue;
-        const top = ref.current.getBoundingClientRect().top;
-        if (top <= tabBarBottom + 10) {
-          setActiveTab(id);
-          break;
+        // 뒤에서부터 순회하여 탭바 하단을 지나친 섹션 중 현재 보이는 섹션을 활성화
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const [id, ref] = sections[i];
+          if (!ref.current) continue;
+          const top = ref.current.getBoundingClientRect().top;
+          if (top <= tabBarBottom + 10) {
+            setActiveTab(id);
+            break;
+          }
         }
-      }
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      // cleanup: 스크롤 이벤트 리스너 및 미완료 애니메이션 프레임 정리
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
