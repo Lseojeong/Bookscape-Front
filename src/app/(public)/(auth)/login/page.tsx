@@ -8,7 +8,7 @@ import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
 import { LoginFormValues } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
-import { useAuthStore } from '@/shared/stores/useAuthStore';
+import { useUserStore } from '@/shared/stores/userStore';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
@@ -23,7 +23,7 @@ import { cn } from '@/shared/utils/cn';
  */
 export default function LoginPage() {
   const router = useRouter();
-  const { setAuth } = useAuthStore();
+  const setSession = useUserStore((state) => state.setSession);
   const { showToast } = useToastStore();
   const {
     control,
@@ -45,17 +45,8 @@ export default function LoginPage() {
         const response = await loginUser(formData);
 
         if (response) {
-          const { user, expiresAt } = response;
-
-          // 전역 상태(Zustand) 업데이트
-          setAuth(
-            {
-              id: user.id,
-              email: user.email,
-              nickname: user.nickname,
-            },
-            expiresAt
-          );
+          const { user, accessTokenExpiresAt } = response;
+          setSession({ user, accessTokenExpiresAt });
 
           // 로그인 성공 토스트
           showToast('check', AUTH_API_MESSAGE.LOGIN.SUCCESS);
@@ -77,7 +68,7 @@ export default function LoginPage() {
         }
       }
     },
-    [router, setAuth, setError, showToast]
+    [router, setError, setSession, showToast]
   );
 
   return (
