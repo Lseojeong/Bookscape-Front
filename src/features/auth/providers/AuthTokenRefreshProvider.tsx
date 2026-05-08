@@ -46,8 +46,11 @@ export default function AuthTokenRefreshProvider() {
         const newExpiredAt = data?.accessTokenExpiresAt;
 
         if (newExpiredAt && user) {
-          // 기존 유저 정보를 유지하면서 만료 시간만 업데이트
-          setSession({ user, accessTokenExpiresAt: newExpiredAt });
+          const currentUser = useUserStore.getState().user;
+          if (currentUser) {
+            // 기존 유저 정보를 유지하면서 만료 시간만 업데이트
+            setSession({ user: currentUser, accessTokenExpiresAt: newExpiredAt });
+          }
         }
       } catch (error) {
         if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
