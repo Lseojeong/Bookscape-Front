@@ -16,6 +16,21 @@ type ProfileFormProps = {
   onUpdateUser: (body: UpdateMyProfileRequestBody) => Promise<void>;
 };
 
+/**
+ * 프로필 수정 폼 컴포넌트
+ *
+ * @description
+ * - 이메일은 수정 불가 필드로 표시합니다.
+ * - 닉네임은 필수 입력 필드입니다.
+ * - 새 비밀번호 / 비밀번호 확인은 입력 시에만 유효성 검사를 수행합니다.
+ * - 저장 성공 후 비밀번호 필드를 초기화합니다.
+ * - `user` prop이 변경되면 폼 기본값을 새 사용자 정보로 리셋합니다.
+ * - 이미지 수정은 이 폼과 독립적으로 `ImageUploadBox`에서 처리합니다.
+ *
+ * @param user - 현재 로그인한 사용자 정보
+ * @param onUpdateUser - 저장하기 버튼 제출 시 호출되는 콜백
+ */
+
 export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
   const {
     control,
