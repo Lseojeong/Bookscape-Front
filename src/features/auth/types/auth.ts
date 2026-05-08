@@ -22,12 +22,14 @@ export const RefreshResponseSchema = z.object({
   refreshToken: z.string(),
 });
 
+/** POST /users 요청 */
+export const SignupRequestScheme = z.object({
+  email: z.string().email(),
+  nickname: z.string(),
+  password: z.string(),
+});
+
 export type LoginResponse = z.infer<typeof LoginResponseSchema>;
 export type UserResponse = z.infer<typeof UserResponseSchema>;
 export type RefreshResponse = z.infer<typeof RefreshResponseSchema>;
-
-export type SignupRequestBody = {
-  email: string;
-  nickname: string;
-  password: string;
-};
+export type SignupRequestBody = z.infer<typeof SignupRequestScheme>;
