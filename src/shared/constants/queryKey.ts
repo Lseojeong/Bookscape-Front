@@ -5,4 +5,6 @@
 export const QUERY_KEYS = {
   ACTIVITY_DETAIL: (id: number) => ['activity', id] as const,
   HOT_ACTIVITY: (size: number) => ['activities', 'hot', size] as const,
+  /** 로그인한 사용자 정보 조회 */
+  USER_ME: () => ['users', 'me'] as const,
 } as const;
