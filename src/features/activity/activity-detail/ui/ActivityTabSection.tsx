@@ -85,10 +85,14 @@ export default function ActivityTabSection({
     };
     scrollToRef(refs[tabId]);
 
-    // smooth scroll 완료 후 잠금 해제
-    setTimeout(() => {
-      isScrollingRef.current = false;
-    }, 1000);
+    // scrollend 이벤트로 스크롤 완료 감지 후 잠금 해제
+    window.addEventListener(
+      'scrollend',
+      () => {
+        isScrollingRef.current = false;
+      },
+      { once: true }
+    );
   };
 
   useEffect(() => {
