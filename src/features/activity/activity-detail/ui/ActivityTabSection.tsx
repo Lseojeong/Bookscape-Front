@@ -125,10 +125,12 @@ export default function ActivityTabSection({
       {/* 체험 설명 */}
       <div ref={descriptionRef}>
         <ActivityDescription description={description} />
+        <div className="mt-10 border-b border-gray-100" />
       </div>
       {/* 오시는 길 */}
       <div ref={locationRef}>
         <ActivityLocation address={address} />
+        <div className="mt-10 border-b border-gray-100" />
       </div>
       {/* TODO: 체험 후기 */}
       <div ref={reviewsRef} />
