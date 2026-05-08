@@ -6,18 +6,13 @@ import type { MyReservation } from '@/features/reservation/types';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Loading from '@/shared/ui/loading/Loading';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
+import { formatYmdToDot } from '@/shared/utils/dateFormat';
 
 type ReservationListSectionProps = {
   isLoading: boolean;
   reservations: MyReservation[];
   selectedStatus: ReservationStatus | '';
   emptyMainTextByStatus: Record<ReservationStatus | '', string>;
-};
-
-const formatReservationDate = (value: string) => {
-  const [year, month, day] = value.split('-');
-  if (!year || !month || !day) return value;
-  return `${year}. ${month.padStart(2, '0')}. ${day.padStart(2, '0')}`;
 };
 
 export default function ReservationListSection({
@@ -64,7 +59,7 @@ export default function ReservationListSection({
     <div className="flex flex-col gap-7.5">
       {reservationsByDate.map(({ date, items }, index) => (
         <section key={date} className="flex flex-col gap-3">
-          <p className="typo-16-bold text-gray-800">{formatReservationDate(date)}</p>
+          <p className="typo-16-bold text-gray-800">{formatYmdToDot(date)}</p>
           <div className="flex flex-col gap-7.5">
             {items.map((reservation) => (
               <ReservationCard key={reservation.id} data={reservation} />
