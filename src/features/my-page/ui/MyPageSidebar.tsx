@@ -27,9 +27,12 @@ const MYPAGE_TABS = [
 
 export default function MyPageSidebar() {
   const user = useUserStore((state) => state.user);
-  const avatarUser = user
-    ? { nickname: user.nickname, profileImageUrl: user.profileImageUrl }
-    : { nickname: '', profileImageUrl: null };
+  const hasHydrated = useUserStore((state) => state.hasHydrated);
+
+  const avatarUser =
+    hasHydrated && user
+      ? { nickname: user.nickname, profileImageUrl: user.profileImageUrl }
+      : { nickname: '', profileImageUrl: null };
   return (
     <>
       <aside className="sticky hidden h-fit w-44.5 shrink-0 rounded-xl border border-gray-50 bg-white px-3.5 py-4 shadow-drop md:top-30 md:block lg:w-72.5 lg:py-6">
