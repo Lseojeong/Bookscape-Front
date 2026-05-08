@@ -22,24 +22,33 @@ export default function ActivityLocation({ address }: ActivityLocationProps) {
   const mapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!mapRef.current || !window.kakao?.maps) return;
+    if (!mapRef.current) return;
 
-    window.kakao.maps.load(() => {
-      const geocoder = new window.kakao.maps.services.Geocoder();
-
-      geocoder.addressSearch(address, (result, status) => {
-        if (status !== window.kakao.maps.services.Status.OK || !mapRef.current) return;
-
-        const coords = new window.kakao.maps.LatLng(Number(result[0].y), Number(result[0].x));
-
-        const map = new window.kakao.maps.Map(mapRef.current, {
-          center: coords,
-          level: 3,
+    const initMap = () => {
+      window.kakao.maps.load(() => {
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(address, (result, status) => {
+          if (status !== window.kakao.maps.services.Status.OK || !mapRef.current) return;
+          const coords = new window.kakao.maps.LatLng(Number(result[0].y), Number(result[0].x));
+          const map = new window.kakao.maps.Map(mapRef.current, { center: coords, level: 3 });
+          new window.kakao.maps.Marker({ map, position: coords });
         });
-
-        new window.kakao.maps.Marker({ map, position: coords });
       });
-    });
+    };
+
+    if (window.kakao?.maps) {
+      initMap();
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (window.kakao?.maps) {
+        clearInterval(interval);
+        initMap();
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
   }, [address]);
 
   return (
