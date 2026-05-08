@@ -5,7 +5,7 @@ import type {
   Schedule,
   Reservation,
 } from '@/features/my-page/reservation-status/types/reservation';
-import ReservationPanelContent from '@/features/my-page/reservation-status/ui/ReservationPanelContent';
+import ReservationPanelContent from '@/features/my-page/reservation-status/ui/pannel/ReservationPanelContent';
 import useBodyScrollLock from '@/shared/ui/overlay/hooks/useBodyScrollLock';
 import useEscapeKey from '@/shared/ui/overlay/hooks/useEscapeKey';
 import OverlayBackdrop from '@/shared/ui/overlay/primitives/OverlayBackdrop';

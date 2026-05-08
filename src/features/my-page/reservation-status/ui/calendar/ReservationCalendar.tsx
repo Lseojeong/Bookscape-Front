@@ -5,7 +5,7 @@ import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import type { CalendarSchedule } from '@/features/my-page/reservation-status/types/reservation';
-import ReservationBadge from '@/features/my-page/reservation-status/ui/ReservationBadge';
+import ReservationBadge from '@/features/my-page/reservation-status/ui/calendar/ReservationBadge';
 import { CaretLeftIcon, CaretRightIcon } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';
 

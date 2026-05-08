@@ -5,7 +5,7 @@ import type {
   Schedule,
   Reservation,
 } from '@/features/my-page/reservation-status/types/reservation';
-import ReservationCard from '@/features/my-page/reservation-status/ui/ReservationCard';
+import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
 import { DeleteIcon } from '@/shared/assets/icons';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';

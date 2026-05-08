@@ -8,8 +8,8 @@ import {
   MOCK_PANEL_SCHEDULES,
   MOCK_RESERVATIONS,
 } from '@/features/my-page/reservation-status/mocks/index';
-import ReservationCalendar from '@/features/my-page/reservation-status/ui/ReservationCalendar';
-import ReservationPanel from '@/features/my-page/reservation-status/ui/ReservationPanel';
+import ReservationCalendar from '@/features/my-page/reservation-status/ui/calendar/ReservationCalendar';
+import ReservationPanel from '@/features/my-page/reservation-status/ui/pannel/ReservationPanel';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
