@@ -5,6 +5,8 @@ import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
+const REFRESH_LIMIT = 5 * 60 * 1000; // 5분
+
 /**
  * Access Token 만료 5분 전에 자동으로 토큰을 재발급하는 컴포넌트입니다.
  * `accessTokenExpiresAt`이 변경될 때마다 타이머를 재설정합니다.
@@ -28,7 +30,6 @@ export default function AuthTokenRefreshProvider() {
   useEffect(() => {
     if (!accessTokenExpiresAt || !user) return;
 
-    const REFRESH_LIMIT = 5 * 60 * 1000; // 5분
     const now = Date.now();
     const remainingTime = accessTokenExpiresAt - now;
 
