@@ -10,8 +10,6 @@ export const loginUser = async (formData: LoginFormValues) => {
   );
 };
 
-type SignupRequest = Omit<SignupFormValues, 'passwordConfirm'>;
-
-export const signupUser = async (formData: SignupRequest) => {
+export const signupUser = async (formData: Omit<SignupFormValues, 'passwordConfirm'>) => {
   return await post('/users', formData);
 };
