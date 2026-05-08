@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useRef } from 'react';
 import { refreshAuthTokens } from '@/features/auth/apis';
 import { ApiError } from '@/shared/apis/apiError';
