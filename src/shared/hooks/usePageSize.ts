@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const DEFAULT_PAGE_SIZE = {
   mobile: 4,
@@ -27,8 +27,7 @@ type PageSizeConfig = typeof DEFAULT_PAGE_SIZE;
 export const usePageSize = (pageSize: PageSizeConfig = DEFAULT_PAGE_SIZE) => {
   const [currentPageSize, setCurrentPageSize] = useState<number>(pageSize.mobile);
 
-  // pageSize 객체의 참조값이 바뀌어도 이펙트가 튀지 않도록 메모이제이션
-  const config = useMemo(() => pageSize, [pageSize]);
+  const { mobile, tablet, desktop } = pageSize;
 
   useEffect(() => {
     // window가 없는 서버 환경에서는 동작하지 않도록 방어 로직 추가
@@ -38,9 +37,9 @@ export const usePageSize = (pageSize: PageSizeConfig = DEFAULT_PAGE_SIZE) => {
     const desktopQuery = window.matchMedia('(min-width: 1024px)');
 
     const update = () => {
-      if (desktopQuery.matches) setCurrentPageSize(config.desktop);
-      else if (tabletQuery.matches) setCurrentPageSize(config.tablet);
-      else setCurrentPageSize(config.mobile);
+      if (desktopQuery.matches) setCurrentPageSize(desktop);
+      else if (tabletQuery.matches) setCurrentPageSize(tablet);
+      else setCurrentPageSize(mobile);
     };
 
     // 초기값 설정
@@ -54,7 +53,7 @@ export const usePageSize = (pageSize: PageSizeConfig = DEFAULT_PAGE_SIZE) => {
       tabletQuery.removeEventListener('change', update);
       desktopQuery.removeEventListener('change', update);
     };
-  }, [config]);
+  }, [mobile, tablet, desktop]);
 
   return currentPageSize;
 };
