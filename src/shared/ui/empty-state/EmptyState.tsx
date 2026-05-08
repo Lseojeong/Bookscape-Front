@@ -162,13 +162,13 @@ export default function EmptyState(props: EmptyStateProps) {
 
     if (type === 'error') {
       const retryText = props.retryText ?? '다시 시도하기';
+      const handleRetry = () => {
+        if (props.onRetry) return props.onRetry();
+        window.location.reload();
+      };
 
       return (
-        <Button
-          type="button"
-          theme="secondary"
-          onClick={() => (props.onRetry ? props.onRetry() : window.location.reload())}
-        >
+        <Button type="button" theme="secondary" onClick={handleRetry}>
           {retryText}
         </Button>
       );
