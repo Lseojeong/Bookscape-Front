@@ -14,17 +14,17 @@ import { usePageSize } from '@/shared/hooks/usePageSize';
  *
  * @returns keyword - URL 쿼리에서 가져온 검색 키워드
  * @returns page - 현재 페이지 번호
- * @returns setPage - 페이지 변경 함수
  * @returns category - 선택된 카테고리
  * @returns handleChangeCategory - 카테고리 변경 및 페이지 초기화 함수
  * @returns activities - 검색된 체험 목록
  * @returns totalCount - 전체 검색 결과 수
  * @returns totalPages - 전체 페이지 수
  * @returns totalResultCount - 카테고리 상관없이 전체 검색 결과 수
+ * @returns handlePageChange - 페이지 변경 함수
  *
  * @example
  * ```tsx
- * const { keyword, activities, totalPages, page, setPage } = useSearchResult();
+ * const { keyword, activities, totalPages, page, handlePageChange } = useSearchResult();
  * ```
  */
 export const useSearchResult = () => {
