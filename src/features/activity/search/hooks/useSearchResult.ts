@@ -60,10 +60,15 @@ export const useSearchResult = () => {
 
   // pageSize 변경 시 페이지 초기화
   useEffect(() => {
+    if (!pageSize) return;
+
+    const params = new URLSearchParams(window.location.search);
+    params.set('page', '1');
+
     startTransition(() => {
-      updateParams({ page: '1' }, 'replace');
+      router.replace('/search?' + params.toString());
     });
-  }, [pageSize, updateParams]);
+  }, [pageSize, router]);
 
   // 검색 카테고리
   const { data } = useSearchActivityData({
