@@ -36,17 +36,23 @@ export const useSearchActivityData = (
 
 export const usePrefetchNextPage = (params: GetSearchActivityParams & { totalPages?: number }) => {
   const queryClient = useQueryClient();
+  const { keyword, category, page, size, totalPages } = params;
 
   useEffect(() => {
     // totalPages가 0이거나 없으면 prefetch 안 함
-    if (!params.totalPages || (params.page ?? 1) >= params.totalPages) return;
+    if (!totalPages || (page ?? 1) >= totalPages) return;
 
-    const nextPageParams = { ...params, page: (params.page ?? 1) + 1 };
+    const nextPageParams = {
+      keyword,
+      category,
+      page: (page ?? 1) + 1,
+      size,
+    };
 
     queryClient.prefetchQuery({
       queryKey: QUERY_KEYS.SEARCH_ACTIVITY(nextPageParams),
       queryFn: () => getSearchActivityData(nextPageParams),
       staleTime: SEARCH_STALE_TIME,
     });
-  }, [params, queryClient]);
+  }, [keyword, category, page, size, totalPages, queryClient]);
 };
