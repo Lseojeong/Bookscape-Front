@@ -1,7 +1,7 @@
 import {
   ActivityDetailSchema,
   ActivityResponse,
-  GetSearchActivityParams,
+  GetActivityParams,
 } from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
@@ -30,17 +30,20 @@ export const getHotActivityData = async (size: number) => {
   return result?.activities ?? [];
 };
 
-export const getSearchActivityData = async ({
+/** 검색 페이지, 전체 체험 목록 페이지 */
+export const getActivityListData = async ({
   method = 'offset',
   category,
   keyword,
+  sort,
   page = 1,
   size,
-}: GetSearchActivityParams) => {
+}: GetActivityParams) => {
   return await get<ActivityResponse>('/activities', {
     method,
     ...(category && { category }),
-    keyword,
+    ...(keyword && { keyword }),
+    ...(sort && { sort }),
     page,
     size,
   });

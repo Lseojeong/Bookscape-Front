@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { getSearchActivityData } from '@/features/activity/apis';
-import { ActivityResponse, GetSearchActivityParams } from '@/features/activity/types';
+import { getActivityListData } from '@/features/activity/apis';
+import { ActivityResponse, GetActivityParams } from '@/features/activity/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 const SEARCH_STALE_TIME = 60 * 1000 * 5; // 5분
@@ -22,19 +22,19 @@ const SEARCH_STALE_TIME = 60 * 1000 * 5; // 5분
  * ```
  */
 export const useSearchActivityData = (
-  params: GetSearchActivityParams,
+  params: GetActivityParams,
   options?: Omit<UseQueryOptions<ActivityResponse | null>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
     queryKey: QUERY_KEYS.SEARCH_ACTIVITY(params),
-    queryFn: () => getSearchActivityData(params),
+    queryFn: () => getActivityListData(params),
     staleTime: SEARCH_STALE_TIME,
     gcTime: 60 * 1000 * 10,
     ...options,
   });
 };
 
-export const usePrefetchNextPage = (params: GetSearchActivityParams & { totalPages?: number }) => {
+export const usePrefetchNextPage = (params: GetActivityParams & { totalPages?: number }) => {
   const queryClient = useQueryClient();
   const { keyword, category, page, size, totalPages } = params;
 
@@ -51,7 +51,7 @@ export const usePrefetchNextPage = (params: GetSearchActivityParams & { totalPag
 
     queryClient.prefetchQuery({
       queryKey: QUERY_KEYS.SEARCH_ACTIVITY(nextPageParams),
-      queryFn: () => getSearchActivityData(nextPageParams),
+      queryFn: () => getActivityListData(nextPageParams),
       staleTime: SEARCH_STALE_TIME,
     });
   }, [keyword, category, page, size, totalPages, queryClient]);
