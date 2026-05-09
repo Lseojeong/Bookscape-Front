@@ -1,11 +1,9 @@
 'use client';
 
 import { useReservationPanel } from '@/features/my-page/reservation-status/hooks/useReservationPanel';
-import type {
-  Schedule,
-  Reservation,
-} from '@/features/my-page/reservation-status/types/reservation';
+import { useReservationsQuery } from '@/features/my-page/reservation-status/hooks/useReservationsQuery';
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
+import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
@@ -17,8 +15,8 @@ import TabBar from '@/shared/ui/tab-bar/TabBar';
 
 type ReservationPanelContentProps = {
   date: Date;
-  schedules: Schedule[];
-  reservations: Reservation[];
+  activityId: number | null;
+  schedules: MyActivityReservedScheduleItem[];
   onClose: () => void;
 };
 
@@ -32,38 +30,34 @@ const TAB_LABELS = {
 } as const;
 
 /**
- * 예약 패널의 실제 콘텐츠를 렌더링하는 컴포넌트.
+ * 예약 패널의 실제 콘텐츠를 렌더링하는 컴포넌트
  *
+ * @description
  * - 상태별 탭(신청 / 승인 / 거절)으로 예약을 분류합니다.
- * - 드롭다운으로 시간대(스케줄)를 선택하면 해당 시간대의 예약 카드 목록이 표시됩니다.
- * - 탭 변경 시 해당 상태의 예약이 있는 첫 번째 스케줄로 자동 이동합니다.
- * - 승인 / 거절 처리는 `useReservationPanel` 훅에서 관리합니다.
+ * - 전체 스케줄의 예약을 한 번에 조회하여 탭 변경 시 스케줄도 자동으로 이동합니다.
+ * - 드롭다운으로 시간대(스케줄)를 선택하면 해당 스케줄의 예약 카드 목록이 표시됩니다.
  *
- * @example
- * ```tsx
- * <ReservationPanelContent
- *   date={selectedDate}
- *   schedules={schedules}
- *   reservations={reservations}
- *   onClose={handleClose}
- * />
- * ```
+ * @param date - 선택된 날짜
+ * @param activityId - 선택된 체험 ID
+ * @param schedules - 날짜별 스케줄 목록
+ * @param onClose - 패널 닫기 핸들러
  */
 export default function ReservationPanelContent({
   date,
+  activityId,
   schedules,
-  reservations,
   onClose,
 }: ReservationPanelContentProps) {
+  // 전체 스케줄 ID 목록으로 모든 예약 한 번에 조회
+  const scheduleIds = schedules.map((s) => s.scheduleId);
+  const { reservations, isLoading } = useReservationsQuery(activityId, scheduleIds);
+
   const {
     activeTab,
     selectedScheduleId,
-    localReservations,
     availableSchedules,
     filtered,
     handleTabChange,
-    handleConfirm,
-    handleDecline,
     setSelectedScheduleId,
   } = useReservationPanel(schedules, reservations);
 
@@ -71,17 +65,17 @@ export default function ReservationPanelContent({
     {
       id: 'pending',
       label: TAB_LABELS.pending,
-      count: localReservations.filter((r) => r.status === 'pending').length,
+      count: reservations.filter((r) => r.status === 'pending').length,
     },
     {
       id: 'confirmed',
       label: TAB_LABELS.confirmed,
-      count: localReservations.filter((r) => r.status === 'confirmed').length,
+      count: reservations.filter((r) => r.status === 'confirmed').length,
     },
     {
       id: 'declined',
       label: TAB_LABELS.declined,
-      count: localReservations.filter((r) => r.status === 'declined').length,
+      count: reservations.filter((r) => r.status === 'declined').length,
     },
   ];
 
@@ -111,7 +105,9 @@ export default function ReservationPanelContent({
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col">
-        {availableSchedules.length === 0 ? (
+        {isLoading ? (
+          <p className="mt-3 text-center typo-14-medium text-gray-400">로딩 중...</p>
+        ) : availableSchedules.length === 0 ? (
           <p className="mt-3 text-center typo-14-medium text-gray-400">
             {TAB_LABELS[activeTab]} 내역이 없습니다.
           </p>
@@ -156,8 +152,8 @@ export default function ReservationPanelContent({
                       <ReservationCard
                         key={r.id}
                         reservation={r}
-                        onConfirm={activeTab === 'pending' ? handleConfirm : undefined}
-                        onDecline={activeTab === 'pending' ? handleDecline : undefined}
+                        onConfirm={activeTab === 'pending' ? () => {} : undefined}
+                        onDecline={activeTab === 'pending' ? () => {} : undefined}
                       />
                     ))
                   )}

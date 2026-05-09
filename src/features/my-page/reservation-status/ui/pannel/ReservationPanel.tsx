@@ -1,11 +1,8 @@
 'use client';
 
 import useIsMobile from '@/features/my-page/reservation-status/hooks/useIsMobile';
-import type {
-  Schedule,
-  Reservation,
-} from '@/features/my-page/reservation-status/types/reservation';
 import ReservationPanelContent from '@/features/my-page/reservation-status/ui/pannel/ReservationPanelContent';
+import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import useBodyScrollLock from '@/shared/ui/overlay/hooks/useBodyScrollLock';
 import useEscapeKey from '@/shared/ui/overlay/hooks/useEscapeKey';
 import OverlayBackdrop from '@/shared/ui/overlay/primitives/OverlayBackdrop';
@@ -16,37 +13,31 @@ type ReservationPanelProps = {
   isOpen: boolean;
   onClose: () => void;
   date: Date | null;
-  schedules: Schedule[];
-  reservations: Reservation[];
+  activityId: number | null;
+  schedules: MyActivityReservedScheduleItem[];
 };
 
 /**
- * 특정 날짜의 예약 목록을 슬라이드 패널로 표시하는 컴포넌트.
+ * 특정 날짜의 예약 목록을 슬라이드 패널로 표시하는 컴포넌트
  *
+ * @description
  * - 모바일: 화면 하단에서 올라오는 바텀 시트
  * - 데스크톱: 화면 우측에서 밀려오는 사이드 패널
+ * - 패널이 열린 동안 body 스크롤이 잠기며, Esc 키로 닫을 수 있습니다.
+ * - `date`가 `null`이면 아무것도 렌더링하지 않습니다.
  *
- * 패널이 열린 동안 body 스크롤이 잠기며, Esc 키로 닫을 수 있습니다.
- * `date`가 `null`이면 아무것도 렌더링하지 않습니다.
- *
- * @example
- * ```tsx
- * <ReservationPanel
- *   isOpen={panelOpen}
- *   onClose={() => setPanelOpen(false)}
- *   date={selectedDate}
- *   schedules={schedules}
- *   reservations={reservations}
- * />
- * ```
+ * @param isOpen - 패널 열림 여부
+ * @param onClose - 패널 닫기 핸들러
+ * @param date - 선택된 날짜
+ * @param activityId - 선택된 체험 ID
+ * @param schedules - 날짜별 스케줄 목록
  */
-
 export default function ReservationPanel({
   isOpen,
   onClose,
   date,
+  activityId,
   schedules,
-  reservations,
 }: ReservationPanelProps) {
   const isMobile = useIsMobile();
 
@@ -57,7 +48,6 @@ export default function ReservationPanel({
 
   return (
     <OverlayPortal>
-      {/* 백드롭 */}
       <div
         className={`fixed inset-0 layer-modal transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
@@ -66,7 +56,6 @@ export default function ReservationPanel({
         <OverlayBackdrop onClick={onClose} ariaLabel="닫기" />
       </div>
 
-      {/* 패널 */}
       <OverlaySurface
         position={isMobile ? 'bottom' : 'right'}
         variant={isMobile ? 'sheet' : 'panel'}
@@ -82,8 +71,8 @@ export default function ReservationPanel({
       >
         <ReservationPanelContent
           date={date}
+          activityId={activityId}
           schedules={schedules}
-          reservations={reservations}
           onClose={onClose}
         />
       </OverlaySurface>
