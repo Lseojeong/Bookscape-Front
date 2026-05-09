@@ -1,10 +1,6 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import type { UserResponse } from '@/features/user/types';
-import ProfileForm from '@/features/user/ui/ProfileForm';
-import PageHeader from '@/shared/ui/page-header/PageHeader';
-
+import MyInfoClient from '@/features/user/ui/MyInfoClient';
+import MyInfoPageHeader from '@/features/user/ui/MyInfoPageHeader';
 /**
  * 내 정보 페이지
  *
@@ -27,23 +23,10 @@ const mockUser: UserResponse = {
 };
 
 export default function MyInfoPage() {
-  const router = useRouter();
-
   return (
     <div>
-      <PageHeader
-        title="내 정보"
-        description="닉네임과 비밀번호를 수정하실 수 있습니다."
-        onBack={() => router.back()}
-      />
-      <div className="mt-6 flex w-full flex-col items-center gap-6 md:w-119 lg:w-160">
-        <ProfileForm
-          user={mockUser}
-          onUpdateUser={async (body) => {
-            console.log('PATCH body:', body);
-          }}
-        />
-      </div>
+      <MyInfoPageHeader />
+      <MyInfoClient user={mockUser} />
     </div>
   );
 }
