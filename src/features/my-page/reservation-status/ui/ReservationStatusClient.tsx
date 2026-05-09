@@ -2,9 +2,9 @@
 
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { useMyActivitiesQuery } from '@/features/my-page/reservation-status/hooks/useMyActivitiesQuery';
 import { useReservationDashboardQuery } from '@/features/my-page/reservation-status/hooks/useReservationDashboardQuery';
 import {
-  MOCK_ACTIVITIES,
   MOCK_PANEL_SCHEDULES,
   MOCK_RESERVATIONS,
 } from '@/features/my-page/reservation-status/mocks/index';
@@ -15,13 +15,7 @@ import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownCon
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
-
-/** TODO: API 연결 후 실제 타입으로 교체 */
-type Activity = (typeof MOCK_ACTIVITIES)[number];
-
-type ReservationStatusClientProps = {
-  activities: Activity[];
-};
+import EmptyState from '@/shared/ui/empty-state/EmptyState';
 
 /**
  * 예약 현황 페이지의 클라이언트 컴포넌트.
@@ -31,24 +25,31 @@ type ReservationStatusClientProps = {
  *
  * @param activities - 서버에서 전달받은 체험 목록
  */
-export default function ReservationStatusClient({ activities }: ReservationStatusClientProps) {
-  const [selectedActivityId, setSelectedActivityId] = useState<number | null>(
-    activities[0]?.id ?? null
-  );
+export default function ReservationStatusClient() {
   const [month, setMonth] = useState(new Date());
   const [panelOpen, setPanelOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
 
-  const activityId = selectedActivityId ?? 1;
+  // 내 체험 리스트 조회
+  const { data: activities = [], isLoading } = useMyActivitiesQuery();
+
+  const [selectedActivityId, setSelectedActivityId] = useState<number | null>(null);
+
+  // activities 로드 후 첫 번째 체험 자동 선택
+  const activityId = selectedActivityId ?? activities[0]?.id ?? null;
+
+  // 달력 예약 현황 조회
+  const { data: calendarSchedules = [] } = useReservationDashboardQuery(activityId, month);
+
+  // TODO: 패널 API 연동 후 Mock 제거
   const currentPanelSchedules = selectedDateStr
-    ? (MOCK_PANEL_SCHEDULES[activityId]?.[selectedDateStr] ?? [])
+    ? (MOCK_PANEL_SCHEDULES[activityId ?? 1]?.[selectedDateStr] ?? [])
     : [];
   const currentReservations = selectedDateStr
-    ? (MOCK_RESERVATIONS[activityId]?.[selectedDateStr] ?? [])
+    ? (MOCK_RESERVATIONS[activityId ?? 1]?.[selectedDateStr] ?? [])
     : [];
 
-  const { data: calendarSchedules = [] } = useReservationDashboardQuery(selectedActivityId, month);
   const handleDateClick = (date: Date) => {
     const dateStr = format(date, 'yyyy-MM-dd');
     setSelectedDate(date);
@@ -58,10 +59,22 @@ export default function ReservationStatusClient({ activities }: ReservationStatu
     });
   };
 
+  //TODO : 로딩 상태 UI 개선
+  if (isLoading) return <div>로딩 중...</div>;
+
+  if (activities.length === 0) {
+    return (
+      <EmptyState
+        type="experience"
+        mainText={'아직 등록한 체험이 없어요.\n새로운 체험을 등록해보세요!'}
+      />
+    );
+  }
+
   return (
     <>
       <SelectDropdown
-        value={String(selectedActivityId ?? '')}
+        value={String(activityId ?? '')}
         onChangeValue={(id) => setSelectedActivityId(Number(id))}
       >
         <SelectDropdownTrigger>
