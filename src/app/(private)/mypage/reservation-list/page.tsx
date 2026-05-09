@@ -1,3 +1,5 @@
+import ReservationListView from '@/features/reservation/reservation-list/ui/my-reservation-list/ReservationListView';
+
 export default function ReservationListPage() {
-  return <div>마이페이지 - 예약 내역 리스트 페이지입니다.</div>;
+  return <ReservationListView />;
 }

@@ -3,6 +3,12 @@
  * query key는 문자열을 직접 작성하지 않고 이 상수를 통해 참조합니다.
  */
 export const QUERY_KEYS = {
+  /** 체험 상세 조회 */
   ACTIVITY_DETAIL: (id: number) => ['activity', id] as const,
+  /** 메인 - 인기 체험 조회 */
   HOT_ACTIVITY: (size: number) => ['activities', 'hot', size] as const,
+
+  /** 내 예약 내역 조회 */
+  MY_RESERVATIONS: (status?: string, size?: number) =>
+    ['my-reservations', status ?? 'all', size ?? 'default'] as const,
 } as const;
