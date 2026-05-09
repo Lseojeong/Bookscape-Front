@@ -63,7 +63,6 @@ export default function ImageUploadBox({
         <div className="relative h-30 w-30 overflow-hidden rounded-full bg-primary-100">
           {previewImage ? (
             objectUrl ? (
-              // 로컬 미리보기 → img 태그
               <Image
                 src={previewImage}
                 alt="프로필 이미지 미리보기"
@@ -72,7 +71,6 @@ export default function ImageUploadBox({
                 className="object-cover"
               />
             ) : (
-              // 서버 이미지 → next/image
               <Image src={previewImage} alt="프로필 이미지" fill className="object-cover" />
             )
           ) : (
