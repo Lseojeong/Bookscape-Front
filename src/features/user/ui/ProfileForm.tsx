@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { UserResponse, UpdateMyProfileRequestBody } from '@/features/user/types';
+import ImageUploadBox from '@/features/user/ui/ImageUploadBox';
 import { profileSchema, type ProfileFormValues } from '@/features/user/utils/schema';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
@@ -80,7 +81,8 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex w-full flex-col gap-6">
-      {/* 이메일: FormField Context 밖에서 순수 Input 사용 (RHF 연결 불필요) */}
+      <ImageUploadBox initialImageUrl={user.profileImageUrl} />
+
       <FormField label="이메일">
         <Input value={user.email} disabled readOnly />
       </FormField>

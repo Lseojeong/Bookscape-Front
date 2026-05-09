@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import type { UserResponse } from '@/features/user/types';
-import ImageUploadBox from '@/features/user/ui/ImageUploadBox';
 import ProfileForm from '@/features/user/ui/ProfileForm';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 
@@ -38,7 +37,6 @@ export default function MyInfoPage() {
         onBack={() => router.back()}
       />
       <div className="mt-6 flex w-full flex-col items-center gap-6 md:w-119 lg:w-160">
-        <ImageUploadBox initialImageUrl={mockUser.profileImageUrl} />
         <ProfileForm
           user={mockUser}
           onUpdateUser={async (body) => {
