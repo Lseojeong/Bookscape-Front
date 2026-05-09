@@ -32,18 +32,19 @@ export default function RootLayout({
     <html lang="ko" className={`${pretendard.variable}`}>
       <body>
         <QueryProvider>
-          <AuthTokenRefreshProvider />
-          <AuthSessionSync />
-          {children}
-          <Script
-            src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
-            strategy="lazyOnload"
-          />
-          <Script
-            src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`}
-            strategy="afterInteractive"
-          />
-          <ToastContainer />
+          <AuthTokenRefreshProvider>
+            <AuthSessionSync />
+            {children}
+            <Script
+              src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+              strategy="lazyOnload"
+            />
+            <Script
+              src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`}
+              strategy="afterInteractive"
+            />
+            <ToastContainer />
+          </AuthTokenRefreshProvider>
         </QueryProvider>
         <OverlayRoot />
         <div id={OVERLAY_ROOT_ID} />
