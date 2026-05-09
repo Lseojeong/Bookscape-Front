@@ -22,10 +22,11 @@ type PageSizeConfig = typeof DEFAULT_PAGE_SIZE;
  *
  * // 커스텀 값 사용
  * const pageSize = usePageSize({ mobile: 6, tablet: 4, desktop: 8 });
+ * if (pageSize === null) return <Skeleton />;
  * ```
  */
 export const usePageSize = (pageSize: PageSizeConfig = DEFAULT_PAGE_SIZE) => {
-  const [currentPageSize, setCurrentPageSize] = useState<number>(pageSize.mobile);
+  const [currentPageSize, setCurrentPageSize] = useState<number | null>(null);
 
   const { mobile, tablet, desktop } = pageSize;
 
