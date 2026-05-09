@@ -54,10 +54,6 @@ export default function ImageUploadBox({
     onReset?.();
   };
 
-  const handleClick = () => {
-    handleReset();
-  };
-
   const isDefault = !previewImage;
 
   return (
@@ -111,7 +107,7 @@ export default function ImageUploadBox({
       <Button
         theme="secondary"
         size="sm"
-        onClick={handleClick}
+        onClick={handleReset}
         className="h-10.5 w-42.5"
         disabled={isDefault}
       >
