@@ -45,6 +45,7 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
       passwordConfirm: '',
     },
     mode: 'onBlur',
+    // reValidateMode: 'onBlur',
   });
 
   useEffect(() => {
