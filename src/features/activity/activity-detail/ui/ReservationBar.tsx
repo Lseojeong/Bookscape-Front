@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '@/shared/ui/button/Button';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
@@ -10,9 +10,28 @@ export default function ReservationBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<Date>();
 
+  const startYRef = useRef<number>(0);
+  const [dragY, setDragY] = useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startYRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const diff = e.touches[0].clientY - startYRef.current;
+    if (diff > 0) setDragY(diff); // 아래로만 이동
+  };
+
+  const handleTouchEnd = () => {
+    if (dragY > 100) {
+      setIsOpen(false);
+    }
+    setDragY(0); // 원위치
+  };
+
   return (
     <>
-      <div className="flex flex-col gap-2 bg-white px-4 py-3 shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
+      <div className="flex flex-col gap-2 border-t border-gray-100 bg-white px-4 py-3">
         <TotalPrice totalPrice={1000} headCount={1} />
         <Button theme="primary" size="md" className="w-full" onClick={() => setIsOpen(true)}>
           예약하기
@@ -25,10 +44,19 @@ export default function ReservationBar() {
         variant="sheet"
         ariaLabel="예약 날짜 선택"
         contentClassName="!rounded-t-3xl !rounded-b-none h-full"
+        surfaceStyle={{
+          transform: `translateY(${dragY}px)`,
+          transition: dragY === 0 ? 'transform 0.3s ease' : 'none',
+        }}
       >
         <div className="flex h-full flex-col">
           {/* 핸들바 */}
-          <div className="flex justify-center pt-1 pb-3">
+          <div
+            className="flex justify-center pt-1 pb-3"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className="h-1 w-19 rounded-full bg-gray-300" />
           </div>
           {/* 콘텐츠 */}
@@ -46,7 +74,7 @@ export default function ReservationBar() {
             </div>
           </div>
           {/* 예약하기 버튼 */}
-          <Button theme="primary" size="lg" className="w-full">
+          <Button theme="primary" size="lg" className="w-full" disabled={!selected}>
             예약하기
           </Button>
         </div>

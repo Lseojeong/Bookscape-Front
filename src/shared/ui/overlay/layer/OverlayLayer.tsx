@@ -19,6 +19,7 @@ type OverlayLayerProps = {
   elevation?: OverlaySurfaceProps['elevation'];
   className?: string;
   surfaceClassName?: string;
+  surfaceStyle?: React.CSSProperties;
   contentClassName?: string;
   backdropClassName?: string;
   closeOnOverlayClick?: boolean;
@@ -63,6 +64,7 @@ export default function OverlayLayer({
   elevation = 'none',
   className,
   surfaceClassName,
+  surfaceStyle,
   contentClassName,
   backdropClassName,
   closeOnOverlayClick = true,
@@ -94,6 +96,7 @@ export default function OverlayLayer({
           tone={tone}
           elevation={elevation}
           className={surfaceClassName}
+          style={surfaceStyle}
         >
           <div
             role="dialog"
