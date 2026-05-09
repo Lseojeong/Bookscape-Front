@@ -2,21 +2,10 @@ import { z } from 'zod';
 
 export const ReservationStatusSchema = z.enum(['pending', 'confirmed', 'declined']);
 
-export const CalendarReservationCountSchema = z.object({
-  completed: z.number(),
-  confirmed: z.number(),
-  pending: z.number(),
-});
-
 export const ScheduleReservationCountSchema = z.object({
   declined: z.number(),
   confirmed: z.number(),
   pending: z.number(),
-});
-
-export const CalendarScheduleSchema = z.object({
-  date: z.string(),
-  reservations: CalendarReservationCountSchema,
 });
 
 export const ScheduleSchema = z.object({
@@ -55,7 +44,6 @@ export const UpdateReservationStatusRequestSchema = z.object({
 });
 
 export type ReservationStatus = z.infer<typeof ReservationStatusSchema>;
-export type CalendarSchedule = z.infer<typeof CalendarScheduleSchema>;
 export type Schedule = z.infer<typeof ScheduleSchema>;
 export type Reservation = z.infer<typeof ReservationSchema>;
 export type GetReservationsResponse = z.infer<typeof GetReservationsResponseSchema>;

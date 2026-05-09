@@ -1,5 +1,4 @@
 import type {
-  CalendarSchedule,
   Schedule,
   Reservation,
 } from '@/features/my-page/reservation-status/types/reservation';
@@ -10,21 +9,6 @@ export const MOCK_ACTIVITIES = [
   { id: 2, title: '한강 야경 보며 즐기는 요트 파티' },
   { id: 3, title: '초보자를 위한 서핑 클래스' },
 ];
-
-// TODO: API 연결 후 삭제 - 달력용
-export const MOCK_CALENDAR_SCHEDULES: Record<number, CalendarSchedule[]> = {
-  1: [
-    { date: '2026-05-09', reservations: { completed: 10, confirmed: 0, pending: 0 } },
-    { date: '2026-05-10', reservations: { completed: 0, confirmed: 2, pending: 0 } },
-    { date: '2026-05-11', reservations: { completed: 0, confirmed: 2, pending: 8 } },
-    { date: '2026-05-12', reservations: { completed: 0, confirmed: 2, pending: 0 } },
-  ],
-  2: [
-    { date: '2026-05-15', reservations: { completed: 0, confirmed: 3, pending: 0 } },
-    { date: '2026-05-20', reservations: { completed: 5, confirmed: 0, pending: 2 } },
-  ],
-  3: [{ date: '2026-05-25', reservations: { completed: 0, confirmed: 0, pending: 4 } }],
-};
 
 // TODO: API 연결 후 삭제 - 패널 시간대용
 export const MOCK_PANEL_SCHEDULES: Record<number, Record<string, Schedule[]>> = {

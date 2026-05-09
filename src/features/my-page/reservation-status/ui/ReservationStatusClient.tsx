@@ -2,9 +2,9 @@
 
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { useReservationDashboardQuery } from '@/features/my-page/reservation-status/hooks/useReservationDashboardQuery';
 import {
   MOCK_ACTIVITIES,
-  MOCK_CALENDAR_SCHEDULES,
   MOCK_PANEL_SCHEDULES,
   MOCK_RESERVATIONS,
 } from '@/features/my-page/reservation-status/mocks/index';
@@ -41,7 +41,6 @@ export default function ReservationStatusClient({ activities }: ReservationStatu
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
 
   const activityId = selectedActivityId ?? 1;
-  const currentCalendarSchedules = MOCK_CALENDAR_SCHEDULES[activityId] ?? [];
   const currentPanelSchedules = selectedDateStr
     ? (MOCK_PANEL_SCHEDULES[activityId]?.[selectedDateStr] ?? [])
     : [];
@@ -49,6 +48,7 @@ export default function ReservationStatusClient({ activities }: ReservationStatu
     ? (MOCK_RESERVATIONS[activityId]?.[selectedDateStr] ?? [])
     : [];
 
+  const { data: calendarSchedules = [] } = useReservationDashboardQuery(selectedActivityId, month);
   const handleDateClick = (date: Date) => {
     const dateStr = format(date, 'yyyy-MM-dd');
     setSelectedDate(date);
@@ -81,7 +81,7 @@ export default function ReservationStatusClient({ activities }: ReservationStatu
       <ReservationCalendar
         month={month}
         onMonthChange={setMonth}
-        schedules={currentCalendarSchedules}
+        schedules={calendarSchedules}
         onDateClick={handleDateClick}
       />
 
