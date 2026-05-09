@@ -89,7 +89,13 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
         />
       </FormField>
       <div className="mb-6 flex justify-center">
-        <Button type="button" theme="secondary" size="sm" className="h-10.5 w-30">
+        <Button
+          type="button"
+          theme="secondary"
+          size="sm"
+          className="h-10.5 w-30"
+          onClick={() => reset()}
+        >
           취소하기
         </Button>
         <Button type="submit" theme="primary" size="sm" className="ml-3 h-10.5 w-30">
