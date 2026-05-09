@@ -130,11 +130,9 @@ export type GetMyActivityReservationsResponse = z.infer<
 >;
 
 // ─── 내 체험 예약 상태 업데이트 ─────────────────────────────────
-export const PatchableReservationStatusSchema = z.enum(['confirmed', 'declined']);
-export type PatchableReservationStatus = z.infer<typeof PatchableReservationStatusSchema>;
 
 export const UpdateMyActivityReservationStatusRequestBodySchema = z.object({
-  status: PatchableReservationStatusSchema,
+  status: SellerReservationStatusSchema,
 });
 export type UpdateMyActivityReservationStatusRequestBody = z.infer<
   typeof UpdateMyActivityReservationStatusRequestBodySchema

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateReservationStatus } from '@/features/my-page/apis';
-import type { PatchableReservationStatus } from '@/features/my-page/types';
+import type { SellerReservationStatus } from '@/features/my-page/types';
 
 /**
  * 내 체험 예약 상태 업데이트 훅 (승인 / 거절)
@@ -21,7 +21,7 @@ export const usePatchReservationStatus = (activityId: number | null, scheduleIds
       status,
     }: {
       reservationId: number;
-      status: PatchableReservationStatus;
+      status: SellerReservationStatus;
     }) => updateReservationStatus(activityId!, reservationId, { status }),
     onSuccess: () => {
       // 예약 목록 쿼리 무효화
