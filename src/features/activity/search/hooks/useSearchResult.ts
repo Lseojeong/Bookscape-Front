@@ -63,7 +63,7 @@ export const useSearchResult = () => {
     startTransition(() => {
       updateParams({ page: '1' }, 'replace');
     });
-  }, [pageSize]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pageSize, updateParams]);
 
   // 검색 카테고리
   const { data } = useSearchActivityData({
