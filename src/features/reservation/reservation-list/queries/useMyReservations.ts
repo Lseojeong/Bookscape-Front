@@ -10,6 +10,8 @@ type UseMyReservationsParams = {
   size?: number;
 };
 
+export const MY_RESERVATIONS_PAGE_SIZE = 5;
+
 const MY_RESERVATIONS_STALE_TIME_MS = 5 * 60 * 1000;
 
 const EMPTY_RESPONSE: GetMyReservationsResponse = {
@@ -18,7 +20,10 @@ const EMPTY_RESPONSE: GetMyReservationsResponse = {
   totalCount: 0,
 };
 
-export const useMyReservations = ({ status, size = 10 }: UseMyReservationsParams = {}) => {
+export const useMyReservations = ({
+  status,
+  size = MY_RESERVATIONS_PAGE_SIZE,
+}: UseMyReservationsParams = {}) => {
   const userId = useUserStore((s) => s.user?.id);
 
   const query = useInfiniteQuery<

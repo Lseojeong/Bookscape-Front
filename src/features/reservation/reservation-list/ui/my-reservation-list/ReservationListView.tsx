@@ -2,7 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { useMyReservations } from '@/features/reservation/reservation-list/queries/useMyReservations';
+import {
+  MY_RESERVATIONS_PAGE_SIZE,
+  useMyReservations,
+} from '@/features/reservation/reservation-list/queries/useMyReservations';
 import ReservationListSection from '@/features/reservation/reservation-list/ui/my-reservation-list/ReservationListSection';
 import StatusFilter from '@/features/reservation/reservation-list/ui/status-filter/StatusFilter';
 import type { MyReservationStatus } from '@/features/reservation/types';
@@ -26,7 +29,7 @@ export default function ReservationListView() {
 
   const { query } = useMyReservations({
     status: (selectedStatus || undefined) as MyReservationStatus | undefined,
-    size: 10,
+    size: MY_RESERVATIONS_PAGE_SIZE,
   });
 
   const reservations = useMemo(() => {
