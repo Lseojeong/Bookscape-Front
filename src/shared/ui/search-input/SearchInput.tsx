@@ -16,7 +16,8 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 export default function SearchInput() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const keyword = searchParams.get('keyword') ?? '';
+  const urlKeyword = searchParams.get('keyword') ?? '';
+
   const { showToast } = useToastStore();
 
   /** 검색 실행 - keyword query 업데이트 */
@@ -36,10 +37,11 @@ export default function SearchInput() {
     // 기존 query 유지하면서 keyword만 업데이트하기 위한 객체 생성
     const params = new URLSearchParams(searchParams.toString());
     params.set('keyword', value);
+    params.set('page', '1'); // 검색어 변경 시 page 1로 초기화
 
     // 변경된 query로 URL 이동 (검색 상태 반영)
-    router.replace('/search?' + params.toString());
+    router.push('/search?' + params.toString());
   };
 
-  return <SearchInputUi onSubmit={handleSubmit} defaultValue={keyword} />;
+  return <SearchInputUi key={urlKeyword} onSubmit={handleSubmit} defaultValue={urlKeyword} />;
 }

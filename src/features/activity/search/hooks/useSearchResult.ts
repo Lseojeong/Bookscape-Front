@@ -1,6 +1,6 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
-import { startTransition, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { startTransition, useCallback, useEffect } from 'react';
 import {
   usePrefetchNextPage,
   useSearchActivityData,
@@ -28,25 +28,42 @@ import { usePageSize } from '@/shared/hooks/usePageSize';
  * ```
  */
 export const useSearchResult = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const keyword = searchParams.get('keyword') ?? '';
-  const [page, setPage] = useState(1);
-  const [category, setCategory] = useState('전체');
+  const page = Number(searchParams.get('page') ?? 1);
+  const category = searchParams.get('category') ?? '전체';
 
   // 한 페이지에 노출 시킬 카드 개수
   const pageSize = usePageSize({ mobile: 6, tablet: 4, desktop: 8 });
 
+  // URL 파라미터를 업데이트하는 공통 함수
+  // push: 히스토리에 추가 (뒤로가기 가능), replace: 현재 URL 덮어쓰기
+  const updateParams = useCallback(
+    (updates: Record<string, string>, mode: 'push' | 'replace' = 'push') => {
+      const params = new URLSearchParams(searchParams.toString());
+      Object.entries(updates).forEach(([key, value]) => params.set(key, value));
+
+      if (mode === 'replace') {
+        router.replace('/search?' + params.toString());
+      } else {
+        router.push('/search?' + params.toString());
+      }
+    },
+    [searchParams, router]
+  );
+
+  // 카테고리 변경 시 page 1로 초기화
   const handleChangeCategory = (newCategory: string) => {
-    setCategory(newCategory);
-    setPage(1);
+    updateParams({ category: newCategory, page: '1' });
   };
 
   // pageSize 변경 시 페이지 초기화
   useEffect(() => {
     startTransition(() => {
-      setPage(1);
+      updateParams({ page: '1' }, 'replace');
     });
-  }, [pageSize]);
+  }, [pageSize]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // 검색 카테고리
   const { data } = useSearchActivityData({
@@ -81,12 +98,12 @@ export const useSearchResult = () => {
   return {
     keyword,
     page,
-    setPage,
     category,
     handleChangeCategory,
     activities,
     totalCount,
     totalPages,
     totalResultCount,
+    handlePageChange: (newPage: number) => updateParams({ page: String(newPage) }),
   };
 };

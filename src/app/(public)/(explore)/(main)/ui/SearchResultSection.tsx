@@ -20,12 +20,12 @@ export default function SearchResultSection() {
   const {
     keyword,
     page,
-    setPage,
     category,
     handleChangeCategory,
     activities,
     totalPages,
     totalResultCount,
+    handlePageChange,
   } = useSearchResult();
 
   return (
@@ -45,7 +45,7 @@ export default function SearchResultSection() {
       ) : (
         <div className="mt-6 flex flex-col items-center gap-6 md:gap-7.5">
           <SearchActivityList activities={activities} />
-          <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+          <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
       )}
     </>

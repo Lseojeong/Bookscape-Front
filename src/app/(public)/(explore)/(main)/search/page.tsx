@@ -10,14 +10,14 @@ import SearchResultSection from '@/app/(public)/(explore)/(main)/ui/SearchResult
 export default function SearchPage() {
   return (
     <>
-      {/* 히어로 배너 */}
-      <HeroBanner />
-      {/* 검색 결과 */}
-      <MainSectionLayout className="md:mt-28.75">
-        <Suspense fallback={<div>...</div>}>
+      <Suspense fallback={<div>...</div>}>
+        {/* 히어로 배너 */}
+        <HeroBanner />
+        {/* 검색 결과 */}
+        <MainSectionLayout className="md:mt-28.75">
           <SearchResultSection />
-        </Suspense>
-      </MainSectionLayout>
+        </MainSectionLayout>
+      </Suspense>
     </>
   );
 }
