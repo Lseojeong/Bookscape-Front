@@ -12,12 +12,12 @@ export type StateBadgeProps = {
  */
 const RESERVATION_BADGE_MAP: Record<ReservationStatus, { label: string; className: string }> = {
   pending: {
-    label: '예약 승인',
-    className: 'bg-mint-100 text-mint-400',
-  },
-  confirmed: {
     label: '예약 완료',
     className: 'bg-green-100 text-green-400',
+  },
+  confirmed: {
+    label: '예약 승인',
+    className: 'bg-mint-100 text-mint-400',
   },
   completed: {
     label: '체험 완료',
