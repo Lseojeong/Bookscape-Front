@@ -5,6 +5,18 @@ import type { AvatarProps } from '@/shared/ui/avatar/types';
 import TabNav from '@/shared/ui/tab-bar/TabNav';
 import MyPageNav from './MyPageNav';
 
+/**
+ * 마이페이지 사이드바 컴포넌트입니다.
+ *
+ * 아바타 이미지와 네비게이션 탭을 표시하며,
+ * 375px 이하에서는 숨김 처리됩니다.
+ * profileImageUrl이 있을 경우 이미지를, 없을 경우 Fallback UI를 표시합니다.
+ *
+ * @example
+ * ```tsx
+ * <MyPageSidebar user={user} />
+ * ```
+ */
 const MYPAGE_TABS = [
   { id: 'info', label: '내 정보', href: '/mypage/info' },
   { id: 'reservation-list', label: '예약내역', href: '/mypage/reservation-list' },

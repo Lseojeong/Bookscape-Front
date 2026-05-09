@@ -26,6 +26,17 @@ const NAV_ITEMS: NavItem[] = [
   { label: '예약 현황', href: '/mypage/reservation-status', icon: ReservationStatusIcon },
 ];
 
+/**
+ * 마이페이지 네비게이션 컴포넌트입니다.
+ *
+ * 현재 경로에 따라 활성화된 탭이 하이라이트되며,
+ * 각 탭은 Link 태그로 라우터 이동을 처리합니다.
+ *
+ * @example
+ * ```tsx
+ * <MyPageNav />
+ * ```
+ */
 export default function MyPageNav() {
   const pathname = usePathname();
   const queryClient = useQueryClient();
