@@ -5,8 +5,7 @@ import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
-// TODO : 토큰 재발급 테스트 후 시간 변경 필요!
-const REFRESH_LIMIT = 29 * 60 * 1000; // 29분
+const REFRESH_LIMIT = 5 * 60 * 1000; // 5분
 
 /**
  * Access Token 만료 5분 전에 자동으로 토큰을 재발급하는 훅입니다.
@@ -35,7 +34,6 @@ export const useTokenRefresh = () => {
 
     // 만료 시각까지 남은 시간 - 5분
     const delay = remainingTime - REFRESH_LIMIT;
-    console.log('60초 후 토큰 갱신');
 
     /** 토큰 재발급 요청 및 세션 갱신 */
     const refresh = async () => {
@@ -51,7 +49,6 @@ export const useTokenRefresh = () => {
           if (currentUser) {
             // 기존 유저 정보를 유지하면서 만료 시간만 업데이트
             setSession({ user: currentUser, accessTokenExpiresAt: newExpiredAt });
-            console.log('토큰 재발급 성공', currentUser);
           }
         }
       } catch (error) {
@@ -73,5 +70,5 @@ export const useTokenRefresh = () => {
     // 만료 5분 전 시점에 재발급 예약
     const timer = setTimeout(refresh, delay);
     return () => clearTimeout(timer);
-  }, [accessTokenExpiresAt, user, setSession, clearSession]);
+  }, [accessTokenExpiresAt, user, setSession, clearSession, showToast]);
 };
