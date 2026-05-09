@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 /**
  * ## useInfiniteScroll
@@ -54,18 +54,14 @@ export const useInfiniteScroll = ({
   rootMargin = '0px 0px 160px 0px',
   threshold = 0.1,
 }: UseInfiniteScrollParams) => {
-  const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const setSentinel = (node: HTMLDivElement | null) => {
-    sentinelRef.current = node;
-  };
+  const [sentinel, setSentinel] = useState<HTMLDivElement | null>(null);
 
   const intersectionOptions = useMemo<globalThis.IntersectionObserverInit>(() => {
     return { root, rootMargin, threshold };
   }, [root, rootMargin, threshold]);
 
   useEffect(() => {
-    const node = sentinelRef.current;
-    if (!node) return;
+    if (!sentinel) return;
 
     const observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -76,9 +72,9 @@ export const useInfiniteScroll = ({
       void fetchNextPage();
     }, intersectionOptions);
 
-    observer.observe(node);
+    observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [enabled, fetchNextPage, hasNextPage, intersectionOptions, isFetchingNextPage]);
+  }, [enabled, fetchNextPage, hasNextPage, intersectionOptions, isFetchingNextPage, sentinel]);
 
   return { setSentinel };
 };
