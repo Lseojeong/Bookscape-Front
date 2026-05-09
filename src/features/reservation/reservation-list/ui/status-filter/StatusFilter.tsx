@@ -1,10 +1,17 @@
 import FilterButton from '@/shared/ui/filter-button/FilterButton';
+import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
-const STATUS_LIST = ['예약 완료', '예약 취소', '예약 승인', '예약 거절', '체험 완료'];
+const STATUS_LIST: Array<{ id: ReservationStatus; label: string }> = [
+  { id: 'pending', label: '예약 완료' },
+  { id: 'declined', label: '예약 거절' },
+  { id: 'confirmed', label: '예약 승인' },
+  { id: 'canceled', label: '예약 취소' },
+  { id: 'completed', label: '체험 완료' },
+];
 
 type StatusFilterProps = {
-  selectedStatus: string;
-  onSelectStatus: (status: string) => void;
+  selectedStatus: ReservationStatus | '';
+  onSelectStatus: (status: ReservationStatus | '') => void;
 };
 
 /**
@@ -27,17 +34,18 @@ type StatusFilterProps = {
  */
 export default function StatusFilter({ selectedStatus, onSelectStatus }: StatusFilterProps) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {STATUS_LIST.map((status) => (
+    <div className="scrollbar-hide flex flex-nowrap gap-2 overflow-x-auto overflow-y-hidden md:flex-wrap md:overflow-x-visible">
+      {STATUS_LIST.map(({ id, label }) => (
         <FilterButton
-          key={status}
-          isSelected={selectedStatus === status}
+          key={id}
+          isSelected={selectedStatus === id}
+          className="shrink-0"
           onClick={() => {
             // 이미 선택된 것을 누르면 선택 해제, 아니면 해당 상태로 변경
-            onSelectStatus(selectedStatus === status ? '' : status);
+            onSelectStatus(selectedStatus === id ? '' : id);
           }}
         >
-          {status}
+          {label}
         </FilterButton>
       ))}
     </div>

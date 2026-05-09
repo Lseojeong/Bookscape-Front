@@ -1,16 +1,18 @@
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
-import { loginUser } from '@/features/auth/apis';
+import { loginUser } from '@/features/auth/apis/auth';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
-import { LoginFormValues } from '@/features/auth/utils/schema';
+import { LoginFormValues, loginSchema } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import Button from '@/shared/ui/button/Button';
+import FormErrorMessage from '@/shared/ui/form/FormErrorMessage';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
@@ -26,18 +28,21 @@ export default function LoginPage() {
   const router = useRouter();
   const setSession = useUserStore((state) => state.setSession);
   const { showToast } = useToastStore();
-  const {
-    control,
-    handleSubmit,
-    setError,
-    formState: { isSubmitting, errors, isDirty },
-  } = useForm({
+  const methods = useForm({
     defaultValues: {
       email: '',
       password: '',
     },
-    mode: 'onChange',
+    mode: 'onBlur',
+    resolver: zodResolver(loginSchema),
   });
+
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { isSubmitting, isDirty, errors },
+  } = methods;
 
   /** 로그인 요청 핸들러 */
   const handleLogin = useCallback(
@@ -94,11 +99,9 @@ export default function LoginPage() {
             />
           </FormField>
           <div className="mt-1 md:mt-2">
-            {/* API 에러 메시지 */}
+            {/* 백엔드 에러 메시지 */}
             {errors.root && (
-              <p className="typo-13-medium text-red-500" role="alert">
-                {errors.root.message}
-              </p>
+              <FormErrorMessage className="typo-13-medium">{errors.root.message}</FormErrorMessage>
             )}
 
             <Button
