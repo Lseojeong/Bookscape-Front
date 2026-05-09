@@ -87,7 +87,9 @@ export default function UserNav({ theme, user, className, onLogout }: UserNavPro
         </ActionDropdownTrigger>
 
         <ActionDropdownContent className="right-0 left-auto">
-          <ActionDropdownItem onClick={() => router.push('/mypage')}>마이페이지</ActionDropdownItem>
+          <ActionDropdownItem onClick={() => router.push('/mypage/info')}>
+            마이페이지
+          </ActionDropdownItem>
           <ActionDropdownItem onClick={handleLogout}>로그아웃</ActionDropdownItem>
         </ActionDropdownContent>
       </ActionDropdown>

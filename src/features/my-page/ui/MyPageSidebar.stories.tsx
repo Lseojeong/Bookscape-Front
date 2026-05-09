@@ -1,16 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import MyPageSidebar from '@/shared/ui/mypage-sidebar/MyPageSidebar';
+import MyPageSidebar from '@/features/my-page/ui/MyPageSidebar';
 
 const meta: Meta<typeof MyPageSidebar> = {
-  title: 'Shared/MyPageSidebar',
+  title: 'Features/MyPage/MyPageSidebar',
   component: MyPageSidebar,
-  args: {
-    user: {
-      nickname: '홍길동',
-      profileImageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgGVm5P0-8Mjkm597XaYeSL2BlMIwp-APf0Q&s',
-    },
-  },
 };
 
 export default meta;
