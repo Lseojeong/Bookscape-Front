@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { getReservationDashboard } from '@/features/my-page/apis';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 /**
  * 내 체험 월별 예약 현황 조회 훅
@@ -17,7 +18,7 @@ export const useReservationDashboardQuery = (activityId: number | null, month: D
   const monthStr = format(month, 'MM');
 
   return useQuery({
-    queryKey: ['my-activities', activityId, 'reservation-dashboard', year, monthStr],
+    queryKey: QUERY_KEYS.RESERVATION_DASHBOARD(activityId, year, monthStr),
     queryFn: () => getReservationDashboard(activityId!, { year, month: monthStr }),
     enabled: !!activityId,
   });

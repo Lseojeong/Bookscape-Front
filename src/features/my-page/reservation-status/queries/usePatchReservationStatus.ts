@@ -31,7 +31,7 @@ export const usePatchReservationStatus = (activityId: number | null, scheduleIds
         });
       });
 
-      // 달력 뱃지 쿼리 무효화 ← 추가
+      // 달력 뱃지 쿼리 무효화 (예약 상태 변경에 따라 달력 뱃지 표시도 달라질 수 있음)
       queryClient.invalidateQueries({
         queryKey: ['my-activities', activityId, 'reservation-dashboard'],
       });

@@ -1,6 +1,7 @@
 import { useQueries } from '@tanstack/react-query';
 import { getMyActivityReservations } from '@/features/my-page/apis';
 import type { SellerReservationStatus } from '@/features/my-page/types';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 const STATUSES: SellerReservationStatus[] = ['pending', 'confirmed', 'declined'];
 
@@ -20,7 +21,7 @@ export const useReservationsQuery = (activityId: number | null, scheduleIds: num
   const results = useQueries({
     queries: STATUSES.flatMap((status) =>
       scheduleIds.map((scheduleId) => ({
-        queryKey: ['my-activities', activityId, 'reservations', scheduleId, status],
+        queryKey: QUERY_KEYS.RESERVATIONS(activityId, scheduleId, status),
         queryFn: () => getMyActivityReservations(activityId!, { scheduleId, status, size: 100 }),
         enabled: !!activityId && scheduleIds.length > 0,
         select: (data: Awaited<ReturnType<typeof getMyActivityReservations>>) => data.reservations,

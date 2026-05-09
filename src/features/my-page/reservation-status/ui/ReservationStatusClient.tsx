@@ -2,9 +2,9 @@
 
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { useMyActivitiesQuery } from '@/features/my-page/reservation-status/hooks/useMyActivitiesQuery';
-import { useReservationDashboardQuery } from '@/features/my-page/reservation-status/hooks/useReservationDashboardQuery';
-import { useReservedScheduleQuery } from '@/features/my-page/reservation-status/hooks/useReservedScheduleQuery';
+import { useMyActivitiesQuery } from '@/features/my-page/reservation-status/queries/useMyActivitiesQuery';
+import { useReservationDashboardQuery } from '@/features/my-page/reservation-status/queries/useReservationDashboardQuery';
+import { useReservedScheduleQuery } from '@/features/my-page/reservation-status/queries/useReservedScheduleQuery';
 import ReservationCalendar from '@/features/my-page/reservation-status/ui/calendar/ReservationCalendar';
 import ReservationPanel from '@/features/my-page/reservation-status/ui/pannel/ReservationPanel';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';

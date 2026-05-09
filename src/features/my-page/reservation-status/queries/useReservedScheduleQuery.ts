@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getReservedSchedule } from '@/features/my-page/apis';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 /**
  * 내 체험 날짜별 예약 스케줄 조회 훅
@@ -13,7 +14,7 @@ import { getReservedSchedule } from '@/features/my-page/apis';
  */
 export const useReservedScheduleQuery = (activityId: number | null, date: string | null) => {
   return useQuery({
-    queryKey: ['my-activities', activityId, 'reserved-schedule', date],
+    queryKey: QUERY_KEYS.RESERVED_SCHEDULE(activityId, date),
     queryFn: () => getReservedSchedule(activityId!, date!),
     enabled: !!activityId && !!date,
   });

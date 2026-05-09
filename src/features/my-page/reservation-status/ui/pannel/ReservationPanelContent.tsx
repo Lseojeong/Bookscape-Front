@@ -1,8 +1,8 @@
 'use client';
 
-import { usePatchReservationStatus } from '@/features/my-page/reservation-status/hooks/usePatchReservationStatus';
 import { useReservationPanel } from '@/features/my-page/reservation-status/hooks/useReservationPanel';
-import { useReservationsQuery } from '@/features/my-page/reservation-status/hooks/useReservationsQuery';
+import { usePatchReservationStatus } from '@/features/my-page/reservation-status/queries/usePatchReservationStatus';
+import { useReservationsQuery } from '@/features/my-page/reservation-status/queries/useReservationsQuery';
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
