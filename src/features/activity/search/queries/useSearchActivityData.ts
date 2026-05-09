@@ -1,7 +1,10 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { getSearchActivityData } from '@/features/activity/apis';
 import { ActivityResponse, GetSearchActivityParams } from '@/features/activity/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
+
+const SEARCH_STALE_TIME = 60 * 1000 * 5; // 5분
 
 /**
  * 검색 조건에 따라 체험 목록을 조회하는 쿼리 훅입니다.
@@ -25,6 +28,25 @@ export const useSearchActivityData = (
   return useQuery({
     queryKey: QUERY_KEYS.SEARCH_ACTIVITY(params),
     queryFn: () => getSearchActivityData(params),
+    staleTime: SEARCH_STALE_TIME,
+    gcTime: 60 * 1000 * 10,
     ...options,
   });
+};
+
+export const usePrefetchNextPage = (params: GetSearchActivityParams & { totalPages?: number }) => {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    // totalPages가 0이거나 없으면 prefetch 안 함
+    if (!params.totalPages || (params.page ?? 1) >= params.totalPages) return;
+
+    const nextPageParams = { ...params, page: (params.page ?? 1) + 1 };
+
+    queryClient.prefetchQuery({
+      queryKey: QUERY_KEYS.SEARCH_ACTIVITY(nextPageParams),
+      queryFn: () => getSearchActivityData(nextPageParams),
+      staleTime: SEARCH_STALE_TIME,
+    });
+  }, [params, queryClient]);
 };

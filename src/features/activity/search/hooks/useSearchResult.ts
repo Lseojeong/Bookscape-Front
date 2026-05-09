@@ -1,7 +1,10 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import { startTransition, useEffect, useState } from 'react';
-import { useSearchActivityData } from '@/features/activity/search/queries/useSearchActivityData';
+import {
+  usePrefetchNextPage,
+  useSearchActivityData,
+} from '@/features/activity/search/queries/useSearchActivityData';
 import { usePageSize } from '@/shared/hooks/usePageSize';
 
 /**
@@ -58,6 +61,15 @@ export const useSearchResult = () => {
 
   // totalCount를 pageSize로 나눠 총 페이지 수 계산
   const totalPages = Math.ceil(totalCount / pageSize);
+
+  // 다음 페이지 prefetch (마지막 페이지면 실행 안 함)
+  usePrefetchNextPage({
+    keyword,
+    category: category === '전체' ? '' : category,
+    page,
+    size: pageSize,
+    totalPages,
+  });
 
   // 전체 검색 결과 수(카테고리 상관없이)
   const { data: totalData } = useSearchActivityData(
