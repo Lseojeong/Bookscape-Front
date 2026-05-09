@@ -41,7 +41,7 @@ export const useSearchResult = () => {
   // push: 히스토리에 추가 (뒤로가기 가능), replace: 현재 URL 덮어쓰기
   const updateParams = useCallback(
     (updates: Record<string, string>, mode: 'push' | 'replace' = 'push') => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(window.location.search);
       Object.entries(updates).forEach(([key, value]) => params.set(key, value));
 
       if (mode === 'replace') {
@@ -50,7 +50,7 @@ export const useSearchResult = () => {
         router.push('/search?' + params.toString());
       }
     },
-    [searchParams, router]
+    [router]
   );
 
   // 카테고리 변경 시 page 1로 초기화
@@ -60,6 +60,7 @@ export const useSearchResult = () => {
 
   // pageSize 변경 시 페이지 초기화
   useEffect(() => {
+    if (!pageSize) return;
     startTransition(() => {
       updateParams({ page: '1' }, 'replace');
     });
