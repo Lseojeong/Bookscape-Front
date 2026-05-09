@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import { refreshAuthTokens } from '@/features/auth/apis';
+import { refreshAuthTokens } from '@/features/auth/apis/auth';
 import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
