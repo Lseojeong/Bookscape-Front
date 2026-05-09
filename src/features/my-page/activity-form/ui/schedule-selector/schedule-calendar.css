@@ -1,0 +1,77 @@
+#schedule-calendar-wrapper .rdp-root {
+  margin: 0;
+  --rdp-accent-color: var(--color-primary-500);
+  --rdp-background-color: var(--color-primary-100);
+  --rdp-outline: 2px solid var(--color-primary-500);
+}
+
+/* 달력 사이즈 (모바일) */
+#schedule-calendar-wrapper .rdp-caption_label {
+  font-size: 15px;
+}
+#schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell,
+#schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
+#schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button,
+#schedule-calendar-wrapper nav.rdp-nav button {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  max-width: 32px;
+  max-height: 32px;
+  padding: 0;
+  margin: 0;
+}
+#schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell {
+  font-size: 12px;
+  padding-bottom: 8px;
+}
+#schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
+#schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button {
+  font-size: 13px;
+}
+
+/* 오늘 날짜 텍스트 색상 및 굵기 변경 */
+#schedule-calendar-wrapper .rdp-today .rdp-day_button {
+  color: var(--color-primary-600);
+  font-weight: 700;
+}
+
+/* 달력 내부 날짜 버튼 포커스 링 */
+#schedule-calendar-wrapper .rdp-day_button:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: 100%;
+}
+
+/* 네비게이션 꺾쇠 버튼 포커스 링 */
+#schedule-calendar-wrapper nav.rdp-nav button:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* 달력 사이즈 (태블릿, 데스크탑) */
+@media (min-width: 640px) {
+  #schedule-calendar-wrapper .rdp-caption_label {
+    font-size: 18px;
+  }
+  #schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell,
+  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
+  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button,
+  #schedule-calendar-wrapper nav.rdp-nav button {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 44px;
+    max-height: 44px;
+  }
+  #schedule-calendar-wrapper table.rdp-month_grid th.rdp-head_cell {
+    font-size: 14px;
+  }
+  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day,
+  #schedule-calendar-wrapper table.rdp-month_grid td.rdp-day button {
+    font-size: 15px;
+  }
+}

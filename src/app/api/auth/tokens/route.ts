@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
-import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
-import { RefreshResponse } from '@/features/auth/types';
+import { RefreshResponse } from '@/features/auth/types/auth';
+import { getAuthCookie, setAuthCookies } from '@/features/auth/utils/cookies';
+import { getJwtExpiresAt } from '@/features/auth/utils/jwt';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
@@ -20,8 +20,7 @@ import { serverFetch } from '@/shared/apis/base/serverFetch';
 export async function POST() {
   try {
     // 1. HttpOnly 쿠키에서 refreshToken 꺼내기
-    const cookieStore = await cookies();
-    const refreshToken = cookieStore.get('refreshToken')?.value;
+    const refreshToken = await getAuthCookie('refreshToken');
 
     if (!refreshToken) {
       return NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_ERROR }, { status: 401 });
@@ -39,24 +38,16 @@ export async function POST() {
       return NextResponse.json({ message: AUTH_API_MESSAGE.TOKEN.REFRESH_ERROR }, { status: 401 });
     }
 
+    const accessTokenExpiresAt = getJwtExpiresAt(data.accessToken);
+
     // 응답 객체 생성 및 공통 쿠키 설정
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true, accessTokenExpiresAt });
 
-    // 3. accessToken 갱신
-    response.cookies.set('accessToken', data.accessToken, {
-      ...COOKIE_OPTIONS,
-    });
-
-    // 4. refreshToken 갱신
-    response.cookies.set('refreshToken', data.refreshToken, {
-      ...COOKIE_OPTIONS,
-    });
+    setAuthCookies({ response, accessToken: data.accessToken, refreshToken: data.refreshToken });
 
     return response;
   } catch (error) {
     // 서버 또는 네트워크 에러
-    console.error('[POST /api/auth/tokens]', error);
-
     if (error instanceof ApiError) {
       return NextResponse.json(
         { message: error.message || AUTH_API_MESSAGE.LOGIN.ERROR },
