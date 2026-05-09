@@ -2,6 +2,7 @@ import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
 import { prefetchActivityDetail } from '@/features/activity/activity-detail/queries/prefetchActivityDetail';
 import ActivityDetail from '@/features/activity/activity-detail/ui/ActivityDetail';
+import ReservationBar from '@/features/activity/activity-detail/ui/ReservationBar';
 import ReservationWidget from '@/features/activity/activity-detail/ui/ReservationWidget';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
@@ -28,7 +29,9 @@ export default async function ActivityDetailPage({ params }: Props) {
           <ReservationWidget />
         </aside>
       </div>
-      <div className="fixed right-0 bottom-0 left-0 bg-green-100 lg:hidden">하단 영역</div>
+      <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">
+        <ReservationBar />
+      </div>
     </HydrationBoundary>
   );
 }

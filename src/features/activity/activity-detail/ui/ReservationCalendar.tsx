@@ -39,10 +39,14 @@ export default function ReservationCalendar({ selected, onSelect }: ReservationC
         showOutsideDays
         components={{
           Chevron: ({ orientation }) =>
-            orientation === 'left' ? <CaretLeftIcon /> : <CaretRightIcon />,
+            orientation === 'left' ? (
+              <CaretLeftIcon className="h-6 w-6" />
+            ) : (
+              <CaretRightIcon className="h-6 w-6" />
+            ),
         }}
         classNames={{
-          root: 'w-full mx-auto', // 달력 전체 감싸는 최상의 div
+          root: 'w-87.5 mx-auto', // 달력 전체 감싸는 최상의 div
           months: 'w-full relative', // 월 전체 영역
           month_grid: 'w-full', // 날짜 그리드 테이블
           month_caption: 'flex items-center mb-2', // "2026년 5월 ◀ ▶" 헤더 영역 전체
@@ -52,7 +56,7 @@ export default function ReservationCalendar({ selected, onSelect }: ReservationC
           button_next: 'flex items-center justify-center', // ▶ 다음 버튼
           weekdays: 'grid grid-cols-7 mb-2', // "일 월 화 수 목 금 토" 행 전체
           weekday: 'aspect-square flex items-center justify-center typo-16-bold text-gray-800', // 요일 각각
-          weeks: 'flex flex-col gap-1', // 날짜 행들 전체
+          weeks: 'flex flex-col gap-1 md:min-h-80', // 날짜 행들 전체
           week: 'grid grid-cols-7', // 한 주 행
           day: 'flex items-center justify-center aspect-square', // 날짜 셀 wrapper
           // 날짜 숫자 버튼
