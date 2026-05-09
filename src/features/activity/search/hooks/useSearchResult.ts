@@ -88,6 +88,7 @@ export const useSearchResult = () => {
     totalPages,
   });
 
+  // OPTIMIZE : 전체 검색 결과 조회 성능 개선 필요
   // 전체 검색 결과 수(카테고리 상관없이)
   const { data: totalData } = useSearchActivityData(
     { keyword, size: 1 },
