@@ -11,7 +11,6 @@ import { formatYmdToDot } from '@/shared/utils/dateFormat';
 type ReservationListSectionProps = {
   isLoading: boolean;
   isError?: boolean;
-  onRetry?: () => void;
   reservations: MyReservation[];
   selectedStatus: ReservationStatus | '';
   emptyMainTextByStatus: Record<ReservationStatus | '', string>;
@@ -20,7 +19,6 @@ type ReservationListSectionProps = {
 export default function ReservationListSection({
   isLoading,
   isError = false,
-  onRetry,
   reservations,
   selectedStatus,
   emptyMainTextByStatus,
@@ -50,13 +48,7 @@ export default function ReservationListSection({
   }
 
   if (isError) {
-    return (
-      <EmptyState
-        type="error"
-        mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
-        onRetry={onRetry}
-      />
-    );
+    return <EmptyState type="error" mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'} />;
   }
 
   if (reservations.length === 0) {
