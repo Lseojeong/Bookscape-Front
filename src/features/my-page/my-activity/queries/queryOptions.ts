@@ -1,4 +1,3 @@
-import type { QueryClient } from '@tanstack/react-query';
 import { getMyActivities } from '@/features/my-page/my-activity/apis';
 import type { GetMyActivitiesQuery } from '@/features/my-page/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
@@ -15,6 +14,3 @@ export const myActivitiesQueryOptions = (query: GetMyActivitiesQuery = {}) => {
     gcTime: MY_ACTIVITIES_GC_TIME,
   } as const;
 };
-
-export const prefetchMyActivities = (queryClient: QueryClient, query: GetMyActivitiesQuery = {}) =>
-  queryClient.prefetchQuery(myActivitiesQueryOptions(query));

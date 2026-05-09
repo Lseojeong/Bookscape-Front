@@ -1,10 +1,8 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { FC, SVGProps } from 'react';
-import { prefetchMyActivities } from '@/features/my-page/my-activity/queries/queryOptions';
 import {
   ActivityIcon,
   InfoIcon,
@@ -39,25 +37,17 @@ const NAV_ITEMS: NavItem[] = [
  */
 export default function MyPageNav() {
   const pathname = usePathname();
-  const queryClient = useQueryClient();
-
-  const prefetch = () => {
-    void prefetchMyActivities(queryClient, { size: 10 });
-  };
 
   return (
     <nav>
       <ul className="flex flex-col gap-3 lg:gap-3.5">
         {NAV_ITEMS.map(({ label, href, icon: Icon }) => {
           const isActive = pathname?.startsWith(href);
-          const shouldPrefetch = href === '/mypage/activity';
 
           return (
             <li key={href}>
               <Link
                 href={href}
-                onMouseEnter={shouldPrefetch ? prefetch : undefined}
-                onFocus={shouldPrefetch ? prefetch : undefined}
                 className={cn(
                   'flex items-center rounded-xl px-5 py-3.5 transition-colors lg:py-3.75',
                   isActive ? 'bg-primary-50 text-black' : 'text-gray-600 hover:bg-gray-50'
