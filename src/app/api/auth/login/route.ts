@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import { LoginResponse } from '@/features/auth/types/auth';
-import { setAuthCookies } from '@/features/auth/utils/cookies';
+import { setAuthCookies, setLoginMethodCookie } from '@/features/auth/utils/cookies';
 import { getJwtExpiresAt } from '@/features/auth/utils/jwt';
 import { LoginFormValues } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
@@ -43,9 +43,11 @@ export async function POST(request: Request) {
       success: true,
       user: data.user,
       accessTokenExpiresAt,
+      loginMethod: 'auth' as const,
     });
 
     setAuthCookies({ response, accessToken: data.accessToken, refreshToken: data.refreshToken });
+    setLoginMethodCookie({ response, loginMethod: 'auth' });
 
     return response;
   } catch (error) {
