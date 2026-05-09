@@ -1,28 +1,36 @@
-export type GetMyActivitiesQuery = {
-  cursorId?: number;
-  size?: number;
-};
+import { z } from 'zod';
 
-export type MyActivitySummary = {
-  id: number;
-  userId: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  address: string;
-  bannerImageUrl: string;
-  rating: number;
-  reviewCount: number;
-  createdAt: string;
-  updatedAt: string;
-};
+export const GetMyActivitiesQuerySchema = z.object({
+  cursorId: z.number().optional(),
+  size: z.number().optional(),
+});
 
-export type GetMyActivitiesResponse = {
-  cursorId: number;
-  totalCount: number;
-  activities: MyActivitySummary[];
-};
+export type GetMyActivitiesQuery = z.infer<typeof GetMyActivitiesQuerySchema>;
+
+export const MyActivitySummarySchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  title: z.string(),
+  description: z.string(),
+  category: z.string(),
+  price: z.number(),
+  address: z.string(),
+  bannerImageUrl: z.string(),
+  rating: z.number(),
+  reviewCount: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export type MyActivitySummary = z.infer<typeof MyActivitySummarySchema>;
+
+export const GetMyActivitiesResponseSchema = z.object({
+  cursorId: z.number().nullable().optional().default(null),
+  totalCount: z.number().optional().default(0),
+  activities: z.array(MyActivitySummarySchema).optional().default([]),
+});
+
+export type GetMyActivitiesResponse = z.infer<typeof GetMyActivitiesResponseSchema>;
 
 export type GetMyActivityReservationDashboardQuery = {
   year: string;
