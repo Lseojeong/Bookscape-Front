@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
+import MyPageSidebar from '@/features/my-page/sidebar/ui/MyPageSidebar';
 import { MOCK_USER } from '@/mocks/user';
-import MyPageSidebar from '@/shared/ui/mypage-sidebar/MyPageSidebar';
 
 type MyPageLayoutProps = {
   children: ReactNode;
