@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import MyPageSidebar from '@/features/my-page/sidebar/ui/MyPageSidebar';
+import MyPageSidebar from '@/features/user/ui/sidebar/MyPageSidebar';
 import { MOCK_USER } from '@/mocks/user';
 
 type MyPageLayoutProps = {
