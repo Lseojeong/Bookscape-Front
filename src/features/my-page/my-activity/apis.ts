@@ -7,7 +7,7 @@ import {
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 
 const EMPTY_MY_ACTIVITIES_RESPONSE: GetMyActivitiesResponse = {
-  cursorId: 0,
+  cursorId: null,
   totalCount: 0,
   activities: [],
 };
