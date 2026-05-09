@@ -1,5 +1,6 @@
 'use client';
 
+import { usePatchReservationStatus } from '@/features/my-page/reservation-status/hooks/usePatchReservationStatus';
 import { useReservationPanel } from '@/features/my-page/reservation-status/hooks/useReservationPanel';
 import { useReservationsQuery } from '@/features/my-page/reservation-status/hooks/useReservationsQuery';
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
@@ -51,6 +52,7 @@ export default function ReservationPanelContent({
   // 전체 스케줄 ID 목록으로 모든 예약 한 번에 조회
   const scheduleIds = schedules.map((s) => s.scheduleId);
   const { reservations, isLoading } = useReservationsQuery(activityId, scheduleIds);
+  const { mutateAsync: patchStatus } = usePatchReservationStatus(activityId, scheduleIds);
 
   const {
     activeTab,
@@ -59,7 +61,23 @@ export default function ReservationPanelContent({
     filtered,
     handleTabChange,
     setSelectedScheduleId,
+    handleAfterStatusChange,
   } = useReservationPanel(schedules, reservations);
+
+  // 승인 핸들러
+  const handleConfirm = async (reservationId: number) => {
+    await patchStatus({ reservationId, status: 'confirmed' });
+
+    const updated = reservations.filter((r) => r.id !== reservationId);
+    handleAfterStatusChange(updated);
+  };
+
+  // 거절 핸들러
+  const handleDecline = async (reservationId: number) => {
+    await patchStatus({ reservationId, status: 'declined' });
+    const updated = reservations.filter((r) => r.id !== reservationId);
+    handleAfterStatusChange(updated);
+  };
 
   const TABS = [
     {
@@ -152,8 +170,8 @@ export default function ReservationPanelContent({
                       <ReservationCard
                         key={r.id}
                         reservation={r}
-                        onConfirm={activeTab === 'pending' ? () => {} : undefined}
-                        onDecline={activeTab === 'pending' ? () => {} : undefined}
+                        onConfirm={activeTab === 'pending' ? handleConfirm : undefined}
+                        onDecline={activeTab === 'pending' ? handleDecline : undefined}
                       />
                     ))
                   )}

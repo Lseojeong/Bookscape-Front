@@ -33,6 +33,21 @@ export const useReservationPanel = (
     setSelectedScheduleId(firstAvailable?.scheduleId ?? null);
   };
 
+  /**
+   * 승인/거절 후 현재 스케줄에 해당 탭 예약이 없으면 다음 스케줄로 자동 이동
+   *
+   * @param updatedReservations - 최신 예약 목록
+   */
+  const handleAfterStatusChange = (updatedReservations: MyActivityReservation[]) => {
+    const stillAvailable = schedules.filter((s) =>
+      updatedReservations.some((r) => r.scheduleId === s.scheduleId && r.status === activeTab)
+    );
+
+    if (!stillAvailable.find((s) => s.scheduleId === resolvedScheduleId)) {
+      setSelectedScheduleId(stillAvailable[0]?.scheduleId ?? null);
+    }
+  };
+
   return {
     activeTab,
     selectedScheduleId: resolvedScheduleId,
@@ -40,5 +55,6 @@ export const useReservationPanel = (
     filtered,
     handleTabChange,
     setSelectedScheduleId,
+    handleAfterStatusChange,
   };
 };

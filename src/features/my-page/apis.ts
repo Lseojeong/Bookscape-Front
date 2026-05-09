@@ -6,6 +6,8 @@ import type {
   GetMyActivityReservedScheduleResponse,
   GetMyActivityReservationsQuery,
   GetMyActivityReservationsResponse,
+  UpdateMyActivityReservationStatusRequestBody,
+  UpdateMyActivityReservationStatusResponse,
 } from '@/features/my-page/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 /**
@@ -71,4 +73,26 @@ export const getMyActivityReservations = async (
     query as Record<string, string | number | boolean | undefined>
   );
   return data ?? { cursorId: 0, totalCount: 0, reservations: [] };
+};
+
+/**
+ * 내 체험 예약 상태 업데이트 (승인 / 거절)
+ *
+ * @description `PATCH /api/my-activities/{activityId}/reservations/{reservationId}`
+ * @param activityId - 체험 ID
+ * @param reservationId - 예약 ID
+ * @param body - 변경할 상태 (`confirmed` | `declined`)
+ * @returns 수정된 예약 정보
+ */
+export const updateReservationStatus = async (
+  activityId: number,
+  reservationId: number,
+  body: UpdateMyActivityReservationStatusRequestBody
+) => {
+  const data = await bffFetch.patch<UpdateMyActivityReservationStatusResponse>(
+    `/my-activities/${activityId}/reservations/${reservationId}`,
+    body
+  );
+  if (!data) throw new Error('예약 상태 업데이트 실패');
+  return data;
 };

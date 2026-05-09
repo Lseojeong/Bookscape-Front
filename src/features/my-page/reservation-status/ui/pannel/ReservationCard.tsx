@@ -1,9 +1,9 @@
-import type { Reservation } from '@/features/my-page/reservation-status/types/reservation';
+import type { MyActivityReservation } from '@/features/my-page/types';
 import Button from '@/shared/ui/button/Button';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 
 type ReservationCardProps = {
-  reservation: Reservation;
+  reservation: MyActivityReservation;
   onConfirm?: (id: number) => void;
   onDecline?: (id: number) => void;
 };
