@@ -10,6 +10,7 @@ import { getMyActivities } from '@/features/my-page/apis';
  */
 export const useMyActivitiesQuery = () => {
   return useQuery({
+    //TODO : 내 체험 관리 페이지 머지되면 shared/constants/queryKeys로 수정
     queryKey: ['my-activities'],
     queryFn: () => getMyActivities({ size: 100 }),
     select: (data) => data.activities,

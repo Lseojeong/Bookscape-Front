@@ -15,6 +15,7 @@ type ReservationPanelProps = {
   date: Date | null;
   activityId: number | null;
   schedules: MyActivityReservedScheduleItem[];
+  isSchedulesLoading: boolean;
 };
 
 /**
@@ -38,6 +39,7 @@ export default function ReservationPanel({
   date,
   activityId,
   schedules,
+  isSchedulesLoading,
 }: ReservationPanelProps) {
   const isMobile = useIsMobile();
 
@@ -73,6 +75,7 @@ export default function ReservationPanel({
           date={date}
           activityId={activityId}
           schedules={schedules}
+          isSchedulesLoading={isSchedulesLoading}
           onClose={onClose}
         />
       </OverlaySurface>

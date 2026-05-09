@@ -12,12 +12,14 @@ import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import FormLabel from '@/shared/ui/form/FormLabel';
+import Loading from '@/shared/ui/loading/Loading';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 
 type ReservationPanelContentProps = {
   date: Date;
   activityId: number | null;
   schedules: MyActivityReservedScheduleItem[];
+  isSchedulesLoading: boolean;
   onClose: () => void;
 };
 
@@ -47,12 +49,18 @@ export default function ReservationPanelContent({
   date,
   activityId,
   schedules,
+  isSchedulesLoading,
   onClose,
 }: ReservationPanelContentProps) {
   // 전체 스케줄 ID 목록으로 모든 예약 한 번에 조회
   const scheduleIds = schedules.map((s) => s.scheduleId);
   const { reservations, isLoading } = useReservationsQuery(activityId, scheduleIds);
-  const { mutateAsync: patchStatus } = usePatchReservationStatus(activityId, scheduleIds);
+  const { mutateAsync: patchStatus, isPending } = usePatchReservationStatus(
+    activityId,
+    scheduleIds
+  );
+
+  const isAllLoading = isSchedulesLoading || isLoading;
 
   const {
     activeTab,
@@ -114,17 +122,21 @@ export default function ReservationPanelContent({
 
       {/* 탭 */}
       <div className="mt-4.5 shrink-0">
-        <TabBar
-          tabs={TABS}
-          activeTab={activeTab}
-          onTabChange={handleTabChange}
-          tabClassName="flex-1"
-        />
+        {!isAllLoading && (
+          <TabBar
+            tabs={TABS}
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+            tabClassName="flex-1"
+          />
+        )}
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col">
-        {isLoading ? (
-          <p className="mt-3 text-center typo-14-medium text-gray-400">로딩 중...</p>
+        {isAllLoading ? (
+          <div className="mt-3 flex justify-center">
+            <Loading size={16} color="var(--color-gray-400)" />
+          </div>
         ) : availableSchedules.length === 0 ? (
           <p className="mt-3 text-center typo-14-medium text-gray-400">
             {TAB_LABELS[activeTab]} 내역이 없습니다.
@@ -170,6 +182,7 @@ export default function ReservationPanelContent({
                       <ReservationCard
                         key={r.id}
                         reservation={r}
+                        isLoading={isPending}
                         onConfirm={activeTab === 'pending' ? handleConfirm : undefined}
                         onDecline={activeTab === 'pending' ? handleDecline : undefined}
                       />

@@ -13,6 +13,7 @@ import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
+import Loading from '@/shared/ui/loading/Loading';
 
 /**
  * 예약 현황 페이지의 클라이언트 컴포넌트
@@ -40,7 +41,10 @@ export default function ReservationStatusClient() {
   const { data: calendarSchedules = [] } = useReservationDashboardQuery(activityId, month);
 
   // 날짜별 스케줄 조회
-  const { data: panelSchedules = [] } = useReservedScheduleQuery(activityId, selectedDateStr);
+  const { data: panelSchedules = [], isLoading: isSchedulesLoading } = useReservedScheduleQuery(
+    activityId,
+    selectedDateStr
+  );
 
   /**
    * 날짜 클릭 핸들러
@@ -53,8 +57,12 @@ export default function ReservationStatusClient() {
     requestAnimationFrame(() => setPanelOpen(true));
   };
 
-  // TODO: 로딩 상태 UI 개선
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading)
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Loading size={20} color="var(--color-gray-400)" />
+      </div>
+    );
 
   if (activities.length === 0) {
     return (
@@ -99,6 +107,7 @@ export default function ReservationStatusClient() {
         date={selectedDate}
         activityId={activityId}
         schedules={panelSchedules}
+        isSchedulesLoading={isSchedulesLoading}
       />
     </>
   );

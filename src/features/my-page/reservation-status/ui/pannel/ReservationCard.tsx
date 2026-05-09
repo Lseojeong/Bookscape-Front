@@ -6,6 +6,7 @@ type ReservationCardProps = {
   reservation: MyActivityReservation;
   onConfirm?: (id: number) => void;
   onDecline?: (id: number) => void;
+  isLoading?: boolean;
 };
 
 /**
@@ -29,6 +30,7 @@ export default function ReservationCard({
   reservation,
   onConfirm,
   onDecline,
+  isLoading = false,
 }: ReservationCardProps) {
   const isPending = reservation.status === 'pending';
   const isConfirmed = reservation.status === 'confirmed';
@@ -58,6 +60,7 @@ export default function ReservationCard({
             size="sm"
             className="h-full flex-1"
             onClick={() => onConfirm(reservation.id)}
+            isLoading={isLoading}
           >
             승인하기
           </Button>
@@ -66,6 +69,7 @@ export default function ReservationCard({
             size="sm"
             className="h-full flex-1 border-gray-100"
             onClick={() => onDecline(reservation.id)}
+            isLoading={isLoading}
           >
             거절하기
           </Button>

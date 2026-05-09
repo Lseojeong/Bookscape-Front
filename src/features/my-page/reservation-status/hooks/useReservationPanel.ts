@@ -5,15 +5,38 @@ import type {
   SellerReservationStatus,
 } from '@/features/my-page/types';
 
+const getInitialTab = (reservations: MyActivityReservation[]): SellerReservationStatus => {
+  if (reservations.some((r) => r.status === 'pending')) return 'pending';
+  if (reservations.some((r) => r.status === 'confirmed')) return 'confirmed';
+  if (reservations.some((r) => r.status === 'declined')) return 'declined';
+  return 'pending';
+};
+
+const getFirstScheduleId = (
+  schedules: MyActivityReservedScheduleItem[],
+  reservations: MyActivityReservation[],
+  tab: SellerReservationStatus
+): number | null => {
+  const first = schedules.find((s) =>
+    reservations.some((r) => r.scheduleId === s.scheduleId && r.status === tab)
+  );
+  return first?.scheduleId ?? schedules[0]?.scheduleId ?? null;
+};
+
 export const useReservationPanel = (
   schedules: MyActivityReservedScheduleItem[],
   reservations: MyActivityReservation[]
 ) => {
-  const [activeTab, setActiveTab] = useState<SellerReservationStatus>('pending');
+  const [manualTab, setManualTab] = useState<SellerReservationStatus | null>(null);
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(null);
 
-  // null이면 첫 번째 스케줄로 자동 선택
-  const resolvedScheduleId = selectedScheduleId ?? schedules[0]?.scheduleId ?? 0;
+  // 사용자가 탭을 직접 선택하지 않았으면 데이터 기반으로 자동 결정
+  const activeTab =
+    manualTab ?? (reservations.length > 0 ? getInitialTab(reservations) : 'pending');
+
+  // 사용자가 스케줄을 직접 선택하지 않았으면 현재 탭 기반으로 자동 결정
+  const resolvedScheduleId =
+    selectedScheduleId ?? getFirstScheduleId(schedules, reservations, activeTab);
 
   const availableSchedules = schedules.filter((s) =>
     reservations.some((r) => r.scheduleId === s.scheduleId && r.status === activeTab)
@@ -28,16 +51,10 @@ export const useReservationPanel = (
     const firstAvailable = schedules.find((s) =>
       reservations.some((r) => r.scheduleId === s.scheduleId && r.status === nextTab)
     );
-    setActiveTab(nextTab);
-    // null로 리셋하면 자동으로 첫 번째 스케줄 선택
+    setManualTab(nextTab);
     setSelectedScheduleId(firstAvailable?.scheduleId ?? null);
   };
 
-  /**
-   * 승인/거절 후 현재 스케줄에 해당 탭 예약이 없으면 다음 스케줄로 자동 이동
-   *
-   * @param updatedReservations - 최신 예약 목록
-   */
   const handleAfterStatusChange = (updatedReservations: MyActivityReservation[]) => {
     const stillAvailable = schedules.filter((s) =>
       updatedReservations.some((r) => r.scheduleId === s.scheduleId && r.status === activeTab)
@@ -50,7 +67,7 @@ export const useReservationPanel = (
 
   return {
     activeTab,
-    selectedScheduleId: resolvedScheduleId,
+    selectedScheduleId: resolvedScheduleId ?? 0,
     availableSchedules,
     filtered,
     handleTabChange,
