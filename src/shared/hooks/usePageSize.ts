@@ -26,7 +26,7 @@ type PageSizeConfig = typeof DEFAULT_PAGE_SIZE;
  * ```
  */
 export const usePageSize = (pageSize: PageSizeConfig = DEFAULT_PAGE_SIZE) => {
-  const [currentPageSize, setCurrentPageSize] = useState<number | null>(null);
+  const [currentPageSize, setCurrentPageSize] = useState<number | undefined>(undefined);
 
   const { mobile, tablet, desktop } = pageSize;
 

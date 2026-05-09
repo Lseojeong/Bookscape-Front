@@ -35,7 +35,7 @@ export const useSearchResult = () => {
   const category = searchParams.get('category') ?? '전체';
 
   // 한 페이지에 노출 시킬 카드 개수
-  const pageSize = usePageSize({ mobile: 6, tablet: 4, desktop: 8 });
+  const pageSize = usePageSize({ mobile: 6, tablet: 4, desktop: 8 }) ?? undefined;
 
   // URL 파라미터를 업데이트하는 공통 함수
   // push: 히스토리에 추가 (뒤로가기 가능), replace: 현재 URL 덮어쓰기
@@ -77,7 +77,7 @@ export const useSearchResult = () => {
   const totalCount = data?.totalCount ?? 0;
 
   // totalCount를 pageSize로 나눠 총 페이지 수 계산
-  const totalPages = Math.ceil(totalCount / pageSize);
+  const totalPages = pageSize ? Math.ceil(totalCount / pageSize) : 0;
 
   // 다음 페이지 prefetch (마지막 페이지면 실행 안 함)
   usePrefetchNextPage({
