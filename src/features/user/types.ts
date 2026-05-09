@@ -11,6 +11,19 @@ export const UserResponseSchema = z.object({
 
 export type UserResponse = z.infer<typeof UserResponseSchema>;
 
+export const UserMeResponseSchema = UserResponseSchema.extend({
+  loginMethod: z.enum(['auth', 'oauth']).nullable(),
+});
+
+/**
+ * ## UserMeResponse
+ *
+ * @description
+ * BFF `GET /users/me` 응답 타입입니다.
+ * 기본 사용자 정보(`UserResponse`)에 로그인 방식(`loginMethod`)을 추가로 포함합니다.
+ */
+export type UserMeResponse = z.infer<typeof UserMeResponseSchema>;
+
 export const UpdateMyProfileRequestBodySchema = z.object({
   nickname: z.string().optional(),
   profileImageUrl: z.string().optional(),
