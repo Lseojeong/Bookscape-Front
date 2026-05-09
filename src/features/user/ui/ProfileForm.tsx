@@ -36,7 +36,8 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    watch,
+    formState: { errors, isDirty },
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -45,8 +46,15 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
       passwordConfirm: '',
     },
     mode: 'onBlur',
-    // reValidateMode: 'onBlur',
+    reValidateMode: 'onBlur',
   });
+
+  const [nickname, newPassword, passwordConfirm] = watch([
+    'nickname',
+    'newPassword',
+    'passwordConfirm',
+  ]);
+  const isPasswordFilled = newPassword ? !!passwordConfirm.trim() : true;
 
   useEffect(() => {
     reset({
@@ -55,6 +63,9 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
       passwordConfirm: '',
     });
   }, [user, reset]);
+
+  const isDisabled =
+    !isDirty || !nickname.trim() || Object.keys(errors).length > 0 || !isPasswordFilled;
 
   const onSubmit = async (values: ProfileFormValues) => {
     const body: UpdateMyProfileRequestBody = {
@@ -99,7 +110,13 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
         >
           취소하기
         </Button>
-        <Button type="submit" theme="primary" size="sm" className="ml-3 h-10.5 w-30">
+        <Button
+          type="submit"
+          theme="primary"
+          size="sm"
+          className="ml-3 h-10.5 w-30"
+          disabled={isDisabled}
+        >
           저장하기
         </Button>
       </div>
