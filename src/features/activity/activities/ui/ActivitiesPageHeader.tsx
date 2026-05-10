@@ -7,8 +7,17 @@ import PageHeader from '@/shared/ui/page-header/PageHeader';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
 
 /**
+ * 체험 목록 페이지 헤더 컴포넌트입니다.
+ * 반응형 레이아웃으로 구성되며, 화면 크기에 따라 요소 배치가 달라집니다.
  *
- * 데스크탑 -
+ * [모바일]
+ * - 상단: SearchInput (full width)
+ * - 중단: PageHeader + SortSelectDropdown
+ * - 하단: CategoryFilter
+ *
+ * [태블릿 이상]
+ * - 상단: PageHeader + SearchInput
+ * - 하단: CategoryFilter + SortSelectDropdown
  */
 export default function ActivitiesPageHeader() {
   const { category, sort, handleChangeCategory, handleChangeSort } = useAllActivityList();

@@ -9,6 +9,14 @@ type ActivityListWithPaginationProps = {
   onPageChange: (page: number) => void;
 };
 
+/**
+ * 체험 목록과 페이지네이션을 함께 렌더링하는 컴포넌트입니다.
+ *
+ * @param activities - 렌더링할 체험 목록
+ * @param currentPage - 현재 페이지 번호
+ * @param totalPages - 전체 페이지 수
+ * @param onPageChange - 페이지 변경 핸들러
+ */
 export default function ActivityListWithPagination({
   activities,
   currentPage,

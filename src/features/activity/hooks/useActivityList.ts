@@ -14,6 +14,20 @@ type UseActivityListParams = {
   basePath: string; // '/search' | '/activities'
 };
 
+/**
+ * 체험 목록 조회 및 페이지네이션 상태를 관리하는 공통 훅입니다.
+ * 검색 페이지와 체험 목록 페이지에서 공통으로 사용됩니다.
+ *
+ * - URL 파라미터 기반으로 현재 페이지를 관리합니다.
+ * - 반응형 pageSize에 따라 페이지를 자동 초기화합니다.
+ * - 다음 페이지를 미리 prefetch하여 페이지 전환 시 로딩을 최소화합니다.
+ *
+ * @param keyword - 검색 키워드 (검색 페이지에서만 사용)
+ * @param category - 선택된 카테고리 ('전체'인 경우 빈 문자열로 변환)
+ * @param sort - 정렬 기준
+ * @param pageSizeConfig - 반응형 페이지 사이즈 설정 ({ mobile, tablet, desktop })
+ * @param basePath - URL 업데이트 시 사용할 기본 경로
+ */
 export const useActivityList = ({
   keyword,
   category,

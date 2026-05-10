@@ -19,6 +19,13 @@ type SortSelectDropdownProps = {
   onChangeSortValue: (sort: string) => void;
 };
 
+/**
+ * 체험 목록 정렬 기준을 선택하는 드롭다운 컴포넌트입니다.
+ * SORT_OPTIONS 목록을 기반으로 선택지를 렌더링합니다.
+ *
+ * @param sortValue - 현재 선택된 정렬 값
+ * @param onChangeSortValue - 정렬 값 변경 핸들러
+ */
 export default function SortSelectDropdown({
   sortValue,
   onChangeSortValue,
