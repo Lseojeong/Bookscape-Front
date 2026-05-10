@@ -1,10 +1,13 @@
 import type {
   CreateMyReservationReviewRequestBody,
-  CreateMyReservationReviewResponse,
   GetMyReservationsQuery,
 } from '@/features/reservation/types';
+import {
+  CreateMyReservationReviewRequestBodySchema,
+  CreateMyReservationReviewResponseSchema,
+  GetMyReservationsResponseSchema,
+} from '@/features/reservation/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
-import { GetMyReservationsResponseSchema } from './types';
 
 export const getMyReservations = async (query?: GetMyReservationsQuery) => {
   const data = await bffFetch.get<unknown>('/my-reservations', query);
@@ -16,8 +19,11 @@ export const createMyReservationReview = async (
   reservationId: number,
   body: CreateMyReservationReviewRequestBody
 ) => {
-  return bffFetch.post<CreateMyReservationReviewResponse>(
+  const safeBody = CreateMyReservationReviewRequestBodySchema.parse(body);
+  const result = await bffFetch.post<unknown>(
     `/my-reservations/${reservationId}/reviews`,
-    body
+    safeBody
   );
+  if (!result) return null;
+  return CreateMyReservationReviewResponseSchema.parse(result);
 };
