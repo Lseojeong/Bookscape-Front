@@ -1,5 +1,5 @@
 'use client';
-import ActivityListWithPagination from '@/app/(public)/(explore)/(main)/ui/AcitivityListWithPagination';
+import ActivityListWithPagination from '@/app/(public)/(explore)/(main)/ui/ActivityListWithPagination';
 import { useAllActivityList } from '@/features/activity/activities/hooks/useAllActivityList';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 
