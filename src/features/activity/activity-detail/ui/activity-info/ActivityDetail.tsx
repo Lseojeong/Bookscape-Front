@@ -1,6 +1,7 @@
 'use client';
 
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
+import { useUserStore } from '@/shared/stores/userStore';
 import ActivityTabSection from '../tab/ActivityTabSection';
 import ActivityInfo from './ActivityInfo';
 import ImageCarousel from './ImageCarousel';
@@ -21,6 +22,8 @@ type ActivityDetailProps = {
  */
 export default function ActivityDetail({ id }: ActivityDetailProps) {
   const { data: activity } = useActivityDetail(id);
+  const { user } = useUserStore();
+  const isOwner = user?.id === activity?.userId;
 
   if (!activity) return null;
 
@@ -36,6 +39,7 @@ export default function ActivityDetail({ id }: ActivityDetailProps) {
         rating={activity.rating}
         reviewCount={activity.reviewCount}
         address={activity.address}
+        isOwner={isOwner}
         className="mt-7"
       />
       {/* 탭바 */}

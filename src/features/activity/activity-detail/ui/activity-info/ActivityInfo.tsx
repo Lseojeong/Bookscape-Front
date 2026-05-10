@@ -21,6 +21,7 @@ type ActivityInfoProps = {
   rating: number;
   reviewCount: number;
   address: string;
+  isOwner?: boolean;
   className?: string;
 };
 
@@ -48,6 +49,7 @@ export default function ActivityInfo({
   rating,
   reviewCount,
   address,
+  isOwner,
   className,
 }: ActivityInfoProps) {
   const router = useRouter();
@@ -60,21 +62,25 @@ export default function ActivityInfo({
         <p className="typo-13-medium text-gray-700 md:typo-14-medium md:text-gray-950">
           {category}
         </p>
-        {/* TODO: 로그인 유저 id와 비교하여 본인 체험일 때만 노출 */}
         {/* 케밥 버튼 */}
-        <ActionDropdown>
-          <ActionDropdownTrigger ariaLabel="메뉴 열기" className="flex cursor-pointer items-center">
-            <MenuIcon aria-hidden />
-          </ActionDropdownTrigger>
-          <ActionDropdownContent className="right-0 left-auto">
-            <ActionDropdownItem onClick={() => router.push(`/activity/${id}/edit`)}>
-              수정하기
-            </ActionDropdownItem>
-            <ActionDropdownItem onClick={() => setIsDeleteModalOpen(true)}>
-              삭제하기
-            </ActionDropdownItem>
-          </ActionDropdownContent>
-        </ActionDropdown>
+        {isOwner && (
+          <ActionDropdown>
+            <ActionDropdownTrigger
+              ariaLabel="메뉴 열기"
+              className="flex cursor-pointer items-center"
+            >
+              <MenuIcon aria-hidden />
+            </ActionDropdownTrigger>
+            <ActionDropdownContent className="right-0 left-auto">
+              <ActionDropdownItem onClick={() => router.push(`/activity/${id}/edit`)}>
+                수정하기
+              </ActionDropdownItem>
+              <ActionDropdownItem onClick={() => setIsDeleteModalOpen(true)}>
+                삭제하기
+              </ActionDropdownItem>
+            </ActionDropdownContent>
+          </ActionDropdown>
+        )}
       </div>
       <ConfirmDialog
         isOpen={isDeleteModalOpen}
