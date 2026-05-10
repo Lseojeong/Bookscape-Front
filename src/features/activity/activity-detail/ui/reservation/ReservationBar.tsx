@@ -69,7 +69,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
   };
 
   return (
-    <>
+    <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">
       <div className="flex flex-col gap-2 border-t border-gray-100 bg-white px-4 py-3">
         <TotalPrice totalPrice={price} headCount={1} />
         <Button theme="primary" size="md" className="w-full" onClick={() => setIsOpen(true)}>
@@ -157,6 +157,6 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
           </div>
         </div>
       </OverlayLayer>
-    </>
+    </div>
   );
 }

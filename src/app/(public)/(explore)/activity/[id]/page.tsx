@@ -29,9 +29,7 @@ export default async function ActivityDetailPage({ params }: Props) {
           <ReservationWidget activityId={activityId} />
         </aside>
       </div>
-      <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">
-        <ReservationBar activityId={activityId} />
-      </div>
+      <ReservationBar activityId={activityId} />
     </HydrationBoundary>
   );
 }
