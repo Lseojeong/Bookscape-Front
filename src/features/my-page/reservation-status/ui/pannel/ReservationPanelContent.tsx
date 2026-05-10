@@ -102,7 +102,13 @@ export default function ReservationPanelContent({
       </div>
 
       <div className="mt-4.5 shrink-0">
-        {!isAllLoading && (
+        {isSchedulesLoading ? (
+          <div className="flex gap-2">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-10 flex-1 animate-pulse rounded-lg" />
+            ))}
+          </div>
+        ) : (
           <TabBar
             tabs={TABS}
             activeTab={activeTab}
@@ -114,7 +120,7 @@ export default function ReservationPanelContent({
 
       <div className="flex min-h-0 flex-1 flex-col">
         {isAllLoading ? (
-          <div className="mt-3 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <Loading size={16} color="var(--color-gray-400)" />
           </div>
         ) : availableSchedules.length === 0 ? (
