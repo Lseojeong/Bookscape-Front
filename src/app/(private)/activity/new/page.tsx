@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useActivitySubmit } from '@/features/my-page/activity-form/hooks/useActivitySubmit';
 import ActivityForm from '@/features/my-page/activity-form/ui/ActivityForm';
-import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
@@ -21,14 +21,8 @@ export default function ActivityNewPage() {
   // NOTE: 폼을 초기화하기 위한 Key 상태
   const [formKey, setFormKey] = useState(0);
 
-  const handleCreateActivity = (data: ActivityFormValues) => {
-    // TODO: 린트 에러 방지용으로 API 연결 시 삭제 필요
-    void data;
-    showToast('check', '폼 검증에 성공하였습니다.');
-
-    // TODO: 이후 백엔드 연동 시 React Query의 mutate 함수로 교체 필요
-    // mutate(data);
-  };
+  // 제출 로직 커스텀 훅
+  const { submitActivity, isPending } = useActivitySubmit();
 
   const handleCancelClick = () => {
     setIsCancelModalOpen(true);
@@ -50,8 +44,9 @@ export default function ActivityNewPage() {
         <ActivityForm
           key={formKey} // key를 부여하여 부모가 원할 때 자식을 새로 렌더링하게 함
           mode="create"
-          onSubmitForm={handleCreateActivity}
+          onSubmitForm={submitActivity}
           onCancelForm={handleCancelClick}
+          isPending={isPending}
         />
       </div>
 
