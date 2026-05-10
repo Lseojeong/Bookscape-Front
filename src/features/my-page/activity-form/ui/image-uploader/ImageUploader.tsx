@@ -1,8 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import ImagePreviewItem from '@/features/my-page/activity-form/ui/image-uploader/ImagePreviewItem';
 import { PlusIcon } from '@/shared/assets/icons';
-import { IMAGE_RULES } from '@/shared/constants/file';
+import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import { cn } from '@/shared/utils/cn';
@@ -49,12 +50,42 @@ export default function ImageUploader({
   onChange,
   onRemove,
 }: ImageUploaderProps) {
+  // 컴포넌트 내부에서 즉시 유효성 검사 에러를 띄워줄 상태
+  const [localError, setLocalError] = useState<string>('');
+
   const count = images.length;
   const isDisabled = count >= maxCount;
-  const isError = !!errorMessage;
+
+  // 로컬 에러가 있으면 먼저 보여주고, 없으면 Zod 에러를 보여줌
+  const displayError = localError || errorMessage;
+  const isError = !!displayError;
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 파일 용량 검사
+    if (file.size > IMAGE_RULES.MAX_SIZE) {
+      setLocalError(IMAGE_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED);
+      e.target.value = '';
+      return;
+    }
+
+    // 파일 확장자 검사
+    if (!(IMAGE_RULES.ACCEPTED_TYPES as readonly string[]).includes(file.type)) {
+      setLocalError(IMAGE_ERROR_MESSAGES.IMAGE_TYPE_INVALID);
+      e.target.value = '';
+      return;
+    }
+
+    setLocalError('');
+
+    onChange(e);
+    e.target.value = '';
+  };
 
   return (
-    <FormField label={label} labelWeight="bold" errorMessage={errorMessage}>
+    <FormField label={label} labelWeight="bold" errorMessage={displayError}>
       <div className="flex flex-wrap gap-3 md:gap-3.5">
         <label
           className={cn(
@@ -98,7 +129,7 @@ export default function ImageUploader({
             className="sr-only"
             accept={IMAGE_RULES.ACCEPTED_TYPES.join(',')}
             disabled={isDisabled}
-            onChange={onChange}
+            onChange={handleFileChange}
           />
         </label>
 
