@@ -94,7 +94,6 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
 
   const handleFileChange = (file: File) => {
     setSelectedFile(file);
-    setProfileImageUrl(URL.createObjectURL(file)); // 미리보기용 (실제 업로드 X)
   };
 
   const handleReset = () => {
