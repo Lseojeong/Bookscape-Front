@@ -60,7 +60,7 @@ export default function ActivityNewPage() {
         onClose={() => setIsCancelModalOpen(false)}
         title="입력 내용을 초기화하시겠어요?"
         description="작성 중인 모든 내용이 삭제되고 처음 상태로 돌아갑니다."
-        cancelText="초기화기"
+        cancelText="초기화하기"
         confirmText="계속 작성하기"
         onCancel={handleConfirmReset}
       />
