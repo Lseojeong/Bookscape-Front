@@ -53,7 +53,7 @@ export default function PriceInput<T extends FieldValues>({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[^0-9]/g, '');
-    onChange(rawValue);
+    onChange(rawValue === '' ? undefined : Number(rawValue));
   };
 
   const displayValue = value ? Number(value).toLocaleString() : '';

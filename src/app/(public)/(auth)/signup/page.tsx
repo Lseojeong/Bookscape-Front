@@ -2,7 +2,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
 import { signupUser } from '@/features/auth/apis/auth';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
@@ -71,56 +72,62 @@ export default function SignupPage() {
   );
 
   return (
-    <FormProvider {...methods}>
-      <AuthForm onSubmit={handleSubmit(handleSignup)}>
-        <FormField label="이메일" errorMessage={errors.email?.message}>
-          <FormInput
-            type="email"
-            name="email"
-            control={control}
-            placeholder="이메일을 입력해 주세요"
-          />
-        </FormField>
+    <>
+      <AuthHeadline />
+      <div className="mt-17 md:mt-22">
+        <AuthForm onSubmit={handleSubmit(handleSignup)}>
+          <FormField label="이메일" errorMessage={errors.email?.message}>
+            <FormInput
+              type="email"
+              name="email"
+              control={control}
+              placeholder="이메일을 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="닉네임" errorMessage={errors.nickname?.message}>
-          <FormInput
-            type="text"
-            name="nickname"
-            control={control}
-            placeholder="닉네임을 입력해 주세요"
-          />
-        </FormField>
+          <FormField label="닉네임" errorMessage={errors.nickname?.message}>
+            <FormInput
+              type="text"
+              name="nickname"
+              control={control}
+              placeholder="닉네임을 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="비밀번호" errorMessage={errors.password?.message}>
-          <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
-        </FormField>
+          <FormField label="비밀번호" errorMessage={errors.password?.message}>
+            <PasswordInput
+              name="password"
+              control={control}
+              placeholder="비밀번호를 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="비밀번호 확인" errorMessage={errors.passwordConfirm?.message}>
-          <PasswordInput
-            name="passwordConfirm"
-            control={control}
-            placeholder="비밀번호를 한 번 더 입력해 주세요"
-          />
-        </FormField>
-        <div className="mt-1 md:mt-2">
-          {/* 백엔드 에러 메시지 */}
-          {errors.root && (
-            <FormErrorMessage className="typo-13-medium">{errors.root.message}</FormErrorMessage>
-          )}
-
-          <Button
-            type="submit"
-            theme="primary"
-            size="lg"
-            isLoading={isSubmitting}
-            disabled={!isDirty || isSubmitting}
-            className="mt-2 h-13.5 w-full rounded-2xl md:mt-2.5"
-          >
-            회원가입 하기
-          </Button>
-        </div>
-      </AuthForm>
-      <AuthFooter />
-    </FormProvider>
+          <FormField label="비밀번호 확인" errorMessage={errors.passwordConfirm?.message}>
+            <PasswordInput
+              name="passwordConfirm"
+              control={control}
+              placeholder="비밀번호를 한 번 더 입력해 주세요"
+            />
+          </FormField>
+          <div className="mt-1 md:mt-2">
+            {/* 백엔드 에러 메시지 */}
+            {errors.root && (
+              <FormErrorMessage className="typo-13-medium">{errors.root.message}</FormErrorMessage>
+            )}
+            <Button
+              type="submit"
+              theme="primary"
+              size="lg"
+              isLoading={isSubmitting}
+              disabled={!isDirty || isSubmitting}
+              className="mt-2 h-13.5 w-full rounded-2xl md:mt-2.5"
+            >
+              회원가입 하기
+            </Button>
+          </div>
+        </AuthForm>
+        <AuthFooter />
+      </div>
+    </>
   );
 }
