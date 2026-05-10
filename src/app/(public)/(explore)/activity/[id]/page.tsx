@@ -1,9 +1,9 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
 import { prefetchActivityDetail } from '@/features/activity/activity-detail/queries/prefetchActivityDetail';
-import ActivityDetail from '@/features/activity/activity-detail/ui/ActivityDetail';
-import ReservationBar from '@/features/activity/activity-detail/ui/ReservationBar';
-import ReservationWidget from '@/features/activity/activity-detail/ui/ReservationWidget';
+import ActivityDetail from '@/features/activity/activity-detail/ui/activity-info/ActivityDetail';
+import ReservationBar from '@/features/activity/activity-detail/ui/reservation/ReservationBar';
+import ReservationWidget from '@/features/activity/activity-detail/ui/reservation/ReservationWidget';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 type Props = {

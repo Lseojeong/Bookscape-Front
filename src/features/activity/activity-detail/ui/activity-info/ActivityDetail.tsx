@@ -1,8 +1,8 @@
 'use client';
 
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
+import ActivityTabSection from '../tab/ActivityTabSection';
 import ActivityInfo from './ActivityInfo';
-import ActivityTabSection from './ActivityTabSection';
 import ImageCarousel from './ImageCarousel';
 
 type ActivityDetailProps = {
