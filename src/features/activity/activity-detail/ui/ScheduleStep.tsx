@@ -84,6 +84,7 @@ export default function ScheduleStep({
             onDecrease={onDecrease}
             onIncrease={onIncrease}
             variant="wide"
+            rounded="xl"
           />
         </div>
       </div>
