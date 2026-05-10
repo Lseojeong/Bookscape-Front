@@ -1,7 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import Star from '@/features/reservation/reservation-list/ui/review-modal/Star';
 import type { ReviewFormValues } from '@/features/reservation/reservation-list/utils/schema';
@@ -69,7 +68,6 @@ export default function ReviewModal({
   defaultContent = '',
   className,
 }: ReviewModalProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { control, handleSubmit, reset, setValue, formState } = useForm<ReviewFormValues>({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: { rating: 0, content: defaultContent },
@@ -85,19 +83,14 @@ export default function ReviewModal({
   const rating = useWatch({ control, name: 'rating' }) ?? 0;
   const contentValue = useWatch({ control, name: 'content' }) ?? '';
   const isEditing = rating > 0 || contentValue.trim().length > 0;
-  const shouldBlockAutoClose = isSubmitting || isEditing;
+  const shouldBlockAutoClose = formState.isSubmitting || isEditing;
 
   const submit = handleSubmit(async ({ rating, content }) => {
-    if (isSubmitting) return;
-
     try {
-      setIsSubmitting(true);
       await onSubmit?.({ rating: Number(rating), content });
       handleClose();
     } catch {
       // NOTE: onSubmit 실패 시 모달을 닫지 않고 유지합니다.
-    } finally {
-      setIsSubmitting(false);
     }
   });
 
@@ -119,7 +112,7 @@ export default function ReviewModal({
             type="button"
             aria-label="닫기"
             onClick={handleClose}
-            disabled={isSubmitting}
+            disabled={formState.isSubmitting}
             className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
           >
             <DeleteIcon className="h-6 w-6 text-gray-950" aria-hidden="true" />
@@ -176,8 +169,8 @@ export default function ReviewModal({
             theme="primary"
             size="lg"
             type="submit"
-            disabled={isSubmitting}
-            isLoading={isSubmitting}
+            disabled={formState.isSubmitting}
+            isLoading={formState.isSubmitting}
             className="h-13.5 w-full rounded-2xl"
           >
             작성하기
