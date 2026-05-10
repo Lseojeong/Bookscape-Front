@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
-import { COOKIE_OPTIONS } from '@/features/auth/constants/cookies';
 import { LoginResponse } from '@/features/auth/types/auth';
+import { setAuthCookies, setLoginMethodCookie } from '@/features/auth/utils/cookies';
+import { getJwtExpiresAt } from '@/features/auth/utils/jwt';
 import { LoginFormValues } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
@@ -35,27 +36,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: AUTH_API_MESSAGE.LOGIN.ERROR }, { status: 500 });
     }
 
-    // 토큰 만료 시간 계산 (현재 시간 기준 30분)
-    const EXPIRE_TIME = 1000 * 60 * 30;
-    const expiresAt = Date.now() + EXPIRE_TIME;
+    const accessTokenExpiresAt = getJwtExpiresAt(data.accessToken);
 
     // 응답 객체 생성 및 공통 쿠키 설정
-    const response = NextResponse.json({ success: true, user: data.user, expiresAt: expiresAt });
-
-    // 3. accessToken 쿠키 저장
-    response.cookies.set('accessToken', data.accessToken, {
-      ...COOKIE_OPTIONS,
+    const response = NextResponse.json({
+      success: true,
+      user: data.user,
+      accessTokenExpiresAt,
+      loginMethod: 'auth' as const,
     });
 
-    // 4. refreshToken 쿠키 저장
-    response.cookies.set('refreshToken', data.refreshToken, {
-      ...COOKIE_OPTIONS,
-    });
+    setAuthCookies({ response, accessToken: data.accessToken, refreshToken: data.refreshToken });
+    setLoginMethodCookie({ response, loginMethod: 'auth' });
 
     return response;
   } catch (error) {
-    console.error('[POST /api/auth/login]', error);
-
     if (error instanceof ApiError) {
       return NextResponse.json(
         { message: error.message || AUTH_API_MESSAGE.LOGIN.ERROR },

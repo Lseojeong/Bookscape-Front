@@ -2,7 +2,12 @@
 
 import Link from 'next/link';
 import Lottie from 'react-lottie-player';
-import { NoDataAnimation, NoReviewAnimation, NoSearchAnimation } from '@/shared/assets/lotties';
+import {
+  ErrorAnimation,
+  NoDataAnimation,
+  NoReviewAnimation,
+  NoSearchAnimation,
+} from '@/shared/assets/lotties';
 import Button from '@/shared/ui/button/Button';
 
 /**
@@ -58,7 +63,31 @@ type ExperienceProps = {
   button?: { href: string; text: string };
 };
 
-type EmptyStateProps = ReviewProps | SearchProps | ExperienceProps;
+/**
+ * 에러 상태를 표시할 때 사용하는 props입니다.
+ *
+ * @example
+ * ```tsx
+ * <EmptyState
+ *   type="error"
+ *   mainText={'문제가 발생했습니다.\n잠시 후 다시 시도해주세요.'}
+ *   onRetry={() => refetch()} // 미지정 시 window.location.reload()
+ * />
+ * ```
+ */
+type ErrorProps = {
+  /** 에러 상태를 나타냅니다. */
+  type: 'error';
+  /** 화면에 표시할 안내 문구입니다. 줄바꿈은 `\n`으로 전달합니다. */
+  mainText: string;
+  /** "다시 시도하기" 버튼 클릭 시 실행할 핸들러 (없으면 window.location.reload()) */
+  onRetry?: () => void;
+  /** 버튼 라벨 커스터마이징 */
+  retryText?: string;
+  button?: never;
+};
+
+type EmptyStateProps = ReviewProps | SearchProps | ExperienceProps | ErrorProps;
 
 /**
  * 데이터가 없는 화면에서 공통으로 사용하는 empty state 컴포넌트입니다.
@@ -98,6 +127,15 @@ type EmptyStateProps = ReviewProps | SearchProps | ExperienceProps;
  *   mainText={'선택한 필터에 맞는 체험이 없어요.\n다른 조건으로 다시 확인해보세요!'}
  * />
  * ```
+ *
+ * @example 에러 상태
+ * ```tsx
+ * <EmptyState
+ *   type="error"
+ *   mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
+ *   onRetry={() => refetch()} // 미지정 시 window.location.reload()
+ * />
+ * ```
  */
 export default function EmptyState(props: EmptyStateProps) {
   const { type, mainText, button } = props;
@@ -106,18 +144,37 @@ export default function EmptyState(props: EmptyStateProps) {
     review: NoReviewAnimation,
     search: NoSearchAnimation,
     experience: NoDataAnimation,
+    error: ErrorAnimation,
   } as const;
 
   const animationData = animationMap[type];
 
   const renderButton = () => {
-    if (type !== 'experience' || !button?.text || !button?.href) return null;
+    if (type === 'experience') {
+      if (!button?.text || !button?.href) return null;
 
-    return (
-      <Button as={Link} href={button.href} theme="primary">
-        {button.text}
-      </Button>
-    );
+      return (
+        <Button as={Link} href={button.href} theme="primary">
+          {button.text}
+        </Button>
+      );
+    }
+
+    if (type === 'error') {
+      const retryText = props.retryText ?? '다시 시도하기';
+      const handleRetry = () => {
+        if (props.onRetry) return props.onRetry();
+        window.location.reload();
+      };
+
+      return (
+        <Button type="button" theme="secondary" onClick={handleRetry}>
+          {retryText}
+        </Button>
+      );
+    }
+
+    return null;
   };
 
   return (

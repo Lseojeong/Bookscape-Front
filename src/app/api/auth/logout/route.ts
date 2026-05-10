@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
+import { clearAuthCookies, clearLoginMethodCookie } from '@/features/auth/utils/cookies';
 
 /**
  * POST /api/auth/logout
@@ -12,14 +13,11 @@ import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 export async function POST() {
   try {
     const response = NextResponse.json({ success: true });
-
-    response.cookies.delete('accessToken');
-    response.cookies.delete('refreshToken');
+    clearAuthCookies(response);
+    clearLoginMethodCookie(response);
 
     return response;
-  } catch (error) {
-    console.error('[POST /api/auth/logout]', error);
-
+  } catch {
     return NextResponse.json({ message: AUTH_API_MESSAGE.LOGOUT.ERROR }, { status: 500 });
   }
 }
