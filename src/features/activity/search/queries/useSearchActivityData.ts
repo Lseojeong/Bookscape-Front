@@ -34,7 +34,7 @@ export const useActivityListData = (
  */
 export const usePrefetchNextPage = (params: GetActivityParams & { totalPages?: number }) => {
   const queryClient = useQueryClient();
-  const { keyword, category, page, size, totalPages } = params;
+  const { keyword, category, sort, page, size, totalPages } = params;
 
   useEffect(() => {
     // totalPages가 0이거나 없으면 prefetch 안 함
@@ -52,5 +52,5 @@ export const usePrefetchNextPage = (params: GetActivityParams & { totalPages?: n
       queryFn: () => getActivityListData(nextPageParams),
       staleTime: ACTIVITY_STALE_TIME,
     });
-  }, [keyword, category, page, size, totalPages, queryClient]);
+  }, [keyword, category, sort, page, size, totalPages, queryClient]);
 };
