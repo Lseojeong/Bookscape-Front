@@ -14,7 +14,7 @@ export const useActivitySubmit = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const { mutateAsync: uploadImage } = useUploadImage();
-  const { mutate: createActivity, isPending: isCreating } = useCreateActivity();
+  const { mutateAsync: createActivityAsync, isPending: isCreating } = useCreateActivity();
 
   const submitActivity = async (data: ActivityFormValues) => {
     try {
@@ -49,19 +49,13 @@ export const useActivitySubmit = () => {
         })),
       };
 
-      // 체험 등록 API 호출
-      createActivity(payload, {
-        onSuccess: () => {
-          showToast('check', '체험이 성공적으로 등록되었습니다.');
-          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES() });
-          router.push('/mypage/activity');
-        },
-        onError: () => {
-          showToast('cancel', '체험 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
-        },
-      });
+      // 등록 API가 완료될 때까지 기다림
+      await createActivityAsync(payload);
+      showToast('check', '체험이 성공적으로 등록되었습니다.');
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES() });
+      router.push('/mypage/activity');
     } catch {
-      showToast('cancel', '이미지 업로드 중 문제가 발생했습니다.');
+      showToast('cancel', '체험 등록에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsUploading(false);
     }
