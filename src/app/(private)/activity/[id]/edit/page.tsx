@@ -42,7 +42,7 @@ export default function ActivityEditPage() {
   // TODO: 수정 API 훅 연결 필요
 
   const handleUpdateActivity = (data: ActivityFormValues) => {
-    console.log('🚀 [서버로 전송하기 전 폼 원본 데이터]:', data);
+    void data;
   };
 
   const handleCancelClick = () => {
