@@ -46,54 +46,62 @@ export const ActivityResponseSchema = z.object({
 export type ActivityData = z.infer<typeof ActivityDataSchema>;
 export type ActivityResponse = z.infer<typeof ActivityResponseSchema>;
 
-export type CreateActivityRequestBody = {
-  title: string;
-  category: string;
-  description: string;
-  address: string;
-  price: number;
-  schedules: Array<{
-    date: string;
-    startTime: string;
-    endTime: string;
-  }>;
-  bannerImageUrl: string;
-  subImageUrls: string[];
-};
+/** 체험 등록 요청 */
+export const CreateActivityRequestBodySchema = z.object({
+  title: z.string(),
+  category: z.string(),
+  description: z.string(),
+  address: z.string(),
+  price: z.number(),
+  schedules: z.array(
+    z.object({
+      date: z.string(),
+      startTime: z.string(),
+      endTime: z.string(),
+    })
+  ),
+  bannerImageUrl: z.string(),
+  subImageUrls: z.array(z.string()),
+});
 
-export type ActivitySubImage = {
-  imageUrl: string;
-  id: number;
-};
+/** 체험 스케줄 응답 */
+export const ActivityScheduleSchema = z.object({
+  date: z.string(),
+  times: z.array(
+    z.object({
+      id: z.number(),
+      startTime: z.string(),
+      endTime: z.string(),
+    })
+  ),
+});
 
-export type ActivityScheduleTime = {
-  endTime: string;
-  startTime: string;
-  id: number;
-};
+/** 체험 등록 응답 */
+export const CreateActivityResponseSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  title: z.string(),
+  description: z.string(),
+  category: z.string(),
+  price: z.number(),
+  address: z.string(),
+  bannerImageUrl: z.string(),
+  rating: z.number(),
+  reviewCount: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  subImages: z.array(SubImageSchema),
+  schedules: z.array(ActivityScheduleSchema),
+});
 
-export type ActivitySchedule = {
-  times: ActivityScheduleTime[];
-  date: string;
-};
+/** 체험 등록 이미지 응답 */
+export const CreateActivityImageUrlResponseSchema = z.object({
+  activityImageUrl: z.string(),
+});
 
-export type CreateActivityResponse = {
-  id: number;
-  userId: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  address: string;
-  bannerImageUrl: string;
-  rating: number;
-  reviewCount: number;
-  createdAt: string;
-  updatedAt: string;
-  subImages: ActivitySubImage[];
-  schedules: ActivitySchedule[];
-};
-
-export type CreateActivityImageUrlResponse = {
-  activityImageUrl: string;
-};
+export type CreateActivityRequestBody = z.infer<typeof CreateActivityRequestBodySchema>;
+export type ActivitySchedule = z.infer<typeof ActivityScheduleSchema>;
+export type ActivityScheduleTime = ActivitySchedule['times'][number];
+export type ActivitySubImage = z.infer<typeof SubImageSchema>;
+export type CreateActivityResponse = z.infer<typeof CreateActivityResponseSchema>;
+export type CreateActivityImageUrlResponse = z.infer<typeof CreateActivityImageUrlResponseSchema>;
