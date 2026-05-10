@@ -16,7 +16,7 @@ export const useReservation = (activityId: number) => {
   const { showToast } = useToastStore();
   const { mutate: createReservation } = useCreateReservation(activityId);
   const { data: myReservationsData } = useQuery({
-    queryKey: QUERY_KEYS.MY_RESERVATIONS(),
+    queryKey: QUERY_KEYS.MY_RESERVATIONS(undefined, 100),
     queryFn: () => getMyReservations({ size: 100 }),
     enabled: !!user,
   });
