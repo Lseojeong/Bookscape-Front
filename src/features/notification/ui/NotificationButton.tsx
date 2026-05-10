@@ -1,13 +1,11 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { useEffect, useRef, useState } from 'react';
-import {
-  deleteMyNotification,
-  getMyNotifications,
-  markMyNotificationsSeen,
-} from '@/features/notification/apis';
-import type { ParsedNotification } from '@/features/notification/types';
+import { useRef } from 'react';
+import { useNotificationDropdown } from '@/features/notification/hooks/useNotificationDropdown';
+import { useDeleteAllMyNotifications } from '@/features/notification/mutations/useDeleteAllMyNotifications';
+import { useMarkMyNotificationsSeenMutation } from '@/features/notification/mutations/useMarkMyNotificationsSeenMutation';
+import { useMyNotifications } from '@/features/notification/queries/useMyNotifications';
 import { NotificationIcon } from '@/shared/assets/icons';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 import type { HeaderTheme } from '@/shared/ui/header/types';
@@ -37,47 +35,31 @@ type NotificationButtonProps = {
 };
 
 export default function NotificationButton({ theme = 'light' }: NotificationButtonProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notifications, setNotifications] = useState<ParsedNotification[]>([]);
-  const [hasNew, setHasNew] = useState(false);
-  const [lastSeenAtMs, setLastSeenAtMs] = useState<number | null>(null);
-  const [modalBaseSeenAtMs, setModalBaseSeenAtMs] = useState<number | null>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
 
-  useOutsideClick(notificationRef, () => setIsModalOpen(false), isModalOpen);
   const { showToast } = useToastStore();
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { query, notifications, hasNew, lastSeenAtMs, totalCount } = useMyNotifications();
+  const markSeenMutation = useMarkMyNotificationsSeenMutation();
+  const { deleteAll, deleteMutation } = useDeleteAllMyNotifications();
 
-  useEffect(() => {
-    let cancelled = false;
+  const isLoaded = query.isFetched;
 
-    (async () => {
-      try {
-        const data = await getMyNotifications({ size: 20 });
-        if (cancelled) return;
-        setNotifications(data?.notifications ?? []);
-        setHasNew(Boolean(data?.hasNew));
-        setLastSeenAtMs(data?.lastSeenAtMs ?? null);
-      } finally {
-        if (!cancelled) setIsLoaded(true);
-      }
-    })();
+  const dropdown = useNotificationDropdown({
+    isLoaded,
+    hasNotifications: notifications.length > 0,
+    lastSeenAtMs,
+    markSeen: () => markSeenMutation.mutateAsync(),
+    onEmpty: () => showToast('warning', '알림이 없습니다.'),
+  });
 
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  useOutsideClick(notificationRef, dropdown.close, dropdown.isOpen);
 
   const handleDeleteOne = (id: number) => {
     void (async () => {
       try {
-        await deleteMyNotification(id);
-        setNotifications((prev) => {
-          const next = prev.filter((n) => n.id !== id);
-          if (prev.length === 1) setIsModalOpen(false);
-          return next;
-        });
+        await deleteMutation.mutateAsync(id);
+        if (notifications.length === 1) dropdown.close();
       } catch {
         showToast('cancel', '알림 삭제에 실패했습니다.');
       }
@@ -85,54 +67,12 @@ export default function NotificationButton({ theme = 'light' }: NotificationButt
   };
 
   const handleDeleteAll = async () => {
-    setIsModalOpen(false);
-    const ids = notifications.map((n) => n.id);
-    const results = await Promise.allSettled(ids.map((id) => deleteMyNotification(id)));
-
-    const succeededIds = results
-      .map((r, index) => (r.status === 'fulfilled' ? ids[index] : null))
-      .filter((v): v is number => v !== null);
-
-    setNotifications((prev) => prev.filter((n) => !succeededIds.includes(n.id)));
-
-    if (succeededIds.length === ids.length) {
-      showToast('check', '모든 알림을 성공적으로 삭제했습니다.');
-      return;
-    }
-
-    showToast('warning', '일부 알림 삭제에 실패했습니다.');
-  };
-
-  const handleClick = () => {
-    if (!isLoaded) return;
-    if (notifications.length === 0) {
-      showToast('warning', '알림이 없습니다.');
-      return;
-    }
-    const willOpen = !isModalOpen;
-    if (willOpen) {
-      // 모달에서 '읽음/안읽음' 구분은 열기 직전 기준으로 고정합니다.
-      setModalBaseSeenAtMs(lastSeenAtMs);
-      // 모달을 열 때 '확인함' 처리 (BFF + 쿠키)
-      setHasNew(false);
-      void (async () => {
-        try {
-          await markMyNotificationsSeen();
-          // UI 분리 기준은 유지하고, 다음 열람부터 적용되도록만 업데이트합니다.
-          setLastSeenAtMs(Date.now());
-        } catch {
-          // 확인 처리 실패는 UX에 큰 영향이 없어 무시합니다.
-        }
-      })();
-    } else {
-      setModalBaseSeenAtMs(null);
-    }
-    setIsModalOpen(willOpen);
+    await deleteAll({ ids: notifications.map((n) => n.id), onStart: dropdown.close });
   };
 
   return (
     <div ref={notificationRef} className="relative flex h-6 w-6 items-center justify-center">
-      <button type="button" aria-label="알림" onClick={handleClick}>
+      <button type="button" aria-label="알림" onClick={dropdown.toggle}>
         <NotificationIcon
           aria-hidden="true"
           className={cn(
@@ -143,12 +83,17 @@ export default function NotificationButton({ theme = 'light' }: NotificationButt
           )}
         />
       </button>
-      {isModalOpen && (
+      {dropdown.isOpen && (
         <Notification
           notifications={notifications}
-          lastSeenAtMs={modalBaseSeenAtMs}
+          totalCount={totalCount}
+          lastSeenAtMs={dropdown.modalBaseSeenAtMs}
           onDeleteAll={handleDeleteAll}
           onDeleteOne={handleDeleteOne}
+          hasNextPage={Boolean(query.hasNextPage)}
+          isFetchingNextPage={query.isFetchingNextPage}
+          isFetchNextPageError={query.isFetchNextPageError}
+          onFetchNextPage={() => query.fetchNextPage()}
         />
       )}
     </div>
