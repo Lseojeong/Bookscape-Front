@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMyActivities } from '@/features/my-page/apis';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 /**
  * 내 체험 리스트 조회 훅
@@ -10,8 +11,7 @@ import { getMyActivities } from '@/features/my-page/apis';
  */
 export const useMyActivitiesQuery = () => {
   return useQuery({
-    //TODO : 내 체험 관리 페이지 머지되면 shared/constants/queryKeys로 수정
-    queryKey: ['my-activities'],
+    queryKey: QUERY_KEYS.MY_ACTIVITIES(),
     queryFn: () => getMyActivities({ size: 100 }),
     select: (data) => data.activities,
   });
