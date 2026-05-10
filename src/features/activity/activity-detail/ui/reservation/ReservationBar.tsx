@@ -6,8 +6,13 @@ import Button from '@/shared/ui/button/Button';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
 import { cn } from '@/shared/utils/cn';
+import { useReservation } from '../../hooks/useReservation';
 import HeadcountStep from './HeadcountStep';
 import ScheduleStep from './ScheduleStep';
+
+type ReservationBarProps = {
+  activityId: number;
+};
 
 /**
  * 태블릿/모바일 하단 고정 예약 바 컴포넌트입니다.
@@ -21,15 +26,26 @@ import ScheduleStep from './ScheduleStep';
  * <ReservationBar />
  * ```
  */
-export default function ReservationBar() {
+export default function ReservationBar({ activityId }: ReservationBarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<Date>();
-  const [selectedScheduleId, setSelectedScheduleId] = useState<number>();
   const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');
-  const [headCount, setHeadCount] = useState(1);
 
   const startYRef = useRef<number>(0);
   const [dragY, setDragY] = useState(0);
+
+  const {
+    price,
+    selected,
+    setSelected,
+    headCount,
+    setHeadCount,
+    selectedScheduleId,
+    setSelectedScheduleId,
+    month,
+    setMonth,
+    schedules,
+    reset,
+  } = useReservation(activityId);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     startYRef.current = e.touches[0].clientY;
@@ -50,7 +66,7 @@ export default function ReservationBar() {
   return (
     <>
       <div className="flex flex-col gap-2 border-t border-gray-100 bg-white px-4 py-3">
-        <TotalPrice totalPrice={1000} headCount={1} />
+        <TotalPrice totalPrice={price} headCount={1} />
         <Button theme="primary" size="md" className="w-full" onClick={() => setIsOpen(true)}>
           예약하기
         </Button>
@@ -60,9 +76,7 @@ export default function ReservationBar() {
         onClose={() => {
           setIsOpen(false);
           setStep('schedule');
-          setSelected(undefined);
-          setSelectedScheduleId(undefined);
-          setHeadCount(1);
+          reset();
         }}
         position="bottom"
         variant="sheet"
@@ -91,11 +105,14 @@ export default function ReservationBar() {
                 selected={selected}
                 selectedScheduleId={selectedScheduleId}
                 headCount={headCount}
+                schedules={schedules}
+                month={month}
                 onSelectDate={(date) => {
                   setSelected(date);
                   setSelectedScheduleId(undefined);
                 }}
                 onSelectSchedule={(id) => setSelectedScheduleId(id)}
+                onMonthChange={setMonth}
                 onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
                 onIncrease={() => setHeadCount((prev) => prev + 1)}
               />

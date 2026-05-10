@@ -30,7 +30,7 @@ export default async function ActivityDetailPage({ params }: Props) {
         </aside>
       </div>
       <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">
-        <ReservationBar />
+        <ReservationBar activityId={activityId} />
       </div>
     </HydrationBoundary>
   );

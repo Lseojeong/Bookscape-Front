@@ -20,6 +20,13 @@ export const useReservation = (activityId: number) => {
   const selectedDateStr = selected ? format(selected, 'yyyy-MM-dd') : null;
   const schedules = availableSchedules?.find((s) => s.date === selectedDateStr)?.times ?? [];
 
+  const reset = () => {
+    setSelected(undefined);
+    setSelectedScheduleId(undefined);
+    setHeadCount(1);
+    setMonth(new Date());
+  };
+
   return {
     price,
     selected,
@@ -31,5 +38,6 @@ export const useReservation = (activityId: number) => {
     month,
     setMonth,
     schedules,
+    reset,
   };
 };
