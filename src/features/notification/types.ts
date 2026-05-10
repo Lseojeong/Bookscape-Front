@@ -20,7 +20,7 @@ export const MyNotificationSchema = z.object({
 export type MyNotification = z.infer<typeof MyNotificationSchema>;
 
 export const GetMyNotificationsResponseSchema = z.object({
-  cursorId: z.number(),
+  cursorId: z.number().nullable(),
   notifications: z.array(MyNotificationSchema),
   totalCount: z.number(),
 });
