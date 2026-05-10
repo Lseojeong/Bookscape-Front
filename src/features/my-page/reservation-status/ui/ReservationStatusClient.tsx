@@ -32,7 +32,7 @@ export default function ReservationStatusClient() {
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
 
   // 내 체험 리스트 조회
-  const { data: activities = [], isLoading } = useMyActivitiesQuery();
+  const { data: activities = [], isError, isLoading, refetch } = useMyActivitiesQuery();
 
   // 선택된 체험 ID (미선택 시 첫 번째 체험 자동 선택)
   const activityId = selectedActivityId ?? activities[0]?.id ?? null;
@@ -64,14 +64,23 @@ export default function ReservationStatusClient() {
       </div>
     );
 
-  if (activities.length === 0) {
+  if (isError)
+    return (
+      <EmptyState
+        type="error"
+        mainText={'체험 목록을 불러오는 데 실패했어요.\n다시 시도해주세요.'}
+        onRetry={refetch}
+      />
+    );
+
+  if (activities.length === 0)
     return (
       <EmptyState
         type="experience"
         mainText={'아직 등록한 체험이 없어요.\n새로운 체험을 등록해보세요!'}
+        button={{ href: '/activity/new', text: '체험 등록하기' }}
       />
     );
-  }
 
   return (
     <>
