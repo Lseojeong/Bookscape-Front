@@ -36,7 +36,7 @@ interface NotificationModalProps {
  *
  * @example
  * ```tsx
- * <NotificationModal
+ * <Notification
       notifications={notifications}
       onDeleteAll={onDeleteAll}
       onDeleteOne={onDeleteOne}
