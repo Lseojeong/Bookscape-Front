@@ -28,6 +28,17 @@ export const GetMyNotificationsResponseSchema = z.object({
 export type GetMyNotificationsResponse = z.infer<typeof GetMyNotificationsResponseSchema>;
 
 /**
+ * BFF(`/api/my-notifications`)에서 내려주는 UI용 응답 타입입니다.
+ * - `notifications`는 content를 파싱해 `ParsedNotification`으로 변환됩니다.
+ * - `hasNew`, `lastSeenAtMs` 정보가 포함될 수 있습니다.
+ */
+export type GetMyNotificationsParsedResponse = Omit<GetMyNotificationsResponse, 'notifications'> & {
+  notifications: ParsedNotification[];
+  hasNew?: boolean;
+  lastSeenAtMs?: number | null;
+};
+
+/**
  * UI에서 사용하는 파싱된 알림 타입입니다.
  * (백엔드 응답을 그대로 쓰기 어렵기 때문에 content를 기반으로 매핑합니다.)
  */

@@ -3,6 +3,7 @@ import {
   GetMyNotificationsResponseSchema,
   GetMyNotificationsQuerySchema,
   type GetMyNotificationsQuery,
+  type GetMyNotificationsParsedResponse,
   type ParsedNotification,
   parseNotificationContent,
 } from '@/features/notification/types';
@@ -61,7 +62,7 @@ export const getMyNotifications = async (query?: GetMyNotificationsQuery) => {
   return {
     ...parsed,
     notifications: parsed.notifications.map(toParsedNotification),
-  };
+  } satisfies GetMyNotificationsParsedResponse;
 };
 
 export const deleteMyNotification = async (notificationId: number) => {
