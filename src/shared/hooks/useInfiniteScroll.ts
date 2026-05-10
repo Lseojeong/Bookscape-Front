@@ -33,11 +33,11 @@ type UseInfiniteScrollParams = {
   /** 다음 페이지 로드 함수 */
   fetchNextPage: () => Promise<unknown>;
   /** 관찰 기준(root). 기본값은 viewport(null) */
-  root?: globalThis.IntersectionObserverInit['root'];
+  root?: IntersectionObserverInit['root'];
   /** 관찰 root 경계 확장 영역 */
-  rootMargin?: globalThis.IntersectionObserverInit['rootMargin'];
+  rootMargin?: IntersectionObserverInit['rootMargin'];
   /** 교차 비율 기준 */
-  threshold?: globalThis.IntersectionObserverInit['threshold'];
+  threshold?: IntersectionObserverInit['threshold'];
 };
 
 /**
@@ -56,7 +56,7 @@ export const useInfiniteScroll = ({
 }: UseInfiniteScrollParams) => {
   const [sentinel, setSentinel] = useState<HTMLDivElement | null>(null);
 
-  const intersectionOptions = useMemo<globalThis.IntersectionObserverInit>(() => {
+  const intersectionOptions = useMemo<IntersectionObserverInit>(() => {
     return { root, rootMargin, threshold };
   }, [root, rootMargin, threshold]);
 
