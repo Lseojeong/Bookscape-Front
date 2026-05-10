@@ -5,9 +5,10 @@ import type { GetMyNotificationsParsedResponse } from '@/features/notification/t
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
 
-export const MY_NOTIFICATIONS_PAGE_SIZE = 2;
+export const MY_NOTIFICATIONS_PAGE_SIZE = 10;
 
-const MY_NOTIFICATIONS_STALE_TIME_MS = 30 * 1000;
+export const MY_NOTIFICATIONS_STALE_TIME_MS = 1000 * 10;
+export const MY_NOTIFICATIONS_REFETCH_INTERVAL_MS = 1000 * 30;
 
 const EMPTY_RESPONSE: GetMyNotificationsParsedResponse = {
   cursorId: null,
@@ -35,6 +36,7 @@ export const useMyNotifications = ({ size = MY_NOTIFICATIONS_PAGE_SIZE } = {}) =
     getNextPageParam: (lastPage) => lastPage.cursorId ?? undefined,
     networkMode: 'always',
     staleTime: MY_NOTIFICATIONS_STALE_TIME_MS,
+    refetchInterval: MY_NOTIFICATIONS_REFETCH_INTERVAL_MS,
     retry: 1,
   });
 
