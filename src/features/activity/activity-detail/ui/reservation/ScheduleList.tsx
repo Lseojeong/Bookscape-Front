@@ -25,6 +25,7 @@ type ScheduleListProps = {
  *   schedules={schedules}
  *   selectedScheduleId={selectedScheduleId}
  *   onSelectSchedule={(id) => setSelectedScheduleId(id)}
+ *   disabledScheduleIds={myBlockedScheduleIds}
  * />
  * ```
  */

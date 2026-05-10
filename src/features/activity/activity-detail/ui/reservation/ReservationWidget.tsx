@@ -20,7 +20,7 @@ type ReservationWidgetProps = {
  *
  * @example
  * ```tsx
- * <ReservationWidget />
+ * <ReservationWidget activityId={activityId} />
  * ```
  */
 export default function ReservationWidget({ activityId }: ReservationWidgetProps) {

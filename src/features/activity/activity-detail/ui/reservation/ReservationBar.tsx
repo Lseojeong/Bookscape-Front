@@ -23,7 +23,7 @@ type ReservationBarProps = {
  *
  * @example
  * ```tsx
- * <ReservationBar />
+ * <ReservationBar activityId={activityId} />
  * ```
  */
 export default function ReservationBar({ activityId }: ReservationBarProps) {

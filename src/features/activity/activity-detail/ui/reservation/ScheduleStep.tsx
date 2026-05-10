@@ -30,8 +30,14 @@ type ScheduleStepProps = {
  * <ScheduleStep
  *   selected={selected}
  *   selectedScheduleId={selectedScheduleId}
+ *   headCount={headCount}
+ *   schedules={schedules}
+ *   month={month}
  *   onSelectDate={(date) => setSelected(date)}
  *   onSelectSchedule={(id) => setSelectedScheduleId(id)}
+ *   onMonthChange={setMonth}
+ *   onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
+ *   onIncrease={() => setHeadCount((prev) => prev + 1)}
  * />
  * ```
  */
