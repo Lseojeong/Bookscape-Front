@@ -9,10 +9,11 @@ import type { SellerReservationStatus } from '@/features/my-page/types';
  * 예약 상태를 `confirmed` 또는 `declined`로 변경합니다.
  * 성공 시 관련 예약 목록 쿼리를 무효화하여 최신 데이터를 다시 조회합니다.
  *
- * @param activityId - 선택된 체험 ID
- * @param scheduleIds - 현재 날짜의 전체 스케줄 ID 목록 (쿼리 무효화 대상)
  */
-export const usePatchReservationStatus = (activityId: number | null, scheduleIds: number[]) => {
+export const usePatchReservationStatus = (
+  activityId: number | null,
+  onSuccess?: (status: SellerReservationStatus) => void
+) => {
   const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
@@ -23,18 +24,21 @@ export const usePatchReservationStatus = (activityId: number | null, scheduleIds
       reservationId: number;
       status: SellerReservationStatus;
     }) => updateReservationStatus(activityId!, reservationId, { status }),
-    onSuccess: () => {
-      // 예약 목록 쿼리 무효화
-      scheduleIds.forEach((scheduleId) => {
-        queryClient.invalidateQueries({
-          queryKey: ['my-activities', activityId, 'reservations', scheduleId],
-        });
+    onSuccess: (_, variables) => {
+      // 예약 목록 갱신
+      queryClient.invalidateQueries({
+        queryKey: ['my-activities', activityId, 'reservations'],
       });
-
-      // 달력 뱃지 쿼리 무효화 (예약 상태 변경에 따라 달력 뱃지 표시도 달라질 수 있음)
+      // 탭 카운트 갱신
+      queryClient.invalidateQueries({
+        queryKey: ['my-activities', activityId, 'reserved-schedule'],
+      });
+      // 달력 뱃지 갱신
       queryClient.invalidateQueries({
         queryKey: ['my-activities', activityId, 'reservation-dashboard'],
       });
+      // 변경된 status 탭으로 이동
+      onSuccess?.(variables.status);
     },
   });
 

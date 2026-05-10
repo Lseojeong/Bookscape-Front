@@ -1,77 +1,43 @@
 import { useState } from 'react';
 import type {
   MyActivityReservedScheduleItem,
-  MyActivityReservation,
   SellerReservationStatus,
 } from '@/features/my-page/types';
 
-const getInitialTab = (reservations: MyActivityReservation[]): SellerReservationStatus => {
-  if (reservations.some((r) => r.status === 'pending')) return 'pending';
-  if (reservations.some((r) => r.status === 'confirmed')) return 'confirmed';
-  if (reservations.some((r) => r.status === 'declined')) return 'declined';
+const getInitialTab = (schedules: MyActivityReservedScheduleItem[]): SellerReservationStatus => {
+  if (schedules.some((s) => s.count.pending > 0)) return 'pending';
+  if (schedules.some((s) => s.count.confirmed > 0)) return 'confirmed';
+  if (schedules.some((s) => s.count.declined > 0)) return 'declined';
   return 'pending';
 };
 
-const getFirstScheduleId = (
-  schedules: MyActivityReservedScheduleItem[],
-  reservations: MyActivityReservation[],
-  tab: SellerReservationStatus
-): number | null => {
-  const first = schedules.find((s) =>
-    reservations.some((r) => r.scheduleId === s.scheduleId && r.status === tab)
-  );
-  return first?.scheduleId ?? schedules[0]?.scheduleId ?? null;
-};
-
-export const useReservationPanel = (
-  schedules: MyActivityReservedScheduleItem[],
-  reservations: MyActivityReservation[]
-) => {
+export const useReservationPanel = (schedules: MyActivityReservedScheduleItem[]) => {
   const [manualTab, setManualTab] = useState<SellerReservationStatus | null>(null);
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(null);
 
-  // 사용자가 탭을 직접 선택하지 않았으면 데이터 기반으로 자동 결정
-  const activeTab =
-    manualTab ?? (reservations.length > 0 ? getInitialTab(reservations) : 'pending');
+  // schedules 기반으로 초기 탭 자동 결정, 사용자가 직접 선택하면 그걸 우선
+  const activeTab = manualTab ?? getInitialTab(schedules);
 
-  // 사용자가 스케줄을 직접 선택하지 않았으면 현재 탭 기반으로 자동 결정
-  const resolvedScheduleId =
-    selectedScheduleId ?? getFirstScheduleId(schedules, reservations, activeTab);
+  // 현재 탭 기준 첫 번째 available 스케줄
+  const firstAvailableId =
+    schedules.find((s) => s.count[activeTab] > 0)?.scheduleId ?? schedules[0]?.scheduleId ?? null;
+  const resolvedScheduleId = selectedScheduleId ?? firstAvailableId;
 
-  const availableSchedules = schedules.filter((s) =>
-    reservations.some((r) => r.scheduleId === s.scheduleId && r.status === activeTab)
-  );
-
-  const filtered = reservations.filter(
-    (r) => r.scheduleId === resolvedScheduleId && r.status === activeTab
-  );
+  const availableSchedules = schedules.filter((s) => s.count[activeTab] > 0);
 
   const handleTabChange = (id: string) => {
     const nextTab = id as SellerReservationStatus;
-    const firstAvailable = schedules.find((s) =>
-      reservations.some((r) => r.scheduleId === s.scheduleId && r.status === nextTab)
-    );
     setManualTab(nextTab);
+    const firstAvailable = schedules.find((s) => s.count[nextTab] > 0);
     setSelectedScheduleId(firstAvailable?.scheduleId ?? null);
-  };
-
-  const handleAfterStatusChange = (updatedReservations: MyActivityReservation[]) => {
-    const stillAvailable = schedules.filter((s) =>
-      updatedReservations.some((r) => r.scheduleId === s.scheduleId && r.status === activeTab)
-    );
-
-    if (!stillAvailable.find((s) => s.scheduleId === resolvedScheduleId)) {
-      setSelectedScheduleId(stillAvailable[0]?.scheduleId ?? null);
-    }
   };
 
   return {
     activeTab,
+    setActiveTab: setManualTab,
     selectedScheduleId: resolvedScheduleId ?? 0,
     availableSchedules,
-    filtered,
     handleTabChange,
     setSelectedScheduleId,
-    handleAfterStatusChange,
   };
 };

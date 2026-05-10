@@ -52,58 +52,39 @@ export default function ReservationPanelContent({
   isSchedulesLoading,
   onClose,
 }: ReservationPanelContentProps) {
-  // 전체 스케줄 ID 목록으로 모든 예약 한 번에 조회
-  const scheduleIds = schedules.map((s) => s.scheduleId);
-  const { reservations, isLoading } = useReservationsQuery(activityId, scheduleIds);
-  const { mutateAsync: patchStatus, isPending } = usePatchReservationStatus(
-    activityId,
-    scheduleIds
-  );
-
-  const isAllLoading = isSchedulesLoading || isLoading;
-
   const {
     activeTab,
     selectedScheduleId,
     availableSchedules,
-    filtered,
     handleTabChange,
     setSelectedScheduleId,
-    handleAfterStatusChange,
-  } = useReservationPanel(schedules, reservations);
+  } = useReservationPanel(schedules);
 
-  // 승인 핸들러
+  const { mutateAsync: patchStatus, isPending } = usePatchReservationStatus(activityId, (status) =>
+    handleTabChange(status)
+  );
+  const { reservations, isLoading } = useReservationsQuery(
+    activityId,
+    selectedScheduleId,
+    activeTab
+  );
+
+  const isAllLoading = isSchedulesLoading || isLoading;
+
+  const selectedSchedule = schedules.find((s) => s.scheduleId === selectedScheduleId);
+  const TABS = [
+    { id: 'pending', label: TAB_LABELS.pending, count: selectedSchedule?.count.pending ?? 0 },
+    { id: 'confirmed', label: TAB_LABELS.confirmed, count: selectedSchedule?.count.confirmed ?? 0 },
+    { id: 'declined', label: TAB_LABELS.declined, count: selectedSchedule?.count.declined ?? 0 },
+  ];
+
   const handleConfirm = async (reservationId: number) => {
     await patchStatus({ reservationId, status: 'confirmed' });
-
-    const updated = reservations.filter((r) => r.id !== reservationId);
-    handleAfterStatusChange(updated);
   };
 
-  // 거절 핸들러
   const handleDecline = async (reservationId: number) => {
     await patchStatus({ reservationId, status: 'declined' });
-    const updated = reservations.filter((r) => r.id !== reservationId);
-    handleAfterStatusChange(updated);
   };
-
-  const TABS = [
-    {
-      id: 'pending',
-      label: TAB_LABELS.pending,
-      count: reservations.filter((r) => r.status === 'pending').length,
-    },
-    {
-      id: 'confirmed',
-      label: TAB_LABELS.confirmed,
-      count: reservations.filter((r) => r.status === 'confirmed').length,
-    },
-    {
-      id: 'declined',
-      label: TAB_LABELS.declined,
-      count: reservations.filter((r) => r.status === 'declined').length,
-    },
-  ];
 
   return (
     <div className="relative flex h-full w-full flex-col overflow-hidden px-6 py-8">
@@ -120,7 +101,6 @@ export default function ReservationPanelContent({
         </button>
       </div>
 
-      {/* 탭 */}
       <div className="mt-4.5 shrink-0">
         {!isAllLoading && (
           <TabBar
@@ -173,12 +153,12 @@ export default function ReservationPanelContent({
               <FormLabel className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약내역</FormLabel>
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <div className="flex flex-col gap-3">
-                  {filtered.length === 0 ? (
+                  {reservations.length === 0 ? (
                     <p className="text-sm text-gray-400">
                       {TAB_LABELS[activeTab]} 내역이 없습니다.
                     </p>
                   ) : (
-                    filtered.map((r) => (
+                    reservations.map((r) => (
                       <ReservationCard
                         key={r.id}
                         reservation={r}
