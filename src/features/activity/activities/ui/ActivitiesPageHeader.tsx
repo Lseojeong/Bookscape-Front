@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import SortSelectDropdown from '@/app/(public)/(explore)/activities/ui/SortSelectDropdown';
+import { useAllActivityList } from '@/features/activity/activities/hooks/useAllActivityList';
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
@@ -10,9 +11,8 @@ import SearchInput from '@/shared/ui/search-input/SearchInput';
  * 데스크탑 -
  */
 export default function ActivitiesPageHeader() {
-  const handleChangeCategory = (category: string) => {
-    return category;
-  };
+  const { category, sort, handleChangeCategory, handleChangeSort } = useAllActivityList();
+
   const router = useRouter();
   return (
     <div className="flex flex-col">
@@ -34,17 +34,17 @@ export default function ActivitiesPageHeader() {
           <SearchInput className="h-14! px-4! typo-14-medium! shadow-none sm:min-w-79.25" />
         </div>
         <div className="sm:hidden">
-          <SortSelectDropdown />
+          <SortSelectDropdown sortValue={sort} onChangeSortValue={handleChangeSort} />
         </div>
       </div>
 
       {/* CategoryFilter + (데스크탑: SortSelectDropdown) */}
       <div className="flex items-center">
         <div className="grow">
-          <CategoryFilter selectedCategory="전체" onChangeCategory={handleChangeCategory} />
+          <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
         </div>
-        <div className="hidden min-w-46 sm:block">
-          <SortSelectDropdown />
+        <div className="ml-5 hidden min-w-40 sm:block">
+          <SortSelectDropdown sortValue={sort} onChangeSortValue={handleChangeSort} />
         </div>
       </div>
     </div>

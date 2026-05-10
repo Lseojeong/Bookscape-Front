@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import {
   SelectDropdown,
   SelectDropdownContent,
@@ -15,11 +14,18 @@ const SORT_OPTIONS = [
   { sort: 'latest', label: '최신순' },
 ];
 
-export default function SortSelectDropdown() {
-  const [sortValue, setSortValue] = useState();
+type SortSelectDropdownProps = {
+  sortValue: string;
+  onChangeSortValue: (sort: string) => void;
+};
+
+export default function SortSelectDropdown({
+  sortValue,
+  onChangeSortValue,
+}: SortSelectDropdownProps) {
   return (
     <>
-      <SelectDropdown value={sortValue} onChangeValue={setSortValue}>
+      <SelectDropdown value={sortValue} onChangeValue={onChangeSortValue}>
         <SelectDropdownTrigger>
           <SelectDropdownValue
             placeholder="인기순"
