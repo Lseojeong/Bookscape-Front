@@ -26,7 +26,7 @@ export const useActivitySubmit = () => {
           ? await uploadImage(data.bannerImage)
           : (data.bannerImage as string);
 
-      // 소개 이미지 병렬 업로드리 처리
+      // 소개 이미지 병렬 업로드 처리
       const subImageUrls = await Promise.all(
         (data.subImages || []).map(async (img) =>
           img instanceof File ? await uploadImage(img) : (img as string)
