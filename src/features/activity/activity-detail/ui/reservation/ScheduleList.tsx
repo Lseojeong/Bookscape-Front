@@ -8,6 +8,7 @@ type ScheduleListProps = {
   schedules: ActivityScheduleTime[];
   selectedScheduleId?: number;
   onSelectSchedule: (id: number) => void;
+  disabledScheduleIds?: Set<number>;
   className?: string;
   emptyClassName?: string;
 };
@@ -32,6 +33,7 @@ export default function ScheduleList({
   schedules,
   selectedScheduleId,
   onSelectSchedule,
+  disabledScheduleIds,
   className,
   emptyClassName,
 }: ScheduleListProps) {
@@ -44,20 +46,26 @@ export default function ScheduleList({
         </p>
       ) : (
         <div className="mb-12.5 flex flex-col gap-3 lg:mb-8">
-          {schedules.map((schedule) => (
-            <button
-              key={schedule.id}
-              onClick={() => onSelectSchedule(schedule.id)}
-              className={cn(
-                'w-full rounded-xl border py-3 text-center typo-16-medium transition-colors',
-                selectedScheduleId === schedule.id
-                  ? 'border-primary-300 border-2 bg-primary-100 text-primary-500'
-                  : 'border-gray-300 bg-white text-gray-950'
-              )}
-            >
-              {schedule.startTime}~{schedule.endTime}
-            </button>
-          ))}
+          {schedules.map((schedule) => {
+            const isDisabled = disabledScheduleIds?.has(schedule.id);
+            return (
+              <button
+                key={schedule.id}
+                onClick={() => !isDisabled && onSelectSchedule(schedule.id)}
+                disabled={isDisabled}
+                className={cn(
+                  'w-full rounded-xl border py-3 text-center typo-16-medium transition-colors',
+                  isDisabled
+                    ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400'
+                    : selectedScheduleId === schedule.id
+                      ? 'border-primary-300 border-2 bg-primary-100 text-primary-500'
+                      : 'border-gray-300 text-gray-950'
+                )}
+              >
+                {schedule.startTime}~{schedule.endTime}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

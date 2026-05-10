@@ -1,5 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { getMyReservations } from '@/features/reservation/apis';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { useCreateReservation } from '../mutations/useCreateReservation';
@@ -7,27 +10,40 @@ import { useActivityDetail } from '../queries/useActivityDetail';
 import { useAvailableSchedule } from '../queries/useAvailableSchedule';
 
 export const useReservation = (activityId: number) => {
+  // 외부 훅
   const { data } = useActivityDetail(activityId);
-  const price = data?.price ?? 0;
+  const { user } = useUserStore();
+  const { showToast } = useToastStore();
+  const { mutate: createReservation } = useCreateReservation(activityId);
+  const { data: myReservationsData } = useQuery({
+    queryKey: QUERY_KEYS.MY_RESERVATIONS(),
+    queryFn: () => getMyReservations({ size: 100 }),
+    enabled: !!user,
+  });
 
+  // 상태
   const [selected, setSelected] = useState<Date>();
   const [headCount, setHeadCount] = useState(1);
   const [selectedScheduleId, setSelectedScheduleId] = useState<number>();
   const [month, setMonth] = useState(new Date());
 
+  // 파생 값
+  const price = data?.price ?? 0;
+  const isOwner = user?.id === data?.userId;
   const year = format(month, 'yyyy');
   const monthStr = format(month, 'MM');
 
+  // 파생 훅
   const { data: availableSchedules } = useAvailableSchedule(activityId, year, monthStr);
 
+  // 파생 값
   const selectedDateStr = selected ? format(selected, 'yyyy-MM-dd') : null;
   const schedules = availableSchedules?.find((s) => s.date === selectedDateStr)?.times ?? [];
-
-  const { mutate: createReservation } = useCreateReservation(activityId);
-
-  const { showToast } = useToastStore();
-
-  const { user } = useUserStore();
+  const myPendingScheduleIds = new Set(
+    myReservationsData?.reservations
+      .filter((r) => r.status === 'pending')
+      .map((r) => r.scheduleId) ?? []
+  );
 
   const reset = () => {
     setSelected(undefined);
@@ -52,8 +68,6 @@ export const useReservation = (activityId: number) => {
     );
   };
 
-  const isOwner = user?.id === data?.userId;
-
   return {
     price,
     selected,
@@ -68,5 +82,6 @@ export const useReservation = (activityId: number) => {
     reset,
     handleReserve,
     isOwner,
+    myPendingScheduleIds,
   };
 };

@@ -37,6 +37,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
     schedules,
     handleReserve,
     isOwner,
+    myPendingScheduleIds,
   } = useReservation(activityId);
 
   if (isOwner) return null;
@@ -70,6 +71,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
         schedules={schedules}
         selectedScheduleId={selectedScheduleId}
         onSelectSchedule={(id) => setSelectedScheduleId(id)}
+        disabledScheduleIds={myPendingScheduleIds}
         className="border-b border-gray-50"
       />
 
