@@ -2,10 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { useMyReservations } from '@/features/reservation/reservation-list/queries/useMyReservations';
+import {
+  MY_RESERVATIONS_PAGE_SIZE,
+  useMyReservations,
+} from '@/features/reservation/reservation-list/queries/useMyReservations';
 import ReservationListSection from '@/features/reservation/reservation-list/ui/my-reservation-list/ReservationListSection';
 import StatusFilter from '@/features/reservation/reservation-list/ui/status-filter/StatusFilter';
 import type { MyReservationStatus } from '@/features/reservation/types';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
@@ -22,14 +27,23 @@ export default function ReservationListView() {
   const router = useRouter();
   const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | ''>('pending');
 
-  const { data, isLoading } = useMyReservations({
+  const { query } = useMyReservations({
     status: (selectedStatus || undefined) as MyReservationStatus | undefined,
-    size: 10,
+    size: MY_RESERVATIONS_PAGE_SIZE,
   });
 
   const reservations = useMemo(() => {
-    return data?.reservations ?? [];
-  }, [data?.reservations]);
+    return query.data?.pages.flatMap((page) => page.reservations) ?? [];
+  }, [query.data?.pages]);
+
+  const isInitialError = query.isError && reservations.length === 0;
+
+  const { setSentinel } = useInfiniteScroll({
+    enabled: query.isSuccess && !query.isFetchNextPageError,
+    hasNextPage: query.hasNextPage,
+    isFetchingNextPage: query.isFetchingNextPage,
+    fetchNextPage: query.fetchNextPage,
+  });
 
   return (
     <div className="flex flex-col gap-7.5 pb-17.5">
@@ -43,10 +57,19 @@ export default function ReservationListView() {
       </div>
 
       <ReservationListSection
-        isLoading={isLoading}
+        isLoading={query.isPending}
+        isError={isInitialError}
         reservations={reservations}
         selectedStatus={selectedStatus}
         emptyMainTextByStatus={EMPTY_MAIN_TEXT_BY_STATUS}
+      />
+
+      <InfiniteScrollSentinel
+        hasNextPage={query.hasNextPage}
+        isFetchingNextPage={query.isFetchingNextPage}
+        isFetchNextPageError={query.isFetchNextPageError}
+        onRetryFetchNextPage={() => query.fetchNextPage()}
+        setSentinel={setSentinel}
       />
     </div>
   );

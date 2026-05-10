@@ -10,6 +10,7 @@ import { formatYmdToDot } from '@/shared/utils/dateFormat';
 
 type ReservationListSectionProps = {
   isLoading: boolean;
+  isError?: boolean;
   reservations: MyReservation[];
   selectedStatus: ReservationStatus | '';
   emptyMainTextByStatus: Record<ReservationStatus | '', string>;
@@ -17,6 +18,7 @@ type ReservationListSectionProps = {
 
 export default function ReservationListSection({
   isLoading,
+  isError = false,
   reservations,
   selectedStatus,
   emptyMainTextByStatus,
@@ -33,7 +35,7 @@ export default function ReservationListSection({
       group[item.date].push(item);
     });
 
-    return dateOrder.map((date) => ({ date, items: group[date] }));
+    return dateOrder.map((date) => ({ date, items: group[date] ?? [] }));
   }, [reservations]);
 
   if (isLoading) {
@@ -43,6 +45,10 @@ export default function ReservationListSection({
         <Loading />
       </div>
     );
+  }
+
+  if (isError) {
+    return <EmptyState type="error" mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'} />;
   }
 
   if (reservations.length === 0) {
@@ -68,8 +74,6 @@ export default function ReservationListSection({
           {index !== reservationsByDate.length - 1 && <div className="mt-5 h-px bg-gray-50" />}
         </section>
       ))}
-
-      {/* TODO: 무한 스크롤 적용 */}
     </div>
   );
 }
