@@ -71,13 +71,22 @@ export default function ReservationPanelContent({
     refetch: refetchReservations,
   } = useReservationsQuery(activityId, selectedScheduleId, activeTab);
 
-  const isAllLoading = isSchedulesLoading || isLoading;
-
-  const selectedSchedule = schedules.find((s) => s.scheduleId === selectedScheduleId);
   const TABS = [
-    { id: 'pending', label: TAB_LABELS.pending, count: selectedSchedule?.count.pending ?? 0 },
-    { id: 'confirmed', label: TAB_LABELS.confirmed, count: selectedSchedule?.count.confirmed ?? 0 },
-    { id: 'declined', label: TAB_LABELS.declined, count: selectedSchedule?.count.declined ?? 0 },
+    {
+      id: 'pending',
+      label: TAB_LABELS.pending,
+      count: schedules.reduce((sum, s) => sum + s.count.pending, 0),
+    },
+    {
+      id: 'confirmed',
+      label: TAB_LABELS.confirmed,
+      count: schedules.reduce((sum, s) => sum + s.count.confirmed, 0),
+    },
+    {
+      id: 'declined',
+      label: TAB_LABELS.declined,
+      count: schedules.reduce((sum, s) => sum + s.count.declined, 0),
+    },
   ];
 
   const handleConfirm = async (reservationId: number) => {
@@ -103,6 +112,7 @@ export default function ReservationPanelContent({
         </button>
       </div>
 
+      {/* 탭 - 스케줄 로딩 시 스켈레톤 */}
       <div className="mt-4.5 shrink-0">
         {isSchedulesLoading ? (
           <div className="flex gap-2">
@@ -120,19 +130,11 @@ export default function ReservationPanelContent({
         )}
       </div>
 
+      {/* 콘텐츠 - 스케줄 로딩 시 전체 로딩 */}
       <div className="flex min-h-0 flex-1 flex-col">
-        {isAllLoading ? (
+        {isSchedulesLoading ? (
           <div className="mt-6 flex justify-center">
             <Loading size={16} color="var(--color-gray-400)" />
-          </div>
-        ) : isError ? (
-          <div className="mt-6 flex flex-col items-center gap-4">
-            <p className="text-center typo-14-medium whitespace-pre-line text-gray-400">
-              {`예약 목록을 불러오는 데 실패했어요.\n다시 시도해주세요.`}
-            </p>
-            <Button theme="secondary" size="md" onClick={() => refetchReservations()}>
-              다시 시도하기
-            </Button>
           </div>
         ) : availableSchedules.length === 0 ? (
           <p className="mt-3 text-center typo-14-medium text-gray-400">
@@ -165,12 +167,26 @@ export default function ReservationPanelContent({
               </SelectDropdown>
             </div>
 
-            {/* 카드 목록 */}
+            {/* 카드 목록 - 예약 로딩 시 카드 영역만 로딩 */}
             <div className="flex min-h-0 flex-1 flex-col md:w-1/2 lg:w-full">
               <FormLabel className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약내역</FormLabel>
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <div className="flex flex-col gap-3">
-                  {reservations.length === 0 ? (
+                  {isLoading ? (
+                    // TODO: 스켈레톤 UI로 교체
+                    <div className="flex justify-center">
+                      <Loading size={16} color="var(--color-gray-400)" />
+                    </div>
+                  ) : isError ? (
+                    <div className="flex flex-col items-center gap-3">
+                      <p className="text-center typo-14-medium whitespace-pre-line text-gray-400">
+                        {`예약 내역을 불러오는 데 실패했어요.\n다시 시도해주세요.`}
+                      </p>
+                      <Button theme="secondary" size="md" onClick={() => refetchReservations()}>
+                        다시 시도하기
+                      </Button>
+                    </div>
+                  ) : reservations.length === 0 ? (
                     <p className="text-sm text-gray-400">
                       {TAB_LABELS[activeTab]} 내역이 없습니다.
                     </p>
