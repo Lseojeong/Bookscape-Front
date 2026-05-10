@@ -5,6 +5,8 @@ type UseNotificationDropdownParams = {
   isLoaded: boolean;
   /** 알림 존재 여부 (없으면 onEmpty 실행) */
   hasNotifications: boolean;
+  /** 새 알림 존재 여부 (false면 markSeen 호출 생략) */
+  hasNew: boolean;
   /** 모달 열기 직전 기준(lastSeen) */
   lastSeenAtMs: number | null;
   /** 알림 확인 처리 */
@@ -16,6 +18,7 @@ type UseNotificationDropdownParams = {
 export const useNotificationDropdown = ({
   isLoaded,
   hasNotifications,
+  hasNew,
   lastSeenAtMs,
   markSeen,
   onEmpty,
@@ -36,10 +39,12 @@ export const useNotificationDropdown = ({
     }
     setModalBaseSeenAtMs(lastSeenAtMs);
     setIsOpen(true);
-    void markSeen().catch(() => {
-      // 확인 처리 실패는 UX에 큰 영향이 없어 무시합니다.
-    });
-  }, [hasNotifications, isLoaded, lastSeenAtMs, markSeen, onEmpty]);
+    if (hasNew) {
+      void markSeen().catch(() => {
+        // 확인 처리 실패는 UX에 큰 영향이 없어 무시합니다.
+      });
+    }
+  }, [hasNew, hasNotifications, isLoaded, lastSeenAtMs, markSeen, onEmpty]);
 
   const toggle = useCallback(() => {
     if (isOpen) {

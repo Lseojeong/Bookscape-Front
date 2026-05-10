@@ -50,6 +50,7 @@ export default function NotificationButton({ theme = 'light' }: NotificationButt
   const dropdown = useNotificationDropdown({
     isLoaded,
     hasNotifications: notifications.length > 0,
+    hasNew,
     lastSeenAtMs,
     markSeen: () => markSeenMutation.mutateAsync(),
     onEmpty: () => showToast('warning', '알림이 없습니다.'),
