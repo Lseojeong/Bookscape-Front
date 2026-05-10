@@ -6,7 +6,7 @@ import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
 import NotificationItem from './NotificationItem';
 
-interface NotificationModalProps {
+type NotificationModalProps = {
   notifications: ParsedNotification[];
   totalCount: number;
   lastSeenAtMs?: number | null;
@@ -16,7 +16,7 @@ interface NotificationModalProps {
   isFetchingNextPage: boolean;
   isFetchNextPageError: boolean;
   onFetchNextPage: () => Promise<unknown>;
-}
+};
 /**
  * 알림 리스트를 표시하는 모달 컴포넌트입니다.
  *
