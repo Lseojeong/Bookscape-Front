@@ -6,6 +6,7 @@ import BaseDropdown from '@/shared/ui/dropdown/base/BaseDropdown';
 import BaseDropdownProvider from '@/shared/ui/dropdown/base/BaseDropdownProvider';
 import { SelectContext } from '@/shared/ui/dropdown/context/selectContext';
 import type { SelectContextType } from '@/shared/ui/dropdown/context/selectContext';
+import { useFormField } from '@/shared/ui/form/FormField';
 
 type SelectDropdownProps<T = string> = {
   children: ReactNode;
@@ -62,7 +63,8 @@ export default function SelectDropdown<T = string>({
   variants = 'basic',
 }: SelectDropdownProps<T>) {
   const autoId = useId();
-  const triggerId = triggerIdProp ?? `select-trigger-${autoId}`;
+  const formField = useFormField();
+  const triggerId = triggerIdProp ?? formField?.id ?? `select-trigger-${autoId}`;
 
   return (
     <SelectContext

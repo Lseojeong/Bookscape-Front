@@ -70,6 +70,7 @@ export function AddressInput() {
     <div className="flex flex-col gap-2.5">
       <FormField
         label="주소"
+        labelWeight="bold"
         labelAction={
           <Button
             type="button"

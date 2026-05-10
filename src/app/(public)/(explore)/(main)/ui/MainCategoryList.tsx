@@ -28,7 +28,7 @@ const CATEGORY_OPTIONS = [
  */
 export default function MainCategoryList() {
   return (
-    <section className="flex flex-col gap-5">
+    <article className="flex flex-col gap-5">
       <div className="flex items-center">
         <Title as="h2" size="18" weight="bold" className="grow text-gray-950 md:typo-32-bold">
           ⚡️ 카테고리
@@ -67,6 +67,6 @@ export default function MainCategoryList() {
           );
         })}
       </ul>
-    </section>
+    </article>
   );
 }

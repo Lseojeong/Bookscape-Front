@@ -14,7 +14,7 @@ const buttonStyle = cva(
         primary:
           'border-transparent bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 aria-disabled:bg-gray-200 aria-disabled:text-gray-50 aria-disabled:hover:bg-gray-200 aria-disabled:active:bg-gray-200',
         secondary:
-          'border-gray-200 bg-white text-gray-600 hover:bg-gray-50 active:bg-gray-100aria-disabled:bg-white aria-disabled:border-gray-200 aria-disabled:text-gray-300 aria-disabled:hover:bg-white aria-disabled:active:bg-white',
+          'border-gray-200 bg-white text-gray-600 hover:bg-gray-50 active:bg-gray-100 aria-disabled:bg-white aria-disabled:border-gray-200 aria-disabled:text-gray-300 aria-disabled:hover:bg-white aria-disabled:active:bg-white',
         gray: 'border-transparent bg-gray-50 text-gray-600 hover:bg-gray-100 active:bg-gray-200 aria-disabled:bg-gray-200 aria-disabled:text-gray-50 aria-disabled:hover:bg-gray-200 aria-disabled:active:bg-gray-200',
       },
       size: {

@@ -2,6 +2,7 @@ import {
   ActivityDetailSchema,
   ActivityResponse,
   ActivitySchedule,
+  GetSearchActivityParams,
 } from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
@@ -35,8 +36,26 @@ export const createReservation = async (
 };
 
 export const getHotActivityData = async (size: number) => {
-  const result = await get<ActivityResponse>(
-    `/activities?method=offset&sort=most_reviewed&size=${size}`
-  );
+  const result = await get<ActivityResponse>('/activities', {
+    method: 'offset',
+    sort: 'most_reviewed',
+    size,
+  });
   return result?.activities ?? [];
+};
+
+export const getSearchActivityData = async ({
+  method = 'offset',
+  category,
+  keyword,
+  page = 1,
+  size,
+}: GetSearchActivityParams) => {
+  return await get<ActivityResponse>('/activities', {
+    method,
+    ...(category && { category }),
+    keyword,
+    page,
+    size,
+  });
 };

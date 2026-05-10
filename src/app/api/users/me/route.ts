@@ -1,4 +1,10 @@
-import type { UpdateMyProfileRequestBody, UserResponse } from '@/features/user/types';
+import { cookies } from 'next/headers';
+import { LOGIN_METHOD_COOKIE_KEY, type LoginMethod } from '@/features/auth/constants/loginMethod';
+import type {
+  UpdateMyProfileRequestBody,
+  UserMeResponse,
+  UserResponse,
+} from '@/features/user/types';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
 
@@ -14,10 +20,17 @@ import { proxyFetch } from '@/shared/apis/bff/proxy';
  * - 실제 데이터 조회는 `proxyFetch`가 백엔드 API(`/users/me`)로 요청을 전달하며,
  *   쿠키의 `accessToken`을 `Authorization: Bearer ...` 헤더로 주입합니다.
  *
- * @returns 사용자 정보 (`UserResponse`)
+ * @returns 사용자 정보 (`UserMeResponse`)
  */
 export const GET = createAuthorizedRoute(async () => {
-  return proxyFetch.get<UserResponse>('/users/me');
+  const me = await proxyFetch.get<UserResponse>('/users/me');
+  if (!me) return me;
+
+  const cookieStore = await cookies();
+  const raw = cookieStore.get(LOGIN_METHOD_COOKIE_KEY)?.value;
+  const loginMethod: LoginMethod | null = raw === 'auth' || raw === 'oauth' ? raw : null;
+
+  return { ...me, loginMethod } satisfies UserMeResponse;
 });
 
 /**

@@ -5,6 +5,7 @@ import TotalPrice from '@/shared/ui/price/TotalPrice';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
+import { formatYmdToDot } from '@/shared/utils/dateFormat';
 import type { ReservationCardProps } from './ReservationCard';
 
 /**
@@ -19,17 +20,8 @@ import type { ReservationCardProps } from './ReservationCard';
  * ```
  */
 export default function ReservationCardInfo({ data }: ReservationCardProps) {
-  const {
-    activity,
-    totalPrice,
-    headCount,
-    status,
-    date,
-    startTime,
-    endTime,
-    reviewSubmitted,
-    activityId,
-  } = data;
+  const { activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
+    data;
   const { title } = activity;
 
   return (
@@ -46,7 +38,7 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
 
         {/* 예약 날짜 + 시간 */}
         <p className="flex gap-1 typo-13-medium text-gray-500 lg:typo-16-medium">
-          <span className="hidden lg:inline-block">{date}</span>
+          <span className="hidden lg:inline-block">{formatYmdToDot(date)}</span>
           <span className="hidden lg:inline-block">·</span>
           <span>
             {startTime} - {endTime}
@@ -64,7 +56,7 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
           type="reservation"
           status={status}
           reviewSubmitted={reviewSubmitted}
-          activityId={activityId}
+          activityId={activity.id}
         />
       </div>
     </BaseCardInfo>

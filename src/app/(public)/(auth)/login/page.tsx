@@ -1,15 +1,18 @@
 'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { loginUser } from '@/features/auth/apis';
+import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
+import { loginUser } from '@/features/auth/apis/auth';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
-import { LoginFormValues } from '@/features/auth/utils/schema';
+import { LoginFormValues, loginSchema } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import Button from '@/shared/ui/button/Button';
+import FormErrorMessage from '@/shared/ui/form/FormErrorMessage';
 import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
@@ -25,18 +28,21 @@ export default function LoginPage() {
   const router = useRouter();
   const setSession = useUserStore((state) => state.setSession);
   const { showToast } = useToastStore();
-  const {
-    control,
-    handleSubmit,
-    setError,
-    formState: { isSubmitting, errors, isDirty },
-  } = useForm({
+  const methods = useForm({
     defaultValues: {
       email: '',
       password: '',
     },
-    mode: 'onChange',
+    mode: 'onBlur',
+    resolver: zodResolver(loginSchema),
   });
+
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { isSubmitting, isDirty, errors },
+  } = methods;
 
   /** 로그인 요청 핸들러 */
   const handleLogin = useCallback(
@@ -73,40 +79,45 @@ export default function LoginPage() {
 
   return (
     <>
-      <AuthForm onSubmit={handleSubmit(handleLogin)}>
-        <FormField label="이메일">
-          <FormInput
-            type="email"
-            name="email"
-            control={control}
-            placeholder="이메일을 입력해 주세요"
-          />
-        </FormField>
+      <AuthHeadline />
+      <div className="mt-17 md:mt-22">
+        <AuthForm onSubmit={handleSubmit(handleLogin)}>
+          <FormField label="이메일">
+            <FormInput
+              type="email"
+              name="email"
+              control={control}
+              placeholder="이메일을 입력해 주세요"
+            />
+          </FormField>
 
-        <FormField label="비밀번호">
-          <PasswordInput name="password" control={control} placeholder="비밀번호를 입력해 주세요" />
-        </FormField>
-        <div className="mt-1 md:mt-2">
-          {/* API 에러 메시지 */}
-          {errors.root && (
-            <p className="typo-13-medium text-red-500" role="alert">
-              {errors.root.message}
-            </p>
-          )}
+          <FormField label="비밀번호">
+            <PasswordInput
+              name="password"
+              control={control}
+              placeholder="비밀번호를 입력해 주세요"
+            />
+          </FormField>
+          <div className="mt-1 md:mt-2">
+            {/* 백엔드 에러 메시지 */}
+            {errors.root && (
+              <FormErrorMessage className="typo-13-medium">{errors.root.message}</FormErrorMessage>
+            )}
 
-          <Button
-            type="submit"
-            theme="primary"
-            size="lg"
-            isLoading={isSubmitting}
-            disabled={!isDirty || isSubmitting}
-            className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
-          >
-            로그인 하기
-          </Button>
-        </div>
-      </AuthForm>
-      <AuthFooter />
+            <Button
+              type="submit"
+              theme="primary"
+              size="lg"
+              isLoading={isSubmitting}
+              disabled={!isDirty || isSubmitting}
+              className={cn('mt-1 h-13.5 w-full rounded-2xl', !errors.root && 'md:mt-2')}
+            >
+              로그인 하기
+            </Button>
+          </div>
+        </AuthForm>
+        <AuthFooter />
+      </div>
     </>
   );
 }
