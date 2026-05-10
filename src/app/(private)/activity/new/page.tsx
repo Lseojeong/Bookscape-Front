@@ -20,8 +20,8 @@ export default function ActivityNewPage() {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
   const handleCreateActivity = (data: ActivityFormValues) => {
-    // 제출된 데이터가 조드 스키마 검증을 통과한 형태인지 확인
-    console.log('서버로 전송될 최종 데이터:', data);
+    // TODO: 린트 에러 방지용으로 API 연결 시 삭제 필요
+    void data;
     alert('폼 검증 성공! (개발자 도구 콘솔창을 확인)');
 
     // TODO: 이후 백엔드 연동 시 React Query의 mutate 함수로 교체 필요
