@@ -61,7 +61,7 @@ export default function ReservationPanelContent({
     setSelectedScheduleId,
   } = useReservationPanel(schedules);
 
-  const { mutateAsync: patchStatus, isPending } = usePatchReservationStatus(activityId, (status) =>
+  const { mutateAsync: patchStatus } = usePatchReservationStatus(activityId, (status) =>
     handleTabChange(status)
   );
   const {
@@ -179,7 +179,6 @@ export default function ReservationPanelContent({
                       <ReservationCard
                         key={r.id}
                         reservation={r}
-                        isLoading={isPending}
                         onConfirm={activeTab === 'pending' ? handleConfirm : undefined}
                         onDecline={activeTab === 'pending' ? handleDecline : undefined}
                       />

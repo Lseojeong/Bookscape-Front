@@ -1,12 +1,12 @@
+import { useState } from 'react';
 import type { MyActivityReservation } from '@/features/my-page/types';
 import Button from '@/shared/ui/button/Button';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 
 type ReservationCardProps = {
   reservation: MyActivityReservation;
-  onConfirm?: (id: number) => void;
-  onDecline?: (id: number) => void;
-  isLoading?: boolean;
+  onConfirm?: (id: number) => Promise<void>;
+  onDecline?: (id: number) => Promise<void>;
 };
 
 /**
@@ -30,11 +30,34 @@ export default function ReservationCard({
   reservation,
   onConfirm,
   onDecline,
-  isLoading = false,
 }: ReservationCardProps) {
+  const [loadingType, setLoadingType] = useState<'confirm' | 'decline' | null>(null);
+
   const isPending = reservation.status === 'pending';
   const isConfirmed = reservation.status === 'confirmed';
   const isDeclined = reservation.status === 'declined';
+
+  const handleConfirm = async () => {
+    if (!onConfirm) return;
+    setLoadingType('confirm');
+    try {
+      await onConfirm(reservation.id);
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const handleDecline = async () => {
+    if (!onDecline) return;
+    setLoadingType('decline');
+    try {
+      await onDecline(reservation.id);
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const isAnyLoading = loadingType !== null;
 
   return (
     <div className="rounded-2xl border border-gray-100 p-4">
@@ -59,17 +82,19 @@ export default function ReservationCard({
             theme="primary"
             size="sm"
             className="h-full flex-1"
-            onClick={() => onConfirm(reservation.id)}
-            isLoading={isLoading}
+            onClick={handleConfirm}
+            isLoading={loadingType === 'confirm'}
+            disabled={isAnyLoading}
           >
             승인하기
           </Button>
           <Button
             theme="secondary"
             size="sm"
-            className="h-full flex-1 border-gray-100"
-            onClick={() => onDecline(reservation.id)}
-            isLoading={isLoading}
+            className="h-full flex-1"
+            onClick={handleDecline}
+            isLoading={loadingType === 'decline'}
+            disabled={isAnyLoading}
           >
             거절하기
           </Button>
