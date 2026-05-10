@@ -27,12 +27,6 @@ type ReservationBarProps = {
  * ```
  */
 export default function ReservationBar({ activityId }: ReservationBarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');
-
-  const startYRef = useRef<number>(0);
-  const [dragY, setDragY] = useState(0);
-
   const {
     price,
     selected,
@@ -46,7 +40,16 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
     schedules,
     reset,
     handleReserve,
+    isOwner,
   } = useReservation(activityId);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');
+
+  const startYRef = useRef<number>(0);
+  const [dragY, setDragY] = useState(0);
+
+  if (isOwner) return null;
 
   const handleTouchStart = (e: React.TouchEvent) => {
     startYRef.current = e.touches[0].clientY;

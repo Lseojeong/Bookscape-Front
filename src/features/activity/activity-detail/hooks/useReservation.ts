@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { useActivityDetail } from '../queries/useActivityDetail';
 import { useAvailableSchedule } from '../queries/useAvailableSchedule';
@@ -26,6 +27,8 @@ export const useReservation = (activityId: number) => {
 
   const { showToast } = useToastStore();
 
+  const { user } = useUserStore();
+
   const reset = () => {
     setSelected(undefined);
     setSelectedScheduleId(undefined);
@@ -49,6 +52,8 @@ export const useReservation = (activityId: number) => {
     );
   };
 
+  const isOwner = user?.id === data?.userId;
+
   return {
     price,
     selected,
@@ -62,5 +67,6 @@ export const useReservation = (activityId: number) => {
     schedules,
     reset,
     handleReserve,
+    isOwner,
   };
 };
