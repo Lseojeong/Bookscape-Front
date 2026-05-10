@@ -30,8 +30,6 @@ export default function MyInfoClient() {
     }
   };
 
-  if (!user) return null;
-
   return (
     <div className="mt-6 flex w-full flex-col items-center gap-6 md:w-119 lg:w-160">
       {isLoading ? (
