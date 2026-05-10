@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ActivityForm from '@/features/my-page/activity-form/ui/ActivityForm';
 import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
@@ -17,9 +16,10 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
  * }
  */
 export default function ActivityNewPage() {
-  const router = useRouter();
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const { showToast } = useToastStore();
+  // NOTE: 폼을 초기화하기 위한 Key 상태
+  const [formKey, setFormKey] = useState(0);
 
   const handleCreateActivity = (data: ActivityFormValues) => {
     // TODO: 린트 에러 방지용으로 API 연결 시 삭제 필요
@@ -34,8 +34,10 @@ export default function ActivityNewPage() {
     setIsCancelModalOpen(true);
   };
 
-  const handleConfirmLeave = () => {
-    router.back();
+  const handleConfirmReset = () => {
+    setFormKey((prev) => prev + 1); // Key를 변경하여 폼을 리셋
+    setIsCancelModalOpen(false);
+    showToast('check', '내용이 초기화되었습니다.');
   };
 
   return (
@@ -46,6 +48,7 @@ export default function ActivityNewPage() {
         </div>
 
         <ActivityForm
+          key={formKey} // key를 부여하여 부모가 원할 때 자식을 새로 렌더링하게 함
           mode="create"
           onSubmitForm={handleCreateActivity}
           onCancelForm={handleCancelClick}
@@ -55,11 +58,11 @@ export default function ActivityNewPage() {
       <ConfirmDialog
         isOpen={isCancelModalOpen}
         onClose={() => setIsCancelModalOpen(false)}
-        title="아직 내용이 저장되지 않았어요."
-        description="뒤로 가면 입력한 내용이 사라집니다."
-        cancelText="나가기"
+        title="입력 내용을 초기화하시겠어요?"
+        description="작성 중인 모든 내용이 삭제되고 처음 상태로 돌아갑니다."
+        cancelText="초기화기"
         confirmText="계속 작성하기"
-        onCancel={handleConfirmLeave}
+        onCancel={handleConfirmReset}
       />
     </main>
   );
