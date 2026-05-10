@@ -28,7 +28,10 @@ export const usePatchReservationStatus = (
     }: {
       reservationId: number;
       status: SellerReservationStatus;
-    }) => updateReservationStatus(activityId!, reservationId, { status }),
+    }) => {
+      if (!activityId) throw new Error('activityId가 없습니다.');
+      return updateReservationStatus(activityId, reservationId, { status });
+    },
     onSuccess: (_, variables) => {
       // 예약 목록 갱신
       queryClient.invalidateQueries({
