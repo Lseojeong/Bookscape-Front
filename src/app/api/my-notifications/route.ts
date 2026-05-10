@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 import type { GetMyNotificationsResponse } from '@/features/notification/types';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
@@ -16,6 +18,20 @@ import { proxyFetch } from '@/shared/apis/bff/proxy';
  * @returns 내 알림 리스트 (`GetMyNotificationsResponse`)
  */
 export const GET = createAuthorizedRoute(async ({ request }) => {
+  const cookieStore = await cookies();
+  const lastSeenRaw = cookieStore.get('notifications_last_seen_at')?.value;
+  const lastSeenAtMs = lastSeenRaw ? Number(lastSeenRaw) : null;
+
   const { search } = new URL(request.url);
-  return proxyFetch.get<GetMyNotificationsResponse>(`/my-notifications${search}`);
+  const data = await proxyFetch.get<GetMyNotificationsResponse>(`/my-notifications${search}`);
+
+  const notifications = data?.notifications ?? [];
+  const hasNew =
+    notifications.length > 0 &&
+    notifications.some((n) => {
+      const ms = Date.parse(n.updatedAt);
+      return Number.isFinite(ms) && (lastSeenAtMs == null || ms > lastSeenAtMs);
+    });
+
+  return NextResponse.json({ ...data, hasNew, lastSeenAtMs });
 });
