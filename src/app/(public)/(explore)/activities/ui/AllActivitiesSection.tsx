@@ -21,7 +21,7 @@ export default function AllActivitiesSection() {
           />
         </div>
       ) : (
-        <section className="mt-6 flex flex-col items-center gap-6 md:gap-7.5">
+        <section className="flex flex-col items-center gap-6 md:gap-7.5">
           <ActivityListWithPagination
             activities={activities}
             currentPage={page}

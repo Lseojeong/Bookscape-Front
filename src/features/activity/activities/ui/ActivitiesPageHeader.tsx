@@ -24,14 +24,14 @@ export default function ActivitiesPageHeader() {
 
   const router = useRouter();
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-3 sm:gap-9">
       {/* SearchInput — 모바일에서만 상단 full width */}
-      <div className="mb-3 sm:hidden">
+      <div className="sm:hidden">
         <SearchInput className="h-14! w-full px-4! typo-14-medium! shadow-none" />
       </div>
 
       {/* PageHeader + (모바일: SortSelectDropdown | 데스크탑: SearchInput) */}
-      <div className="mb-7.5 flex items-center sm:mb-9">
+      <div className="flex items-center">
         <div className="grow">
           <PageHeader
             title="체험활동"
