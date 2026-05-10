@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from 'next/navigation';
-import { startTransition, useCallback, useEffect } from 'react';
+import { startTransition, useCallback, useEffect, useRef } from 'react';
 import {
   useActivityListData,
   usePrefetchNextPage,
@@ -58,8 +58,16 @@ export const useActivityList = ({
   );
 
   // pageSize 변경 시 페이지 초기화
+  const isInitializedRef = useRef(false);
+
   useEffect(() => {
     if (!pageSize) return;
+
+    if (!isInitializedRef.current) {
+      isInitializedRef.current = true;
+      return;
+    }
+
     startTransition(() => {
       updateParams({ page: '1' }, 'replace');
     });
