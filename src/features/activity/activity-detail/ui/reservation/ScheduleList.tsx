@@ -1,15 +1,11 @@
 'use client';
 
+import { ActivityScheduleTime } from '@/features/activity/types';
 import { cn } from '@/shared/utils/cn';
-
-// TODO: API 연결 후 제거
-const MOCK_SCHEDULES = [
-  { id: 1, startTime: '14:00', endTime: '15:00' },
-  { id: 2, startTime: '15:00', endTime: '16:00' },
-];
 
 type ScheduleListProps = {
   selected?: Date;
+  schedules: ActivityScheduleTime[];
   selectedScheduleId?: number;
   onSelectSchedule: (id: number) => void;
   className?: string;
@@ -25,6 +21,7 @@ type ScheduleListProps = {
  * ```tsx
  * <ScheduleList
  *   selected={selected}
+ *   schedules={schedules}
  *   selectedScheduleId={selectedScheduleId}
  *   onSelectSchedule={(id) => setSelectedScheduleId(id)}
  * />
@@ -32,6 +29,7 @@ type ScheduleListProps = {
  */
 export default function ScheduleList({
   selected,
+  schedules,
   selectedScheduleId,
   onSelectSchedule,
   className,
@@ -46,7 +44,7 @@ export default function ScheduleList({
         </p>
       ) : (
         <div className="mb-12.5 flex flex-col gap-3 lg:mb-8">
-          {MOCK_SCHEDULES.map((schedule) => (
+          {schedules.map((schedule) => (
             <button
               key={schedule.id}
               onClick={() => onSelectSchedule(schedule.id)}

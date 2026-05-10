@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import Button from '@/shared/ui/button/Button';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import PriceDisplay from '@/shared/ui/price/PriceDisplay';
-import { useActivityDetail } from '../../queries/useActivityDetail';
+import { useReservation } from '../../hooks/useReservation';
 import HeadCountControl from './HeadCountControl';
 import ReservationCalendar from './ReservationCalendar';
 import ScheduleList from './ScheduleList';
@@ -25,12 +24,18 @@ type ReservationWidgetProps = {
  * ```
  */
 export default function ReservationWidget({ activityId }: ReservationWidgetProps) {
-  const { data } = useActivityDetail(activityId);
-  const price = data?.price ?? 0;
-
-  const [selected, setSelected] = useState<Date>();
-  const [headCount, setHeadCount] = useState(1);
-  const [selectedScheduleId, setSelectedScheduleId] = useState<number>();
+  const {
+    price,
+    selected,
+    setSelected,
+    headCount,
+    setHeadCount,
+    selectedScheduleId,
+    setSelectedScheduleId,
+    month,
+    setMonth,
+    schedules,
+  } = useReservation(activityId);
 
   return (
     <div className="flex flex-col gap-6 rounded-3xl border border-gray-50 p-7.5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
@@ -40,6 +45,8 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
       {/* 달력 */}
       <ReservationCalendar
         selected={selected}
+        month={month}
+        onMonthChange={setMonth}
         onSelect={(date) => {
           setSelected(date);
           setSelectedScheduleId(undefined);
@@ -56,6 +63,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
       {/* 예약 가능한 시간 */}
       <ScheduleList
         selected={selected}
+        schedules={schedules}
         selectedScheduleId={selectedScheduleId}
         onSelectSchedule={(id) => setSelectedScheduleId(id)}
         className="border-b border-gray-50"

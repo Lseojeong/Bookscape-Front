@@ -1,13 +1,14 @@
 'use client';
 
 import { ko } from 'date-fns/locale';
-import { useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { CaretLeftIcon, CaretRightIcon } from '@/shared/assets/icons';
 
 type ReservationCalendarProps = {
   selected?: Date;
   onSelect: (date: Date | undefined) => void;
+  month: Date;
+  onMonthChange: (month: Date) => void;
 };
 
 /**
@@ -20,9 +21,12 @@ type ReservationCalendarProps = {
  * <ReservationCalendar selected={selected} onSelect={setSelected} />
  * ```
  */
-export default function ReservationCalendar({ selected, onSelect }: ReservationCalendarProps) {
-  const [month, setMonth] = useState(new Date());
-
+export default function ReservationCalendar({
+  selected,
+  onSelect,
+  month,
+  onMonthChange,
+}: ReservationCalendarProps) {
   return (
     <div>
       <p className="mb-2 typo-18-bold text-gray-950 md:mb-6 lg:mb-2">날짜</p>
@@ -31,10 +35,10 @@ export default function ReservationCalendar({ selected, onSelect }: ReservationC
         selected={selected}
         onSelect={(date) => {
           onSelect(date);
-          if (date) setMonth(date);
+          if (date) onMonthChange(date);
         }}
         month={month}
-        onMonthChange={setMonth}
+        onMonthChange={onMonthChange}
         locale={ko}
         showOutsideDays
         components={{

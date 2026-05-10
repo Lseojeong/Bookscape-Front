@@ -1,5 +1,6 @@
 'use client';
 
+import { ActivityScheduleTime } from '@/features/activity/types';
 import HeadCountControl from './HeadCountControl';
 import ReservationCalendar from './ReservationCalendar';
 import ScheduleList from './ScheduleList';
@@ -8,8 +9,11 @@ type ScheduleStepProps = {
   selected?: Date;
   selectedScheduleId?: number;
   headCount: number;
+  schedules: ActivityScheduleTime[];
+  month: Date;
   onSelectDate: (date: Date | undefined) => void;
   onSelectSchedule: (id: number) => void;
+  onMonthChange: (month: Date) => void;
   onDecrease: () => void;
   onIncrease: () => void;
 };
@@ -34,8 +38,11 @@ export default function ScheduleStep({
   selected,
   selectedScheduleId,
   headCount,
+  schedules,
+  month,
   onSelectDate,
   onSelectSchedule,
+  onMonthChange,
   onDecrease,
   onIncrease,
 }: ScheduleStepProps) {
@@ -43,12 +50,18 @@ export default function ScheduleStep({
     <div className="md:flex md:justify-center md:gap-6 md:py-6">
       {/* 달력 */}
       <div>
-        <ReservationCalendar selected={selected} onSelect={onSelectDate} />
+        <ReservationCalendar
+          selected={selected}
+          month={month}
+          onMonthChange={onMonthChange}
+          onSelect={onSelectDate}
+        />
       </div>
       <div className="mt-6 md:w-75 md:rounded-2xl md:p-6 md:shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
         {/* 예약 가능한 시간 */}
         <ScheduleList
           selected={selected}
+          schedules={schedules}
           selectedScheduleId={selectedScheduleId}
           onSelectSchedule={onSelectSchedule}
           emptyClassName="mb-8 flex items-center justify-center"
