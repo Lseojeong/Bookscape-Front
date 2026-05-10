@@ -1,9 +1,9 @@
 'use client';
 
-import MyPageNav from '@/features/my-page/ui/MyPageNav';
 import { useUserStore } from '@/shared/stores/userStore';
 import Avatar from '@/shared/ui/avatar/Avatar';
 import TabNav from '@/shared/ui/tab-bar/TabNav';
+import MyPageNav from './MyPageNav';
 
 /**
  * 마이페이지 사이드바 컴포넌트입니다.
@@ -17,7 +17,6 @@ import TabNav from '@/shared/ui/tab-bar/TabNav';
  * <MyPageSidebar user={user} />
  * ```
  */
-
 const MYPAGE_TABS = [
   { id: 'info', label: '내 정보', href: '/mypage/info' },
   { id: 'reservation-list', label: '예약내역', href: '/mypage/reservation-list' },
