@@ -1,0 +1,36 @@
+import type { Preview } from '@storybook/nextjs';
+import '@/shared/styles/globals.css';
+import QueryProvider from '@/shared/providers/QueryProvider';
+
+const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <QueryProvider>
+        <Story />
+      </QueryProvider>
+    ),
+  ],
+  parameters: {
+    // 기본 레이아웃 가운데 정렬
+    layout: 'centered',
+
+    // docs 자동 생성
+    tags: ['autodocs'],
+
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+
+    a11y: {
+      // 'todo' - show a11y violations in the test UI only
+      // 'error' - fail CI on a11y violations
+      // 'off' - skip a11y checks entirely
+      test: 'todo',
+    },
+  },
+};
+
+export default preview;

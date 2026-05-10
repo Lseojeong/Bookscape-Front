@@ -29,12 +29,13 @@ export default function CategoryFilter({
   onChangeCategory,
 }: CategoryFilterProps) {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="scrollbar-hide flex flex-nowrap gap-2 overflow-x-auto overflow-y-hidden md:flex-wrap md:overflow-x-visible">
       {CATEGORY_LIST.map((category) => (
         <FilterButton
           key={category}
           isSelected={selectedCategory === category}
           onClick={() => onChangeCategory(category)}
+          className="shrink-0"
         >
           {category}
         </FilterButton>

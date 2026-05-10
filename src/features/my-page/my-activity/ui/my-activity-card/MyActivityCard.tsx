@@ -30,12 +30,16 @@ export type MyActivityCardProps = {
  * ```
  */
 export default function MyActivityCard({ data }: MyActivityCardProps) {
-  const { title } = data;
+  const { title, bannerImageUrl } = data;
 
   return (
     <div className={cn('flex items-center rounded-3xl', cardWrapStyles)}>
       {/* 이미지 영역 */}
-      <BaseCardImage alt={title} containerClassName={cardImageStyles} />
+      <BaseCardImage
+        bannerImageUrl={bannerImageUrl}
+        alt={title}
+        containerClassName={cardImageStyles}
+      />
 
       {/* 정보 영역 */}
       <div className="relative layer-base w-full">

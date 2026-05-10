@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { OauthSessionResponseBody } from '@/features/auth/types/oauth';
-import { setAuthCookies } from '@/features/auth/utils/cookies';
+import { setAuthCookies, setLoginMethodCookie } from '@/features/auth/utils/cookies';
 import { getJwtExpiresAt } from '@/features/auth/utils/jwt';
 import type { UserResponse } from '@/features/user/types';
 import { ENV } from '@/shared/apis/env';
@@ -20,9 +20,10 @@ export const createOAuthSessionResponse = (params: {
 
   const accessTokenExpiresAt = getJwtExpiresAt(accessToken);
 
-  const response = NextResponse.json({ user, accessTokenExpiresAt });
+  const response = NextResponse.json({ user, accessTokenExpiresAt, loginMethod: 'oauth' as const });
 
   setAuthCookies({ response, accessToken, refreshToken });
+  setLoginMethodCookie({ response, loginMethod: 'oauth' });
 
   return response;
 };

@@ -2,6 +2,7 @@
 
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
 import ActivityInfo from './ActivityInfo';
+import ActivityTabSection from './ActivityTabSection';
 import ImageCarousel from './ImageCarousel';
 
 type ActivityDetailProps = {
@@ -35,8 +36,14 @@ export default function ActivityDetail({ id }: ActivityDetailProps) {
         rating={activity.rating}
         reviewCount={activity.reviewCount}
         address={activity.address}
+        className="mt-7"
       />
       {/* 탭바 */}
+      <ActivityTabSection
+        description={activity.description}
+        address={activity.address}
+        className="mt-7"
+      />
     </section>
   );
 }

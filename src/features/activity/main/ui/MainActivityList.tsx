@@ -21,7 +21,7 @@ export default function MainActivityList() {
     useMainActivityCarousel();
 
   return (
-    <section className="flex w-full flex-col gap-5 py-8">
+    <article className="flex w-full flex-col gap-5 py-8">
       <Title as="h2" size="18" weight="bold" className="text-gray-950 md:typo-32-bold">
         🔥 <span className="text-secondary-500">HOT</span> 인기 체험
       </Title>
@@ -72,6 +72,6 @@ export default function MainActivityList() {
           </CarouselArrowButton>
         </div>
       )}
-    </section>
+    </article>
   );
 }
