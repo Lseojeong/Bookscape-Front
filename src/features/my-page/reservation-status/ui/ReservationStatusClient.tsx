@@ -27,7 +27,7 @@ import Loading from '@/shared/ui/loading/Loading';
 export default function ReservationStatusClient() {
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(null);
   const [month, setMonth] = useState(new Date());
-  const [panelOpen, setPanelOpen] = useState(false);
+  const [ispanelOpen, setIsPanelOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedDateStr, setSelectedDateStr] = useState<string | null>(null);
 
@@ -54,7 +54,7 @@ export default function ReservationStatusClient() {
     const dateStr = format(date, 'yyyy-MM-dd');
     setSelectedDate(date);
     setSelectedDateStr(dateStr);
-    requestAnimationFrame(() => setPanelOpen(true));
+    requestAnimationFrame(() => setIsPanelOpen(true));
   };
 
   if (isLoading)
@@ -102,8 +102,8 @@ export default function ReservationStatusClient() {
 
       <ReservationPanel
         key={selectedDateStr ?? ''}
-        isOpen={panelOpen}
-        onClose={() => setPanelOpen(false)}
+        isOpen={ispanelOpen}
+        onClose={() => setIsPanelOpen(false)}
         date={selectedDate}
         activityId={activityId}
         schedules={panelSchedules}
