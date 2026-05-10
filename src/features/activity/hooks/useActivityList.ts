@@ -40,7 +40,7 @@ export const useActivityList = ({
   const page = Number(searchParams.get('page') ?? 1);
 
   // 한 페이지에 노출 시킬 카드 개수
-  const pageSize = usePageSize(pageSizeConfig) ?? undefined;
+  const pageSize = usePageSize(pageSizeConfig);
 
   // URL 파라미터를 업데이트하는 공통 함수
   const updateParams = useCallback(
