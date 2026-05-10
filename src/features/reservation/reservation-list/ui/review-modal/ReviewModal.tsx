@@ -87,7 +87,7 @@ export default function ReviewModal({
 
   const submit = handleSubmit(async ({ rating, content }) => {
     try {
-      await onSubmit?.({ rating: Number(rating), content });
+      await onSubmit?.({ rating, content });
       handleClose();
     } catch {
       // NOTE: onSubmit 실패 시 모달을 닫지 않고 유지합니다.
