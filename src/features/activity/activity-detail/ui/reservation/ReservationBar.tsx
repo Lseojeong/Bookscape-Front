@@ -45,6 +45,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
     setMonth,
     schedules,
     reset,
+    handleReserve,
   } = useReservation(activityId);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -144,6 +145,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
               size="lg"
               className="w-full"
               disabled={!selected || !selectedScheduleId}
+              onClick={handleReserve}
             >
               예약하기
             </Button>

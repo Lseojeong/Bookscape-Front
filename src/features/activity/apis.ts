@@ -5,6 +5,7 @@ import {
 } from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
+import { CreateActivityReservationRequestBody } from '../reservation/types';
 
 export const getActivityDetail = async (id: number) => {
   const data = await get(`/activities/${id}`);
@@ -25,6 +26,13 @@ export const getAvailableSchedule = async (activityId: number, year: string, mon
   return get<ActivitySchedule[]>(
     `/activities/${activityId}/available-schedule?year=${year}&month=${month}`
   );
+};
+
+export const createReservation = async (
+  activityId: number,
+  body: CreateActivityReservationRequestBody
+) => {
+  return bffFetch.post(`/activities/${activityId}/reservations`, body);
 };
 
 export const getHotActivityData = async (size: number) => {

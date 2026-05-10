@@ -35,6 +35,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
     month,
     setMonth,
     schedules,
+    handleReserve,
   } = useReservation(activityId);
 
   return (
@@ -75,7 +76,12 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
           <p className="typo-20-medium text-gray-500">총 합계</p>
           <PriceDisplay price={price * headCount} unit="" showSlash={false} />
         </div>
-        <Button theme="primary" size="md" disabled={!selected || !selectedScheduleId}>
+        <Button
+          theme="primary"
+          size="md"
+          disabled={!selected || !selectedScheduleId}
+          onClick={handleReserve}
+        >
           예약하기
         </Button>
       </div>

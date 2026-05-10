@@ -1,7 +1,9 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { useActivityDetail } from '../queries/useActivityDetail';
 import { useAvailableSchedule } from '../queries/useAvailableSchedule';
+import { useCreateReservation } from '../queries/useCreateReservation';
 
 export const useReservation = (activityId: number) => {
   const { data } = useActivityDetail(activityId);
@@ -20,11 +22,31 @@ export const useReservation = (activityId: number) => {
   const selectedDateStr = selected ? format(selected, 'yyyy-MM-dd') : null;
   const schedules = availableSchedules?.find((s) => s.date === selectedDateStr)?.times ?? [];
 
+  const { mutate: createReservation } = useCreateReservation(activityId);
+
+  const { showToast } = useToastStore();
+
   const reset = () => {
     setSelected(undefined);
     setSelectedScheduleId(undefined);
     setHeadCount(1);
     setMonth(new Date());
+  };
+
+  const handleReserve = () => {
+    if (!selectedScheduleId) return;
+    createReservation(
+      { scheduleId: selectedScheduleId, headCount },
+      {
+        onSuccess: () => {
+          showToast('check', '예약이 신청되었습니다.');
+          reset();
+        },
+        onError: () => {
+          showToast('cancel', '예약 신청에 실패했습니다.');
+        },
+      }
+    );
   };
 
   return {
@@ -39,5 +61,6 @@ export const useReservation = (activityId: number) => {
     setMonth,
     schedules,
     reset,
+    handleReserve,
   };
 };
