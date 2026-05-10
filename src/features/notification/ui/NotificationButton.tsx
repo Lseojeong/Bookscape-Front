@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority';
 import { useRef } from 'react';
 import { useNotificationDropdown } from '@/features/notification/hooks/useNotificationDropdown';
 import { useDeleteAllMyNotifications } from '@/features/notification/mutations/useDeleteAllMyNotifications';
+import { useDeleteMyNotificationMutation } from '@/features/notification/mutations/useDeleteMyNotificationMutation';
 import { useMarkMyNotificationsSeenMutation } from '@/features/notification/mutations/useMarkMyNotificationsSeenMutation';
 import { useMyNotifications } from '@/features/notification/queries/useMyNotifications';
 import { NotificationIcon } from '@/shared/assets/icons';
@@ -41,7 +42,8 @@ export default function NotificationButton({ theme = 'light' }: NotificationButt
 
   const { query, notifications, hasNew, lastSeenAtMs, totalCount } = useMyNotifications();
   const markSeenMutation = useMarkMyNotificationsSeenMutation();
-  const { deleteAll, deleteMutation } = useDeleteAllMyNotifications();
+  const deleteMutation = useDeleteMyNotificationMutation();
+  const { deleteAll } = useDeleteAllMyNotifications();
 
   const isLoaded = query.isFetched;
 
