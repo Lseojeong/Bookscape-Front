@@ -4,7 +4,7 @@ import { useActivityList } from '@/features/activity/hooks/useActivityList';
 export const useAllActivityList = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get('category') ?? '전체';
-  const sort = searchParams.get('sort') ?? 'latest';
+  const sort = searchParams.get('sort') ?? 'most_reviewed';
 
   const { page, activities, totalCount, totalPages, updateParams, handlePageChange } =
     useActivityList({
