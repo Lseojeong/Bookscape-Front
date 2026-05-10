@@ -69,7 +69,10 @@ export const useUserStore = create<
     ['zustand/devtools', never],
     [
       'zustand/persist',
-      { user: UserResponse | undefined; accessTokenExpiresAt: number | undefined },
+      {
+        user: UserResponse | undefined;
+        accessTokenExpiresAt: number | undefined;
+      },
     ],
   ]
 >(
@@ -92,7 +95,11 @@ export const useUserStore = create<
           ),
         clearSession: (reason) =>
           set(
-            { user: undefined, accessTokenExpiresAt: undefined, sessionEndReason: reason },
+            {
+              user: undefined,
+              accessTokenExpiresAt: undefined,
+              sessionEndReason: reason,
+            },
             false,
             'user/clearSession'
           ),

@@ -1,3 +1,4 @@
+import type { LoginMethod } from '@/features/auth/constants/loginMethod';
 import type { UserResponse } from '@/features/user/types';
 
 export type OauthProvider = 'kakao';
@@ -20,4 +21,5 @@ export type OauthAuthResponse = {
 export type OauthSessionResponseBody = {
   user: UserResponse;
   accessTokenExpiresAt: number;
+  loginMethod: LoginMethod;
 };

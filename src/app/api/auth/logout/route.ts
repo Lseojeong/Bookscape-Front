@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
-import { clearAuthCookies } from '@/features/auth/utils/cookies';
+import { clearAuthCookies, clearLoginMethodCookie } from '@/features/auth/utils/cookies';
 
 /**
  * POST /api/auth/logout
@@ -14,6 +14,7 @@ export async function POST() {
   try {
     const response = NextResponse.json({ success: true });
     clearAuthCookies(response);
+    clearLoginMethodCookie(response);
 
     return response;
   } catch {

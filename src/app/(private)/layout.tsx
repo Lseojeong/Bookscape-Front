@@ -1,4 +1,4 @@
-import BaseLayout from '@/shared/layout/BaseLayout';
+import BaseLayout from '@/app/ui/layout/BaseLayout';
 import type { WithChildren } from '@/shared/types/common';
 
 /**
