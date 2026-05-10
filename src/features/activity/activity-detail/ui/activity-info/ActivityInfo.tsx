@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import DeleteActivityDialog from '@/features/my-page/common/DeleteActivityDialog';
 import { MenuIcon, StarIcon } from '@/shared/assets/icons';
-import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import {
   ActionDropdown,
   ActionDropdownContent,
@@ -11,9 +11,7 @@ import {
   ActionDropdownTrigger,
 } from '@/shared/ui/dropdown/action';
 import Title from '@/shared/ui/title/Title';
-import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
-import { useDeleteActivity } from '../../mutations/useDeleteActivity';
 import ActivityAddress from './ActivityAddress';
 
 type ActivityInfoProps = {
@@ -56,8 +54,6 @@ export default function ActivityInfo({
 }: ActivityInfoProps) {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { mutate: deleteActivity } = useDeleteActivity();
-  const { showToast } = useToastStore();
 
   return (
     <div className={cn(className)}>
@@ -86,26 +82,10 @@ export default function ActivityInfo({
           </ActionDropdown>
         )}
       </div>
-      <ConfirmDialog
+      <DeleteActivityDialog
+        id={id}
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        title="체험을 삭제하시겠습니까?"
-        description="삭제할 경우, 다시 되돌릴 수 없습니다."
-        confirmText="삭제하기"
-        cancelText="아니오"
-        onCancel={() => setIsDeleteModalOpen(false)}
-        onConfirm={async () => {
-          deleteActivity(id, {
-            onSuccess: () => {
-              showToast('check', '체험이 삭제되었습니다.');
-              router.push('/activities');
-            },
-            onError: () => {
-              showToast('cancel', '체험 삭제에 실패했습니다.');
-            },
-          });
-          setIsDeleteModalOpen(false);
-        }}
       />
       {/* 타이틀 */}
       <Title as="h1" size="18" weight="bold" color="text-gray-950" className="mb-4 md:typo-24-bold">
