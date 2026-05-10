@@ -1,7 +1,8 @@
 'use client';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getMe, updateMyProfile } from '@/features/user/apis';
+import { useQueryClient } from '@tanstack/react-query';
+import { updateMyProfile } from '@/features/user/apis';
+import { useMyInfoQuery } from '@/features/user/queries/useMyInfoQuery';
 import type { UpdateMyProfileRequestBody } from '@/features/user/types';
 import ProfileForm from '@/features/user/ui/ProfileForm';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
@@ -17,10 +18,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 export default function MyInfoClient() {
   const { showToast } = useToastStore();
   const queryClient = useQueryClient();
-  const { data: user, isLoading } = useQuery({
-    queryKey: QUERY_KEYS.USER_ME(),
-    queryFn: getMe,
-  });
+  const { data: user, isLoading } = useMyInfoQuery();
 
   const handleUpdateUser = async (body: UpdateMyProfileRequestBody) => {
     try {
