@@ -11,3 +11,24 @@ export const formatYmdToDot = (value: string): string => {
   if (!year || !month || !day) return value;
   return `${year}. ${month.padStart(2, '0')}. ${day.padStart(2, '0')}`;
 };
+
+/**
+ * 예약 일정 텍스트를 `YYYY. MM. DD / HH:mm - HH:mm (N명)` 형식으로 생성합니다.
+ *
+ * @example
+ * formatReservationScheduleText({ date: '2026-05-09', startTime: '11:00', endTime: '12:30', headCount: 10 })
+ * // '2026. 05. 09 / 11:00 - 12:30 (10명)'
+ */
+export const formatReservationScheduleText = ({
+  date,
+  startTime,
+  endTime,
+  headCount,
+}: {
+  date: string;
+  startTime: string;
+  endTime: string;
+  headCount: number;
+}): string => {
+  return `${formatYmdToDot(date)} / ${startTime} - ${endTime} (${headCount}명)`;
+};
