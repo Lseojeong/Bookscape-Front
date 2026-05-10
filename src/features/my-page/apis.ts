@@ -1,15 +1,18 @@
+import {
+  GetMyActivitiesResponseSchema,
+  GetMyActivityReservationDashboardResponseSchema,
+  GetMyActivityReservedScheduleResponseSchema,
+  GetMyActivityReservationsResponseSchema,
+  UpdateMyActivityReservationStatusResponseSchema,
+} from '@/features/my-page/types';
 import type {
   GetMyActivitiesQuery,
-  GetMyActivitiesResponse,
-  GetMyActivityReservationDashboardResponse,
   GetMyActivityReservationDashboardQuery,
-  GetMyActivityReservedScheduleResponse,
   GetMyActivityReservationsQuery,
-  GetMyActivityReservationsResponse,
   UpdateMyActivityReservationStatusRequestBody,
-  UpdateMyActivityReservationStatusResponse,
 } from '@/features/my-page/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
+
 /**
  * 내 체험 리스트 조회
  *
@@ -18,9 +21,12 @@ import { bffFetch } from '@/shared/apis/base/bffFetch';
  * @returns 내 체험 리스트
  */
 export const getMyActivities = async (query?: GetMyActivitiesQuery) => {
-  const data = await bffFetch.get<GetMyActivitiesResponse>('/my-activities', query);
-  return data ?? { cursorId: 0, totalCount: 0, activities: [] };
+  const data = await bffFetch.get('/my-activities', query);
+  return GetMyActivitiesResponseSchema.parse(
+    data ?? { cursorId: 0, totalCount: 0, activities: [] }
+  );
 };
+
 /**
  * 내 체험 월별 예약 현황 조회
  *
@@ -33,11 +39,8 @@ export const getReservationDashboard = async (
   activityId: number,
   query: GetMyActivityReservationDashboardQuery
 ) => {
-  const data = await bffFetch.get<GetMyActivityReservationDashboardResponse>(
-    `/my-activities/${activityId}/reservation-dashboard`,
-    query
-  );
-  return data ?? [];
+  const data = await bffFetch.get(`/my-activities/${activityId}/reservation-dashboard`, query);
+  return GetMyActivityReservationDashboardResponseSchema.parse(data ?? []);
 };
 
 /**
@@ -49,11 +52,8 @@ export const getReservationDashboard = async (
  * @returns 스케줄 목록
  */
 export const getReservedSchedule = async (activityId: number, date: string) => {
-  const data = await bffFetch.get<GetMyActivityReservedScheduleResponse>(
-    `/my-activities/${activityId}/reserved-schedule`,
-    { date }
-  );
-  return data ?? [];
+  const data = await bffFetch.get(`/my-activities/${activityId}/reserved-schedule`, { date });
+  return GetMyActivityReservedScheduleResponseSchema.parse(data ?? []);
 };
 
 /**
@@ -68,11 +68,13 @@ export const getMyActivityReservations = async (
   activityId: number,
   query: GetMyActivityReservationsQuery
 ) => {
-  const data = await bffFetch.get<GetMyActivityReservationsResponse>(
+  const data = await bffFetch.get(
     `/my-activities/${activityId}/reservations`,
     query as Record<string, string | number | boolean | undefined>
   );
-  return data ?? { cursorId: 0, totalCount: 0, reservations: [] };
+  return GetMyActivityReservationsResponseSchema.parse(
+    data ?? { cursorId: 0, totalCount: 0, reservations: [] }
+  );
 };
 
 /**
@@ -89,10 +91,10 @@ export const updateReservationStatus = async (
   reservationId: number,
   body: UpdateMyActivityReservationStatusRequestBody
 ) => {
-  const data = await bffFetch.patch<UpdateMyActivityReservationStatusResponse>(
+  const data = await bffFetch.patch(
     `/my-activities/${activityId}/reservations/${reservationId}`,
     body
   );
   if (!data) throw new Error('예약 상태 업데이트 실패');
-  return data;
+  return UpdateMyActivityReservationStatusResponseSchema.parse(data);
 };
