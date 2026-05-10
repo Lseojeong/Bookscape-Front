@@ -6,6 +6,7 @@ import { useMyInfoQuery } from '@/features/user/queries/useMyInfoQuery';
 import type { UpdateMyProfileRequestBody } from '@/features/user/types';
 import ProfileForm from '@/features/user/ui/ProfileForm';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Loading from '@/shared/ui/loading/Loading';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -18,7 +19,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 export default function MyInfoClient() {
   const { showToast } = useToastStore();
   const queryClient = useQueryClient();
-  const { data: user, isLoading } = useMyInfoQuery();
+  const { data: user, isLoading, isError, refetch } = useMyInfoQuery();
 
   const handleUpdateUser = async (body: UpdateMyProfileRequestBody) => {
     try {
@@ -36,6 +37,12 @@ export default function MyInfoClient() {
         <div className="flex h-full items-center justify-center">
           <Loading size={20} color="var(--color-gray-400)" />
         </div>
+      ) : isError ? (
+        <EmptyState
+          type="error"
+          mainText={'정보를 불러오는 데 실패했어요.\n다시 시도해주세요.'}
+          onRetry={refetch}
+        />
       ) : user ? (
         <ProfileForm user={user} onUpdateUser={handleUpdateUser} />
       ) : null}
