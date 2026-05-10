@@ -72,7 +72,7 @@ export default function ReviewModal({
     resolver: zodResolver(reviewFormSchema),
     defaultValues: { rating: 0, content: defaultContent },
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    reValidateMode: 'onChange',
   });
 
   const handleClose = () => {
