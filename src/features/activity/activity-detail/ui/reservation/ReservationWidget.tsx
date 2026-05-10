@@ -4,9 +4,14 @@ import { useState } from 'react';
 import Button from '@/shared/ui/button/Button';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import PriceDisplay from '@/shared/ui/price/PriceDisplay';
+import { useActivityDetail } from '../../queries/useActivityDetail';
 import HeadCountControl from './HeadCountControl';
 import ReservationCalendar from './ReservationCalendar';
 import ScheduleList from './ScheduleList';
+
+type ReservationWidgetProps = {
+  activityId: number;
+};
 
 /**
  * PC 사이드바 예약 위젯 컴포넌트입니다.
@@ -19,7 +24,10 @@ import ScheduleList from './ScheduleList';
  * <ReservationWidget />
  * ```
  */
-export default function ReservationWidget() {
+export default function ReservationWidget({ activityId }: ReservationWidgetProps) {
+  const { data } = useActivityDetail(activityId);
+  const price = data?.price ?? 0;
+
   const [selected, setSelected] = useState<Date>();
   const [headCount, setHeadCount] = useState(1);
   const [selectedScheduleId, setSelectedScheduleId] = useState<number>();
@@ -27,7 +35,7 @@ export default function ReservationWidget() {
   return (
     <div className="flex flex-col gap-6 rounded-3xl border border-gray-50 p-7.5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
       {/* 가격 */}
-      <PerPersonPrice pricePerPerson={1000} />
+      <PerPersonPrice pricePerPerson={price} />
 
       {/* 달력 */}
       <ReservationCalendar
@@ -57,7 +65,7 @@ export default function ReservationWidget() {
       <div className="mb-2.5 flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <p className="typo-20-medium text-gray-500">총 합계</p>
-          <PriceDisplay price={1000 * headCount} unit="" showSlash={false} />
+          <PriceDisplay price={price * headCount} unit="" showSlash={false} />
         </div>
         <Button theme="primary" size="md" disabled={!selected || !selectedScheduleId}>
           예약하기

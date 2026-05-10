@@ -1,4 +1,8 @@
-import { ActivityDetailSchema, ActivityResponse } from '@/features/activity/types';
+import {
+  ActivityDetailSchema,
+  ActivityResponse,
+  ActivitySchedule,
+} from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
 
@@ -15,6 +19,12 @@ export const getActivityDetail = async (id: number) => {
 export const deleteActivity = async (id: number) => {
   // TODO: 로그인 구현 후 BFF Route Handler 연결 필요
   await bffFetch.delete(`/activities/${id}`);
+};
+
+export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
+  return get<ActivitySchedule[]>(
+    `/activities/${activityId}/available-schedule?year=${year}&month=${month}`
+  );
 };
 
 export const getHotActivityData = async (size: number) => {

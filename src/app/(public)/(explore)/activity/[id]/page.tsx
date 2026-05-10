@@ -26,7 +26,7 @@ export default async function ActivityDetailPage({ params }: Props) {
       <div className="mx-auto max-w-280 px-6 pt-7.5 pb-30 md:px-7.5 md:pt-8.5 lg:flex lg:gap-10 lg:px-10 lg:pt-22 lg:pb-0">
         <ActivityDetail id={activityId} />
         <aside className="hidden lg:block lg:w-102.5">
-          <ReservationWidget />
+          <ReservationWidget activityId={activityId} />
         </aside>
       </div>
       <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">

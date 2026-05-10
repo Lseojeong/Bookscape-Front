@@ -41,7 +41,9 @@ export default function ScheduleList({
     <div className={className}>
       <p className="mb-3 typo-16-bold text-gray-950">예약 가능한 시간</p>
       {!selected ? (
-        <p className={cn('typo-16-medium text-gray-500', emptyClassName)}>날짜를 선택해주세요.</p>
+        <p className={cn('mb-4 typo-16-medium text-gray-500', emptyClassName)}>
+          날짜를 선택해주세요.
+        </p>
       ) : (
         <div className="mb-12.5 flex flex-col gap-3 lg:mb-8">
           {MOCK_SCHEDULES.map((schedule) => (
