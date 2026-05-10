@@ -32,21 +32,22 @@ export const usePatchReservationStatus = (
       if (!activityId) throw new Error('activityId가 없습니다.');
       return updateReservationStatus(activityId, reservationId, { status });
     },
-    onSuccess: (_, variables) => {
-      // 예약 목록 갱신
-      queryClient.invalidateQueries({
-        queryKey: ['my-activities', activityId, 'reservations'],
-      });
-      // 탭 카운트 갱신
-      queryClient.invalidateQueries({
-        queryKey: ['my-activities', activityId, 'reserved-schedule'],
-      });
-      // 달력 뱃지 갱신
-      queryClient.invalidateQueries({
-        queryKey: ['my-activities', activityId, 'reservation-dashboard'],
-      });
-      // 변경된 status 탭으로 이동
+    onSuccess: async (_, variables) => {
+      // 탭 먼저 이동
       onSuccess?.(variables.status);
+
+      // 이후 백그라운드에서 갱신
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ['my-activities', activityId, 'reservations'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['my-activities', activityId, 'reserved-schedule'],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ['my-activities', activityId, 'reservation-dashboard'],
+        }),
+      ]);
     },
     onError: () => {
       // 예약 상태 변경 실패 시 토스트 표시

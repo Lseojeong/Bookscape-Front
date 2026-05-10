@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { MyActivityReservation } from '@/features/my-page/types';
 import Button from '@/shared/ui/button/Button';
+import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 
 type ReservationCardProps = {
@@ -32,6 +33,7 @@ export default function ReservationCard({
   onDecline,
 }: ReservationCardProps) {
   const [loadingType, setLoadingType] = useState<'confirm' | 'decline' | null>(null);
+  const [isDeclineDialogOpen, setIsDeclineDialogOpen] = useState(false);
 
   const isPending = reservation.status === 'pending';
   const isConfirmed = reservation.status === 'confirmed';
@@ -47,7 +49,7 @@ export default function ReservationCard({
     }
   };
 
-  const handleDecline = async () => {
+  const handleDeclineConfirm = async () => {
     if (!onDecline) return;
     setLoadingType('decline');
     try {
@@ -91,8 +93,8 @@ export default function ReservationCard({
           <Button
             theme="secondary"
             size="sm"
-            className="h-full flex-1"
-            onClick={handleDecline}
+            className="h-full flex-1 border-gray-100"
+            onClick={() => setIsDeclineDialogOpen(true)}
             isLoading={loadingType === 'decline'}
             disabled={isAnyLoading}
           >
@@ -100,6 +102,16 @@ export default function ReservationCard({
           </Button>
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={isDeclineDialogOpen}
+        onClose={() => setIsDeclineDialogOpen(false)}
+        title="예약을 거절할까요?"
+        description="거절 후에는 되돌릴 수 없습니다."
+        confirmText="거절하기"
+        cancelText="취소"
+        onConfirm={handleDeclineConfirm}
+      />
     </div>
   );
 }
