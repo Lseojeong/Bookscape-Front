@@ -41,7 +41,7 @@ export default function SortSelectDropdown({
         </SelectDropdownTrigger>
         <SelectDropdownContent>
           {SORT_OPTIONS.map((option) => (
-            <SelectDropdownItem key={option.sort} value={String(option.sort)}>
+            <SelectDropdownItem key={option.sort} value={option.sort}>
               {option.label}
             </SelectDropdownItem>
           ))}
