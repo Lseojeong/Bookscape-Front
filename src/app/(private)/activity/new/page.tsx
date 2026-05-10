@@ -1,9 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useActivitySubmit } from '@/features/my-page/activity-form/hooks/useActivitySubmit';
 import ActivityForm from '@/features/my-page/activity-form/ui/ActivityForm';
+import { usePreventGoBack } from '@/shared/hooks/usePreventGoBack';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
@@ -17,7 +17,6 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
  * }
  */
 export default function ActivityNewPage() {
-  const router = useRouter();
   const { showToast } = useToastStore();
 
   // 어떤 모달을 띄울지 관리하는 상태 ('leave': 페이지 나가기, 'reset': 폼 초기화, null: 닫힘)
@@ -28,6 +27,13 @@ export default function ActivityNewPage() {
 
   // 제출 로직 커스텀 훅
   const { submitActivity, isPending } = useActivitySubmit();
+
+  const { confirmLeave } = usePreventGoBack(() => {
+    // 뒤로 가기를 누르면 모달을 띄움
+    if (modalType !== 'leave') {
+      setModalType('leave');
+    }
+  });
 
   // 백버튼 클릭 시
   const handleHeaderBackClick = () => {
@@ -42,7 +48,7 @@ export default function ActivityNewPage() {
   // 뒤로가기 모달에서 '나가기' 확정 시
   const handleConfirmLeave = () => {
     setModalType(null);
-    router.back();
+    confirmLeave();
   };
 
   // 초기화 모달에서 '초기화하기' 확정 시
