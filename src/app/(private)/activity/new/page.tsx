@@ -6,6 +6,7 @@ import ActivityForm from '@/features/my-page/activity-form/ui/ActivityForm';
 import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 /**
  * 새로운 체험을 등록하는 페이지 컴포넌트입니다.
@@ -18,11 +19,12 @@ import PageHeader from '@/shared/ui/page-header/PageHeader';
 export default function ActivityNewPage() {
   const router = useRouter();
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const { showToast } = useToastStore();
 
   const handleCreateActivity = (data: ActivityFormValues) => {
     // TODO: 린트 에러 방지용으로 API 연결 시 삭제 필요
     void data;
-    alert('폼 검증 성공! (개발자 도구 콘솔창을 확인)');
+    showToast('check', '폼 검증에 성공하였습니다.');
 
     // TODO: 이후 백엔드 연동 시 React Query의 mutate 함수로 교체 필요
     // mutate(data);
