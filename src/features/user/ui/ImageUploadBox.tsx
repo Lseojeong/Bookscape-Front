@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { EditIcon } from '@/shared/assets/icons';
 import { DefaultProfileImage } from '@/shared/assets/images';
+import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 import Button from '@/shared/ui/button/Button';
 
 type ProfileImageUploadProps = {
@@ -30,13 +31,33 @@ export default function ImageUploadBox({
   onReset,
 }: ProfileImageUploadProps) {
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const previewImage = objectUrl ?? initialImageUrl;
 
+  const validateFile = (file: File): string | null => {
+    if (file.size > IMAGE_RULES.MAX_SIZE) {
+      return IMAGE_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED;
+    }
+    if (
+      !IMAGE_RULES.ACCEPTED_TYPES.includes(file.type as (typeof IMAGE_RULES.ACCEPTED_TYPES)[number])
+    ) {
+      return IMAGE_ERROR_MESSAGES.IMAGE_TYPE_INVALID;
+    }
+    return null;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    const validationError = validateFile(file);
+    if (validationError) {
+      setError(validationError);
+      e.target.value = '';
+      return;
+    }
 
     const nextObjectUrl = URL.createObjectURL(file);
     setObjectUrl((prev) => {
@@ -51,6 +72,7 @@ export default function ImageUploadBox({
   const handleReset = () => {
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     setObjectUrl(null);
+    setError(null);
     onReset?.();
   };
 
@@ -95,7 +117,7 @@ export default function ImageUploadBox({
         <input
           ref={inputRef}
           type="file"
-          accept="image/*"
+          accept={IMAGE_RULES.ACCEPTED_TYPES.join(',')}
           onChange={handleChange}
           className="hidden"
         />
@@ -111,6 +133,12 @@ export default function ImageUploadBox({
       >
         기본 프로필로 변경
       </Button>
+
+      {error && (
+        <p className="typo-14-medium text-error" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
