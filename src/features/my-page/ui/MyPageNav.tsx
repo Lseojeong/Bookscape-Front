@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { FC, SVGProps } from 'react';
 import {
+  ActivityIcon,
   InfoIcon,
   ReservationListIcon,
-  ActivityIcon,
   ReservationStatusIcon,
 } from '@/shared/assets/icons';
 import { cn } from '@/shared/utils/cn';

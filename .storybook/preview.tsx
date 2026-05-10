@@ -1,7 +1,15 @@
 import type { Preview } from '@storybook/nextjs';
 import '@/shared/styles/globals.css';
+import QueryProvider from '@/shared/providers/QueryProvider';
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <QueryProvider>
+        <Story />
+      </QueryProvider>
+    ),
+  ],
   parameters: {
     // 기본 레이아웃 가운데 정렬
     layout: 'centered',
