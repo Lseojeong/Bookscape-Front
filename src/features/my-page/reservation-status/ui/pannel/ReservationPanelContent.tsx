@@ -1,7 +1,7 @@
 'use client';
 
 import { useReservationPanel } from '@/features/my-page/reservation-status/hooks/useReservationPanel';
-import { usePatchReservationStatus } from '@/features/my-page/reservation-status/queries/usePatchReservationStatus';
+import { usePatchReservationStatus } from '@/features/my-page/reservation-status/mutations/usePatchReservationStatus';
 import { useReservationsQuery } from '@/features/my-page/reservation-status/queries/useReservationsQuery';
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
