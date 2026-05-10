@@ -39,9 +39,9 @@ export const useReservation = (activityId: number) => {
   // 파생 값
   const selectedDateStr = selected ? format(selected, 'yyyy-MM-dd') : null;
   const schedules = availableSchedules?.find((s) => s.date === selectedDateStr)?.times ?? [];
-  const myPendingScheduleIds = new Set(
+  const myBlockedScheduleIds = new Set(
     myReservationsData?.reservations
-      .filter((r) => r.status === 'pending')
+      .filter((r) => r.status === 'pending' || r.status === 'confirmed')
       .map((r) => r.scheduleId) ?? []
   );
 
@@ -82,6 +82,6 @@ export const useReservation = (activityId: number) => {
     reset,
     handleReserve,
     isOwner,
-    myPendingScheduleIds,
+    myBlockedScheduleIds,
   };
 };

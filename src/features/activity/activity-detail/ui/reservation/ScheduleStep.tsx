@@ -16,7 +16,7 @@ type ScheduleStepProps = {
   onMonthChange: (month: Date) => void;
   onDecrease: () => void;
   onIncrease: () => void;
-  myPendingScheduleIds: Set<number>;
+  myBlockedScheduleIds: Set<number>;
 };
 
 /**
@@ -46,7 +46,7 @@ export default function ScheduleStep({
   onMonthChange,
   onDecrease,
   onIncrease,
-  myPendingScheduleIds,
+  myBlockedScheduleIds,
 }: ScheduleStepProps) {
   return (
     <div className="md:flex md:justify-center md:gap-6 md:py-6">
@@ -65,7 +65,7 @@ export default function ScheduleStep({
           selected={selected}
           schedules={schedules}
           selectedScheduleId={selectedScheduleId}
-          disabledScheduleIds={myPendingScheduleIds}
+          disabledScheduleIds={myBlockedScheduleIds}
           onSelectSchedule={onSelectSchedule}
           emptyClassName="mb-8 flex items-center justify-center"
         />
