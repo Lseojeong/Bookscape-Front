@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import { useActivityList } from '@/features/activity/hooks/useActivityList';
-import { useSearchActivityData } from '@/features/activity/search/queries/useSearchActivityData';
+import { useActivityListData } from '@/features/activity/search/queries/useSearchActivityData';
 
 /**
  * 검색 결과 페이지의 상태 및 데이터 패칭 로직을 관리하는 훅입니다.
@@ -32,7 +32,7 @@ export const useSearchResult = () => {
 
   // OPTIMIZE : 전체 검색 결과 조회 성능 개선 필요
   // 전체 검색 결과 수(카테고리 상관없이)
-  const { data: totalData } = useSearchActivityData(
+  const { data: totalData } = useActivityListData(
     { keyword, size: 1 },
     { enabled: category !== '전체' && !!keyword }
   );

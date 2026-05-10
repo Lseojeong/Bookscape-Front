@@ -1,8 +1,8 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { startTransition, useCallback, useEffect } from 'react';
 import {
+  useActivityListData,
   usePrefetchNextPage,
-  useSearchActivityData,
 } from '@/features/activity/search/queries/useSearchActivityData';
 import { usePageSize } from '@/shared/hooks/usePageSize';
 
@@ -51,7 +51,7 @@ export const useActivityList = ({
     });
   }, [pageSize, updateParams]);
 
-  const { data } = useSearchActivityData({
+  const { data } = useActivityListData({
     keyword,
     category: category === '전체' ? '' : category,
     sort,
@@ -65,7 +65,6 @@ export const useActivityList = ({
   // totalCount를 pageSize로 나눠 총 페이지 수 계산
   const totalPages = pageSize ? Math.ceil(totalCount / pageSize) : 0;
 
-  // TODO 확인!!!!!!!!!!!!
   // 다음 페이지 prefetch (마지막 페이지면 실행 안 함)
   usePrefetchNextPage({
     keyword,

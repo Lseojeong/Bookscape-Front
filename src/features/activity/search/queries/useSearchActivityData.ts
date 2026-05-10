@@ -21,12 +21,12 @@ const SEARCH_STALE_TIME = 60 * 1000 * 5; // 5분
  * });
  * ```
  */
-export const useSearchActivityData = (
+export const useActivityListData = (
   params: GetActivityParams,
   options?: Omit<UseQueryOptions<ActivityResponse | null>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
-    queryKey: QUERY_KEYS.SEARCH_ACTIVITY(params),
+    queryKey: QUERY_KEYS.ACTIVITY_LIST(params),
     queryFn: () => getActivityListData(params),
     staleTime: SEARCH_STALE_TIME,
     gcTime: 60 * 1000 * 10,
@@ -50,7 +50,7 @@ export const usePrefetchNextPage = (params: GetActivityParams & { totalPages?: n
     };
 
     queryClient.prefetchQuery({
-      queryKey: QUERY_KEYS.SEARCH_ACTIVITY(nextPageParams),
+      queryKey: QUERY_KEYS.ACTIVITY_LIST(nextPageParams),
       queryFn: () => getActivityListData(nextPageParams),
       staleTime: SEARCH_STALE_TIME,
     });
