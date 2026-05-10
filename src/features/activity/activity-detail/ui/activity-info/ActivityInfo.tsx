@@ -11,7 +11,9 @@ import {
   ActionDropdownTrigger,
 } from '@/shared/ui/dropdown/action';
 import Title from '@/shared/ui/title/Title';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
+import { useDeleteActivity } from '../../mutations/useDeleteActivity';
 import ActivityAddress from './ActivityAddress';
 
 type ActivityInfoProps = {
@@ -54,6 +56,8 @@ export default function ActivityInfo({
 }: ActivityInfoProps) {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { mutate: deleteActivity } = useDeleteActivity();
+  const { showToast } = useToastStore();
 
   return (
     <div className={cn(className)}>
@@ -91,9 +95,16 @@ export default function ActivityInfo({
         cancelText="아니오"
         onCancel={() => setIsDeleteModalOpen(false)}
         onConfirm={async () => {
-          // TODO: 로그인 구현 후 삭제 API 연결
-          // TODO: 삭제 완료 토스트
-          router.push('/activities');
+          deleteActivity(id, {
+            onSuccess: () => {
+              showToast('check', '체험이 삭제되었습니다.');
+              router.push('/activities');
+            },
+            onError: () => {
+              showToast('cancel', '체험 삭제에 실패했습니다.');
+            },
+          });
+          setIsDeleteModalOpen(false);
         }}
       />
       {/* 타이틀 */}

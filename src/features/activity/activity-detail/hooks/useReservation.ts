@@ -2,9 +2,9 @@ import { format } from 'date-fns';
 import { useState } from 'react';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
+import { useCreateReservation } from '../mutations/useCreateReservation';
 import { useActivityDetail } from '../queries/useActivityDetail';
 import { useAvailableSchedule } from '../queries/useAvailableSchedule';
-import { useCreateReservation } from '../queries/useCreateReservation';
 
 export const useReservation = (activityId: number) => {
   const { data } = useActivityDetail(activityId);

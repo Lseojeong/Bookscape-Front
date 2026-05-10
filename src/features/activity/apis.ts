@@ -18,8 +18,7 @@ export const getActivityDetail = async (id: number) => {
 };
 
 export const deleteActivity = async (id: number) => {
-  // TODO: 로그인 구현 후 BFF Route Handler 연결 필요
-  await bffFetch.delete(`/activities/${id}`);
+  await bffFetch.delete(`/my-activities/${id}`);
 };
 
 export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
