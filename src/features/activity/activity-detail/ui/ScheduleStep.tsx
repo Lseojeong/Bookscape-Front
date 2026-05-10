@@ -23,6 +23,9 @@ type ScheduleStepProps = {
 /**
  * 예약 날짜와 시간을 선택하는 스텝 컴포넌트입니다.
  *
+ * ReservationBar 바텀시트의 첫 번째 단계로, 날짜 선택 후 시간 슬롯을 선택할 수 있습니다.
+ * 태블릿에서는 참여 인원 수 조절 영역도 함께 표시됩니다.
+ *
  * @example
  * ```tsx
  * <ScheduleStep

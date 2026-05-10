@@ -13,6 +13,8 @@ type HeadcountStepProps = {
 /**
  * 예약 인원을 선택하는 스텝 컴포넌트입니다.
  *
+ * ReservationBar 바텀시트의 두 번째 단계로, 뒤로가기 버튼으로 이전 스텝으로 돌아갈 수 있습니다.
+ *
  * @example
  * ```tsx
  * <HeadcountStep

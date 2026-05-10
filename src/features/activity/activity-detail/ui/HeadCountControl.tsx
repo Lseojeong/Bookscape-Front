@@ -14,6 +14,8 @@ type HeadCountControlProps = {
 /**
  * 참여 인원 수 조절 컴포넌트입니다.
  *
+ * `variant`로 레이아웃을, `rounded`로 버튼 모서리 스타일을 제어할 수 있습니다.
+ *
  * @example
  * ```tsx
  * <HeadCountControl
