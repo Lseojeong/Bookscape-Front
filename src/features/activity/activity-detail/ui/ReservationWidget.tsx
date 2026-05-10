@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { MinusIcon, PlusIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import PriceDisplay from '@/shared/ui/price/PriceDisplay';
 import { cn } from '@/shared/utils/cn';
+import HeadCountControl from './HeadCountControl';
 import ReservationCalendar from './ReservationCalendar';
 
 // TODO: API 연결 후 제거
@@ -14,6 +14,17 @@ const MOCK_SCHEDULES = [
   { id: 2, startTime: '15:00', endTime: '16:00' },
 ];
 
+/**
+ * PC 사이드바 예약 위젯 컴포넌트입니다.
+ *
+ * 1인당 가격, 날짜 선택 달력, 참여 인원 수 조절, 예약 가능한 시간 선택, 총 합계 및 예약하기 버튼을 포함합니다.
+ * 날짜와 시간을 모두 선택해야 예약하기 버튼이 활성화됩니다.
+ *
+ * @example
+ * ```tsx
+ * <ReservationWidget />
+ * ```
+ */
 export default function ReservationWidget() {
   const [selected, setSelected] = useState<Date>();
   const [headCount, setHeadCount] = useState(1);
@@ -34,24 +45,11 @@ export default function ReservationWidget() {
       />
 
       {/* 참여 인원 수 */}
-      <div className="flex items-center justify-between">
-        <p className="typo-16-bold text-gray-950">참여 인원 수</p>
-        <div className="flex items-center gap-3 rounded-full border border-gray-50 px-4 py-2">
-          <button
-            className="flex h-5 w-5 items-center justify-center typo-16-medium text-gray-700"
-            onClick={() => setHeadCount((prev) => Math.max(1, prev - 1))}
-          >
-            <MinusIcon />
-          </button>
-          <span className="w-10 text-center typo-16-bold text-gray-800">{headCount}</span>
-          <button
-            className="flex h-5 w-5 items-center justify-center typo-16-medium text-gray-700"
-            onClick={() => setHeadCount((prev) => prev + 1)}
-          >
-            <PlusIcon />
-          </button>
-        </div>
-      </div>
+      <HeadCountControl
+        headCount={headCount}
+        onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
+        onIncrease={() => setHeadCount((prev) => prev + 1)}
+      />
 
       {/* 예약 가능한 시간 */}
       <div className="border-b border-gray-50 pb-6">

@@ -24,8 +24,8 @@ export default function ReservationCalendar({ selected, onSelect }: ReservationC
   const [month, setMonth] = useState(new Date());
 
   return (
-    <>
-      <p className="mb:mb-6 mb-2 typo-18-bold text-gray-950 lg:mb-2">날짜</p>
+    <div>
+      <p className="mb-2 typo-18-bold text-gray-950 md:mb-6 lg:mb-2">날짜</p>
       <DayPicker
         mode="single"
         selected={selected}
@@ -68,6 +68,6 @@ export default function ReservationCalendar({ selected, onSelect }: ReservationC
           disabled: 'text-gray-300 cursor-not-allowed', // 비활성화된 날짜
         }}
       />
-    </>
+    </div>
   );
 }

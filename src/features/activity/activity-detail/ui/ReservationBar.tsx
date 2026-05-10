@@ -1,14 +1,32 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { ChevronRightIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
-import ReservationCalendar from './ReservationCalendar';
+import { cn } from '@/shared/utils/cn';
+import HeadcountStep from './HeadcountStep';
+import ScheduleStep from './ScheduleStep';
 
+/**
+ * 태블릿/모바일 하단 고정 예약 바 컴포넌트입니다.
+ *
+ * 하단에 가격과 예약하기 버튼을 고정으로 표시하며
+ * 버튼 클릭 시 달력과 예약 가능한 시간을 선택할 수 있는 바텀시트가 열립니다.
+ * 핸들바를 아래로 드래그하면 시트를 닫을 수 있습니다.
+ *
+ * @example
+ * ```tsx
+ * <ReservationBar />
+ * ```
+ */
 export default function ReservationBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<Date>();
+  const [selectedScheduleId, setSelectedScheduleId] = useState<number>();
+  const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');
+  const [headCount, setHeadCount] = useState(1);
 
   const startYRef = useRef<number>(0);
   const [dragY, setDragY] = useState(0);
@@ -39,11 +57,18 @@ export default function ReservationBar() {
       </div>
       <OverlayLayer
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={() => {
+          setIsOpen(false);
+          setStep('schedule');
+          setSelected(undefined);
+          setSelectedScheduleId(undefined);
+          setHeadCount(1);
+        }}
         position="bottom"
         variant="sheet"
         ariaLabel="예약 날짜 선택"
-        contentClassName="!rounded-t-3xl !rounded-b-none h-full"
+        surfaceClassName={step === 'headcount' ? 'h-auto!' : undefined}
+        contentClassName={cn('rounded-t-3xl! rounded-b-none!', step === 'schedule' && 'h-full')}
         surfaceStyle={{
           transform: `translateY(${dragY}px)`,
           transition: dragY === 0 ? 'transform 0.3s ease' : 'none',
@@ -60,23 +85,52 @@ export default function ReservationBar() {
             <div className="h-1 w-19 rounded-full bg-gray-300" />
           </div>
           {/* 콘텐츠 */}
-          <div className="flex-1 overflow-y-auto px-6 md:flex md:justify-center md:gap-6 md:py-6">
-            {/* 달력 */}
-            <div>
-              <ReservationCalendar selected={selected} onSelect={setSelected} />
-            </div>
-            {/* 예약 가능한 시간 */}
-            <div className="mt-6 md:w-75 md:rounded-2xl md:p-6 md:shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
-              <p className="mb-3 typo-16-bold text-gray-950">예약 가능한 시간</p>
-              <div className="mb-8 flex items-center justify-center">
-                <p className="typo-16-medium text-gray-500">날짜를 선택해주세요.</p>
-              </div>
-            </div>
+          <div className="flex-1 overflow-y-auto px-6">
+            {step === 'schedule' ? (
+              <ScheduleStep
+                selected={selected}
+                selectedScheduleId={selectedScheduleId}
+                headCount={headCount}
+                onSelectDate={(date) => {
+                  setSelected(date);
+                  setSelectedScheduleId(undefined);
+                }}
+                onSelectSchedule={(id) => setSelectedScheduleId(id)}
+                onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
+                onIncrease={() => setHeadCount((prev) => prev + 1)}
+              />
+            ) : (
+              <HeadcountStep
+                headCount={headCount}
+                onBack={() => setStep('schedule')}
+                onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
+                onIncrease={() => setHeadCount((prev) => prev + 1)}
+              />
+            )}
           </div>
-          {/* 예약하기 버튼 */}
-          <Button theme="primary" size="lg" className="w-full" disabled={!selected}>
-            예약하기
-          </Button>
+
+          <div className="relative">
+            {/* 인원 수 선택 버튼 — 모바일에서만 표시 */}
+            {step === 'schedule' && (
+              <button
+                className="absolute -top-9 right-2 flex items-center gap-1 md:hidden"
+                disabled={!selectedScheduleId}
+                onClick={() => setStep('headcount')}
+              >
+                <span className="typo-16-medium text-gray-500">인원 수 선택</span>
+                <ChevronRightIcon className="text-gray-500" />
+              </button>
+            )}
+            {/* 예약하기 버튼 */}
+            <Button
+              theme="primary"
+              size="lg"
+              className="w-full"
+              disabled={!selected || !selectedScheduleId}
+            >
+              예약하기
+            </Button>
+          </div>
         </div>
       </OverlayLayer>
     </>
