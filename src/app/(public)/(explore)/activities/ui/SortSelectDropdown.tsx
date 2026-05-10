@@ -9,8 +9,8 @@ import {
 
 const SORT_OPTIONS = [
   { sort: 'most_reviewed', label: '인기순' },
-  { sort: 'price_asc', label: '가격 높은 순' },
-  { sort: 'price_desc', label: '가격 낮은 순' },
+  { sort: 'price_asc', label: '가격 낮은 순' },
+  { sort: 'price_desc', label: '가격 높은 순' },
   { sort: 'latest', label: '최신순' },
 ];
 
