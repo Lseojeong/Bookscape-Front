@@ -20,7 +20,7 @@ export const useReservationsQuery = (
   scheduleId: number | null,
   status: SellerReservationStatus
 ) => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: QUERY_KEYS.RESERVATIONS(activityId, scheduleId ?? 0, status),
     queryFn: () =>
       getMyActivityReservations(activityId!, { scheduleId: scheduleId!, status, size: 100 }),
@@ -28,5 +28,5 @@ export const useReservationsQuery = (
     select: (data) => data.reservations,
   });
 
-  return { reservations: data ?? [], isLoading };
+  return { reservations: data ?? [], isLoading, isError, refetch };
 };

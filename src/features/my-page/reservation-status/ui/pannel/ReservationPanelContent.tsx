@@ -6,6 +6,7 @@ import { useReservationsQuery } from '@/features/my-page/reservation-status/quer
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
+import Button from '@/shared/ui/button/Button';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
@@ -63,11 +64,12 @@ export default function ReservationPanelContent({
   const { mutateAsync: patchStatus, isPending } = usePatchReservationStatus(activityId, (status) =>
     handleTabChange(status)
   );
-  const { reservations, isLoading } = useReservationsQuery(
-    activityId,
-    selectedScheduleId,
-    activeTab
-  );
+  const {
+    reservations,
+    isLoading,
+    isError,
+    refetch: refetchReservations,
+  } = useReservationsQuery(activityId, selectedScheduleId, activeTab);
 
   const isAllLoading = isSchedulesLoading || isLoading;
 
@@ -122,6 +124,15 @@ export default function ReservationPanelContent({
         {isAllLoading ? (
           <div className="mt-6 flex justify-center">
             <Loading size={16} color="var(--color-gray-400)" />
+          </div>
+        ) : isError ? (
+          <div className="mt-6 flex flex-col items-center gap-4">
+            <p className="text-center typo-14-medium whitespace-pre-line text-gray-400">
+              {`예약 목록을 불러오는 데 실패했어요.\n다시 시도해주세요.`}
+            </p>
+            <Button theme="secondary" size="md" onClick={() => refetchReservations()}>
+              다시 시도하기
+            </Button>
           </div>
         ) : availableSchedules.length === 0 ? (
           <p className="mt-3 text-center typo-14-medium text-gray-400">
