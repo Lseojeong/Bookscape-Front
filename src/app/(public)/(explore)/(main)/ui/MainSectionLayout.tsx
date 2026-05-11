@@ -5,7 +5,6 @@ type MainSectionLayoutProps = {
   children: ReactNode;
   className?: string;
 };
-
 /**
  * 메인 페이지 및 검색 페이지에서 공통으로 사용하는 섹션 레이아웃 컴포넌트입니다.
  * 최대 너비, 여백, 패딩 등 공통 레이아웃 스타일을 제공합니다.

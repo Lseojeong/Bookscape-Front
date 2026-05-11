@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-import HeroBanner from '@/app/(public)/(explore)/(main)/ui/HeroBanner';
 import MainSectionLayout from '@/app/(public)/(explore)/(main)/ui/MainSectionLayout';
 import SearchResultSection from '@/features/activity/search/ui/SearchResultSection';
 
@@ -10,14 +8,9 @@ import SearchResultSection from '@/features/activity/search/ui/SearchResultSecti
 export default function SearchPage() {
   return (
     <>
-      <Suspense fallback={<div>...</div>}>
-        {/* 히어로 배너 */}
-        <HeroBanner />
-        {/* 검색 결과 */}
-        <MainSectionLayout className="md:mt-28.75">
-          <SearchResultSection />
-        </MainSectionLayout>
-      </Suspense>
+      <MainSectionLayout className="md:mt-28.75">
+        <SearchResultSection />
+      </MainSectionLayout>
     </>
   );
 }
