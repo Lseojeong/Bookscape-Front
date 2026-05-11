@@ -6,8 +6,9 @@ import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
 
 export const MY_ACTIVITIES_PAGE_SIZE = 10;
-export const MY_ACTIVITIES_STALE_TIME = 60_000;
-export const MY_ACTIVITIES_GC_TIME = 5 * 60_000;
+
+const MY_ACTIVITIES_STALE_TIME_MS = 5 * 60 * 1000;
+const MY_ACTIVITIES_GC_TIME_MS = 30 * 60 * 1000;
 
 export const useMyActivities = (query: GetMyActivitiesQuery = {}) => {
   const { size = MY_ACTIVITIES_PAGE_SIZE } = query;
@@ -30,8 +31,8 @@ export const useMyActivities = (query: GetMyActivitiesQuery = {}) => {
       }),
     getNextPageParam: (lastPage) => lastPage.cursorId ?? undefined,
     networkMode: 'always',
-    staleTime: MY_ACTIVITIES_STALE_TIME,
-    gcTime: MY_ACTIVITIES_GC_TIME,
+    staleTime: MY_ACTIVITIES_STALE_TIME_MS,
+    gcTime: MY_ACTIVITIES_GC_TIME_MS,
     retry: 1,
   });
 
