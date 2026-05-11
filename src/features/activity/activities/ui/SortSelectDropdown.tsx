@@ -8,10 +8,10 @@ import {
 } from '@/shared/ui/dropdown/select';
 
 const SORT_OPTIONS = [
+  { sort: 'latest', label: '최신순' },
   { sort: 'most_reviewed', label: '인기순' },
   { sort: 'price_asc', label: '가격 낮은 순' },
   { sort: 'price_desc', label: '가격 높은 순' },
-  { sort: 'latest', label: '최신순' },
 ];
 
 type SortSelectDropdownProps = {
@@ -35,7 +35,7 @@ export default function SortSelectDropdown({
       <SelectDropdown value={sortValue} onChangeValue={onChangeSortValue} variants="shadow">
         <SelectDropdownTrigger className="ml-auto">
           <SelectDropdownValue
-            placeholder="인기순"
+            placeholder="최신순"
             render={(value) => SORT_OPTIONS.find((option) => option.sort === value)?.label}
           />
         </SelectDropdownTrigger>
