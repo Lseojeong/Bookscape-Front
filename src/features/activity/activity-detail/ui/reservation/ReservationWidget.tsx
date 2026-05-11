@@ -1,12 +1,12 @@
 'use client';
 
+import { useReservation } from '@/features/activity/activity-detail/hooks/useReservation';
+import HeadCountControl from '@/features/activity/activity-detail/ui/reservation/HeadCountControl';
+import ReservationCalendar from '@/features/activity/activity-detail/ui/reservation/ReservationCalendar';
+import ScheduleList from '@/features/activity/activity-detail/ui/reservation/ScheduleList';
 import Button from '@/shared/ui/button/Button';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import PriceDisplay from '@/shared/ui/price/PriceDisplay';
-import { useReservation } from '../../hooks/useReservation';
-import HeadCountControl from './HeadCountControl';
-import ReservationCalendar from './ReservationCalendar';
-import ScheduleList from './ScheduleList';
 
 type ReservationWidgetProps = {
   activityId: number;

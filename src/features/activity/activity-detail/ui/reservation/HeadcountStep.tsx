@@ -1,7 +1,7 @@
 'use client';
 
+import HeadCountControl from '@/features/activity/activity-detail/ui/reservation/HeadCountControl';
 import { BackIcon } from '@/shared/assets/icons';
-import HeadCountControl from './HeadCountControl';
 
 type HeadcountStepProps = {
   headCount: number;
