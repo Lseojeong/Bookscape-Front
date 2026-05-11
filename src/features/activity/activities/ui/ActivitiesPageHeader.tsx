@@ -27,7 +27,7 @@ export default function ActivitiesPageHeader() {
     <div className="flex flex-col gap-3 sm:gap-9">
       {/* SearchInput — 모바일에서만 상단 full width */}
       <div className="sm:hidden">
-        <SearchInput className="h-14! w-full px-4! typo-14-medium! shadow-none" />
+        <SearchInput className="h-14! w-full rounded-2xl! px-4! typo-14-medium! shadow-none" />
       </div>
 
       {/* PageHeader + (모바일: SortSelectDropdown | 데스크탑: SearchInput) */}
@@ -40,7 +40,7 @@ export default function ActivitiesPageHeader() {
           />
         </div>
         <div className="hidden sm:block">
-          <SearchInput className="h-14! px-4! typo-14-medium! shadow-none sm:min-w-79.25" />
+          <SearchInput className="h-14! rounded-2xl! px-4! typo-14-medium! shadow-none sm:min-w-79.25" />
         </div>
         <div className="sm:hidden">
           <SortSelectDropdown sortValue={sort} onChangeSortValue={handleChangeSort} />
