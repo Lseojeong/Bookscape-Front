@@ -1,18 +1,42 @@
 'use client';
 
+import { useMemo } from 'react';
+import {
+  MY_ACTIVITIES_PAGE_SIZE,
+  useMyActivities,
+} from '@/features/my-page/my-activity/queries/useMyActivities';
 import MyActivityCard from '@/features/my-page/my-activity/ui/my-activity-card/MyActivityCard';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
-import { useMyActivities } from '../queries/useMyActivities';
+import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
+import Loading from '@/shared/ui/loading/Loading';
 
 export default function MyActivityList() {
-  const { data, isLoading, isError } = useMyActivities({ size: 10 });
+  const { query } = useMyActivities({ size: MY_ACTIVITIES_PAGE_SIZE });
 
-  if (isLoading) {
+  const activities = useMemo(() => {
+    return query.data?.pages.flatMap((page) => page.activities) ?? [];
+  }, [query.data?.pages]);
+
+  const isInitialError = query.isError && activities.length === 0;
+
+  const { setSentinel } = useInfiniteScroll({
+    enabled: query.isSuccess && !query.isFetchNextPageError,
+    hasNextPage: query.hasNextPage,
+    isFetchingNextPage: query.isFetchingNextPage,
+    fetchNextPage: query.fetchNextPage,
+  });
+
+  if (query.isPending && activities.length === 0) {
     // TODO: 스켈레톤 UI로 교체
-    return null;
+    return (
+      <div className="flex justify-center py-10">
+        <Loading />
+      </div>
+    );
   }
 
-  if (isError) {
+  if (isInitialError) {
     return (
       <EmptyState
         type="error"
@@ -20,8 +44,6 @@ export default function MyActivityList() {
       />
     );
   }
-
-  const activities = data?.activities ?? [];
 
   if (activities.length === 0) {
     return (
@@ -33,20 +55,30 @@ export default function MyActivityList() {
   }
 
   return (
-    <div className="flex flex-col gap-4 md:gap-7.5">
-      {activities.map((activity) => (
-        <MyActivityCard
-          key={activity.id}
-          data={{
-            id: activity.id,
-            title: activity.title,
-            rating: activity.rating,
-            reviewCount: activity.reviewCount,
-            price: activity.price,
-            bannerImageUrl: activity.bannerImageUrl,
-          }}
-        />
-      ))}
-    </div>
+    <>
+      <div className="flex flex-col gap-4 md:gap-7.5">
+        {activities.map((activity) => (
+          <MyActivityCard
+            key={activity.id}
+            data={{
+              id: activity.id,
+              title: activity.title,
+              rating: activity.rating,
+              reviewCount: activity.reviewCount,
+              price: activity.price,
+              bannerImageUrl: activity.bannerImageUrl,
+            }}
+          />
+        ))}
+      </div>
+
+      <InfiniteScrollSentinel
+        hasNextPage={query.hasNextPage}
+        isFetchingNextPage={query.isFetchingNextPage}
+        isFetchNextPageError={query.isFetchNextPageError}
+        onRetryFetchNextPage={() => query.fetchNextPage()}
+        setSentinel={setSentinel}
+      />
+    </>
   );
 }
