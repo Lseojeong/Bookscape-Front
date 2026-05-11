@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import type { CreateActivityImageUrlResponse } from '@/features/my-page/activity-form/types';
-import { bffFetch } from '@/shared/apis/base/bffFetch';
+import { uploadImage } from '@/features/my-page/apis';
 
 export const useUploadImage = () => {
   return useMutation({
@@ -8,10 +7,7 @@ export const useUploadImage = () => {
       const formData = new FormData();
       formData.append('image', file);
 
-      const res = await bffFetch.postFormData<CreateActivityImageUrlResponse>(
-        '/activities/image',
-        formData
-      );
+      const res = await uploadImage(formData);
 
       if (!res) {
         throw new Error('이미지 업로드 응답이 없습니다.');
