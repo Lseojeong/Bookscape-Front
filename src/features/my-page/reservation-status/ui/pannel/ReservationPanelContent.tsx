@@ -7,6 +7,7 @@ import { useReservationsQuery } from '@/features/my-page/reservation-status/quer
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
+import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import Button from '@/shared/ui/button/Button';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
@@ -14,6 +15,7 @@ import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import FormLabel from '@/shared/ui/form/FormLabel';
+import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
 import Loading from '@/shared/ui/loading/Loading';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 
@@ -25,7 +27,6 @@ type ReservationPanelContentProps = {
   onClose: () => void;
 };
 
-/** 날짜를 `YYYY년 M월 D일` 형식으로 변환합니다. */
 const formatDate = (d: Date) => `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
 
 const TAB_LABELS = {
@@ -39,12 +40,16 @@ const TAB_LABELS = {
  *
  * @description
  * - 상태별 탭(신청 / 승인 / 거절)으로 예약을 분류합니다.
- * - 전체 스케줄의 예약을 한 번에 조회하여 탭 변경 시 스케줄도 자동으로 이동합니다.
- * - 드롭다운으로 시간대(스케줄)를 선택하면 해당 스케줄의 예약 카드 목록이 표시됩니다.
+ * - /reserved-schedule 응답의 count로 탭 카운트를 구성합니다.
+ * - 탭/스케줄 선택 시 /reservations?scheduleId=xxx&status=xxx 로 목록을 조회합니다.
+ * - 최초 1회는 스케줄 + 예약 목록 모두 로딩 완료 후 콘텐츠를 표시합니다.
+ * - 이후 탭/스케줄 변경 시엔 카드 영역만 로딩됩니다.
+ * - 카드 목록은 무한스크롤로 페이지네이션됩니다.
  *
  * @param date - 선택된 날짜
  * @param activityId - 선택된 체험 ID
- * @param schedules - 날짜별 스케줄 목록
+ * @param schedules - 날짜별 스케줄 목록 (count 포함)
+ * @param isSchedulesLoading - 스케줄 로딩 상태
  * @param onClose - 패널 닫기 핸들러
  */
 export default function ReservationPanelContent({
@@ -65,17 +70,29 @@ export default function ReservationPanelContent({
   const { mutateAsync: patchStatus } = usePatchReservationStatus(activityId, (status) =>
     handleTabChange(status)
   );
+
   const {
     reservations,
     isLoading,
     isPending,
     isError,
     refetch: refetchReservations,
+    hasNextPage,
+    isFetchingNextPage,
+    isFetchNextPageError,
+    fetchNextPage,
   } = useReservationsQuery(activityId, selectedScheduleId, activeTab);
+
+  const { setSentinel } = useInfiniteScroll({
+    enabled: !isError,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   const [isInitialLoaded, setIsInitialLoaded] = useState(false);
 
-  if (!isInitialLoaded && !isSchedulesLoading && !isPending) {
+  if (!isInitialLoaded && !isSchedulesLoading && (!isPending || schedules.length === 0)) {
     setIsInitialLoaded(true);
   }
 
@@ -122,7 +139,7 @@ export default function ReservationPanelContent({
         </button>
       </div>
 
-      {/* 탭 - 스케줄 로딩 시 스켈레톤 */}
+      {/* 탭 - 최초 진입 시만 스켈레톤 */}
       <div className="mt-4.5 shrink-0">
         {isAllLoading ? (
           <div className="flex gap-2">
@@ -140,7 +157,7 @@ export default function ReservationPanelContent({
         )}
       </div>
 
-      {/* 콘텐츠 - 스케줄 로딩 시 전체 로딩 */}
+      {/* 콘텐츠 - 최초 진입 시 전체 로딩 */}
       <div className="flex min-h-0 flex-1 flex-col">
         {isAllLoading ? (
           <div className="mt-6 flex justify-center">
@@ -177,7 +194,7 @@ export default function ReservationPanelContent({
               </SelectDropdown>
             </div>
 
-            {/* 카드 목록 - 예약 로딩 시 카드 영역만 로딩 */}
+            {/* 카드 목록 - 무한스크롤 적용 */}
             <div className="flex min-h-0 flex-1 flex-col md:w-1/2 lg:w-full">
               <FormLabel className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약내역</FormLabel>
               <div className="min-h-0 flex-1 overflow-y-auto">
@@ -201,14 +218,23 @@ export default function ReservationPanelContent({
                       {TAB_LABELS[activeTab]} 내역이 없습니다.
                     </p>
                   ) : (
-                    reservations.map((r) => (
-                      <ReservationCard
-                        key={r.id}
-                        reservation={r}
-                        onConfirm={activeTab === 'pending' ? handleConfirm : undefined}
-                        onDecline={activeTab === 'pending' ? handleDecline : undefined}
+                    <>
+                      {reservations.map((r) => (
+                        <ReservationCard
+                          key={r.id}
+                          reservation={r}
+                          onConfirm={activeTab === 'pending' ? handleConfirm : undefined}
+                          onDecline={activeTab === 'pending' ? handleDecline : undefined}
+                        />
+                      ))}
+                      <InfiniteScrollSentinel
+                        hasNextPage={hasNextPage}
+                        isFetchingNextPage={isFetchingNextPage}
+                        isFetchNextPageError={isFetchNextPageError}
+                        onRetryFetchNextPage={() => fetchNextPage()}
+                        setSentinel={setSentinel}
                       />
-                    ))
+                    </>
                   )}
                 </div>
               </div>
