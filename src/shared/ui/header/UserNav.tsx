@@ -1,3 +1,4 @@
+'use client';
 import { cva } from 'class-variance-authority';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
