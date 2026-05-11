@@ -40,8 +40,6 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
     myBlockedScheduleIds,
   } = useReservation(activityId);
 
-  if (isOwner) return null;
-
   return (
     <div className="flex flex-col gap-6 rounded-3xl border border-gray-50 p-7.5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
       {/* 가격 */}
@@ -84,7 +82,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
         <Button
           theme="primary"
           size="md"
-          disabled={!selected || !selectedScheduleId}
+          disabled={isOwner || !selected || !selectedScheduleId}
           onClick={handleReserve}
         >
           예약하기

@@ -50,8 +50,6 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
   const startYRef = useRef<number>(0);
   const [dragY, setDragY] = useState(0);
 
-  if (isOwner) return null;
-
   const handleTouchStart = (e: React.TouchEvent) => {
     startYRef.current = e.touches[0].clientY;
   };
@@ -72,7 +70,13 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
     <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">
       <div className="flex flex-col gap-2 border-t border-gray-100 bg-white px-4 py-3">
         <TotalPrice totalPrice={price} headCount={1} />
-        <Button theme="primary" size="md" className="w-full" onClick={() => setIsOpen(true)}>
+        <Button
+          theme="primary"
+          size="md"
+          className="w-full"
+          disabled={isOwner}
+          onClick={() => setIsOpen(true)}
+        >
           예약하기
         </Button>
       </div>
