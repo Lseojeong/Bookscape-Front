@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useCreateReservation } from '@/features/activity/activity-detail/mutations/useCreateReservation';
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/features/activity/activity-detail/queries/useAvailableSchedule';
@@ -39,10 +39,14 @@ export const useReservation = (activityId: number) => {
   // 파생 값
   const selectedDateStr = selected ? format(selected, 'yyyy-MM-dd') : null;
   const schedules = availableSchedules?.find((s) => s.date === selectedDateStr)?.times ?? [];
-  const myBlockedScheduleIds = new Set(
-    myReservationsData?.reservations
-      .filter((r) => r.status === 'pending' || r.status === 'confirmed')
-      .map((r) => r.scheduleId) ?? []
+  const myBlockedScheduleIds = useMemo(
+    () =>
+      new Set(
+        myReservationsData?.reservations
+          .filter((r) => r.status === 'pending' || r.status === 'confirmed')
+          .map((r) => r.scheduleId) ?? []
+      ),
+    [myReservationsData]
   );
 
   const reset = () => {
