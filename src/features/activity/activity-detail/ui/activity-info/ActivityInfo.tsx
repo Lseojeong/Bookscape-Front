@@ -1,27 +1,17 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import DeleteActivityDialog from '@/features/my-page/common/DeleteActivityDialog';
-import { MenuIcon, StarIcon } from '@/shared/assets/icons';
-import {
-  ActionDropdown,
-  ActionDropdownContent,
-  ActionDropdownItem,
-  ActionDropdownTrigger,
-} from '@/shared/ui/dropdown/action';
+import { StarIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 import ActivityAddress from './ActivityAddress';
+import ActivityKebabMenu from './ActivityKebabMenu';
 
 type ActivityInfoProps = {
   id: number;
+  userId: number;
   category: string;
   title: string;
   rating: number;
   reviewCount: number;
   address: string;
-  isOwner?: boolean;
   className?: string;
 };
 
@@ -34,6 +24,7 @@ type ActivityInfoProps = {
  * ```tsx
  * <ActivityInfo
  *   id={activity.id}
+ *   userId={activity.userId}
  *   category={activity.category}
  *   title={activity.title}
  *   rating={activity.rating}
@@ -44,17 +35,14 @@ type ActivityInfoProps = {
  */
 export default function ActivityInfo({
   id,
+  userId,
   category,
   title,
   rating,
   reviewCount,
   address,
-  isOwner,
   className,
 }: ActivityInfoProps) {
-  const router = useRouter();
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
   return (
     <div className={cn(className)}>
       <div className="mb-1 flex items-center justify-between md:mb-2.5">
@@ -63,30 +51,8 @@ export default function ActivityInfo({
           {category}
         </p>
         {/* 케밥 버튼 */}
-        {isOwner && (
-          <ActionDropdown>
-            <ActionDropdownTrigger
-              ariaLabel="메뉴 열기"
-              className="flex cursor-pointer items-center"
-            >
-              <MenuIcon aria-hidden />
-            </ActionDropdownTrigger>
-            <ActionDropdownContent className="right-0 left-auto">
-              <ActionDropdownItem onClick={() => router.push(`/activity/${id}/edit`)}>
-                수정하기
-              </ActionDropdownItem>
-              <ActionDropdownItem onClick={() => setIsDeleteModalOpen(true)}>
-                삭제하기
-              </ActionDropdownItem>
-            </ActionDropdownContent>
-          </ActionDropdown>
-        )}
+        <ActivityKebabMenu id={id} userId={userId} />
       </div>
-      <DeleteActivityDialog
-        id={id}
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-      />
       {/* 타이틀 */}
       <Title as="h1" size="18" weight="bold" color="text-gray-950" className="mb-4 md:typo-24-bold">
         {title}
