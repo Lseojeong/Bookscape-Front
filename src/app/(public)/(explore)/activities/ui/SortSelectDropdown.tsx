@@ -32,14 +32,14 @@ export default function SortSelectDropdown({
 }: SortSelectDropdownProps) {
   return (
     <>
-      <SelectDropdown value={sortValue} onChangeValue={onChangeSortValue}>
-        <SelectDropdownTrigger>
+      <SelectDropdown value={sortValue} onChangeValue={onChangeSortValue} variants="shadow">
+        <SelectDropdownTrigger className="ml-auto">
           <SelectDropdownValue
             placeholder="인기순"
             render={(value) => SORT_OPTIONS.find((option) => option.sort === value)?.label}
           />
         </SelectDropdownTrigger>
-        <SelectDropdownContent>
+        <SelectDropdownContent className="right-0 left-auto">
           {SORT_OPTIONS.map((option) => (
             <SelectDropdownItem key={option.sort} value={option.sort}>
               {option.label}
