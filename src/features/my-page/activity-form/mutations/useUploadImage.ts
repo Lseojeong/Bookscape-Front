@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import type { CreateActivityImageUrlResponse } from '@/features/activity/types';
+import type { CreateActivityImageUrlResponse } from '@/features/my-page/activity-form/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 
 export const useUploadImage = () => {

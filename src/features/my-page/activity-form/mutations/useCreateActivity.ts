@@ -1,5 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import type { CreateActivityRequestBody, CreateActivityResponse } from '@/features/activity/types';
+import type {
+  CreateActivityRequestBody,
+  CreateActivityResponse,
+} from '@/features/my-page/activity-form/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 
 export const useCreateActivity = () => {
