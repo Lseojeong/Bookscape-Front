@@ -22,7 +22,7 @@ export default async function ActivityDetailPage({ params }: Props) {
 
   return (
     <>
-      <div className="mx-auto max-w-280 px-6 pt-7.5 pb-30 md:px-7.5 md:pt-8.5 lg:flex lg:gap-10 lg:px-10 lg:pt-22 lg:pb-0">
+      <div className="mx-auto max-w-280 px-6 pt-7.5 pb-30 md:px-7.5 md:pt-8.5 lg:flex lg:gap-10 lg:px-10 lg:pt-22">
         <ActivityDetail activity={activity} />
         <aside className="hidden lg:block lg:w-102.5">
           <ReservationWidget activityId={activityId} />
