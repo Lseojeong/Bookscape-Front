@@ -22,7 +22,7 @@ type ProfileImageUploadProps = {
  * - "기본 프로필로 변경" 버튼으로 이미지를 초기화할 수 있습니다.
  *
  * @param initialImageUrl - 초기 프로필 이미지 URL
- * @param onFileChange - 파일 선택 시 호출되는 콜백 (TODO: API 연동 시 사용)
+ * @param onFileChange - 파일 선택 시 호출되는 콜백
  * @param onReset - 기본 프로필로 변경 시 호출되는 콜백
  */
 export default function ImageUploadBox({
@@ -34,7 +34,8 @@ export default function ImageUploadBox({
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const previewImage = objectUrl ?? initialImageUrl;
+  const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(initialImageUrl ?? null);
+  const previewImage = objectUrl ?? currentImageUrl;
 
   const validateFile = (file: File): string | null => {
     if (file.size > IMAGE_RULES.MAX_SIZE) {
@@ -65,13 +66,14 @@ export default function ImageUploadBox({
       return nextObjectUrl;
     });
 
-    onFileChange?.(file); // TODO: API 연동 시 여기서 업로드
+    onFileChange?.(file);
     e.target.value = '';
   };
 
   const handleReset = () => {
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     setObjectUrl(null);
+    setCurrentImageUrl(null);
     setError(null);
     onReset?.();
   };

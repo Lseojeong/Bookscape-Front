@@ -12,7 +12,8 @@ type UseMyReservationsParams = {
 
 export const MY_RESERVATIONS_PAGE_SIZE = 5;
 
-const MY_RESERVATIONS_STALE_TIME_MS = 5 * 60 * 1000;
+const MY_RESERVATIONS_STALE_TIME_MS = 1 * 60 * 1000;
+const MY_RESERVATIONS_GC_TIME_MS = 10 * 60 * 1000;
 
 const EMPTY_RESPONSE: GetMyReservationsResponse = {
   cursorId: null,
@@ -45,6 +46,7 @@ export const useMyReservations = ({
     getNextPageParam: (lastPage) => lastPage.cursorId ?? undefined,
     networkMode: 'always',
     staleTime: MY_RESERVATIONS_STALE_TIME_MS,
+    gcTime: MY_RESERVATIONS_GC_TIME_MS,
     retry: 1,
   });
 
