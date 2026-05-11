@@ -4,7 +4,7 @@ import MainCategoryList from '@/features/activity/main/ui/MainCategoryList';
 
 /**
  * 메인 페이지 컴포넌트입니다.
- * 히어로 배너, 카테고리 목록, 체험 목록으로 구성됩니다.
+ * 카테고리 목록, 체험 목록으로 구성됩니다.
  */
 export default function MainPage() {
   return (
