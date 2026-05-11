@@ -35,7 +35,7 @@ export default function ActivitiesPageHeader() {
         <div className="grow">
           <PageHeader
             title="체험활동"
-            description="체험을 탐색하고 예약할 수 있습니다."
+            description="체험을 탐색할 수 있습니다"
             onBack={() => router.back()}
           />
         </div>
