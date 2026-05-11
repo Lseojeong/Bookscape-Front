@@ -24,7 +24,7 @@ export const useLogout = () => {
       if (response === null) throw new Error();
       showToast('check', '로그아웃 되었습니다.');
     } catch {
-      showToast('warning', '로그아웃 중 오류가 발생했습니다.');
+      showToast('cancel', '로그아웃 중 오류가 발생했습니다.');
     } finally {
       clearSession('user');
       router.replace('/');
