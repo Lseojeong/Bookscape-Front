@@ -46,7 +46,7 @@ export const useReservationsQuery = (
       }),
     initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) => lastPage.cursorId ?? undefined,
-    enabled: !!activityId && !!scheduleId,
+    enabled: activityId !== null && scheduleId !== null,
     select: (data) => ({
       reservations: data.pages.flatMap((page) => page.reservations),
       pages: data.pages,
