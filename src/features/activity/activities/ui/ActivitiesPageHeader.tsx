@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import SortSelectDropdown from '@/app/(public)/(explore)/activities/ui/SortSelectDropdown';
 import { useAllActivityList } from '@/features/activity/activities/hooks/useAllActivityList';
+import SortSelectDropdown from '@/features/activity/activities/ui/SortSelectDropdown';
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
