@@ -37,6 +37,7 @@ type HeaderProps = {
   isLoggedIn?: boolean;
   user?: AvatarUser;
   className?: string;
+  onLogout: () => void;
 };
 
 /**
@@ -66,7 +67,7 @@ type HeaderProps = {
  * @param props.user - 유저 정보
  * @param props.className - 추가 클래스
  */
-export default function Header({ isLoggedIn = false, user, className }: HeaderProps) {
+export default function Header({ isLoggedIn = false, user, className, onLogout }: HeaderProps) {
   const pathname = usePathname();
   const isScrollThemedPage = pathname === '/' || pathname === '/search';
   const { isScrolled } = useScroll({ isEnabled: isScrollThemedPage });
@@ -81,7 +82,7 @@ export default function Header({ isLoggedIn = false, user, className }: HeaderPr
           <Logo variant={logoVariantByTheme[theme]} className="h-6 md:h-7" />
         </LogoWrapper>
 
-        <HeaderNav theme={theme} isLoggedIn={isLoggedIn} user={user} />
+        <HeaderNav theme={theme} isLoggedIn={isLoggedIn} user={user} onLogout={onLogout} />
       </div>
     </header>
   );
