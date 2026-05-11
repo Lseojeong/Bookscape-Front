@@ -98,12 +98,16 @@ export const useActivityEditSubmit = (
         }
       });
 
+      const formattedAddress = formData.detailAddress
+        ? `${formData.address}, ${formData.detailAddress}`
+        : formData.address;
+
       const payload = {
         title: formData.title,
         category: formData.category,
         description: formData.description,
         price: formData.price!,
-        address: `${formData.address} ${formData.detailAddress}`.trim(),
+        address: formattedAddress.trim(),
         bannerImageUrl,
         subImageIdsToRemove,
         subImageUrlsToAdd,

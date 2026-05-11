@@ -66,13 +66,27 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
   const initialData: ActivityInitialData | undefined = useMemo(() => {
     if (!originalData) return undefined;
 
+    // 주소 분리 로직
+    const fullAddress = originalData.address || '';
+    // 첫 번째 쉼표의 위치를 찾음.
+    const firstCommaIndex = fullAddress.indexOf(',');
+    let displayAddress = fullAddress;
+    let displayDetailAddress = '';
+
+    if (firstCommaIndex !== -1) {
+      // 첫 번째 쉼표 앞부분은 기본 주소
+      displayAddress = fullAddress.substring(0, firstCommaIndex).trim();
+      // 첫 번째 쉼표 뒷부분은 상세 주소
+      displayDetailAddress = fullAddress.substring(firstCommaIndex + 1).trim();
+    }
+
     return {
       title: originalData.title,
       category: originalData.category as ActivityFormValues['category'],
       description: originalData.description,
       price: originalData.price,
-      address: originalData.address,
-      detailAddress: '',
+      address: displayAddress,
+      detailAddress: displayDetailAddress,
       bannerImage: originalData.bannerImageUrl,
       subImages: originalData.subImages?.map((img) => img.imageUrl) || [],
       schedules:

@@ -33,12 +33,17 @@ export const useActivitySubmit = () => {
         )
       );
 
+      // 주소를 합칠 때 쉼표를 구분자로 사용
+      const formattedAddress = data.detailAddress
+        ? `${data.address}, ${data.detailAddress}`
+        : data.address;
+
       // 최종 페이로드 가공
       const payload = {
         title: data.title,
         category: data.category,
         description: data.description,
-        address: `${data.address} ${data.detailAddress}`.trim(),
+        address: formattedAddress,
         price: data.price!,
         bannerImageUrl,
         subImageUrls,
