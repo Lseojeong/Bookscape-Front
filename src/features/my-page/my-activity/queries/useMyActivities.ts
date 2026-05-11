@@ -1,4 +1,3 @@
-import type { InfiniteData, QueryKey } from '@tanstack/react-query';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getMyActivities } from '@/features/my-page/my-activity/apis';
 import type { GetMyActivitiesQuery } from '@/features/my-page/types';
@@ -15,16 +14,10 @@ export const useMyActivities = ({
 }: Pick<GetMyActivitiesQuery, 'size'> = {}) => {
   const userId = useUserStore((s) => s.user?.id);
 
-  const infiniteQuery = useInfiniteQuery<
-    Awaited<ReturnType<typeof getMyActivities>>,
-    unknown,
-    InfiniteData<Awaited<ReturnType<typeof getMyActivities>>, number | undefined>,
-    QueryKey,
-    number | undefined
-  >({
+  const infiniteQuery = useInfiniteQuery({
     queryKey: QUERY_KEYS.MY_ACTIVITIES(size),
     enabled: !!userId,
-    initialPageParam: undefined,
+    initialPageParam: undefined as number | undefined,
     queryFn: async ({ pageParam }) =>
       await getMyActivities({
         cursorId: pageParam,
@@ -37,5 +30,5 @@ export const useMyActivities = ({
     retry: 1,
   });
 
-  return { query: infiniteQuery };
+  return infiniteQuery;
 };

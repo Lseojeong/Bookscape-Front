@@ -12,7 +12,7 @@ import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSe
 import Loading from '@/shared/ui/loading/Loading';
 
 export default function MyActivityList() {
-  const { query } = useMyActivities({ size: MY_ACTIVITIES_PAGE_SIZE });
+  const query = useMyActivities({ size: MY_ACTIVITIES_PAGE_SIZE });
 
   const activities = useMemo(() => {
     return query.data?.pages.flatMap((page) => page.activities) ?? [];
