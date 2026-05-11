@@ -1,8 +1,9 @@
-import type {
+import {
   UpdateMyProfileRequestBody,
-  CreateMyProfileImageUrlResponse,
+  UserMeResponseSchema,
+  UserResponseSchema,
+  CreateMyProfileImageUrlResponseSchema,
 } from '@/features/user/types';
-import { UserMeResponseSchema } from '@/features/user/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 
 export const getMe = async () => {
@@ -15,7 +16,8 @@ export const getMe = async () => {
  * @description `PATCH /api/users/me`
  */
 export const updateMyProfile = async (body: UpdateMyProfileRequestBody) => {
-  return bffFetch.patch('/users/me', body);
+  const data = await bffFetch.patch('/users/me', body);
+  return data ? UserResponseSchema.parse(data) : null;
 };
 
 /**
@@ -25,7 +27,8 @@ export const updateMyProfile = async (body: UpdateMyProfileRequestBody) => {
 export const createMyProfileImageUrl = async (file: File) => {
   const formData = new FormData();
   formData.append('image', file);
-  return bffFetch.post<CreateMyProfileImageUrlResponse>('/users/me/image', formData, {
+  const data = await bffFetch.post('/users/me/image', formData, {
     isFormData: true,
   });
+  return data ? CreateMyProfileImageUrlResponseSchema.parse(data) : null;
 };
