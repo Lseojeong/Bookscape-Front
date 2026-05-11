@@ -18,4 +18,13 @@ export const QUERY_KEYS = {
     ['my-reservations', status ?? 'all', size ?? 'default'] as const,
   // 내 체험 관리 목록 조회
   MY_ACTIVITIES: (size?: number) => ['my-activities', size ?? 10] as const,
+  /** 내 체험 월별 예약 현황 조회 */
+  RESERVATION_DASHBOARD: (activityId: number | null, year: string, month: string) =>
+    ['my-activities', activityId, 'reservation-dashboard', year, month] as const,
+  /** 내 체험 날짜별 예약 스케줄 조회 */
+  RESERVED_SCHEDULE: (activityId: number | null, date: string | null) =>
+    ['my-activities', activityId, 'reserved-schedule', date] as const,
+  /** 내 체험 예약 목록 조회 */
+  RESERVATIONS: (activityId: number | null, scheduleId: number, status: string) =>
+    ['my-activities', activityId, 'reservations', scheduleId, status] as const,
 } as const;
