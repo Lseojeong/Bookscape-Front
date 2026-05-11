@@ -106,6 +106,7 @@ export type ActivityScheduleTime = ActivitySchedule['times'][number];
 export type ActivitySubImage = z.infer<typeof SubImageSchema>;
 export type CreateActivityResponse = z.infer<typeof CreateActivityResponseSchema>;
 export type CreateActivityImageUrlResponse = z.infer<typeof CreateActivityImageUrlResponseSchema>;
+export type ActivityDetailResponse = CreateActivityResponse;
 
 export type GetSearchActivityParams = {
   method?: string;
