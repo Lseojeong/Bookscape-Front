@@ -20,12 +20,14 @@ export const useLogout = () => {
 
   const handleLogout = async () => {
     try {
-      await bffFetch.post('/auth/logout');
-      clearSession('user');
+      const response = await bffFetch.post('/auth/logout');
+      if (response === null) throw new Error();
       showToast('check', '로그아웃 되었습니다.');
-      router.replace('/');
     } catch {
       showToast('warning', '로그아웃 중 오류가 발생했습니다.');
+    } finally {
+      clearSession('user');
+      router.replace('/');
     }
   };
 
