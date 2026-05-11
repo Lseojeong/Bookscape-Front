@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import ActivityDescription from '@/features/activity/activity-detail/ui/activity-info/ActivityDescription';
+import ActivityLocation from '@/features/activity/activity-detail/ui/activity-info/ActivityLocation';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 import { cn } from '@/shared/utils/cn';
-import ActivityDescription from '../activity-info/ActivityDescription';
-import ActivityLocation from '../activity-info/ActivityLocation';
 
 type ActivityTabSectionProps = {
   description: string;

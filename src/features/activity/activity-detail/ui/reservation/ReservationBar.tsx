@@ -1,14 +1,14 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { useReservation } from '@/features/activity/activity-detail/hooks/useReservation';
+import HeadcountStep from '@/features/activity/activity-detail/ui/reservation/HeadcountStep';
+import ScheduleStep from '@/features/activity/activity-detail/ui/reservation/ScheduleStep';
 import { ChevronRightIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
 import { cn } from '@/shared/utils/cn';
-import { useReservation } from '../../hooks/useReservation';
-import HeadcountStep from './HeadcountStep';
-import ScheduleStep from './ScheduleStep';
 
 type ReservationBarProps = {
   activityId: number;

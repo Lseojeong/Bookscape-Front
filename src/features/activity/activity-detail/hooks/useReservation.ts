@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { useCreateReservation } from '@/features/activity/activity-detail/mutations/useCreateReservation';
+import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
+import { useAvailableSchedule } from '@/features/activity/activity-detail/queries/useAvailableSchedule';
 import { getMyReservations } from '@/features/reservation/apis';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
-import { useCreateReservation } from '../mutations/useCreateReservation';
-import { useActivityDetail } from '../queries/useActivityDetail';
-import { useAvailableSchedule } from '../queries/useAvailableSchedule';
 
 export const useReservation = (activityId: number) => {
   // 외부 훅
