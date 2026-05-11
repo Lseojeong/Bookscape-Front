@@ -69,8 +69,9 @@ export default function NotificationItem({
         </div>
       </div>
       <div className="typo-14-medium text-gray-800">
-        <p>{title}</p>
-        <p>({date})</p>
+        <p className="wrap-break-word">
+          {title} ({date})
+        </p>
         <p>
           예약이 <span className={`font-semibold ${color}`}>{label}</span> 되었어요
         </p>
