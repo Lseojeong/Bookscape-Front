@@ -99,10 +99,11 @@ export type CreateActivityImageUrlResponse = {
   activityImageUrl: string;
 };
 
-export type GetSearchActivityParams = {
-  method?: string;
+export type GetActivityParams = {
+  method?: 'offset' | 'cursor';
   category?: string;
   keyword?: string;
+  sort?: string;
   page?: number;
   size?: number;
 };
