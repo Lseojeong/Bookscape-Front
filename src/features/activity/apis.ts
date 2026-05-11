@@ -1,6 +1,7 @@
 import {
   ActivityDetailSchema,
   ActivityResponse,
+  ActivityResponseSchema,
   GetActivityParams,
 } from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
@@ -21,13 +22,14 @@ export const deleteActivity = async (id: number) => {
   await bffFetch.delete(`/activities/${id}`);
 };
 
+/** 메인 페이지 - 인기 체험 목록 */
 export const getHotActivityData = async (size: number) => {
   const result = await get<ActivityResponse>('/activities', {
     method: 'offset',
     sort: 'most_reviewed',
     size,
   });
-  return result?.activities ?? [];
+  return ActivityResponseSchema.parse(result ?? { activities: [], totalCount: 0 });
 };
 
 /** 검색 페이지, 전체 체험 목록 페이지 */

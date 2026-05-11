@@ -1,9 +1,8 @@
 'use client';
 import useEmblaCarousel from 'embla-carousel-react';
-import { useState, useEffect, useCallback, startTransition } from 'react';
+import { useState, useEffect, useCallback, startTransition, useMemo } from 'react';
 import { useHotActivityData } from '@/features/activity/main/queries/useHotActivityData';
 
-// TODO : 호출 개수 정해야함!
 const ACTIVITY_FETCH_LIMIT = 8;
 
 /**
@@ -14,7 +13,8 @@ export default function useMainActivityCarousel() {
   const [canScrollNext, setCanScrollNext] = useState(false);
 
   /** 인기 체험 api 호출 */
-  const { data: activityData = [] } = useHotActivityData(ACTIVITY_FETCH_LIMIT);
+  const { data } = useHotActivityData(ACTIVITY_FETCH_LIMIT);
+  const activityData = useMemo(() => data?.activities ?? [], [data?.activities]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
