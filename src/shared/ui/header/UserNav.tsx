@@ -1,7 +1,6 @@
 import { cva } from 'class-variance-authority';
 import { useRouter } from 'next/navigation';
 import { NotificationIcon } from '@/shared/assets/icons';
-import { useLogout } from '@/shared/hooks/useLogout';
 import type { AvatarUser } from '@/shared/ui/avatar/types';
 import {
   ActionDropdown,
@@ -50,6 +49,7 @@ type UserNavProps = {
   theme: HeaderTheme;
   user: AvatarUser;
   className?: string;
+  onLogout: () => void;
 };
 
 /**
@@ -65,9 +65,9 @@ type UserNavProps = {
  * @param props.user - 유저 정보
  * @param props.className - 추가 클래스
  */
-export default function UserNav({ theme, user, className }: UserNavProps) {
+export default function UserNav({ theme, user, className, onLogout }: UserNavProps) {
   const router = useRouter();
-  const { handleLogout } = useLogout();
+  const handleLogout = onLogout;
 
   return (
     <div className={cn('flex items-center gap-5', className)}>
