@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import type { ParsedNotification } from '@/features/notification/types';
 import { getTimeAgo } from '@/features/notification/utils/getTimeAgo';
 import { DeleteIcon } from '@/shared/assets/icons';
@@ -51,19 +51,12 @@ export default function NotificationItem({
   onDelete,
   lastSeenAtMs,
 }: NotificationItemProps) {
-  const router = useRouter();
-
   const { label, color, reservationListUrl } =
     NOTIFICATION_STATUS_OPTIONS[status as NotificationStatus];
 
   const updatedAtMs = Date.parse(updatedAt);
   const isNew =
     Number.isFinite(updatedAtMs) && (lastSeenAtMs == null || updatedAtMs > lastSeenAtMs);
-
-  /** 상태에 따라 예약 내역 페이지로 이동 */
-  const handleNavigateReservationList = () => {
-    router.push(reservationListUrl);
-  };
 
   return (
     <div className={`p-4 ${isNew ? 'bg-primary-50' : ''}`}>
@@ -82,13 +75,9 @@ export default function NotificationItem({
       </div>
 
       <div className="typo-14-medium text-gray-800">
-        <button
-          type="button"
-          onClick={handleNavigateReservationList}
-          className="cursor-pointer text-left wrap-break-word hover:underline"
-        >
+        <Link href={reservationListUrl} className="block text-left wrap-break-word hover:underline">
           {title} ({date})
-        </button>
+        </Link>
 
         <p>
           예약이 <span className={`font-semibold ${color}`}>{label}</span> 되었어요
