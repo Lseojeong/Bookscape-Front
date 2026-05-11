@@ -11,13 +11,21 @@ export const useAllActivityList = () => {
   const category = searchParams.get('category') ?? '전체';
   const sort = searchParams.get('sort') ?? 'most_reviewed';
 
-  const { page, activities, totalCount, totalPages, updateParams, handlePageChange } =
-    useActivityList({
-      category,
-      sort,
-      pageSize: { mobile: 6, tablet: 6, desktop: 12 },
-      basePath: '/activities',
-    });
+  const {
+    page,
+    activities,
+    totalCount,
+    totalPages,
+    updateParams,
+    handlePageChange,
+    isLoading,
+    isError,
+  } = useActivityList({
+    category,
+    sort,
+    pageSize: { mobile: 6, tablet: 6, desktop: 12 },
+    basePath: '/activities',
+  });
 
   const handleChangeCategory = (newCategory: string) => {
     updateParams({ category: newCategory, page: '1' });
@@ -34,6 +42,8 @@ export const useAllActivityList = () => {
     activities,
     totalCount,
     totalPages,
+    isLoading,
+    isError,
     handleChangeCategory,
     handleChangeSort,
     handlePageChange,

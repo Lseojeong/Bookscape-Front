@@ -73,7 +73,7 @@ export const useActivityList = ({
     });
   }, [pageSize, updateParams]);
 
-  const { data } = useActivityListData({
+  const { data, isLoading, isError } = useActivityListData({
     keyword,
     category: category === '전체' ? '' : category,
     sort,
@@ -103,6 +103,8 @@ export const useActivityList = ({
     activities,
     totalCount,
     totalPages,
+    isLoading,
+    isError,
     updateParams,
     handlePageChange: (newPage: number) => updateParams({ page: String(newPage) }),
   };

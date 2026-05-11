@@ -9,8 +9,21 @@ import EmptyState from '@/shared/ui/empty-state/EmptyState';
  * 체험이 있을 경우 페이지네이션과 함께 목록을 렌더링합니다.
  */
 export default function AllActivitiesSection() {
-  const { page, activities, totalPages, handlePageChange } = useAllActivityList();
+  const { page, activities, totalPages, handlePageChange, isLoading, isError } =
+    useAllActivityList();
 
+  // TODO: 스켈레톤으로 대체
+  if (isLoading) {
+    return;
+  }
+
+  if (isError) {
+    return (
+      <div className="mt-10">
+        <EmptyState type="error" mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'} />
+      </div>
+    );
+  }
   return (
     <>
       {activities.length === 0 ? (
