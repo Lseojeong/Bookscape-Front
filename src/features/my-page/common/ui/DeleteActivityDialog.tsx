@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useDeleteActivity } from '@/features/my-page/common/useDeleteActivity';
+import { useDeleteActivity } from '@/features/my-page/common/mutations/useDeleteActivity';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 

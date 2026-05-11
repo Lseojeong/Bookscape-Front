@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import DeleteActivityDialog from '@/features/my-page/common/DeleteActivityDialog';
+import DeleteActivityDialog from '@/features/my-page/common/ui/DeleteActivityDialog';
 import { MenuIcon } from '@/shared/assets/icons';
 import { useUserStore } from '@/shared/stores/userStore';
 import {
