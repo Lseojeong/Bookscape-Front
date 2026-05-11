@@ -1,5 +1,8 @@
-import type { CreateActivityRequestBody, CreateActivityResponse } from '@/features/activity/types';
 import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
+import type {
+  CreateActivityRequestBody,
+  CreateActivityResponse,
+} from '@/features/my-page/activity-form/types';
 import { ApiError } from '@/shared/apis/apiError';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
