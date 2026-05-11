@@ -17,9 +17,34 @@ import Title from '@/shared/ui/title/Title';
  * ```
  */
 export default function MainActivityList() {
-  const { emblaRef, activityData, canScrollPrev, canScrollNext, scrollPrev, scrollNext } =
-    useMainActivityCarousel();
+  const {
+    emblaRef,
+    activityData,
+    canScrollPrev,
+    canScrollNext,
+    scrollPrev,
+    scrollNext,
+    isLoading,
+    isError,
+    refetch,
+  } = useMainActivityCarousel();
 
+  // TODO: 스켈레톤으로 대체
+  if (isLoading) {
+    return;
+  }
+
+  if (isError) {
+    return (
+      <div className="mt-10">
+        <EmptyState
+          type="error"
+          mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
+          onRetry={refetch}
+        />
+      </div>
+    );
+  }
   return (
     <article className="flex w-full flex-col gap-5 py-8">
       <Title as="h2" size="18" weight="bold" className="text-gray-950 md:typo-32-bold">

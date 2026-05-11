@@ -25,8 +25,27 @@ export default function SearchResultSection() {
     totalPages,
     totalResultCount,
     handlePageChange,
+    isLoading,
+    isError,
+    refetch,
   } = useSearchResult();
 
+  // TODO: 스켈레톤으로 대체
+  if (isLoading) {
+    return;
+  }
+
+  if (isError) {
+    return (
+      <div className="mt-10">
+        <EmptyState
+          type="error"
+          mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
+          onRetry={refetch}
+        />
+      </div>
+    );
+  }
   return (
     <>
       <div className="mb-5 md:mb-7 lg:mb-10">

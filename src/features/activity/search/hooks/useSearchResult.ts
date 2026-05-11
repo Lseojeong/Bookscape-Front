@@ -18,13 +18,22 @@ export const useSearchResult = () => {
   const keyword = searchParams.get('keyword') ?? '';
   const category = searchParams.get('category') ?? '전체';
 
-  const { page, activities, totalCount, totalPages, updateParams, handlePageChange } =
-    useActivityList({
-      keyword,
-      category,
-      pageSize: { mobile: 6, tablet: 4, desktop: 8 },
-      basePath: '/search',
-    });
+  const {
+    page,
+    activities,
+    totalCount,
+    totalPages,
+    updateParams,
+    handlePageChange,
+    isLoading,
+    isError,
+    refetch,
+  } = useActivityList({
+    keyword,
+    category,
+    pageSize: { mobile: 6, tablet: 4, desktop: 8 },
+    basePath: '/search',
+  });
 
   const handleChangeCategory = (newCategory: string) => {
     updateParams({ category: newCategory, page: '1' });
@@ -48,5 +57,8 @@ export const useSearchResult = () => {
     totalPages,
     totalResultCount,
     handlePageChange,
+    isLoading,
+    isError,
+    refetch,
   };
 };
