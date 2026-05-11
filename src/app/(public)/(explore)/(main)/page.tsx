@@ -1,7 +1,7 @@
-import HeroBanner from '@/app/(public)/(explore)/(main)/ui/HeroBanner';
-import MainCategoryList from '@/app/(public)/(explore)/(main)/ui/MainCategoryList';
-import MainSectionLayout from '@/app/(public)/(explore)/(main)/ui/MainSectionLayout';
 import MainActivityList from '@/features/activity/main/ui/MainActivityList';
+import MainCategoryList from '@/features/activity/main/ui/MainCategoryList';
+import MainSectionLayout from '@/features/activity/main/ui/MainSectionLayout';
+import HeroBanner from '@/features/activity/ui/HeroBanner';
 
 /**
  * 메인 페이지 컴포넌트입니다.

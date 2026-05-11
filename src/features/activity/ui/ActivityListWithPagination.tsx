@@ -1,4 +1,4 @@
-import SearchActivityList from '@/app/(public)/(explore)/(main)/ui/SearchActivityList';
+import SearchActivityList from '@/features/activity/search/ui/SearchActivityList';
 import { ActivityData } from '@/features/activity/types';
 import Pagination from '@/shared/ui/pagination/Pagination';
 
