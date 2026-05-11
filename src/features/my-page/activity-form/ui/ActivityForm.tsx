@@ -35,6 +35,7 @@ type ActivityFormProps = {
   onSubmitForm: (data: ActivityFormValues) => void;
   /** 폼 내의 취소 버튼을 눌렀을 때 실행될 콜백 함수입니다. */
   onCancelForm: () => void;
+  isPending?: boolean;
 };
 
 /**
@@ -54,6 +55,7 @@ export default function ActivityForm({
   initialData,
   onSubmitForm,
   onCancelForm,
+  isPending = false,
 }: ActivityFormProps) {
   const methods = useForm<ActivityFormValues>({
     resolver: zodResolver(activityFormSchema),
@@ -208,6 +210,7 @@ export default function ActivityForm({
             size="md"
             className="h-12 w-39.25 md:h-10.75 md:w-30"
             onClick={onCancelForm}
+            disabled={isPending} // 폼 제출 중일 때 취소 버튼 비활성화
           >
             취소하기
           </Button>
@@ -216,6 +219,8 @@ export default function ActivityForm({
             theme="primary"
             size="md"
             className="h-12 w-39.25 md:h-10.75 md:w-30"
+            isLoading={isPending} // 폼 제출 중일 때 로딩 상태 표시
+            disabled={isPending}
           >
             {mode === 'create' ? '등록하기' : '수정하기'}
           </Button>

@@ -1,3 +1,8 @@
+import type {
+  CreateActivityRequestBody,
+  CreateActivityResponse,
+  CreateActivityImageUrlResponse,
+} from '@/features/my-page/activity-form/types';
 import {
   GetMyActivitiesResponseSchema,
   GetMyActivityReservationDashboardResponseSchema,
@@ -97,4 +102,26 @@ export const updateReservationStatus = async (
   );
   if (!data) throw new Error('예약 상태 업데이트 실패');
   return UpdateMyActivityReservationStatusResponseSchema.parse(data);
+};
+
+/**
+ * 체험 등록
+ *
+ * @description `POST /activities`
+ * @param data - 체험 등록에 필요한 폼 데이터
+ * @returns 등록 완료된 체험 정보
+ */
+export const createActivity = async (data: CreateActivityRequestBody) => {
+  return await bffFetch.post<CreateActivityResponse>('/activities', data);
+};
+
+/**
+ * 체험 이미지 업로드
+ *
+ * @description `POST /activities/image`
+ * @param formData - 업로드할 이미지 파일이 포함된 FormData 객체
+ * @returns 업로드된 이미지의 URL
+ */
+export const uploadImage = async (formData: FormData) => {
+  return await bffFetch.postFormData<CreateActivityImageUrlResponse>('/activities/image', formData);
 };

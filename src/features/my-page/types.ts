@@ -162,8 +162,7 @@ export type UpdateMyActivityReservationStatusResponse = z.infer<
 
 export type DeleteMyActivityResponse = undefined;
 
-// ─── 내 체험 수정 ───────────────────────────────────────────────
-
+/** 체험 수정 요청 */
 export const UpdateMyActivityRequestBodySchema = z.object({
   title: z.string(),
   category: z.string(),
@@ -182,8 +181,26 @@ export const UpdateMyActivityRequestBodySchema = z.object({
     })
   ),
 });
-export type UpdateMyActivityRequestBody = z.infer<typeof UpdateMyActivityRequestBodySchema>;
 
+/** 체험 수정 응답 내 스케줄 */
+export const UpdateMyActivityScheduleSchema = z.object({
+  date: z.string(),
+  times: z.array(
+    z.object({
+      id: z.number(),
+      startTime: z.string(),
+      endTime: z.string(),
+    })
+  ),
+});
+
+/** 체험 수정 응답 내 서브 이미지 */
+export const UpdateMyActivitySubImageSchema = z.object({
+  id: z.number(),
+  imageUrl: z.string(),
+});
+
+/** 체험 수정 응답 */
 export const UpdateMyActivityResponseSchema = z.object({
   id: z.number(),
   userId: z.number(),
@@ -197,23 +214,9 @@ export const UpdateMyActivityResponseSchema = z.object({
   reviewCount: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
-  subImages: z.array(
-    z.object({
-      imageUrl: z.string(),
-      id: z.number(),
-    })
-  ),
-  schedules: z.array(
-    z.object({
-      times: z.array(
-        z.object({
-          endTime: z.string(),
-          startTime: z.string(),
-          id: z.number(),
-        })
-      ),
-      date: z.string(),
-    })
-  ),
+  subImages: z.array(UpdateMyActivitySubImageSchema),
+  schedules: z.array(UpdateMyActivityScheduleSchema),
 });
+
+export type UpdateMyActivityRequestBody = z.infer<typeof UpdateMyActivityRequestBodySchema>;
 export type UpdateMyActivityResponse = z.infer<typeof UpdateMyActivityResponseSchema>;
