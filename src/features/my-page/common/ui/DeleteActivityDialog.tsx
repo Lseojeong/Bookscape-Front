@@ -27,7 +27,7 @@ export default function DeleteActivityDialog({ id, isOpen, onClose }: DeleteActi
         deleteActivity(id, {
           onSuccess: () => {
             showToast('check', '체험이 삭제되었습니다.');
-            router.push('/activities');
+            router.push('/mypage/activity');
           },
           onError: (error) => {
             const message = error instanceof Error ? error.message : '체험 삭제에 실패했습니다.';
