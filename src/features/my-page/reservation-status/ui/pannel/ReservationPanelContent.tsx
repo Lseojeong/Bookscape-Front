@@ -27,6 +27,7 @@ type ReservationPanelContentProps = {
   onClose: () => void;
 };
 
+/** 날짜를 `YYYY년 M월 D일` 형식으로 변환합니다. */
 const formatDate = (d: Date) => `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
 
 const TAB_LABELS = {

@@ -17,6 +17,17 @@ const RESERVATIONS_PAGE_SIZE = 3;
  * @param scheduleId - 선택된 스케줄 ID
  * @param status - 조회할 예약 상태 (pending | confirmed | declined)
  * @returns 예약 목록 및 무한스크롤 관련 상태
+ * @example
+ * ```tsx
+ * const {
+ *   reservations,
+ *   isPending,
+ *   isError,
+ *   hasNextPage,
+ *   isFetchingNextPage,
+ *   isFetchNextPageError,
+ *   fetchNextPage,
+ * } = useReservationsQuery(activityId, scheduleId, 'pending');
  */
 
 export const useReservationsQuery = (
