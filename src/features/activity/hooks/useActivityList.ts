@@ -3,7 +3,7 @@ import { startTransition, useCallback, useEffect, useRef } from 'react';
 import {
   useActivityListData,
   usePrefetchNextPage,
-} from '@/features/activity/search/queries/useSearchActivityData';
+} from '@/features/activity/queries/useActivityListData';
 import { usePageSize } from '@/shared/hooks/usePageSize';
 
 type UseActivityListParams = {

@@ -5,6 +5,7 @@ import { ActivityResponse, GetActivityParams } from '@/features/activity/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 const ACTIVITY_STALE_TIME = 60 * 1000 * 5; // 5분
+const ACTIVITY_GC_TIME = 60 * 1000 * 10; // 10분
 
 /**
  * 체험 목록을 조회하는 쿼리 훅입니다.
@@ -21,7 +22,7 @@ export const useActivityListData = (
     queryKey: QUERY_KEYS.ACTIVITY_LIST(params),
     queryFn: () => getActivityListData(params),
     staleTime: ACTIVITY_STALE_TIME,
-    gcTime: 60 * 1000 * 10,
+    gcTime: ACTIVITY_GC_TIME,
     ...options,
   });
 };
@@ -43,6 +44,7 @@ export const usePrefetchNextPage = (params: GetActivityParams & { totalPages?: n
     const nextPageParams = {
       keyword,
       category,
+      sort,
       page: (page ?? 1) + 1,
       size,
     };

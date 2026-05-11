@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import { useActivityList } from '@/features/activity/hooks/useActivityList';
-import { useActivityListData } from '@/features/activity/search/queries/useSearchActivityData';
+import { useActivityListData } from '@/features/activity/queries/useActivityListData';
 
 /**
  * 검색 결과 페이지의 상태 및 데이터 패칭 로직을 관리하는 훅입니다.
