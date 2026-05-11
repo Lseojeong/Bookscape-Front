@@ -1,7 +1,10 @@
+'use client';
 import { cva } from 'class-variance-authority';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { NotificationIcon } from '@/shared/assets/icons';
 import type { AvatarUser } from '@/shared/ui/avatar/types';
+import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import {
   ActionDropdown,
   ActionDropdownContent,
@@ -44,13 +47,12 @@ const profileNicknameVariants = cva('', {
  * @property theme - 헤더 테마 (`'primary' | 'light'`)
  * @property user - 유저 정보
  * @property className - wrapper에 추가할 클래스
- * @property onLogout - 로그아웃 클릭 시 실행할 콜백
  */
 type UserNavProps = {
   theme: HeaderTheme;
   user: AvatarUser;
   className?: string;
-  onLogout?: () => void;
+  onLogout: () => void;
 };
 
 /**
@@ -65,12 +67,11 @@ type UserNavProps = {
  * @param props.theme - 헤더 테마
  * @param props.user - 유저 정보
  * @param props.className - 추가 클래스
- * @param props.onLogout - 로그아웃 콜백
  */
 export default function UserNav({ theme, user, className, onLogout }: UserNavProps) {
   const router = useRouter();
-  // TODO: 실제 로그아웃 로직(인증 상태/토큰/스토어 초기화 등) 연결
-  const handleLogout = onLogout ?? (() => {});
+  const handleLogout = onLogout;
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   return (
     <div className={cn('flex items-center gap-5', className)}>
@@ -90,9 +91,20 @@ export default function UserNav({ theme, user, className, onLogout }: UserNavPro
           <ActionDropdownItem onClick={() => router.push('/mypage/info')}>
             마이페이지
           </ActionDropdownItem>
-          <ActionDropdownItem onClick={handleLogout}>로그아웃</ActionDropdownItem>
+          <ActionDropdownItem onClick={() => setIsLogoutModalOpen(true)}>
+            로그아웃
+          </ActionDropdownItem>
         </ActionDropdownContent>
       </ActionDropdown>
+      <ConfirmDialog
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        title="로그아웃 하시겠습니까?"
+        confirmText="네"
+        cancelText="아니오"
+        onCancel={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+      />
     </div>
   );
 }
