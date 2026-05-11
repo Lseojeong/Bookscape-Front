@@ -1,3 +1,6 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import { cardImageStyles, cardWrapStyles } from '@/shared/ui/card/cardStyles';
 import { cn } from '@/shared/utils/cn';
@@ -30,17 +33,26 @@ export type MyActivityCardProps = {
  * ```
  */
 export default function MyActivityCard({ data }: MyActivityCardProps) {
-  const { title, bannerImageUrl } = data;
+  const router = useRouter();
+  const { id, title, bannerImageUrl } = data;
+
+  const handleClickCard = () => {
+    router.push(`/activity/${id}`);
+  };
 
   return (
-    <div className={cn('flex items-center rounded-3xl', cardWrapStyles)}>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleClickCard}
+      className={cn('flex cursor-pointer items-center rounded-3xl', cardWrapStyles)}
+    >
       {/* 이미지 영역 */}
       <BaseCardImage
         bannerImageUrl={bannerImageUrl}
         alt={title}
         containerClassName={cardImageStyles}
       />
-
       {/* 정보 영역 */}
       <div className="relative layer-base w-full">
         <MyActivityCardInfo data={data} />
