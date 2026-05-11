@@ -18,7 +18,7 @@ export const useUpdateMyProfileMutation = () => {
   const setUser = useUserStore((state) => state.setUser);
 
   return useMutation({
-    mutationFn: (body: UpdateMyProfileRequestBody) => updateMyProfile(body) as Promise<void>,
+    mutationFn: (body: UpdateMyProfileRequestBody) => updateMyProfile(body),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USER_ME() });
       const updated = await queryClient.fetchQuery({

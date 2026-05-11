@@ -16,7 +16,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 type ProfileFormProps = {
   user: UserMeResponse;
-  onUpdateUser: (body: UpdateMyProfileRequestBody) => Promise<void>;
+  onUpdateUser: (body: UpdateMyProfileRequestBody) => Promise<unknown>;
 };
 
 /**
