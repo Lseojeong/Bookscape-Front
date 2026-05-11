@@ -1,8 +1,10 @@
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useCreateReservation } from '@/features/activity/activity-detail/mutations/useCreateReservation';
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/features/activity/activity-detail/queries/useAvailableSchedule';
+import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { useMyReservations } from '../queries/useMyReservations';
@@ -14,6 +16,7 @@ export const useReservation = (activityId: number) => {
   const { showToast } = useToastStore();
   const { mutate: createReservation } = useCreateReservation(activityId);
   const { data: myReservationsData } = useMyReservations();
+  const router = useRouter();
 
   // 상태
   const [selected, setSelected] = useState<Date>();
@@ -60,6 +63,11 @@ export const useReservation = (activityId: number) => {
           reset();
         },
         onError: (error: unknown) => {
+          if (error instanceof ApiError && error.status === 401) {
+            showToast('cancel', '로그인을 해주세요.');
+            router.push('/login');
+            return;
+          }
           const message = error instanceof Error ? error.message : '예약 신청에 실패했습니다.';
           showToast('cancel', message);
         },
