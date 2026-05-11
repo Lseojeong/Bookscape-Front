@@ -29,7 +29,9 @@ export const getHotActivityData = async (size: number) => {
     sort: 'most_reviewed',
     size,
   });
-  return ActivityResponseSchema.parse(result ?? { activities: [], totalCount: 0 });
+  const parsed = ActivityResponseSchema.parse(result ?? { activities: [], totalCount: 0 });
+
+  return parsed.activities;
 };
 
 /** 검색 페이지, 전체 체험 목록 페이지 */
