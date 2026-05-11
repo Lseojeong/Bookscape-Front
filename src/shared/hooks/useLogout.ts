@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { bffFetch } from '@/shared/apis/base/bffFetch';
+import { logoutUser } from '@/features/auth/apis/auth';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -20,7 +20,7 @@ export const useLogout = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await bffFetch.post('/auth/logout');
+      const response = await logoutUser();
       if (response === null) throw new Error();
       showToast('check', '로그아웃 되었습니다.');
     } catch {
