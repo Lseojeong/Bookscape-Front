@@ -36,7 +36,7 @@ export default function ActivitiesPageHeader() {
           <PageHeader
             title="체험활동"
             description="체험을 탐색할 수 있습니다"
-            onBack={() => router.back()}
+            onBack={() => router.push('/')}
           />
         </div>
         <div className="hidden sm:block">
