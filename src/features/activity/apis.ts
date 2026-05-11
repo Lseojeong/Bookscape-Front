@@ -1,7 +1,8 @@
+import { z } from 'zod';
 import {
   ActivityDetailSchema,
   ActivityResponse,
-  ActivitySchedule,
+  ActivityScheduleSchema,
   GetSearchActivityParams,
 } from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
@@ -22,10 +23,12 @@ export const deleteActivity = async (id: number) => {
   await bffFetch.delete(`/my-activities/${id}`);
 };
 
+/** 예약 가능일 조회 */
 export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
-  return get<ActivitySchedule[]>(
+  const data = await get(
     `/activities/${activityId}/available-schedule?year=${year}&month=${month}`
   );
+  return z.array(ActivityScheduleSchema).parse(data);
 };
 
 export const createReservation = async (

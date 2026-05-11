@@ -69,16 +69,21 @@ export type ActivitySubImage = {
   id: number;
 };
 
-export type ActivityScheduleTime = {
-  endTime: string;
-  startTime: string;
-  id: number;
-};
+/** 예약 가능 스케줄 시간 */
+export const ActivityScheduleTimeSchema = z.object({
+  id: z.number(),
+  startTime: z.string(),
+  endTime: z.string(),
+});
 
-export type ActivitySchedule = {
-  times: ActivityScheduleTime[];
-  date: string;
-};
+/** 예약 가능 스케줄 */
+export const ActivityScheduleSchema = z.object({
+  date: z.string(),
+  times: z.array(ActivityScheduleTimeSchema),
+});
+
+export type ActivityScheduleTime = z.infer<typeof ActivityScheduleTimeSchema>;
+export type ActivitySchedule = z.infer<typeof ActivityScheduleSchema>;
 
 export type CreateActivityResponse = {
   id: number;
