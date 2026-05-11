@@ -1,13 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useMemo, useState } from 'react';
 import { useCreateReservation } from '@/features/activity/activity-detail/mutations/useCreateReservation';
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
 import { useAvailableSchedule } from '@/features/activity/activity-detail/queries/useAvailableSchedule';
-import { getMyReservations } from '@/features/reservation/apis';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
+import { useMyReservations } from '../queries/useMyReservations';
 
 export const useReservation = (activityId: number) => {
   // 외부 훅
@@ -15,11 +13,7 @@ export const useReservation = (activityId: number) => {
   const { user } = useUserStore();
   const { showToast } = useToastStore();
   const { mutate: createReservation } = useCreateReservation(activityId);
-  const { data: myReservationsData } = useQuery({
-    queryKey: QUERY_KEYS.MY_RESERVATIONS(undefined, 100),
-    queryFn: () => getMyReservations({ size: 100 }),
-    enabled: !!user,
-  });
+  const { data: myReservationsData } = useMyReservations();
 
   // 상태
   const [selected, setSelected] = useState<Date>();
