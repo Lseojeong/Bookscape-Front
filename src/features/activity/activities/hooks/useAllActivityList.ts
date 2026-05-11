@@ -20,6 +20,7 @@ export const useAllActivityList = () => {
     handlePageChange,
     isLoading,
     isError,
+    refetch,
   } = useActivityList({
     category,
     sort,
@@ -44,6 +45,7 @@ export const useAllActivityList = () => {
     totalPages,
     isLoading,
     isError,
+    refetch,
     handleChangeCategory,
     handleChangeSort,
     handlePageChange,
