@@ -36,15 +36,19 @@ export default function MyActivityCard({ data }: MyActivityCardProps) {
   const router = useRouter();
   const { id, title, bannerImageUrl } = data;
 
-  const handleClickCard = () => {
-    router.push(`/activity/${id}`);
+  const handleClickCard = (e: React.MouseEvent | React.KeyboardEvent) => {
+    // 내부의 버튼이나 링크 클릭 시에는 카드 전체 클릭 이벤트가 발생하지 않도록 방지
+    if ((e.target as HTMLElement).closest('button, a')) return;
+    if (e.type === 'click' || (e as React.KeyboardEvent).key === 'Enter') {
+      router.push(`/activity/${id}`);
+    }
   };
-
   return (
     <div
       role="button"
       tabIndex={0}
       onClick={handleClickCard}
+      onKeyDown={handleClickCard}
       className={cn('flex cursor-pointer items-center rounded-3xl', cardWrapStyles)}
     >
       {/* 이미지 영역 */}
