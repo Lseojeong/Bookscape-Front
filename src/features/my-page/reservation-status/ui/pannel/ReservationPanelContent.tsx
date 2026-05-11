@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useReservationPanel } from '@/features/my-page/reservation-status/hooks/useReservationPanel';
 import { usePatchReservationStatus } from '@/features/my-page/reservation-status/mutations/usePatchReservationStatus';
 import { useReservationsQuery } from '@/features/my-page/reservation-status/queries/useReservationsQuery';
@@ -67,9 +68,18 @@ export default function ReservationPanelContent({
   const {
     reservations,
     isLoading,
+    isPending,
     isError,
     refetch: refetchReservations,
   } = useReservationsQuery(activityId, selectedScheduleId, activeTab);
+
+  const [isInitialLoaded, setIsInitialLoaded] = useState(false);
+
+  if (!isInitialLoaded && !isSchedulesLoading && !isPending) {
+    setIsInitialLoaded(true);
+  }
+
+  const isAllLoading = !isInitialLoaded;
 
   const TABS = [
     {
@@ -114,7 +124,7 @@ export default function ReservationPanelContent({
 
       {/* 탭 - 스케줄 로딩 시 스켈레톤 */}
       <div className="mt-4.5 shrink-0">
-        {isSchedulesLoading ? (
+        {isAllLoading ? (
           <div className="flex gap-2">
             {[1, 2, 3].map((i) => (
               <div key={i} className="h-10 flex-1 animate-pulse rounded-lg" />
@@ -132,7 +142,7 @@ export default function ReservationPanelContent({
 
       {/* 콘텐츠 - 스케줄 로딩 시 전체 로딩 */}
       <div className="flex min-h-0 flex-1 flex-col">
-        {isSchedulesLoading ? (
+        {isAllLoading ? (
           <div className="mt-6 flex justify-center">
             <Loading size={16} color="var(--color-gray-400)" />
           </div>
