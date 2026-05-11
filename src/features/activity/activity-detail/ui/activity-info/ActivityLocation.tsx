@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import ActivityAddress from '@/features/activity/activity-detail/ui/activity-info/ActivityAddress';
 import Title from '@/shared/ui/title/Title';
-import ActivityAddress from './ActivityAddress';
 
 type ActivityLocationProps = {
   address: string;

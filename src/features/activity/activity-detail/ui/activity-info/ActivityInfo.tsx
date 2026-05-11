@@ -1,8 +1,8 @@
+import ActivityAddress from '@/features/activity/activity-detail/ui/activity-info/ActivityAddress';
+import ActivityKebabMenu from '@/features/activity/activity-detail/ui/activity-info/ActivityKebabMenu';
 import { StarIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
-import ActivityAddress from './ActivityAddress';
-import ActivityKebabMenu from './ActivityKebabMenu';
 
 type ActivityInfoProps = {
   id: number;

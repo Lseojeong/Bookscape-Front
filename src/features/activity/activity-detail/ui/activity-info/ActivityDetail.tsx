@@ -1,7 +1,7 @@
+import ActivityInfo from '@/features/activity/activity-detail/ui/activity-info/ActivityInfo';
+import ImageCarousel from '@/features/activity/activity-detail/ui/activity-info/ImageCarousel';
+import ActivityTabSection from '@/features/activity/activity-detail/ui/tab/ActivityTabSection';
 import type { ActivityDetail as ActivityDetailType } from '@/features/activity/types';
-import ActivityTabSection from '../tab/ActivityTabSection';
-import ActivityInfo from './ActivityInfo';
-import ImageCarousel from './ImageCarousel';
 
 type ActivityDetailProps = {
   activity: ActivityDetailType & { images: string[] };
