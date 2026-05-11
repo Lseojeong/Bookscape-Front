@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import MainSectionLayout from '@/features/activity/main/ui/MainSectionLayout';
+import HeroBanner from '@/app/(public)/(explore)/(main)/ui/HeroBanner';
+import MainSectionLayout from '@/app/(public)/(explore)/(main)/ui/MainSectionLayout';
 import SearchResultSection from '@/features/activity/search/ui/SearchResultSection';
-import HeroBanner from '@/features/activity/ui/HeroBanner';
 
 /**
  * 검색 페이지 컴포넌트입니다.
