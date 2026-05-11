@@ -108,3 +108,39 @@ export type GetSearchActivityParams = {
   page?: number;
   size?: number;
 };
+
+/** 체험 후기 작성자 */
+export const ReviewUserSchema = z.object({
+  profileImageUrl: z.string().nullable(),
+  nickname: z.string(),
+  id: z.number(),
+});
+
+/** 체험 후기 */
+export const ActivityReviewSchema = z.object({
+  id: z.number(),
+  user: ReviewUserSchema,
+  activityId: z.number(),
+  rating: z.number(),
+  content: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+/** 체험 후기 조회 응답 */
+export const ActivityReviewsResponseSchema = z.object({
+  averageRating: z.number(),
+  totalCount: z.number(),
+  reviews: z.array(ActivityReviewSchema),
+});
+
+export type ReviewUser = z.infer<typeof ReviewUserSchema>;
+export type ActivityReview = z.infer<typeof ActivityReviewSchema>;
+export type ActivityReviewsResponse = z.infer<typeof ActivityReviewsResponseSchema>;
+
+/** 체험 후기 조회 파라미터 */
+export type GetActivityReviewsParams = {
+  activityId: number;
+  page?: number;
+  size?: number;
+};

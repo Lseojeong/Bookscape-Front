@@ -1,13 +1,16 @@
 import {
   ActivityDetailSchema,
   ActivityResponse,
+  ActivityReviewsResponseSchema,
   ActivitySchedule,
+  GetActivityReviewsParams,
   GetSearchActivityParams,
 } from '@/features/activity/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
 import { CreateActivityReservationRequestBody } from '../reservation/types';
 
+/** 체험 상세 조회 */
 export const getActivityDetail = async (id: number) => {
   const data = await get(`/activities/${id}`);
   const activity = ActivityDetailSchema.parse(data);
@@ -18,16 +21,19 @@ export const getActivityDetail = async (id: number) => {
   return { ...activity, images };
 };
 
+/** 체험 삭제 */
 export const deleteActivity = async (id: number) => {
   await bffFetch.delete(`/my-activities/${id}`);
 };
 
+/** 예약 가능일 조회 */
 export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
   return get<ActivitySchedule[]>(
     `/activities/${activityId}/available-schedule?year=${year}&month=${month}`
   );
 };
 
+/** 예약 신청 */
 export const createReservation = async (
   activityId: number,
   body: CreateActivityReservationRequestBody
@@ -58,4 +64,14 @@ export const getSearchActivityData = async ({
     page,
     size,
   });
+};
+
+/** 체험 후기 조회 */
+export const getActivityReviews = async ({
+  activityId,
+  page = 1,
+  size = 3,
+}: GetActivityReviewsParams) => {
+  const data = await get(`/activities/${activityId}/reviews`, { page, size });
+  return ActivityReviewsResponseSchema.parse(data);
 };

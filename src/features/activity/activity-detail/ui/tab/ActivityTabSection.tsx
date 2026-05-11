@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import ActivityDescription from '@/features/activity/activity-detail/ui/activity-info/ActivityDescription';
 import ActivityLocation from '@/features/activity/activity-detail/ui/activity-info/ActivityLocation';
+import ActivityReviews from '@/features/activity/activity-detail/ui/review/ActivityReviews';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 import { cn } from '@/shared/utils/cn';
-import ActivityReviews from '../review/ActivityReviews';
 
 type ActivityTabSectionProps = {
   description: string;
