@@ -1,8 +1,7 @@
+import { ComponentPropsWithoutRef } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-type SkeletonProps = {
-  className: string;
-};
+type SkeletonProps = ComponentPropsWithoutRef<'div'>;
 
 /**
  * ### Skeleton 컴포넌트
@@ -34,6 +33,12 @@ type SkeletonProps = {
  * <Skeleton className="h-8 w-1/2 rounded-md bg-gray-300" />
  * ```
  */
-export default function Skeleton({ className }: SkeletonProps) {
-  return <div className={cn('animate-pulse bg-gray-100 opacity-70', className)} />;
+export default function Skeleton({ className, ...props }: SkeletonProps) {
+  return (
+    <div
+      className={cn('animate-pulse bg-gray-100 opacity-70', className)}
+      aria-hidden="true"
+      {...props}
+    />
+  );
 }
