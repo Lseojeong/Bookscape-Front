@@ -10,8 +10,9 @@ export const MY_ACTIVITIES_PAGE_SIZE = 10;
 const MY_ACTIVITIES_STALE_TIME_MS = 5 * 60 * 1000;
 const MY_ACTIVITIES_GC_TIME_MS = 30 * 60 * 1000;
 
-export const useMyActivities = (query: GetMyActivitiesQuery = {}) => {
-  const { size = MY_ACTIVITIES_PAGE_SIZE } = query;
+export const useMyActivities = ({
+  size = MY_ACTIVITIES_PAGE_SIZE,
+}: Pick<GetMyActivitiesQuery, 'size'> = {}) => {
   const userId = useUserStore((s) => s.user?.id);
 
   const infiniteQuery = useInfiniteQuery<
