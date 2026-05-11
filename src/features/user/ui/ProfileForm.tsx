@@ -83,8 +83,7 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
 
   // 비밀번호 유효성 (oauth 제외)
   const isPasswordValid =
-    isOauth ||
-    (!!newPassword.trim() && !!passwordConfirm.trim() && Object.keys(errors).length === 0);
+    isOauth || (newPassword ? !!passwordConfirm.trim() && Object.keys(errors).length === 0 : true);
 
   const isDisabled =
     (!isDirty && !isImageChanged) ||
