@@ -59,8 +59,9 @@ export const useReservation = (activityId: number) => {
           showToast('check', '예약이 신청되었습니다.');
           reset();
         },
-        onError: () => {
-          showToast('cancel', '예약 신청에 실패했습니다.');
+        onError: (error: unknown) => {
+          const message = error instanceof Error ? error.message : '예약 신청에 실패했습니다.';
+          showToast('cancel', message);
         },
       }
     );
