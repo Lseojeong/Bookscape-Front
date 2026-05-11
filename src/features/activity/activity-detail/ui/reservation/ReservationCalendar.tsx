@@ -41,6 +41,7 @@ export default function ReservationCalendar({
         onMonthChange={onMonthChange}
         locale={ko}
         showOutsideDays
+        disabled={{ before: new Date() }}
         components={{
           Chevron: ({ orientation }) =>
             orientation === 'left' ? (
@@ -69,7 +70,7 @@ export default function ReservationCalendar({
           today: 'bg-primary-100 rounded-full text-primary-500', // 오늘 날짜
           selected: 'bg-primary-500 rounded-full text-white pointer-events-none', // 선택된 날짜
           outside: 'text-gray-300', // 이전/다음 달 날짜 (흐리게)
-          disabled: 'text-gray-300 cursor-not-allowed', // 비활성화된 날짜
+          disabled: 'text-gray-300 cursor-not-allowed line-through', // 비활성화된 날짜
         }}
       />
     </div>
