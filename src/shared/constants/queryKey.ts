@@ -7,6 +7,7 @@ import { GetActivityParams } from '@/features/activity/types';
 export const QUERY_KEYS = {
   /** 체험 상세 조회 */
   ACTIVITY_DETAIL: (id: number) => ['activity', id] as const,
+
   /** 메인 - 인기 체험 조회 */
   HOT_ACTIVITY: (size: number) => ['activities', 'hot', size] as const,
   /** 검색 및 체험 목록 데이터 조회 */
@@ -16,7 +17,14 @@ export const QUERY_KEYS = {
   /** 내 예약 내역 조회 */
   MY_RESERVATIONS: (status?: string, size?: number) =>
     ['my-reservations', status ?? 'all', size ?? 'default'] as const,
-  // 내 체험 관리 목록 조회
+  /** 내 알림 조회 - prefix */
+  MY_NOTIFICATIONS_BASE: () => ['my-notifications'] as const,
+
+  /** 내 알림 조회 */
+  MY_NOTIFICATIONS: (size?: number) =>
+    [...QUERY_KEYS.MY_NOTIFICATIONS_BASE(), size ?? 'default'] as const,
+
+  /** 내 체험 관리 목록 조회 */
   MY_ACTIVITIES: (size?: number) => ['my-activities', size ?? 10] as const,
   /** 내 체험 월별 예약 현황 조회 */
   RESERVATION_DASHBOARD: (activityId: number | null, year: string, month: string) =>

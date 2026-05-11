@@ -1,8 +1,8 @@
 'use client';
 import { cva } from 'class-variance-authority';
 import { useRouter } from 'next/navigation';
+import NotificationButton from '@/features/notification/ui/NotificationButton';
 import { useState } from 'react';
-import { NotificationIcon } from '@/shared/assets/icons';
 import type { AvatarUser } from '@/shared/ui/avatar/types';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import {
@@ -14,18 +14,6 @@ import {
 import Profile from '@/shared/ui/header/profile/Profile';
 import type { HeaderTheme } from '@/shared/ui/header/types';
 import { cn } from '@/shared/utils/cn';
-
-const notificationIconVariants = cva('h-6 w-6', {
-  variants: {
-    theme: {
-      primary: '[&>path]:fill-white',
-      light: '',
-    },
-  },
-  defaultVariants: {
-    theme: 'light',
-  },
-});
 
 const dividerVariants = cva('h-3.5 w-px bg-gray-100');
 
@@ -75,10 +63,7 @@ export default function UserNav({ theme, user, className, onLogout }: UserNavPro
 
   return (
     <div className={cn('flex items-center gap-5', className)}>
-      {/* TODO: 알림 구현 */}
-      <button type="button" aria-label="알림" className="flex h-6 w-6 items-center justify-center">
-        <NotificationIcon aria-hidden="true" className={notificationIconVariants({ theme })} />
-      </button>
+      <NotificationButton theme={theme} />
 
       <span aria-hidden="true" className={dividerVariants()} />
 
