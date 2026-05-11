@@ -63,10 +63,11 @@ export type ActivitySchedule = z.infer<typeof ActivityScheduleSchema>;
 export type ActivityScheduleTime = ActivitySchedule['times'][number];
 export type ActivitySubImage = z.infer<typeof SubImageSchema>;
 
-export type GetSearchActivityParams = {
-  method?: string;
+export type GetActivityParams = {
+  method?: 'offset' | 'cursor';
   category?: string;
   keyword?: string;
+  sort?: string;
   page?: number;
   size?: number;
 };

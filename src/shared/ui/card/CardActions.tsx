@@ -12,6 +12,7 @@ type ReservationCardActionsProps = {
   status: ReservationStatus;
   reviewSubmitted?: boolean;
   activityId?: number;
+  onReviewClick?: () => void;
 };
 
 type CardActionsProps = ManageCardActionsProps | ReservationCardActionsProps;
@@ -104,12 +105,11 @@ export default function CardActions(props: CardActionsProps) {
         후기 작성 완료
       </Button>
     ) : (
-      // TODO: 후기 작성 모달 연결 필요
       <Button
         type="button"
         size="sm"
         className="rounded-lg px-2.5 py-1.5"
-        onClick={() => alert('후기 작성 버튼 클릭')}
+        onClick={props.onReviewClick}
       >
         후기 작성하기
       </Button>

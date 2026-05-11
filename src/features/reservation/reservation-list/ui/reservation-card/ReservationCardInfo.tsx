@@ -1,11 +1,15 @@
+import { useState } from 'react';
+import { useCreateMyReservationReviewMutation } from '@/features/reservation/reservation-list/mutations/useCreateMyReservationReviewMutation';
+import ReviewModal from '@/features/reservation/reservation-list/ui/review-modal/ReviewModal';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import CardActions from '@/shared/ui/card/CardActions';
 import { cardInfoStyles } from '@/shared/ui/card/cardStyles';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 import Title from '@/shared/ui/title/Title';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
-import { formatYmdToDot } from '@/shared/utils/dateFormat';
+import { formatReservationScheduleText, formatYmdToDot } from '@/shared/utils/dateFormat';
 import type { ReservationCardProps } from './ReservationCard';
 
 /**
@@ -20,9 +24,14 @@ import type { ReservationCardProps } from './ReservationCard';
  * ```
  */
 export default function ReservationCardInfo({ data }: ReservationCardProps) {
-  const { activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
+  const { id, activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
     data;
   const { title } = activity;
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const { showToast } = useToastStore();
+  const createReviewMutation = useCreateMyReservationReviewMutation();
+
+  const scheduleText = formatReservationScheduleText({ date, startTime, endTime, headCount });
 
   return (
     <BaseCardInfo className={cn(cardInfoStyles)}>
@@ -57,8 +66,28 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
           status={status}
           reviewSubmitted={reviewSubmitted}
           activityId={activity.id}
+          onReviewClick={() => setIsReviewOpen(true)}
         />
       </div>
+
+      <ReviewModal
+        isOpen={isReviewOpen}
+        onClose={() => setIsReviewOpen(false)}
+        activityTitle={title}
+        scheduleText={scheduleText}
+        onSubmit={async ({ rating, content }) => {
+          try {
+            await createReviewMutation.mutateAsync({
+              reservationId: id,
+              body: { rating, content },
+            });
+            showToast('check', '후기가 등록되었습니다.');
+          } catch {
+            showToast('cancel', '후기 등록에 실패했습니다.');
+            throw new Error('review submit failed');
+          }
+        }}
+      />
     </BaseCardInfo>
   );
 }
