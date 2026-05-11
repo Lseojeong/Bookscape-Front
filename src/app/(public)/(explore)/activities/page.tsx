@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
-import AllActivitiesSection from '@/app/(public)/(explore)/activities/ui/AllActivitiesSection';
 import ActivitiesPageHeader from '@/features/activity/activities/ui/ActivitiesPageHeader';
+import AllActivitiesSection from '@/features/activity/activities/ui/AllActivitiesSection';
 
 /**
  * 체험 목록 페이지 컴포넌트입니다.

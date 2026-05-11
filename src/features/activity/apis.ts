@@ -43,7 +43,7 @@ export const getActivityListData = async ({
   page = 1,
   size,
 }: GetActivityParams) => {
-  return await get<ActivityResponse>('/activities', {
+  const data = await get<ActivityResponse>('/activities', {
     method,
     ...(category && { category }),
     ...(keyword && { keyword }),
@@ -51,4 +51,5 @@ export const getActivityListData = async ({
     page,
     size,
   });
+  return ActivityResponseSchema.parse(data ?? { activities: [], totalCount: 0 });
 };

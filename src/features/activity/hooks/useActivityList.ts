@@ -3,7 +3,7 @@ import { startTransition, useCallback, useEffect, useRef } from 'react';
 import {
   useActivityListData,
   usePrefetchNextPage,
-} from '@/features/activity/search/queries/useSearchActivityData';
+} from '@/features/activity/queries/useActivityListData';
 import { usePageSize } from '@/shared/hooks/usePageSize';
 
 type UseActivityListParams = {
@@ -73,7 +73,7 @@ export const useActivityList = ({
     });
   }, [pageSize, updateParams]);
 
-  const { data } = useActivityListData({
+  const { data, isLoading, isError, refetch } = useActivityListData({
     keyword,
     category: category === '전체' ? '' : category,
     sort,
@@ -103,6 +103,9 @@ export const useActivityList = ({
     activities,
     totalCount,
     totalPages,
+    isLoading,
+    isError,
+    refetch,
     updateParams,
     handlePageChange: (newPage: number) => updateParams({ page: String(newPage) }),
   };

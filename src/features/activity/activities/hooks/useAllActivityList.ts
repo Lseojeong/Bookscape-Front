@@ -9,15 +9,24 @@ import { useActivityList } from '@/features/activity/hooks/useActivityList';
 export const useAllActivityList = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get('category') ?? '전체';
-  const sort = searchParams.get('sort') ?? 'most_reviewed';
+  const sort = searchParams.get('sort') ?? 'latest';
 
-  const { page, activities, totalCount, totalPages, updateParams, handlePageChange } =
-    useActivityList({
-      category,
-      sort,
-      pageSize: { mobile: 6, tablet: 6, desktop: 12 },
-      basePath: '/activities',
-    });
+  const {
+    page,
+    activities,
+    totalCount,
+    totalPages,
+    updateParams,
+    handlePageChange,
+    isLoading,
+    isError,
+    refetch,
+  } = useActivityList({
+    category,
+    sort,
+    pageSize: { mobile: 6, tablet: 6, desktop: 12 },
+    basePath: '/activities',
+  });
 
   const handleChangeCategory = (newCategory: string) => {
     updateParams({ category: newCategory, page: '1' });
@@ -34,6 +43,9 @@ export const useAllActivityList = () => {
     activities,
     totalCount,
     totalPages,
+    isLoading,
+    isError,
+    refetch,
     handleChangeCategory,
     handleChangeSort,
     handlePageChange,

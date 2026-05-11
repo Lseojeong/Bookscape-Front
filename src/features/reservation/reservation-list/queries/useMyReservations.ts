@@ -1,12 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
+import type { InfiniteData, QueryKey } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getMyReservations } from '@/features/reservation/apis';
 import type { GetMyReservationsResponse, MyReservationStatus } from '@/features/reservation/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { useUserStore } from '@/shared/stores/userStore';
 
 type UseMyReservationsParams = {
   status?: MyReservationStatus;
   size?: number;
 };
+
+export const MY_RESERVATIONS_PAGE_SIZE = 5;
+
+const MY_RESERVATIONS_STALE_TIME_MS = 1 * 60 * 1000;
+const MY_RESERVATIONS_GC_TIME_MS = 10 * 60 * 1000;
 
 const EMPTY_RESPONSE: GetMyReservationsResponse = {
   cursorId: null,
@@ -14,14 +21,34 @@ const EMPTY_RESPONSE: GetMyReservationsResponse = {
   totalCount: 0,
 };
 
-export const useMyReservations = ({ status, size = 10 }: UseMyReservationsParams = {}) => {
-  return useQuery({
+export const useMyReservations = ({
+  status,
+  size = MY_RESERVATIONS_PAGE_SIZE,
+}: UseMyReservationsParams = {}) => {
+  const userId = useUserStore((s) => s.user?.id);
+
+  const query = useInfiniteQuery<
+    GetMyReservationsResponse,
+    unknown,
+    InfiniteData<GetMyReservationsResponse, number | undefined>,
+    QueryKey,
+    number | undefined
+  >({
     queryKey: QUERY_KEYS.MY_RESERVATIONS(status, size),
-    queryFn: async () =>
+    enabled: !!userId,
+    initialPageParam: undefined,
+    queryFn: async ({ pageParam }) =>
       (await getMyReservations({
+        cursorId: pageParam,
         size,
         status,
       })) ?? EMPTY_RESPONSE,
-    // TODO: 무한 스크롤 적용 시 useInfiniteQuery + getNextPageParam로 교체
+    getNextPageParam: (lastPage) => lastPage.cursorId ?? undefined,
+    networkMode: 'always',
+    staleTime: MY_RESERVATIONS_STALE_TIME_MS,
+    gcTime: MY_RESERVATIONS_GC_TIME_MS,
+    retry: 1,
   });
+
+  return { query };
 };

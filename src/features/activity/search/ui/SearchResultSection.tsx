@@ -1,7 +1,7 @@
 'use client';
-import ActivityListWithPagination from '@/app/(public)/(explore)/(main)/ui/ActivityListWithPagination';
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import { useSearchResult } from '@/features/activity/search/hooks/useSearchResult';
+import ActivityListWithPagination from '@/features/activity/ui/ActivityListWithPagination';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
 

@@ -73,6 +73,8 @@ export default function SelectDropdownItem<T = string>({
   const { value: selectedValue, setValue, variants } = useSelectContext<T>();
 
   const isSelected = selectedValue === value;
+  // 긴 텍스트는 `truncate`로 말줄임 처리되므로, hover 시 전체 내용을 확인할 수 있도록 title을 제공합니다.
+  const title = typeof children === 'string' ? children : undefined;
 
   const selectOption = () => {
     if (disabled) {
@@ -93,6 +95,7 @@ export default function SelectDropdownItem<T = string>({
       aria-disabled={disabled || undefined}
       tabIndex={disabled ? -1 : 0}
       className={cn(dropdownItemVariants({ variants, disabled, selected: isSelected }))}
+      title={title}
       onClick={selectOption}
       onKeyDown={handleKeyDown}
     >
