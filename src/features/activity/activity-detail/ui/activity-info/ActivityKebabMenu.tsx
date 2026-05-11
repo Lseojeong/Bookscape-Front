@@ -30,10 +30,12 @@ type ActivityKebabMenuProps = {
 export default function ActivityKebabMenu({ id, userId }: ActivityKebabMenuProps) {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { user } = useUserStore();
+  const user = useUserStore((state) => state.user);
+  const hasHydrated = useUserStore((state) => state.hasHydrated);
   const isOwner = user?.id === userId;
 
-  if (!isOwner) return null;
+  // 케밥 버튼 깜빡임 방지
+  if (!hasHydrated || !isOwner) return null;
 
   return (
     <>
