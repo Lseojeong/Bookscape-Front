@@ -3,6 +3,9 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import SearchInputUi from '@/shared/ui/search-input/SearchInputField';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
+type SearchInputProps = {
+  className?: string;
+};
 /**
  * 검색 인풋 컴포넌트입니다.
  * URL query 파라미터(keyword)로 검색 상태를 관리합니다.
@@ -13,7 +16,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
  * <SearchInput />
  * ```
  */
-export default function SearchInput() {
+export default function SearchInput({ className }: SearchInputProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const urlKeyword = searchParams.get('keyword') ?? '';
@@ -43,5 +46,12 @@ export default function SearchInput() {
     router.push('/search?' + params.toString());
   };
 
-  return <SearchInputUi key={urlKeyword} onSubmit={handleSubmit} defaultValue={urlKeyword} />;
+  return (
+    <SearchInputUi
+      key={urlKeyword}
+      onSubmit={handleSubmit}
+      defaultValue={urlKeyword}
+      className={className}
+    />
+  );
 }

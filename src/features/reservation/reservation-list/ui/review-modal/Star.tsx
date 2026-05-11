@@ -16,7 +16,6 @@ import clampRating from './utils/clampRating';
  * @param disabled - 비활성화 상태입니다.
  * @param readOnly - 읽기 전용 상태입니다(클릭/키보드 변경 불가).
  * @param className - 전체 wrapper 클래스입니다.
- * @param size - 각 별 크기(px)입니다. 기본값은 `42`입니다.
  * @param ariaLabel - 접근성 라벨입니다.
  */
 export type StarProps = {
@@ -27,7 +26,6 @@ export type StarProps = {
   disabled?: boolean;
   readOnly?: boolean;
   className?: string;
-  size?: number;
   ariaLabel?: string;
 };
 
@@ -56,7 +54,6 @@ export default function Star({
   disabled,
   readOnly,
   className,
-  size = 42,
   ariaLabel = '별점 선택',
 }: StarProps) {
   const groupId = useId();
@@ -122,7 +119,7 @@ export default function Star({
             onClick={() => commit(idx)}
             onKeyDown={getKeyDownHandler(idx)}
           >
-            <StarIcon style={{ width: size, height: size }} aria-hidden="true" />
+            <StarIcon className="h-10.5 w-10.5" aria-hidden="true" />
           </button>
         );
       })}

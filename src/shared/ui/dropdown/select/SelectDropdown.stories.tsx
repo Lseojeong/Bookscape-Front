@@ -110,6 +110,16 @@ const CATEGORY_OPTIONS = [
   { value: '웰빙', label: '웰빙', disabled: false },
 ];
 
+const LONG_TEXT_OPTIONS = [
+  {
+    value: 'long-1',
+    label:
+      '제목이 아주아주 길어서 드롭다운 트리거/옵션에서 말줄임(...)이 제대로 적용되는지 확인하는 테스트 항목입니다',
+    disabled: false,
+  },
+  { value: 'long-2', label: '짧은 옵션', disabled: false },
+] as const;
+
 export const Default: Story = {
   args: {
     variants: 'basic',
@@ -144,6 +154,54 @@ export const Default: Story = {
 
           <SelectDropdownContent>
             {CATEGORY_OPTIONS.map((opt) => (
+              <SelectDropdownItem key={opt.value} value={opt.value} disabled={opt.disabled}>
+                {opt.label}
+              </SelectDropdownItem>
+            ))}
+          </SelectDropdownContent>
+        </SelectDropdown>
+      </div>
+    );
+  },
+};
+
+export const LongText: Story = {
+  args: {
+    variants: 'basic',
+    value: LONG_TEXT_OPTIONS[0].value,
+    triggerId: 'long-text',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '텍스트가 길어도 트리거/옵션에서 UI가 깨지지 않고 말줄임(...) 처리되는지 확인하는 예제입니다.',
+      },
+    },
+  },
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs<{ value: string }>();
+
+    return (
+      <div className="flex h-80 w-60 flex-col gap-2">
+        <SelectDropdown
+          {...args}
+          value={value}
+          onChangeValue={(nextValue: string) => {
+            updateArgs({ value: nextValue });
+          }}
+        >
+          <SelectDropdownTrigger>
+            <SelectDropdownValue
+              placeholder="옵션 선택"
+              render={(value: string) =>
+                LONG_TEXT_OPTIONS.find((opt) => opt.value === value)?.label
+              }
+            />
+          </SelectDropdownTrigger>
+
+          <SelectDropdownContent>
+            {LONG_TEXT_OPTIONS.map((opt) => (
               <SelectDropdownItem key={opt.value} value={opt.value} disabled={opt.disabled}>
                 {opt.label}
               </SelectDropdownItem>

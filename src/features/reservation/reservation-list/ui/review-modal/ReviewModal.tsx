@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 import Star from '@/features/reservation/reservation-list/ui/review-modal/Star';
+import type { ReviewFormValues } from '@/features/reservation/reservation-list/utils/schema';
+import { reviewFormSchema } from '@/features/reservation/reservation-list/utils/schema';
 import { DeleteIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
@@ -37,10 +39,6 @@ export type ReviewModalProps = {
   className?: string;
 };
 
-type ReviewModalFormValues = {
-  content: string;
-};
-
 /**
  * ## ReviewModal
  *
@@ -70,37 +68,29 @@ export default function ReviewModal({
   defaultContent = '',
   className,
 }: ReviewModalProps) {
-  const [rating, setRating] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { control, handleSubmit, reset } = useForm<ReviewModalFormValues>({
-    defaultValues: { content: defaultContent },
-    mode: 'onChange',
+  const { control, handleSubmit, reset, setValue, formState } = useForm<ReviewFormValues>({
+    resolver: zodResolver(reviewFormSchema),
+    defaultValues: { rating: 0, content: defaultContent },
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
   });
 
   const handleClose = () => {
     onClose();
-    // NOTE: 모달을 닫을 때 별점을 초기화합니다.
-    setRating(0);
-    reset({ content: defaultContent });
+    reset({ rating: 0, content: defaultContent });
   };
 
+  const rating = useWatch({ control, name: 'rating' }) ?? 0;
   const contentValue = useWatch({ control, name: 'content' }) ?? '';
-  const canSubmit = rating > 0 && contentValue.trim().length > 0;
   const isEditing = rating > 0 || contentValue.trim().length > 0;
-  const shouldBlockAutoClose = isSubmitting || isEditing;
+  const shouldBlockAutoClose = formState.isSubmitting || isEditing;
 
-  const submit = handleSubmit(async ({ content }) => {
-    if (isSubmitting) return;
-
+  const submit = handleSubmit(async ({ rating, content }) => {
     try {
-      setIsSubmitting(true);
       await onSubmit?.({ rating, content });
       handleClose();
-    } catch (error) {
-      // TODO: 리뷰 제출 API 연동 시 에러 처리/토스트 추가
-      throw error;
-    } finally {
-      setIsSubmitting(false);
+    } catch {
+      // NOTE: onSubmit 실패 시 모달을 닫지 않고 유지합니다.
     }
   });
 
@@ -122,7 +112,7 @@ export default function ReviewModal({
             type="button"
             aria-label="닫기"
             onClick={handleClose}
-            disabled={isSubmitting}
+            disabled={formState.isSubmitting}
             className="p-1 outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
           >
             <DeleteIcon className="h-6 w-6 text-gray-950" aria-hidden="true" />
@@ -139,7 +129,20 @@ export default function ReviewModal({
             </div>
 
             <div className="flex justify-center">
-              <Star value={rating} onChange={setRating} ariaLabel="별점 선택" />
+              <FormField
+                label="별점"
+                labelTextClassName="sr-only"
+                errorMessage={formState.errors.rating?.message}
+                errorMessageClassName="text-center"
+              >
+                <Star
+                  value={rating}
+                  onChange={(next) =>
+                    setValue('rating', next, { shouldDirty: true, shouldValidate: true })
+                  }
+                  ariaLabel="별점 선택"
+                />
+              </FormField>
             </div>
           </div>
 
@@ -149,6 +152,7 @@ export default function ReviewModal({
                 label="소중한 경험을 들려주세요"
                 labelTextClassName="typo-18-bold text-gray-950"
                 labelClassName="mb-4"
+                errorMessage={formState.errors.content?.message}
               >
                 <FormTextarea
                   name="content"
@@ -165,8 +169,8 @@ export default function ReviewModal({
             theme="primary"
             size="lg"
             type="submit"
-            disabled={!canSubmit || isSubmitting}
-            isLoading={isSubmitting}
+            disabled={formState.isSubmitting}
+            isLoading={formState.isSubmitting}
             className="h-13.5 w-full rounded-2xl"
           >
             작성하기
