@@ -1,3 +1,6 @@
+'use client';
+
+import Link from 'next/link';
 import type { ParsedNotification } from '@/features/notification/types';
 import { getTimeAgo } from '@/features/notification/utils/getTimeAgo';
 import { DeleteIcon } from '@/shared/assets/icons';
@@ -16,10 +19,12 @@ const NOTIFICATION_STATUS_OPTIONS = {
   confirmed: {
     label: '승인',
     color: 'text-primary-500',
+    reservationListUrl: '/mypage/reservation-list?status=confirmed',
   },
   declined: {
     label: '거절',
     color: 'text-red-500',
+    reservationListUrl: '/mypage/reservation-list?status=declined',
   },
 } as const;
 
@@ -46,8 +51,8 @@ export default function NotificationItem({
   onDelete,
   lastSeenAtMs,
 }: NotificationItemProps) {
-  const { label, color } =
-    NOTIFICATION_STATUS_OPTIONS[status as keyof typeof NOTIFICATION_STATUS_OPTIONS];
+  const { label, color, reservationListUrl } =
+    NOTIFICATION_STATUS_OPTIONS[status as NotificationStatus];
 
   const updatedAtMs = Date.parse(updatedAt);
   const isNew =
@@ -68,10 +73,12 @@ export default function NotificationItem({
           </button>
         </div>
       </div>
+
       <div className="typo-14-medium text-gray-800">
-        <p className="wrap-break-word">
+        <Link href={reservationListUrl} className="block text-left wrap-break-word hover:underline">
           {title} ({date})
-        </p>
+        </Link>
+
         <p>
           예약이 <span className={`font-semibold ${color}`}>{label}</span> 되었어요
         </p>

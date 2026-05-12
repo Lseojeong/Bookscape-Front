@@ -65,7 +65,7 @@ export default function Notification({
   });
 
   return (
-    <div className="absolute top-[calc(100%+8px)] right-0 layer-dropdown max-h-[340px] w-65 rounded-xl bg-white pt-4 pb-2 shadow-card max-sm:fixed max-sm:top-14 max-sm:right-6 max-sm:left-6 max-sm:w-auto lg:w-92.5">
+    <div className="absolute top-[calc(100%+8px)] right-0 layer-dropdown max-h-85 w-65 rounded-xl bg-white pt-4 pb-2 shadow-card max-sm:fixed max-sm:top-14 max-sm:right-6 max-sm:left-6 max-sm:w-auto lg:w-92.5">
       <div className="flex items-center justify-between border-b border-gray-50 px-4 pb-3">
         <div className="typo-16-bold">알림 {totalCount}개</div>
         {notifications.length > 0 && (
