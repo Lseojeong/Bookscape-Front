@@ -1,21 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import ReservationCard, {
-  ReservationCardData,
-} from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
+import ReservationCard from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
+import type { MyReservation } from '@/features/reservation/types';
 
 const meta: Meta<typeof ReservationCard> = {
   title: 'Features/Card/ReservationCard',
   component: ReservationCard,
   tags: ['autodocs'],
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        push: () => {},
+        replace: () => {},
+        back: () => {},
+      },
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof ReservationCard>;
 
-const mockReservations: ReservationCardData[] = [
+const mockReservations: MyReservation[] = [
   {
     id: 1,
-    nickname: '김민준',
     userId: 101,
     activity: {
       bannerImageUrl: 'https://picsum.photos/seed/activity1/400/300',
@@ -23,7 +31,6 @@ const mockReservations: ReservationCardData[] = [
       id: 201,
     },
     teamId: 'team-alpha',
-    activityId: 201,
     scheduleId: 301,
     status: 'confirmed',
     reviewSubmitted: false,
@@ -32,10 +39,11 @@ const mockReservations: ReservationCardData[] = [
     date: '2026-05-10',
     startTime: '10:00',
     endTime: '12:00',
+    createdAt: '2026-05-01T00:00:00.000Z',
+    updatedAt: '2026-05-01T00:00:00.000Z',
   },
   {
     id: 2,
-    nickname: '이수경',
     userId: 102,
     activity: {
       bannerImageUrl: 'https://picsum.photos/seed/activity2/400/300',
@@ -43,7 +51,6 @@ const mockReservations: ReservationCardData[] = [
       id: 202,
     },
     teamId: 'team-beta',
-    activityId: 202,
     scheduleId: 302,
     status: 'pending',
     reviewSubmitted: false,
@@ -52,10 +59,11 @@ const mockReservations: ReservationCardData[] = [
     date: '2026-05-15',
     startTime: '18:00',
     endTime: '21:00',
+    createdAt: '2026-05-01T00:00:00.000Z',
+    updatedAt: '2026-05-01T00:00:00.000Z',
   },
   {
     id: 3,
-    nickname: '박지훈',
     userId: 103,
     activity: {
       bannerImageUrl: 'https://picsum.photos/seed/activity3/400/300',
@@ -63,7 +71,6 @@ const mockReservations: ReservationCardData[] = [
       id: 203,
     },
     teamId: 'team-gamma',
-    activityId: 203,
     scheduleId: 303,
     status: 'completed',
     reviewSubmitted: true,
@@ -72,10 +79,11 @@ const mockReservations: ReservationCardData[] = [
     date: '2026-04-20',
     startTime: '09:00',
     endTime: '11:00',
+    createdAt: '2026-05-01T00:00:00.000Z',
+    updatedAt: '2026-05-01T00:00:00.000Z',
   },
   {
     id: 6,
-    nickname: '박지훈',
     userId: 103,
     activity: {
       bannerImageUrl: 'https://picsum.photos/seed/activity3/400/300',
@@ -83,7 +91,6 @@ const mockReservations: ReservationCardData[] = [
       id: 203,
     },
     teamId: 'team-gamma',
-    activityId: 203,
     scheduleId: 303,
     status: 'completed',
     reviewSubmitted: false,
@@ -92,10 +99,11 @@ const mockReservations: ReservationCardData[] = [
     date: '2026-04-20',
     startTime: '09:00',
     endTime: '11:00',
+    createdAt: '2026-05-01T00:00:00.000Z',
+    updatedAt: '2026-05-01T00:00:00.000Z',
   },
   {
     id: 4,
-    nickname: '최유나',
     userId: 104,
     activity: {
       bannerImageUrl: 'https://picsum.photos/seed/activity4/400/300',
@@ -103,7 +111,6 @@ const mockReservations: ReservationCardData[] = [
       id: 204,
     },
     teamId: 'team-delta',
-    activityId: 204,
     scheduleId: 304,
     status: 'declined',
     reviewSubmitted: false,
@@ -112,10 +119,11 @@ const mockReservations: ReservationCardData[] = [
     date: '2026-05-01',
     startTime: '14:00',
     endTime: '16:00',
+    createdAt: '2026-05-01T00:00:00.000Z',
+    updatedAt: '2026-05-01T00:00:00.000Z',
   },
   {
     id: 5,
-    nickname: '정도현',
     userId: 105,
     activity: {
       bannerImageUrl: 'https://picsum.photos/seed/activity5/400/300',
@@ -123,7 +131,6 @@ const mockReservations: ReservationCardData[] = [
       id: 205,
     },
     teamId: 'team-epsilon',
-    activityId: 205,
     scheduleId: 305,
     status: 'canceled',
     reviewSubmitted: false,
@@ -132,14 +139,17 @@ const mockReservations: ReservationCardData[] = [
     date: '2026-06-01',
     startTime: '07:00',
     endTime: '13:00',
+    createdAt: '2026-05-01T00:00:00.000Z',
+    updatedAt: '2026-05-01T00:00:00.000Z',
   },
 ];
+
 // 예약 내역 카드
 export const Reservation: Story = {
   render: () => (
     <div className="flex w-100 flex-col gap-5 md:w-130 md:gap-5 lg:w-170">
       {mockReservations.map((data) => (
-        <ReservationCard key={data.activity.id} data={data} />
+        <ReservationCard key={data.id} data={data} />
       ))}
     </div>
   ),

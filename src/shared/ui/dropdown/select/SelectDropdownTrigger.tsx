@@ -8,7 +8,7 @@ import useDropdownBaseContext from '@/shared/ui/dropdown/hooks/useDropdownBaseCo
 import useSelectContext from '@/shared/ui/dropdown/hooks/useSelectDropdownContext';
 import { cn } from '@/shared/utils/cn';
 
-const selectDropdownTriggerVariants = cva('flex items-center', {
+const selectDropdownTriggerVariants = cva('flex min-w-0 items-center', {
   variants: {
     variants: {
       basic: 'field-surface w-full justify-between rounded-2xl px-4 h-13.5',
@@ -74,11 +74,16 @@ export default function SelectDropdownTrigger({
       )}
       onClick={() => setIsOpen((prev) => !prev)}
     >
-      {children}
-      <CaretDownIcon
+      <span className="min-w-0 flex-1 overflow-hidden text-left">{children}</span>
+      <span
         aria-hidden="true"
-        className={cn('transition-transform duration-200', 'w-7', isOpen && 'rotate-180')}
-      />
+        className={cn(
+          'inline-flex size-7 shrink-0 items-center justify-center transition-transform duration-200',
+          isOpen && 'rotate-180'
+        )}
+      >
+        <CaretDownIcon className="block size-5" />
+      </span>
     </button>
   );
 }
