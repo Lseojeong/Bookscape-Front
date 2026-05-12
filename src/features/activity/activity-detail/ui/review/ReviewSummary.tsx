@@ -1,13 +1,5 @@
+import { getRatingLabel } from '@/features/activity/activity-detail/utils/ratingFormat';
 import { StarIcon } from '@/shared/assets/icons';
-
-const getRatingLabel = (rating: number, totalCount: number) => {
-  if (totalCount === 0) return '후기 없음';
-  if (rating >= 4.5) return '매우 만족'; // 4.5 ~ 5.0
-  if (rating >= 4.0) return '만족'; // 4.0 ~ 4.4
-  if (rating >= 3.0) return '보통'; // 3.0 ~ 3.9
-  if (rating >= 2.0) return '불만족'; // 2.0 ~ 2.9
-  return '매우 불만족'; // 0 ~ 1.9
-};
 
 type ReviewSummaryProps = {
   averageRating: number;
