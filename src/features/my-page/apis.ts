@@ -4,6 +4,7 @@ import type {
   CreateActivityImageUrlResponse,
 } from '@/features/my-page/activity-form/types';
 import {
+  GetMyActivitiesQuerySchema,
   GetMyActivitiesResponseSchema,
   GetMyActivityReservationDashboardResponseSchema,
   GetMyActivityReservedScheduleResponseSchema,
@@ -12,11 +13,18 @@ import {
 } from '@/features/my-page/types';
 import type {
   GetMyActivitiesQuery,
+  GetMyActivitiesResponse,
   GetMyActivityReservationDashboardQuery,
   GetMyActivityReservationsQuery,
   UpdateMyActivityReservationStatusRequestBody,
 } from '@/features/my-page/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
+
+const EMPTY_MY_ACTIVITIES_RESPONSE: GetMyActivitiesResponse = {
+  cursorId: null,
+  totalCount: 0,
+  activities: [],
+};
 
 /**
  * 내 체험 리스트 조회
@@ -25,11 +33,21 @@ import { bffFetch } from '@/shared/apis/base/bffFetch';
  * @param query - 커서 ID, 페이지 크기
  * @returns 내 체험 리스트
  */
-export const getMyActivities = async (query?: GetMyActivitiesQuery) => {
-  const data = await bffFetch.get('/my-activities', query);
-  return GetMyActivitiesResponseSchema.parse(
-    data ?? { cursorId: 0, totalCount: 0, activities: [] }
-  );
+export const getMyActivities = async (query: GetMyActivitiesQuery = {}) => {
+  const safeQuery = GetMyActivitiesQuerySchema.parse(query);
+  const data = await bffFetch.get<GetMyActivitiesResponse>('/my-activities', safeQuery);
+  if (!data) return EMPTY_MY_ACTIVITIES_RESPONSE;
+  return GetMyActivitiesResponseSchema.parse(data);
+};
+
+/**
+ * 내 체험 삭제
+ *
+ * @description `DELETE /api/my-activities/{activityId}`
+ * @param activityId - 체험 ID
+ */
+export const deleteActivity = async (activityId: number) => {
+  await bffFetch.delete(`/my-activities/${activityId}`);
 };
 
 /**

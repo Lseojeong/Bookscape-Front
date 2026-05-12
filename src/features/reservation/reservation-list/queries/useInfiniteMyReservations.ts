@@ -5,7 +5,7 @@ import type { GetMyReservationsResponse, MyReservationStatus } from '@/features/
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useUserStore } from '@/shared/stores/userStore';
 
-type UseMyReservationsParams = {
+type UseInfiniteMyReservationsParams = {
   status?: MyReservationStatus;
   size?: number;
 };
@@ -21,10 +21,10 @@ const EMPTY_RESPONSE: GetMyReservationsResponse = {
   totalCount: 0,
 };
 
-export const useMyReservations = ({
+export const useInfiniteMyReservations = ({
   status,
   size = MY_RESERVATIONS_PAGE_SIZE,
-}: UseMyReservationsParams = {}) => {
+}: UseInfiniteMyReservationsParams = {}) => {
   const userId = useUserStore((s) => s.user?.id);
 
   const query = useInfiniteQuery<
