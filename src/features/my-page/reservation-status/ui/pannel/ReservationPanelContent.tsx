@@ -133,7 +133,7 @@ export default function ReservationPanelContent({
     <div className="relative flex h-full w-full flex-col overflow-hidden px-6 py-8">
       {/* 헤더 */}
       <div className="shrink-0">
-        {!date ? (
+        {!isAllLoading ? (
           <Skeleton className="h-6 w-30 rounded-xl md:w-2/6" />
         ) : (
           <p className="typo-18-bold lg:typo-24-bold">{formatDate(date)}</p>
