@@ -1,7 +1,14 @@
 import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import { cn } from '@/shared/utils/cn';
 
-/** 세로형 체험 카드 스켈레톤 UI입니다.  */
+/** 세로형 체험 카드 스켈레톤 UI입니다.
+ *
+ * @example
+ * ```tsx
+ * {Array.from({ length: 8 }).map((_, i) => (
+ *   <ActivityCardSkeleton key={i} />
+ * ))}
+ */
 export default function ActivityCardSkeleton({ className }: { className?: string }) {
   return (
     <div className={cn('rounded-2xl border border-gray-100 p-4', className)}>
