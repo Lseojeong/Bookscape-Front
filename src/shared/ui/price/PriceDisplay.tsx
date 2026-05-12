@@ -32,7 +32,7 @@ export default function PriceDisplay({
     <span className={cn('flex items-center typo-18-bold text-gray-950', priceClassName)}>
       ₩{price.toLocaleString('ko-KR')}
       <span className={cn('typo-16-medium text-gray-500', !showSlash && 'pl-1', unitClassName)}>
-        {showSlash && '/'}
+        {showSlash && <>&nbsp;/&nbsp;</>}
         {unit}
       </span>
     </span>

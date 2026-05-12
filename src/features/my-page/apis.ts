@@ -41,6 +41,16 @@ export const getMyActivities = async (query: GetMyActivitiesQuery = {}) => {
 };
 
 /**
+ * 내 체험 삭제
+ *
+ * @description `DELETE /api/my-activities/{activityId}`
+ * @param activityId - 체험 ID
+ */
+export const deleteActivity = async (activityId: number) => {
+  await bffFetch.delete(`/my-activities/${activityId}`);
+};
+
+/**
  * 내 체험 월별 예약 현황 조회
  *
  * @description `GET /api/my-activities/{activityId}/reservation-dashboard`
