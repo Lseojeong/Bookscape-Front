@@ -7,6 +7,7 @@ type SearchInputUiProps = {
   defaultValue?: string;
   placeholder?: string;
   name?: string;
+  className?: string;
 };
 
 /**
@@ -18,7 +19,7 @@ type SearchInputUiProps = {
  * 스토리북에서는 앱 라우터 의존성으로 인해 SearchInput 대신 이 컴포넌트를 직접 사용합니다.
  */
 const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
-  ({ onSubmit, placeholder = '체험을 검색해 주세요', defaultValue, name }, ref) => {
+  ({ onSubmit, placeholder = '체험을 검색해 주세요', defaultValue, name, className }, ref) => {
     return (
       <form role="search" className="relative w-full" onSubmit={onSubmit}>
         <input
@@ -29,7 +30,8 @@ const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
           aria-label="검색어 입력"
           className={cn(
             'field-surface field-input',
-            'h-15.5 w-full rounded-[20px] px-5 py-5.5 pr-14 typo-14-medium shadow-drop md:h-17.5 md:rounded-3xl md:px-8 md:py-6 md:pr-22 md:typo-18-medium'
+            'h-15.5 w-full rounded-[20px] px-5 py-5.5 pr-14 typo-14-medium shadow-drop md:h-17.5 md:rounded-3xl md:px-8 md:py-6 md:pr-22 md:typo-18-medium',
+            className
           )}
         />
         <button

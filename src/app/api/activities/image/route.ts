@@ -1,4 +1,4 @@
-import type { CreateActivityImageUrlResponse } from '@/features/activity/types';
+import type { CreateActivityImageUrlResponse } from '@/features/my-page/activity-form/types';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
 
