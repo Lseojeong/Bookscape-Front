@@ -1,22 +1,14 @@
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useActivityReviews } from '@/features/activity/activity-detail/queries/useActivityReviews';
+import ReviewList from '@/features/activity/activity-detail/ui/review/ReviewList';
+import ReviewSummary from '@/features/activity/activity-detail/ui/review/ReviewSummary';
 import Pagination from '@/shared/ui/pagination/Pagination';
 import Title from '@/shared/ui/title/Title';
-import ReviewList from './ReviewList';
-import ReviewSummary from './ReviewSummary';
-
-type Review = {
-  id: number;
-  nickname: string;
-  rating: number;
-  content: string;
-  createdAt: string;
-};
 
 type ActivityReviewsProps = {
-  averageRating: number;
-  totalCount: number;
-  currentPage: number;
-  reviews: Review[];
-  onPageChange: (page: number) => void;
+  activityId: number;
 };
 
 const PAGE_SIZE = 3;
@@ -28,23 +20,23 @@ const PAGE_SIZE = 3;
  *
  * @example
  * ```tsx
- * <ActivityReviews
- *   averageRating={4.2}
- *   totalCount={1300}
- *   currentPage={1}
- *   reviews={reviews}
- *   onPageChange={handlePageChange}
- * />
+ * <ActivityReviews activityId={activityId} />
  * ```
  */
-export default function ActivityReviews({
-  averageRating,
-  totalCount,
-  currentPage,
-  reviews,
-  onPageChange,
-}: ActivityReviewsProps) {
-  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+export default function ActivityReviews({ activityId }: ActivityReviewsProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('reviewPage') ?? 1);
+
+  const { data } = useActivityReviews(activityId, currentPage);
+
+  const totalPages = Math.ceil((data?.totalCount ?? 0) / PAGE_SIZE);
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('reviewPage', String(page));
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <div className="mt-5 md:mt-7.5">
@@ -52,11 +44,18 @@ export default function ActivityReviews({
         체험 후기
       </Title>
       <div className="mb-6">
-        <ReviewSummary averageRating={averageRating} totalCount={totalCount} />
+        <ReviewSummary
+          averageRating={data?.averageRating ?? 0}
+          totalCount={data?.totalCount ?? 0}
+        />
       </div>
-      <ReviewList reviews={reviews} />
+      <ReviewList reviews={data?.reviews ?? []} />
       <div className="mt-10 flex justify-center">
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

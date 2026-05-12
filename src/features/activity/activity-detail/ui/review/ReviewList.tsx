@@ -1,15 +1,8 @@
-import ReviewCard from './ReviewCard';
-
-type Review = {
-  id: number;
-  nickname: string;
-  rating: number;
-  content: string;
-  createdAt: string;
-};
+import ReviewCard from '@/features/activity/activity-detail/ui/review/ReviewCard';
+import type { ActivityReview } from '@/features/activity/types';
 
 type ReviewListProps = {
-  reviews: Review[];
+  reviews: ActivityReview[];
 };
 
 /**
@@ -26,7 +19,7 @@ export default function ReviewList({ reviews }: ReviewListProps) {
       {reviews.map((review) => (
         <ReviewCard
           key={review.id}
-          nickname={review.nickname}
+          nickname={review.user.nickname}
           rating={review.rating}
           content={review.content}
           createdAt={review.createdAt}

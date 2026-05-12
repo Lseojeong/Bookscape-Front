@@ -1,6 +1,7 @@
 import { StarIcon } from '@/shared/assets/icons';
 
-const getRatingLabel = (rating: number) => {
+const getRatingLabel = (rating: number, totalCount: number) => {
+  if (totalCount === 0) return '후기 없음';
   if (rating >= 4.5) return '매우 만족'; // 4.5 ~ 5.0
   if (rating >= 4.0) return '만족'; // 4.0 ~ 4.4
   if (rating >= 3.0) return '보통'; // 3.0 ~ 3.9
@@ -27,7 +28,9 @@ export default function ReviewSummary({ averageRating, totalCount }: ReviewSumma
   return (
     <div className="flex flex-col items-center gap-0.5">
       <p className="typo-24-bold text-gray-950 md:typo-32-bold">{averageRating.toFixed(1)}</p>
-      <p className="typo-14-bold text-gray-950 md:typo-16-bold">{getRatingLabel(averageRating)}</p>
+      <p className="typo-14-bold text-gray-950 md:typo-16-bold">
+        {getRatingLabel(averageRating, totalCount)}
+      </p>
       <div className="flex items-center gap-0.5">
         <StarIcon className="h-4 w-4 text-yellow-500" />
         <p className="typo-14-medium text-gray-500">{totalCount.toLocaleString()}개 후기</p>
