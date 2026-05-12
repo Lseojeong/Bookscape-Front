@@ -17,7 +17,7 @@ export const useDeleteActivity = () => {
 
       queryClient.setQueriesData<
         InfiniteData<GetMyActivitiesResponse, number | undefined> | undefined
-      >({ queryKey: ['my-activities', 'infinite'] }, (old) => {
+      >({ queryKey: ['my-activities'] }, (old) => {
         if (!old) return old;
 
         const nextPages = old.pages.map((page) => {
