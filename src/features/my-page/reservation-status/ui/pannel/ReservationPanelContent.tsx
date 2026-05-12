@@ -7,6 +7,7 @@ import { useReservationsQuery } from '@/features/my-page/reservation-status/quer
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
 import ReservationCardSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationCardSkeleton';
 import ReservationDropdownSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationDropdownSkeleton';
+import ReservationPanelContentSkeletion from '@/features/my-page/reservation-status/ui/skeleton/ReservationPanelContentSkeletion';
 import ReservationTabBarSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationTabBarSkeleton';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
@@ -19,7 +20,7 @@ import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTri
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import FormLabel from '@/shared/ui/form/FormLabel';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
-import Loading from '@/shared/ui/loading/Loading';
+import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 
 type ReservationPanelContentProps = {
@@ -132,7 +133,11 @@ export default function ReservationPanelContent({
     <div className="relative flex h-full w-full flex-col overflow-hidden px-6 py-8">
       {/* 헤더 */}
       <div className="shrink-0">
-        <p className="typo-18-bold lg:typo-24-bold">{formatDate(date)}</p>
+        {!date ? (
+          <Skeleton className="h-6 w-30 rounded-xl md:w-2/6" />
+        ) : (
+          <p className="typo-18-bold lg:typo-24-bold">{formatDate(date)}</p>
+        )}
         <button
           type="button"
           onClick={onClose}
@@ -160,9 +165,7 @@ export default function ReservationPanelContent({
       {/* 콘텐츠 - 최초 진입 시 전체 로딩 */}
       <div className="flex min-h-0 flex-1 flex-col">
         {isAllLoading ? (
-          <div className="mt-6 flex justify-center">
-            <Loading size={16} color="var(--color-gray-400)" />
-          </div>
+          <ReservationPanelContentSkeletion />
         ) : availableSchedules.length === 0 ? (
           <p className="mt-3 text-center typo-14-medium text-gray-400">
             {TAB_LABELS[activeTab]} 내역이 없습니다.

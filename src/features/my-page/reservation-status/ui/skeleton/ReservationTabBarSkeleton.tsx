@@ -5,7 +5,7 @@ export default function ReservationTabBarSkeleton() {
   return (
     <div className="flex gap-2">
       {[1, 2, 3].map((i) => (
-        <Skeleton key={i} className="h-6 flex-1 rounded-xl" />
+        <Skeleton key={i} className="h-8 flex-1 rounded-xl" />
       ))}
     </div>
   );
