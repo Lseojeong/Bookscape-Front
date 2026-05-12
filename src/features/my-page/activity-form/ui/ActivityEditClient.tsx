@@ -98,7 +98,7 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
   }, [originalData]);
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-4 pt-10 md:px-0 md:pt-14">
+    <div className="mx-auto w-full max-w-3xl px-4 pt-10 md:px-0 md:pt-14">
       <div className="mb-10">
         <PageHeader title="내 체험 수정" onBack={handleHeaderBackClick} />
       </div>
@@ -135,6 +135,6 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
         confirmText="계속 수정하기"
         onCancel={handleConfirmReset}
       />
-    </main>
+    </div>
   );
 }
