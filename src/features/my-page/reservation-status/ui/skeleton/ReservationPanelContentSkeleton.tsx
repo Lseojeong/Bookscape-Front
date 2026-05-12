@@ -5,13 +5,13 @@ import ReservationDropdownSkeleton from '@/features/my-page/reservation-status/u
 export default function ReservationPanelContentSkeleton() {
   return (
     <>
-      <div className="">
+      <div>
         <p className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약 시간</p>
         <div className="flex flex-col gap-3">
           <ReservationDropdownSkeleton />
         </div>
       </div>
-      <div className="">
+      <div>
         <p className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약내역</p>
         <div className="flex flex-col gap-3">
           {Array.from({ length: 2 }).map((_, i) => (
