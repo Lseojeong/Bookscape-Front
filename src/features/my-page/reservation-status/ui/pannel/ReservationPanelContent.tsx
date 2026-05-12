@@ -7,7 +7,7 @@ import { useReservationsQuery } from '@/features/my-page/reservation-status/quer
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
 import ReservationCardSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationCardSkeleton';
 import ReservationDropdownSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationDropdownSkeleton';
-import ReservationPanelContentSkeletion from '@/features/my-page/reservation-status/ui/skeleton/ReservationPanelContentSkeletion';
+import ReservationPanelContentSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationPanelContentSkeleton';
 import ReservationTabBarSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationTabBarSkeleton';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
@@ -165,7 +165,7 @@ export default function ReservationPanelContent({
       {/* 콘텐츠 - 최초 진입 시 전체 로딩 */}
       <div className="flex min-h-0 flex-1 flex-col">
         {isAllLoading ? (
-          <ReservationPanelContentSkeletion />
+          <ReservationPanelContentSkeleton />
         ) : availableSchedules.length === 0 ? (
           <p className="mt-3 text-center typo-14-medium text-gray-400">
             {TAB_LABELS[activeTab]} 내역이 없습니다.

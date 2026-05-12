@@ -2,7 +2,7 @@ import ReservationCardSkeleton from '@/features/my-page/reservation-status/ui/sk
 import ReservationDropdownSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationDropdownSkeleton';
 
 /** 예약 현황 패널 컨텐츠 스켈레톤 UI입니다. */
-export default function ReservationPanelContentSkeletion() {
+export default function ReservationPanelContentSkeleton() {
   return (
     <>
       <div className="">
