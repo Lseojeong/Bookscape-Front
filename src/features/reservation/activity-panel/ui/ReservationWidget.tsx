@@ -59,11 +59,13 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
       />
 
       {/* 참여 인원 수 */}
-      <HeadCountControl
-        headCount={headCount}
-        onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
-        onIncrease={() => setHeadCount((prev) => prev + 1)}
-      />
+      {selectedScheduleId && (
+        <HeadCountControl
+          headCount={headCount}
+          onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
+          onIncrease={() => setHeadCount((prev) => prev + 1)}
+        />
+      )}
 
       {/* 예약 가능한 시간 */}
       <ScheduleList

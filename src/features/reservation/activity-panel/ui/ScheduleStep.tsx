@@ -16,6 +16,7 @@ type ScheduleStepProps = {
   onMonthChange: (month: Date) => void;
   onDecrease: () => void;
   onIncrease: () => void;
+  onVisitHeadcount?: () => void;
   myBlockedScheduleIds: Set<number>;
   availableDates?: string[];
 };
@@ -53,6 +54,7 @@ export default function ScheduleStep({
   onMonthChange,
   onDecrease,
   onIncrease,
+  onVisitHeadcount,
   myBlockedScheduleIds,
   availableDates,
 }: ScheduleStepProps) {
@@ -84,8 +86,14 @@ export default function ScheduleStep({
           <div className="hidden md:mt-6 md:block">
             <HeadCountControl
               headCount={headCount}
-              onDecrease={onDecrease}
-              onIncrease={onIncrease}
+              onDecrease={() => {
+                onDecrease();
+                onVisitHeadcount?.();
+              }}
+              onIncrease={() => {
+                onIncrease();
+                onVisitHeadcount?.();
+              }}
               variant="wide"
               rounded="xl"
             />
