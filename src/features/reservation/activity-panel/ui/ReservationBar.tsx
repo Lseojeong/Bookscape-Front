@@ -76,6 +76,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
           size="md"
           className="w-full"
           disabled={isOwner}
+          type="button"
           onClick={() => setIsOpen(true)}
         >
           예약하기
