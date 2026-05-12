@@ -2,6 +2,7 @@
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import { useSearchResult } from '@/features/activity/search/hooks/useSearchResult';
 import ActivityListWithPagination from '@/features/activity/ui/ActivityListWithPagination';
+import ActivityCardSkeleton from '@/features/activity/ui/skeleton/ActivityCardSkeleton';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
 
@@ -43,7 +44,14 @@ export default function SearchResultSection() {
       <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
 
       {isLoading ? (
-        <></> // TODO: 스켈레톤으로 대체
+        <>
+          {/* ~ md: 4개 노출, lg: 8개 노출 */}
+          <div className="mt-10 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <ActivityCardSkeleton key={i} className={i >= 4 ? 'hidden lg:block' : ''} />
+            ))}
+          </div>
+        </>
       ) : isError ? (
         <div className="mt-10">
           <EmptyState

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActivityCarousel';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
 import CarouselArrowButton from '@/features/activity/main/ui/CarouselArrowButton';
+import ActivityCardSkeleton from '@/features/activity/ui/skeleton/ActivityCardSkeleton';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
@@ -36,7 +37,13 @@ export default function MainActivityList() {
       </Title>
 
       {isLoading ? (
-        <></> // TODO: 스켈레톤으로 대체
+        <>
+          <div className="grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <ActivityCardSkeleton key={i} />
+            ))}
+          </div>
+        </>
       ) : isError ? (
         <div className="mt-10">
           <EmptyState
