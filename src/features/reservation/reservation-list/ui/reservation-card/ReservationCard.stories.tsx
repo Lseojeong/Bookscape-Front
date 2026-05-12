@@ -6,6 +6,16 @@ const meta: Meta<typeof ReservationCard> = {
   title: 'Features/Card/ReservationCard',
   component: ReservationCard,
   tags: ['autodocs'],
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        push: () => {},
+        replace: () => {},
+        back: () => {},
+      },
+    },
+  },
 };
 
 export default meta;
@@ -133,12 +143,13 @@ const mockReservations: MyReservation[] = [
     updatedAt: '2026-05-01T00:00:00.000Z',
   },
 ];
+
 // 예약 내역 카드
 export const Reservation: Story = {
   render: () => (
     <div className="flex w-100 flex-col gap-5 md:w-130 md:gap-5 lg:w-170">
       {mockReservations.map((data) => (
-        <ReservationCard key={data.activity.id} data={data} />
+        <ReservationCard key={data.id} data={data} />
       ))}
     </div>
   ),

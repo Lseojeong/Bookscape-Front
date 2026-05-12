@@ -5,6 +5,16 @@ const meta: Meta<typeof MyActivityCard> = {
   title: 'Features/Card/MyActivityCard',
   component: MyActivityCard,
   tags: ['autodocs'],
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        push: () => {},
+        replace: () => {},
+        back: () => {},
+      },
+    },
+  },
 };
 
 export default meta;
@@ -47,16 +57,11 @@ const mockActivities = [
     price: 99000,
   },
 ];
+
 // 내 체험 관리 카드
 export const MyActivity: Story = {
   args: {
-    data: {
-      id: 1,
-      title: '제목이 아주 길어지는 경우에는 말줄임표가 적용됩니다',
-      reviewCount: 120,
-      rating: 3.5,
-      price: 25000,
-    },
+    data: mockActivities[0],
   },
   render: () => (
     <div className="flex w-100 flex-col gap-5 md:w-130 md:gap-5 lg:w-170">

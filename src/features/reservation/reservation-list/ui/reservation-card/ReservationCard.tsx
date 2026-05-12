@@ -1,3 +1,5 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import type { MyReservation } from '@/features/reservation/types';
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import { cardImageStyles, cardWrapStyles } from '@/shared/ui/card/cardStyles';
@@ -20,8 +22,23 @@ export type ReservationCardProps = {
  * ```
  */
 export default function ReservationCard({ data }: ReservationCardProps) {
+  const router = useRouter();
+
+  const handleClickCard = (e: React.MouseEvent | React.KeyboardEvent) => {
+    // 내부의 버튼이나 링크 클릭 시에는 카드 전체 클릭 이벤트가 발생하지 않도록 방지
+    if ((e.target as HTMLElement).closest('button, a')) return;
+    if (e.type === 'click' || (e as React.KeyboardEvent).key === 'Enter') {
+      router.push(`/activity/${data.activity.id}`);
+    }
+  };
   return (
-    <div className={cn('flex items-center rounded-3xl', cardWrapStyles)}>
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleClickCard}
+      onKeyDown={handleClickCard}
+      className={cn('flex cursor-pointer items-center rounded-3xl', cardWrapStyles)}
+    >
       {/* 이미지 */}
       <BaseCardImage
         containerClassName={cardImageStyles}
