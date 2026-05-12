@@ -68,6 +68,7 @@ export default function ScheduleList({
                 key={schedule.id}
                 onClick={() => !isDisabled && onSelectSchedule(schedule.id)}
                 disabled={isDisabled}
+                type="button"
                 className={cn(
                   'w-full rounded-xl border py-3 text-center typo-16-medium transition-colors',
                   isDisabled

@@ -175,6 +175,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
               size="lg"
               className="w-full"
               disabled={!selected || !selectedScheduleId || !hasVisitedHeadcountStep}
+              type="button"
               onClick={handleReserve}
             >
               예약하기

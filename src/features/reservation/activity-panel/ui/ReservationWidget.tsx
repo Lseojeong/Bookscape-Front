@@ -88,6 +88,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
           size="md"
           disabled={isOwner || !selected || !selectedScheduleId}
           onClick={handleReserve}
+          type="button"
         >
           예약하기
         </Button>

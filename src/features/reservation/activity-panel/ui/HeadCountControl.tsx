@@ -52,6 +52,7 @@ export default function HeadCountControl({
         <button
           className="flex h-5 w-5 items-center justify-center typo-16-medium text-gray-700"
           onClick={onDecrease}
+          type="button"
         >
           <MinusIcon />
         </button>
@@ -59,6 +60,7 @@ export default function HeadCountControl({
         <button
           className="flex h-5 w-5 items-center justify-center typo-16-medium text-gray-700"
           onClick={onIncrease}
+          type="button"
         >
           <PlusIcon />
         </button>
