@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import {
   MY_RESERVATIONS_PAGE_SIZE,
-  useMyReservations,
+  useInfiniteMyReservations,
 } from '@/features/reservation/reservation-list/queries/useInfiniteMyReservations';
 import ReservationListSection from '@/features/reservation/reservation-list/ui/my-reservation-list/ReservationListSection';
 import StatusFilter from '@/features/reservation/reservation-list/ui/status-filter/StatusFilter';
@@ -65,7 +65,7 @@ export default function ReservationListView() {
     router.replace(getReservationListUrl(status, searchParams));
   };
 
-  const { query } = useMyReservations({
+  const { query } = useInfiniteMyReservations({
     status: selectedStatus as MyReservationStatus,
     size: MY_RESERVATIONS_PAGE_SIZE,
   });
