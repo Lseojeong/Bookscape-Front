@@ -99,7 +99,7 @@ export const useActivityEditSubmit = (
         title: formData.title,
         category: formData.category,
         description: formData.description,
-        price: formData.price!,
+        price: formData.price,
         address: formattedAddress.trim(),
         bannerImageUrl,
         subImageIdsToRemove,

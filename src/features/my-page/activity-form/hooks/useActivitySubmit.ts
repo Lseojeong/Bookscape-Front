@@ -44,7 +44,7 @@ export const useActivitySubmit = () => {
         category: data.category,
         description: data.description,
         address: formattedAddress,
-        price: data.price!,
+        price: data.price,
         bannerImageUrl,
         subImageUrls,
         schedules: data.schedules.map((s) => ({
