@@ -1,8 +1,8 @@
 'use client';
+import ActivityListWithPagination from '@/features/activity/common/ui/ActivityListWithPagination';
+import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import { useSearchResult } from '@/features/activity/search/hooks/useSearchResult';
-import ActivityListWithPagination from '@/features/activity/ui/ActivityListWithPagination';
-import ActivityCardSkeleton from '@/features/activity/ui/skeleton/ActivityCardSkeleton';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
 

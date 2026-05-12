@@ -1,9 +1,9 @@
 'use client';
 import Link from 'next/link';
+import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
 import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActivityCarousel';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
 import CarouselArrowButton from '@/features/activity/main/ui/CarouselArrowButton';
-import ActivityCardSkeleton from '@/features/activity/ui/skeleton/ActivityCardSkeleton';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';

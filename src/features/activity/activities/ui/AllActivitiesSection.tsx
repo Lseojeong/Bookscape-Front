@@ -1,7 +1,7 @@
 'use client';
 import { useAllActivityList } from '@/features/activity/activities/hooks/useAllActivityList';
-import ActivityListWithPagination from '@/features/activity/ui/ActivityListWithPagination';
-import ActivityCardSkeleton from '@/features/activity/ui/skeleton/ActivityCardSkeleton';
+import ActivityListWithPagination from '@/features/activity/common/ui/ActivityListWithPagination';
+import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 
 /**
