@@ -60,7 +60,7 @@ export default function ReservationCalendar({
             ),
         }}
         classNames={{
-          root: 'w-87.5 mx-auto', // 달력 전체 감싸는 최상의 div
+          root: 'w-full max-w-81.75 mx-auto md:w-87.5', // 달력 전체 감싸는 최상의 div
           months: 'w-full relative', // 월 전체 영역
           month_grid: 'w-full', // 날짜 그리드 테이블
           month_caption: 'flex items-center mb-2', // "2026년 5월 ◀ ▶" 헤더 영역 전체
