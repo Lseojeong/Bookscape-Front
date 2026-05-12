@@ -1,4 +1,8 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
+import DeleteActivityDialog from '@/features/my-page/common/ui/DeleteActivityDialog';
 import Button from '@/shared/ui/button/Button';
 import { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
@@ -16,6 +20,41 @@ type ReservationCardActionsProps = {
 };
 
 type CardActionsProps = ManageCardActionsProps | ReservationCardActionsProps;
+
+function ManageCardActions({ activityId }: { activityId: number }) {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  return (
+    <>
+      <div className="flex gap-2">
+        <Button
+          as={Link}
+          href={`/activity/${activityId}/edit`}
+          theme="secondary"
+          size="sm"
+          className="w-17 rounded-lg"
+        >
+          수정하기
+        </Button>
+        <Button
+          type="button"
+          theme="gray"
+          size="sm"
+          className="w-17 rounded-lg"
+          onClick={() => setIsDeleteOpen(true)}
+        >
+          삭제하기
+        </Button>
+      </div>
+
+      <DeleteActivityDialog
+        id={activityId}
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+      />
+    </>
+  );
+}
 
 /**
  * 체험/예약 카드 하단의 액션 버튼 컴포넌트입니다.
@@ -44,29 +83,7 @@ type CardActionsProps = ManageCardActionsProps | ReservationCardActionsProps;
 export default function CardActions(props: CardActionsProps) {
   // 내 체험 관리 버튼
   if (props.type === 'manage') {
-    return (
-      <div className="flex gap-2">
-        <Button
-          as={Link}
-          href={`/activity/${props.activityId}/edit`}
-          theme="secondary"
-          size="sm"
-          className="w-17 rounded-lg"
-        >
-          수정하기
-        </Button>
-        {/* TODO: 삭제 확인 모달 연결 필요 */}
-        <Button
-          type="button"
-          theme="gray"
-          size="sm"
-          className="w-17 rounded-lg"
-          onClick={() => alert('삭제하기 버튼 클릭')}
-        >
-          삭제하기
-        </Button>
-      </div>
-    );
+    return <ManageCardActions activityId={props.activityId} />;
   }
 
   const { status, reviewSubmitted, activityId } = props;

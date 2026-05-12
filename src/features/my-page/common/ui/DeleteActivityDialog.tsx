@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { useDeleteActivity } from '@/features/my-page/common/mutations/useDeleteActivity';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
