@@ -94,14 +94,17 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
         position="bottom"
         variant="sheet"
         ariaLabel="예약 날짜 선택"
-        surfaceClassName={step === 'headcount' ? 'h-auto!' : undefined}
+        surfaceClassName={cn(
+          'h-auto! max-h-[calc(100dvh-80px)]',
+          step === 'headcount' && 'max-h-none'
+        )}
         contentClassName={cn('rounded-t-3xl! rounded-b-none!', step === 'schedule' && 'h-full')}
         surfaceStyle={{
           transform: `translateY(${dragY}px)`,
           transition: dragY === 0 ? 'transform 0.3s ease' : 'none',
         }}
       >
-        <div className="flex h-full flex-col">
+        <div className="flex flex-col">
           {/* 핸들바 */}
           <div
             className="flex justify-center pt-1 pb-3"
