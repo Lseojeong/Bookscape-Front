@@ -1,4 +1,5 @@
 import { StarIcon } from '@/shared/assets/icons';
+import { formatYmdToDot } from '@/shared/utils/dateFormat';
 
 type ReviewCardProps = {
   nickname: string;
@@ -23,11 +24,7 @@ type ReviewCardProps = {
  * ```
  */
 export default function ReviewCard({ nickname, rating, content, createdAt }: ReviewCardProps) {
-  const formattedDate = new Date(createdAt).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  });
+  const formattedDate = formatYmdToDot(createdAt.slice(0, 10));
 
   return (
     <div className="rounded-3xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
