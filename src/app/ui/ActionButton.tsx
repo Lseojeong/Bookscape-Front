@@ -12,7 +12,7 @@ type ActionButtonBaseProps = PropsWithChildren<{
 }>;
 
 type ActionButtonLinkProps = ActionButtonBaseProps & {
-  href: string;
+  href: ComponentPropsWithoutRef<typeof Link>['href'];
 } & Omit<ComponentPropsWithoutRef<typeof Link>, 'href' | 'className' | 'children'>;
 
 type ActionButtonActionProps = ActionButtonBaseProps & {
@@ -37,7 +37,7 @@ export default function ActionButton({
     className
   );
 
-  if ('href' in props && typeof props.href === 'string') {
+  if ('href' in props && props.href != null) {
     const { href, ...rest } = props;
     return (
       <Link href={href} className={commonClassName} {...rest}>
