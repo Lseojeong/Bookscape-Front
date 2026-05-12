@@ -18,3 +18,7 @@ export const getMyActivities = async (query: GetMyActivitiesQuery = {}) => {
   if (!result) return EMPTY_MY_ACTIVITIES_RESPONSE;
   return GetMyActivitiesResponseSchema.parse(result);
 };
+
+export const deleteActivity = async (id: number) => {
+  await bffFetch.delete(`/my-activities/${id}`);
+};

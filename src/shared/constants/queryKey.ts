@@ -10,8 +10,14 @@ export const QUERY_KEYS = {
 
   /** 메인 - 인기 체험 조회 */
   HOT_ACTIVITY: (size: number) => ['activities', 'hot', size] as const,
+
+  /** 예약 가능일 조회 */
+  AVAILABLE_SCHEDULE: (activityId: number, year: string, month: string) =>
+    ['activity', activityId, 'available-schedule', year, month] as const,
+
   /** 검색 및 체험 목록 데이터 조회 */
   ACTIVITY_LIST: (params: GetActivityParams) => ['activities', params] as const,
+
   /** 로그인한 사용자 정보 조회 */
   USER_ME: () => ['users', 'me'] as const,
   /** 내 예약 내역 조회 */

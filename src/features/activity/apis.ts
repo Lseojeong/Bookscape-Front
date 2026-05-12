@@ -1,9 +1,12 @@
+import { z } from 'zod';
 import {
   ActivityDetailSchema,
   ActivityResponse,
+  ActivityScheduleSchema,
   ActivityResponseSchema,
   GetActivityParams,
 } from '@/features/activity/types';
+import { CreateActivityReservationRequestBody } from '@/features/reservation/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
 
@@ -17,9 +20,19 @@ export const getActivityDetail = async (id: number) => {
   return { ...activity, images };
 };
 
-export const deleteActivity = async (id: number) => {
-  // TODO: 로그인 구현 후 BFF Route Handler 연결 필요
-  await bffFetch.delete(`/activities/${id}`);
+/** 예약 가능일 조회 */
+export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
+  const data = await get(
+    `/activities/${activityId}/available-schedule?year=${year}&month=${month}`
+  );
+  return z.array(ActivityScheduleSchema).parse(data);
+};
+
+export const createReservation = async (
+  activityId: number,
+  body: CreateActivityReservationRequestBody
+) => {
+  return bffFetch.post(`/activities/${activityId}/reservations`, body);
 };
 
 /**
