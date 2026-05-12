@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { useReservation } from '@/features/reservation/activity-panel/hooks/useReservation';
 import HeadcountStep from '@/features/reservation/activity-panel/ui/HeadcountStep';
 import ScheduleStep from '@/features/reservation/activity-panel/ui/ScheduleStep';
-import { ChevronRightIcon } from '@/shared/assets/icons';
+import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
 import Button from '@/shared/ui/button/Button';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
@@ -47,10 +47,23 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');
-  const [hasVisitedHeadcountStep, setHasVisitedHeadcountStep] = useState(false);
 
   const startYRef = useRef<number>(0);
   const [dragY, setDragY] = useState(0);
+
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const canReserve = Boolean(selected && selectedScheduleId);
+  const isScheduleStep = step === 'schedule';
+  const primaryButtonLabel = isScheduleStep && isMobile ? '다음으로' : '예약하기';
+  const primaryButtonDisabled = isOwner || !canReserve;
+
+  const handlePrimaryButtonClick = () => {
+    if (isScheduleStep && isMobile) {
+      goHeadcountStep();
+      return;
+    }
+    handleReserve();
+  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     startYRef.current = e.touches[0].clientY;
@@ -72,12 +85,10 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
     setIsOpen(false);
     setStep('schedule');
     reset();
-    setHasVisitedHeadcountStep(false);
   };
 
   const goHeadcountStep = () => {
     setStep('headcount');
-    setHasVisitedHeadcountStep(true);
   };
 
   return (
@@ -136,13 +147,10 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
                 }}
                 onSelectSchedule={(id) => {
                   setSelectedScheduleId(id);
-                  // 태블릿에서만 hasVisitedHeadcountStep true로 변경
-                  if (window.innerWidth >= 768) setHasVisitedHeadcountStep(true);
                 }}
                 onMonthChange={setMonth}
                 onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
                 onIncrease={() => setHeadCount((prev) => prev + 1)}
-                onVisitHeadcount={() => setHasVisitedHeadcountStep(true)}
                 myBlockedScheduleIds={myBlockedScheduleIds}
                 availableDates={availableDates}
               />
@@ -155,30 +163,17 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
               />
             )}
           </div>
-
           <div className="relative">
-            {/* 인원 수 선택 버튼 — 모바일에서만 표시 */}
-            {step === 'schedule' && (
-              <button
-                className="absolute -top-10 right-2 flex items-center gap-1 md:hidden"
-                disabled={!selectedScheduleId}
-                type="button"
-                onClick={goHeadcountStep}
-              >
-                <span className="typo-16-medium text-gray-500">인원 수 선택</span>
-                <ChevronRightIcon className="text-gray-500" />
-              </button>
-            )}
             {/* 예약하기 버튼 */}
             <Button
               theme="primary"
               size="lg"
               className="w-full"
-              disabled={!selected || !selectedScheduleId || !hasVisitedHeadcountStep}
+              disabled={primaryButtonDisabled}
               type="button"
-              onClick={handleReserve}
+              onClick={handlePrimaryButtonClick}
             >
-              예약하기
+              {primaryButtonLabel}
             </Button>
           </div>
         </div>
