@@ -29,29 +29,23 @@ export default function MainActivityList() {
     refetch,
   } = useMainActivityCarousel();
 
-  // TODO: 스켈레톤으로 대체
-  if (isLoading) {
-    return;
-  }
-
-  if (isError) {
-    return (
-      <div className="mt-10">
-        <EmptyState
-          type="error"
-          mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
-          onRetry={refetch}
-        />
-      </div>
-    );
-  }
   return (
     <article className="flex w-full flex-col gap-5 py-8">
       <Title as="h2" size="18" weight="bold" className="text-gray-950 md:typo-32-bold">
         🔥 <span className="text-secondary-500">HOT</span> 인기 체험
       </Title>
 
-      {activityData.length === 0 ? (
+      {isLoading ? (
+        <></> // TODO: 스켈레톤으로 대체
+      ) : isError ? (
+        <div className="mt-10">
+          <EmptyState
+            type="error"
+            mainText={'인기 체험을 불러오는 데 실패했어요.\n잠시 후 다시 시도해주세요.'}
+            onRetry={refetch}
+          />
+        </div>
+      ) : activityData.length === 0 ? (
         <EmptyState
           type="experience"
           mainText={'아직 인기 체험이 없어요.\n첫 번째 후기의 주인공이 되어보시는 건 어떨까요?'}
