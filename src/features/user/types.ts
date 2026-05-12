@@ -26,7 +26,7 @@ export type UserMeResponse = z.infer<typeof UserMeResponseSchema>;
 
 export const UpdateMyProfileRequestBodySchema = z.object({
   nickname: z.string().optional(),
-  profileImageUrl: z.string().optional(),
+  profileImageUrl: z.string().nullable().optional(),
   newPassword: z.string().optional(),
 });
 

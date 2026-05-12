@@ -17,8 +17,17 @@ import Title from '@/shared/ui/title/Title';
  * ```
  */
 export default function MainActivityList() {
-  const { emblaRef, activityData, canScrollPrev, canScrollNext, scrollPrev, scrollNext } =
-    useMainActivityCarousel();
+  const {
+    emblaRef,
+    activityData,
+    canScrollPrev,
+    canScrollNext,
+    scrollPrev,
+    scrollNext,
+    isLoading,
+    isError,
+    refetch,
+  } = useMainActivityCarousel();
 
   return (
     <article className="flex w-full flex-col gap-5 py-8">
@@ -26,7 +35,17 @@ export default function MainActivityList() {
         🔥 <span className="text-secondary-500">HOT</span> 인기 체험
       </Title>
 
-      {activityData.length === 0 ? (
+      {isLoading ? (
+        <></> // TODO: 스켈레톤으로 대체
+      ) : isError ? (
+        <div className="mt-10">
+          <EmptyState
+            type="error"
+            mainText={'인기 체험을 불러오는 데 실패했어요.\n잠시 후 다시 시도해주세요.'}
+            onRetry={refetch}
+          />
+        </div>
+      ) : activityData.length === 0 ? (
         <EmptyState
           type="experience"
           mainText={'아직 인기 체험이 없어요.\n첫 번째 후기의 주인공이 되어보시는 건 어떨까요?'}

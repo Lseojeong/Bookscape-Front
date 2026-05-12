@@ -1,14 +1,16 @@
+import { z } from 'zod';
 import {
   ActivityDetailSchema,
   ActivityResponse,
+  ActivityScheduleSchema,
   ActivityReviewsResponseSchema,
-  ActivitySchedule,
+  ActivityResponseSchema,
+  GetActivityParams,
   GetActivityReviewsParams,
-  GetSearchActivityParams,
 } from '@/features/activity/types';
+import { CreateActivityReservationRequestBody } from '@/features/reservation/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
-import { CreateActivityReservationRequestBody } from '../reservation/types';
 
 /** 체험 상세 조회 */
 export const getActivityDetail = async (id: number) => {
@@ -28,12 +30,12 @@ export const deleteActivity = async (id: number) => {
 
 /** 예약 가능일 조회 */
 export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
-  return get<ActivitySchedule[]>(
+  const data = await get(
     `/activities/${activityId}/available-schedule?year=${year}&month=${month}`
   );
+  return z.array(ActivityScheduleSchema).parse(data);
 };
 
-/** 예약 신청 */
 export const createReservation = async (
   activityId: number,
   body: CreateActivityReservationRequestBody
@@ -41,29 +43,46 @@ export const createReservation = async (
   return bffFetch.post(`/activities/${activityId}/reservations`, body);
 };
 
+/**
+ * 메인 페이지의 인기 체험 목록을 조회합니다.
+ * 'most_reviewed' 순으로 정렬된 데이터를 가져오며, Zod를 통해 런타임 데이터 검증을 수행합니다.
+ *
+ * @param size - 조회할 데이터 개수
+ * @returns 검증된 인기 체험 목록 배열
+ * @example
+ * ```ts
+ * const activities = await getHotActivityData(8);
+ * ```
+ */
 export const getHotActivityData = async (size: number) => {
   const result = await get<ActivityResponse>('/activities', {
     method: 'offset',
     sort: 'most_reviewed',
     size,
   });
-  return result?.activities ?? [];
+  const parsed = ActivityResponseSchema.parse(result ?? { activities: [], totalCount: 0 });
+
+  return parsed.activities;
 };
 
-export const getSearchActivityData = async ({
+/** 검색 페이지, 전체 체험 목록 페이지 */
+export const getActivityListData = async ({
   method = 'offset',
   category,
   keyword,
+  sort,
   page = 1,
   size,
-}: GetSearchActivityParams) => {
-  return await get<ActivityResponse>('/activities', {
+}: GetActivityParams) => {
+  const data = await get<ActivityResponse>('/activities', {
     method,
     ...(category && { category }),
-    keyword,
+    ...(keyword && { keyword }),
+    ...(sort && { sort }),
     page,
     size,
   });
+  return ActivityResponseSchema.parse(data ?? { activities: [], totalCount: 0 });
 };
 
 /** 체험 후기 조회 */

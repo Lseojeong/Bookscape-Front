@@ -82,6 +82,11 @@ export type CreateMyReservationReviewRequestBody = {
   content: string;
 };
 
+export const CreateMyReservationReviewRequestBodySchema = z.object({
+  rating: z.number(),
+  content: z.string(),
+});
+
 export type CreateMyReservationReviewResponse = {
   updatedAt: string;
   createdAt: string;
@@ -92,6 +97,17 @@ export type CreateMyReservationReviewResponse = {
   teamId: string;
   id: number;
 };
+
+export const CreateMyReservationReviewResponseSchema = z.object({
+  updatedAt: z.string(),
+  createdAt: z.string(),
+  content: z.string(),
+  rating: z.number(),
+  userId: z.number(),
+  activityId: z.number(),
+  teamId: z.string(),
+  id: z.number(),
+});
 
 export type CreateActivityReservationRequestBody = {
   scheduleId: number;

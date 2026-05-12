@@ -15,7 +15,7 @@ type SelectDropdownValueProps<T = string> = {
   valueClassName?: string;
 };
 
-const dropdownValueStyle = 'typo-16-medium text-gray-900';
+const dropdownValueStyle = 'block min-w-0 truncate typo-16-medium text-gray-900';
 
 /**
  * SelectDropdownValue

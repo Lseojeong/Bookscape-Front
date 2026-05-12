@@ -64,21 +64,22 @@ export type CreateActivityRequestBody = {
   subImageUrls: string[];
 };
 
-export type ActivitySubImage = {
-  imageUrl: string;
-  id: number;
-};
+/** 예약 가능 스케줄 시간 */
+export const ActivityScheduleTimeSchema = z.object({
+  id: z.number(),
+  startTime: z.string(),
+  endTime: z.string(),
+});
 
-export type ActivityScheduleTime = {
-  endTime: string;
-  startTime: string;
-  id: number;
-};
+/** 예약 가능 스케줄 */
+export const ActivityScheduleSchema = z.object({
+  date: z.string(),
+  times: z.array(ActivityScheduleTimeSchema),
+});
 
-export type ActivitySchedule = {
-  times: ActivityScheduleTime[];
-  date: string;
-};
+export type ActivityScheduleTime = z.infer<typeof ActivityScheduleTimeSchema>;
+export type ActivitySchedule = z.infer<typeof ActivityScheduleSchema>;
+export type ActivitySubImage = z.infer<typeof SubImageSchema>;
 
 export type CreateActivityResponse = {
   id: number;
@@ -97,14 +98,11 @@ export type CreateActivityResponse = {
   schedules: ActivitySchedule[];
 };
 
-export type CreateActivityImageUrlResponse = {
-  activityImageUrl: string;
-};
-
-export type GetSearchActivityParams = {
-  method?: string;
+export type GetActivityParams = {
+  method?: 'offset' | 'cursor';
   category?: string;
   keyword?: string;
+  sort?: string;
   page?: number;
   size?: number;
 };
