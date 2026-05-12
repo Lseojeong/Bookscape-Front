@@ -1,4 +1,5 @@
 import type {
+  ActivityDetailForForm,
   CreateActivityRequestBody,
   CreateActivityResponse,
   CreateActivityImageUrlResponse,
@@ -131,7 +132,7 @@ export const uploadImage = async (formData: FormData) => {
 
 /** 체험 상세 조회 API */
 export const fetchActivityDetail = async (id: number) => {
-  const res = await get<CreateActivityResponse>(`/activities/${id}`);
+  const res = await get<ActivityDetailForForm>(`/activities/${id}`);
   if (!res) throw new Error('체험 상세 정보를 불러오지 못했습니다.');
   return res;
 };

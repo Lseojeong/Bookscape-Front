@@ -3,15 +3,12 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useUpdateActivity } from '@/features/my-page/activity-form/mutations/useUpdateActivity';
 import { useUploadImage } from '@/features/my-page/activity-form/mutations/useUploadImage';
-import type { CreateActivityResponse } from '@/features/my-page/activity-form/types';
+import type { ActivityDetailForForm } from '@/features/my-page/activity-form/types';
 import type { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
-export const useActivityEditSubmit = (
-  activityId: number,
-  originalData?: CreateActivityResponse
-) => {
+export const useActivityEditSubmit = (activityId: number, originalData?: ActivityDetailForForm) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { showToast } = useToastStore();

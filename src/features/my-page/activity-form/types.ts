@@ -18,7 +18,7 @@ export const FormSubImageSchema = z.object({
   imageUrl: z.string(),
 });
 
-/** 폼 전용 스케줄 스키마 */
+/** GET 상세조회 응답용 */
 export const FlatScheduleSchema = z.object({
   id: z.number(),
   date: z.string(),
@@ -26,7 +26,13 @@ export const FlatScheduleSchema = z.object({
   endTime: z.string(),
 });
 
-// ─── 폼 초기 데이터용 상세 조회 (GET) ─────────────────────────
+/** POST, PATCH 응답용 */
+export const NestedScheduleSchema = z.object({
+  date: z.string(),
+  times: z.array(z.object({ id: z.number(), startTime: z.string(), endTime: z.string() })),
+});
+
+// ─── 폼 초기 데이터용 상세 조회 (GET 응답) ────────────────────
 export const ActivityDetailForFormSchema = z.object({
   id: z.number(),
   userId: z.number(),
@@ -45,7 +51,7 @@ export const ActivityDetailForFormSchema = z.object({
 });
 export type ActivityDetailForForm = z.infer<typeof ActivityDetailForFormSchema>;
 
-// ─── 체험 등록 (POST) ──────────────────────────────────────────
+// ─── 체험 등록 (POST 요청 및 응답) ──────────────────────────
 export const CreateActivityRequestBodySchema = z.object({
   title: z.string(),
   category: z.string(),
@@ -63,7 +69,22 @@ export const CreateActivityRequestBodySchema = z.object({
   subImageUrls: z.array(z.string()),
 });
 
-export const CreateActivityResponseSchema = ActivityDetailForFormSchema;
+export const CreateActivityResponseSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  title: z.string(),
+  description: z.string(),
+  category: z.string(),
+  price: z.number(),
+  address: z.string(),
+  bannerImageUrl: z.string(),
+  rating: z.number(),
+  reviewCount: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  subImages: z.array(FormSubImageSchema),
+  schedules: z.array(NestedScheduleSchema),
+});
 
 export const CreateActivityImageUrlResponseSchema = z.object({
   activityImageUrl: z.string(),
@@ -73,7 +94,7 @@ export type CreateActivityRequestBody = z.infer<typeof CreateActivityRequestBody
 export type CreateActivityResponse = z.infer<typeof CreateActivityResponseSchema>;
 export type CreateActivityImageUrlResponse = z.infer<typeof CreateActivityImageUrlResponseSchema>;
 
-// ─── 체험 수정 (PATCH) ─────────────────────────────────────────
+// ─── 체험 수정 (PATCH 요청 및 응답) ─────────────────────────
 export const UpdateMyActivityRequestBodySchema = z.object({
   title: z.string(),
   category: z.string(),
@@ -107,12 +128,7 @@ export const UpdateMyActivityResponseSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string(),
   subImages: z.array(FormSubImageSchema),
-  schedules: z.array(
-    z.object({
-      date: z.string(),
-      times: z.array(z.object({ id: z.number(), startTime: z.string(), endTime: z.string() })),
-    })
-  ),
+  schedules: z.array(NestedScheduleSchema),
 });
 
 export type UpdateMyActivityRequestBody = z.infer<typeof UpdateMyActivityRequestBodySchema>;
