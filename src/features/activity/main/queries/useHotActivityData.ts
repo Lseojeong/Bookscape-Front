@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getHotActivityData } from '@/features/activity/apis';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
-const HOT_ACTIVITY_STALE_TIME = 5 * 60 * 1000; // 5분
-const HOT_ACTIVITY_GC_TIME = 10 * 60 * 1000; // 10분
+const HOT_ACTIVITY_STALE_TIME = 10 * 60 * 1000; // 10분
+const HOT_ACTIVITY_GC_TIME = 30 * 60 * 1000; // 30분
 
 /**
  * 메인 페이지의 인기 체험 목록 데이터를 조회하는 커스텀 훅입니다.
