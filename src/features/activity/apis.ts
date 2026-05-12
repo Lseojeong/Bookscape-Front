@@ -23,11 +23,6 @@ export const getActivityDetail = async (id: number) => {
   return { ...activity, images };
 };
 
-/** 체험 삭제 */
-export const deleteActivity = async (id: number) => {
-  await bffFetch.delete(`/my-activities/${id}`);
-};
-
 /** 예약 가능일 조회 */
 export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
   const data = await get(
