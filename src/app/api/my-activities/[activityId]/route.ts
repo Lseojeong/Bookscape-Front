@@ -2,7 +2,7 @@ import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/consta
 import type {
   UpdateMyActivityRequestBody,
   UpdateMyActivityResponse,
-} from '@/features/my-page/types';
+} from '@/features/my-page/activity-form/types';
 import { ApiError } from '@/shared/apis/apiError';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';

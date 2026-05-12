@@ -1,8 +1,9 @@
-import type { ActivityDetailResponse } from '@/features/activity/types';
 import type {
   CreateActivityRequestBody,
   CreateActivityResponse,
   CreateActivityImageUrlResponse,
+  UpdateMyActivityRequestBody,
+  UpdateMyActivityResponse,
 } from '@/features/my-page/activity-form/types';
 import {
   GetMyActivitiesResponseSchema,
@@ -10,8 +11,6 @@ import {
   GetMyActivityReservedScheduleResponseSchema,
   GetMyActivityReservationsResponseSchema,
   UpdateMyActivityReservationStatusResponseSchema,
-  UpdateMyActivityRequestBody,
-  UpdateMyActivityResponse,
 } from '@/features/my-page/types';
 import type {
   GetMyActivitiesQuery,
@@ -132,7 +131,7 @@ export const uploadImage = async (formData: FormData) => {
 
 /** 체험 상세 조회 API */
 export const fetchActivityDetail = async (id: number) => {
-  const res = await get<ActivityDetailResponse>(`/activities/${id}`);
+  const res = await get<CreateActivityResponse>(`/activities/${id}`);
   if (!res) throw new Error('체험 상세 정보를 불러오지 못했습니다.');
   return res;
 };

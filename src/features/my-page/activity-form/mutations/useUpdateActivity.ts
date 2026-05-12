@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
+import type { UpdateMyActivityRequestBody } from '@/features/my-page/activity-form/types';
 import { updateMyActivity } from '@/features/my-page/apis';
-import type { UpdateMyActivityRequestBody } from '@/features/my-page/types';
 
 export const useUpdateActivity = (id: number) => {
   return useMutation({

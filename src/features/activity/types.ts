@@ -9,6 +9,7 @@ export const SubImageSchema = z.object({
 /** 체험 상세 조회 응답 */
 export const ActivityDetailSchema = z.object({
   id: z.number(),
+  userId: z.number(),
   bannerImageUrl: z.string(),
   subImages: z.array(SubImageSchema),
   category: z.string(),
@@ -17,6 +18,7 @@ export const ActivityDetailSchema = z.object({
   reviewCount: z.number(),
   address: z.string(),
   description: z.string(),
+  price: z.number(),
 });
 
 export type SubImage = z.infer<typeof SubImageSchema>;
@@ -47,20 +49,21 @@ export const ActivityResponseSchema = z.object({
 export type ActivityData = z.infer<typeof ActivityDataSchema>;
 export type ActivityResponse = z.infer<typeof ActivityResponseSchema>;
 
-/** 체험 스케줄 응답 */
-export const ActivityScheduleSchema = z.object({
-  date: z.string(),
-  times: z.array(
-    z.object({
-      id: z.number(),
-      startTime: z.string(),
-      endTime: z.string(),
-    })
-  ),
+/** 예약 가능 스케줄 시간 */
+export const ActivityScheduleTimeSchema = z.object({
+  id: z.number(),
+  startTime: z.string(),
+  endTime: z.string(),
 });
 
+/** 예약 가능 스케줄 */
+export const ActivityScheduleSchema = z.object({
+  date: z.string(),
+  times: z.array(ActivityScheduleTimeSchema),
+});
+
+export type ActivityScheduleTime = z.infer<typeof ActivityScheduleTimeSchema>;
 export type ActivitySchedule = z.infer<typeof ActivityScheduleSchema>;
-export type ActivityScheduleTime = ActivitySchedule['times'][number];
 export type ActivitySubImage = z.infer<typeof SubImageSchema>;
 
 export type GetActivityParams = {
