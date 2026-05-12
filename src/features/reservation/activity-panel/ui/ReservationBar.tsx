@@ -148,8 +148,9 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
             {/* 인원 수 선택 버튼 — 모바일에서만 표시 */}
             {step === 'schedule' && (
               <button
-                className="absolute -top-9 right-2 flex items-center gap-1 md:hidden"
+                className="absolute -top-10 right-2 flex items-center gap-1 md:hidden"
                 disabled={!selectedScheduleId}
+                type="button"
                 onClick={() => setStep('headcount')}
               >
                 <span className="typo-16-medium text-gray-500">인원 수 선택</span>
