@@ -105,7 +105,7 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
 
       showToast('check', '체험 수정이 완료되었습니다.');
       // 캐시 무효화를 통해 최신 데이터 갱신 보장
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(activityId) });
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(activityId) });
       router.push(`/activity/${activityId}`);
     } catch {
       showToast('cancel', '체험 수정에 실패했습니다. 다시 시도해주세요.');
