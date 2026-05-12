@@ -4,7 +4,7 @@ import Skeleton from '@/shared/ui/skeleton/Skeleton';
 export default function ReservationDropdownSkeleton() {
   return (
     <div className="rounded-2xl border border-gray-100 p-4">
-      <Skeleton className="h-6 w-50 rounded-xl" />
+      <Skeleton className="h-6 w-40 rounded-xl sm:w-50" />
     </div>
   );
 }
