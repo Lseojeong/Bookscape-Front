@@ -3,13 +3,12 @@ import {
   ActivityDetailSchema,
   ActivityResponse,
   ActivityScheduleSchema,
-  GetSearchActivityParams,
   ActivityResponseSchema,
   GetActivityParams,
 } from '@/features/activity/types';
+import { CreateActivityReservationRequestBody } from '@/features/reservation/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
-import { CreateActivityReservationRequestBody } from '../reservation/types';
 
 export const getActivityDetail = async (id: number) => {
   const data = await get(`/activities/${id}`);
