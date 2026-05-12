@@ -4,6 +4,7 @@ import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/consta
 import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 
 export const scheduleSchema = z.object({
+  id: z.number().optional(), // 기존 스케줄 식별용
   date: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
   startTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
   endTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
@@ -34,12 +35,12 @@ export const activityFormSchema = z.object({
     message: ACTIVITY_ERROR_MESSAGES.CATEGORY_REQUIRED,
   }),
   description: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.DESCRIPTION_REQUIRED),
-  price: z.preprocess(
-    (val) => (val === '' ? undefined : val),
-    z.coerce
-      .number({ message: ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED })
-      .min(0, ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED)
-  ),
+  price: z
+    .number({
+      message: ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED,
+    })
+    .min(0, ACTIVITY_ERROR_MESSAGES.PRICE_REQUIRED),
+
   address: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.ADDRESS_REQUIRED),
   detailAddress: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.DETAIL_ADDRESS_REQUIRED),
   schedules: z

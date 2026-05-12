@@ -63,3 +63,14 @@ export const NoFilterResult: Story = {
     />
   ),
 };
+
+export const ErrorState: Story = {
+  name: '에러',
+  render: () => (
+    <EmptyState
+      type="error"
+      mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
+      onRetry={() => {}}
+    />
+  ),
+};

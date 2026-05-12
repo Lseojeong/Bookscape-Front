@@ -9,7 +9,6 @@ import ScheduleCard from '@/features/my-page/activity-form/ui/schedule-selector/
 import { ReservationStatusIcon } from '@/shared/assets/icons';
 import FormField from '@/shared/ui/form/FormField';
 import Input from '@/shared/ui/input/Input';
-import { cn } from '@/shared/utils/cn';
 
 /**
  * 예약 가능한 날짜를 달력에서 선택하고, 선택된 날짜들의 스케줄 카드 목록을 렌더링하는 부모 컴포넌트입니다.
@@ -32,9 +31,13 @@ export default function ScheduleSelector() {
   } = useScheduleSelector();
 
   return (
-    <div className="flex w-full flex-col">
-      <div className={cn('w-full', dateInputError ? 'mb-3' : 'mb-8')}>
-        <FormField label="예약 가능한 시간대" errorMessage={scheduleError as string}>
+    <div className="flex w-full flex-col gap-6">
+      <div className="w-full">
+        <FormField
+          label="예약 가능한 시간대"
+          labelWeight="bold"
+          errorMessage={scheduleError as string}
+        >
           <FormField label="날짜" errorMessage={dateInputError}>
             <div className="relative w-full" ref={calendarRef} id="schedule-calendar-wrapper">
               <Input
@@ -71,18 +74,20 @@ export default function ScheduleSelector() {
       </div>
 
       {/* 등록된 그룹 스케줄 카드 렌더링 영역 */}
-      <div className="flex flex-col gap-5">
-        {groupedSchedules.map((group, index) => (
-          <ScheduleCard
-            key={group.dateString}
-            date={group.date}
-            slots={group.slots}
-            onRemoveCard={() => handleRemoveGroup(group.dateString)}
-            onAddSlot={(newSlot) => handleAddSlot(index, newSlot)}
-            onRemoveSlot={(slotIndex) => handleRemoveSlot(index, slotIndex)}
-          />
-        ))}
-      </div>
+      {groupedSchedules.length > 0 && (
+        <div className="flex flex-col gap-5">
+          {groupedSchedules.map((group, index) => (
+            <ScheduleCard
+              key={group.dateString}
+              date={group.date}
+              slots={group.slots}
+              onRemoveCard={() => handleRemoveGroup(group.dateString)}
+              onAddSlot={(newSlot) => handleAddSlot(index, newSlot)}
+              onRemoveSlot={(slotIndex) => handleRemoveSlot(index, slotIndex)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

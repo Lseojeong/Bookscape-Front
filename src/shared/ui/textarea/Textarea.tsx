@@ -74,7 +74,13 @@ export default function Textarea({
     <div className={cn('w-full', wrapperClassName)}>
       <div
         data-error={isError || undefined}
-        className={cn('relative', containerVariants({ variant }))}
+        className={cn(
+          'relative',
+          containerVariants({ variant }),
+          // NOTE: 글자 수 카운터가 wrapper 내부에 absolute로 올라가므로,
+          // 마지막 줄이 카운터 뒤로 가려지지 않도록 하단 패딩을 확보합니다.
+          hasCounter && 'pb-8'
+        )}
       >
         <textarea
           ref={ref}
@@ -84,9 +90,8 @@ export default function Textarea({
           onChange={handleChange}
           aria-invalid={isError}
           className={cn(
-            'h-full w-full field-input resize-none field-control',
-            'typo-14-medium md:typo-16-medium',
-            'scrollbar-mini',
+            'scrollbar-mini h-full w-full field-input resize-none field-control',
+            variant === 'review' ? 'typo-14-medium md:typo-16-medium' : 'typo-16-medium',
             className
           )}
           {...props}
@@ -97,7 +102,8 @@ export default function Textarea({
             aria-hidden="true"
             className="absolute right-5 bottom-2 flex h-5 items-center justify-end text-right typo-13-medium text-gray-600 md:typo-14-medium"
           >
-            {charCount}/{maxLength}
+            <span className="text-primary-500">{charCount}</span>
+            <span>/{maxLength}</span>
           </div>
         )}
       </div>

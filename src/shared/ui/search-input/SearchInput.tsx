@@ -1,7 +1,11 @@
 'use client';
 import { useSearchParams, useRouter } from 'next/navigation';
 import SearchInputUi from '@/shared/ui/search-input/SearchInputField';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
+type SearchInputProps = {
+  className?: string;
+};
 /**
  * 검색 인풋 컴포넌트입니다.
  * URL query 파라미터(keyword)로 검색 상태를 관리합니다.
@@ -12,10 +16,12 @@ import SearchInputUi from '@/shared/ui/search-input/SearchInputField';
  * <SearchInput />
  * ```
  */
-export default function SearchInput() {
+export default function SearchInput({ className }: SearchInputProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const keyword = searchParams.get('keyword') ?? '';
+  const urlKeyword = searchParams.get('keyword') ?? '';
+
+  const { showToast } = useToastStore();
 
   /** 검색 실행 - keyword query 업데이트 */
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -25,17 +31,27 @@ export default function SearchInput() {
     const formData = new FormData(e.currentTarget);
     const value = (formData.get('keyword')?.toString() || '').trim();
 
-    // 기존 query 유지하면서 keyword만 업데이트하기 위한 객체 생성
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set('keyword', value);
-    } else {
-      params.delete('keyword');
+    // 검색어가 없을때 토스트 띄우기
+    if (!value) {
+      showToast('warning', '검색어를 입력해주세요.');
+      return;
     }
 
+    // 기존 query 유지하면서 keyword만 업데이트하기 위한 객체 생성
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('keyword', value);
+    params.set('page', '1'); // 검색어 변경 시 page 1로 초기화
+
     // 변경된 query로 URL 이동 (검색 상태 반영)
-    router.replace('/search?' + params.toString());
+    router.push('/search?' + params.toString());
   };
 
-  return <SearchInputUi onSubmit={handleSubmit} defaultValue={keyword} />;
+  return (
+    <SearchInputUi
+      key={urlKeyword}
+      onSubmit={handleSubmit}
+      defaultValue={urlKeyword}
+      className={className}
+    />
+  );
 }
