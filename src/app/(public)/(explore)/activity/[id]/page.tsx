@@ -17,16 +17,12 @@ export default async function ActivityDetailPage({ params }: Props) {
     notFound();
   }
 
-  const activity = await (async () => {
-    try {
-      return await getActivityDetail(activityId);
-    } catch (error) {
-      if (error instanceof ApiError && error.status === 404) {
-        notFound();
-      }
-      throw error;
+  const activity = await getActivityDetail(activityId).catch((error) => {
+    if (error instanceof ApiError && error.status === 404) {
+      notFound();
     }
-  })();
+    throw error;
+  });
 
   if (!activity) notFound();
 
