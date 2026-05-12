@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useActivitySubmit } from '@/features/my-page/activity-form/hooks/useActivitySubmit';
 import ActivityForm from '@/features/my-page/activity-form/ui/ActivityForm';
+import LeaveConfirmDialog from '@/features/my-page/activity-form/ui/LeaveConfirmDialog';
+import ResetConfirmDialog from '@/features/my-page/activity-form/ui/ResetConfirmDialog';
 import { usePreventGoBack } from '@/shared/hooks/usePreventGoBack';
-import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -74,26 +75,18 @@ export default function ActivityNewPage() {
         />
       </div>
 
-      {/* 뒤로가기 모달 */}
-      <ConfirmDialog
+      <LeaveConfirmDialog
         isOpen={modalType === 'leave'}
         onClose={() => setModalType(null)}
-        title="아직 내용이 저장되지 않았어요."
-        description="뒤로 가면 입력한 내용이 사라집니다."
-        cancelText="나가기"
+        onConfirmLeave={handleConfirmLeave}
         confirmText="계속 작성하기"
-        onCancel={handleConfirmLeave}
       />
 
-      {/* 폼 초기화 모달 */}
-      <ConfirmDialog
+      <ResetConfirmDialog
         isOpen={modalType === 'reset'}
         onClose={() => setModalType(null)}
-        title="입력 내용을 초기화하시겠어요?"
-        description="작성 중인 모든 내용이 삭제되고 처음 상태로 돌아갑니다."
-        cancelText="초기화하기"
+        onConfirmReset={handleConfirmReset}
         confirmText="계속 작성하기"
-        onCancel={handleConfirmReset}
       />
     </main>
   );

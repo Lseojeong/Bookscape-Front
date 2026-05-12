@@ -6,10 +6,11 @@ import { useActivityDetail } from '@/features/my-page/activity-form/queries/useA
 import ActivityForm, {
   type ActivityInitialData,
 } from '@/features/my-page/activity-form/ui/ActivityForm';
+import LeaveConfirmDialog from '@/features/my-page/activity-form/ui/LeaveConfirmDialog';
+import ResetConfirmDialog from '@/features/my-page/activity-form/ui/ResetConfirmDialog';
 import { splitAddress } from '@/features/my-page/activity-form/utils/address';
 import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
 import { usePreventGoBack } from '@/shared/hooks/usePreventGoBack';
-import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -106,26 +107,18 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
         />
       )}
 
-      {/* 뒤로가기 모달 */}
-      <ConfirmDialog
+      <LeaveConfirmDialog
         isOpen={modalType === 'leave'}
         onClose={() => setModalType(null)}
-        title="아직 내용이 저장되지 않았어요."
-        description="뒤로 가면 수정한 내용이 사라집니다."
-        cancelText="나가기"
+        onConfirmLeave={handleConfirmLeave}
         confirmText="계속 수정하기"
-        onCancel={handleConfirmLeave}
       />
 
-      {/* 폼 초기화 모달 */}
-      <ConfirmDialog
+      <ResetConfirmDialog
         isOpen={modalType === 'reset'}
         onClose={() => setModalType(null)}
-        title="입력 내용을 초기화하시겠어요?"
-        description="수정한 내용이 모두 삭제되고 처음 상태로 돌아갑니다."
-        cancelText="초기화하기"
+        onConfirmReset={handleConfirmReset}
         confirmText="계속 수정하기"
-        onCancel={handleConfirmReset}
       />
     </div>
   );
