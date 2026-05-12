@@ -38,6 +38,15 @@ export default function ScheduleList({
   className,
   emptyClassName,
 }: ScheduleListProps) {
+  const now = new Date();
+  const isToday = selected ? selected.toDateString() === now.toDateString() : false;
+
+  const isPastSchedule = (startTime: string) => {
+    if (!isToday) return false;
+    const [hour, minute] = startTime.split(':').map(Number);
+    return hour * 60 + minute <= now.getHours() * 60 + now.getMinutes();
+  };
+
   return (
     <div className={className}>
       <p className="mb-3 typo-16-bold text-gray-950">예약 가능한 시간</p>
@@ -52,7 +61,8 @@ export default function ScheduleList({
       ) : (
         <div className="mb-12.5 flex flex-col gap-3 lg:mb-8">
           {schedules.map((schedule) => {
-            const isDisabled = disabledScheduleIds?.has(schedule.id);
+            const isDisabled =
+              disabledScheduleIds?.has(schedule.id) || isPastSchedule(schedule.startTime);
             return (
               <button
                 key={schedule.id}
