@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useUpdateActivity } from '@/features/my-page/activity-form/mutations/useUpdateActivity';
 import { useUploadImage } from '@/features/my-page/activity-form/mutations/useUploadImage';
 import type { ActivityDetailForForm } from '@/features/my-page/activity-form/types';
+import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/utils/images';
 import type { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
@@ -25,10 +26,7 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
       setIsUploading(true);
 
       // 배너 이미지 처리
-      let bannerImageUrl = formData.bannerImage as string;
-      if (formData.bannerImage instanceof File) {
-        bannerImageUrl = await uploadImage(formData.bannerImage);
-      }
+      const bannerImageUrl = await getImageUrl(formData.bannerImage, uploadImage);
 
       // 소개 이미지 Diffing
       const formStringUrls = (formData.subImages || []).filter((img) => typeof img === 'string');
@@ -38,9 +36,7 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
         .filter((orig) => !formStringUrls.includes(orig.imageUrl))
         .map((orig) => orig.id);
 
-      const subImageUrlsToAdd = await Promise.all(
-        formFiles.map(async (file) => await uploadImage(file as File))
-      );
+      const subImageUrlsToAdd = await getImageUrls(formFiles, uploadImage);
 
       // 스케줄 Diffing
       const originalFlatSchedules = originalData.schedules || [];
@@ -98,7 +94,7 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
         description: formData.description,
         price: formData.price,
         address: formattedAddress.trim(),
-        bannerImageUrl,
+        bannerImageUrl: bannerImageUrl as string,
         subImageIdsToRemove,
         subImageUrlsToAdd,
         scheduleIdsToRemove,
