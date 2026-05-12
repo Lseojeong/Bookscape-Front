@@ -1,9 +1,9 @@
 import ActivityAddress from '@/features/activity/activity-detail/ui/activity-info/ActivityAddress';
 import ActivityKebabMenu from '@/features/activity/activity-detail/ui/activity-info/ActivityKebabMenu';
+import ActivityShare from '@/features/activity/activity-detail/ui/share/ActivityShare';
 import { StarIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
-import ActivityShare from '../share/ActivityShare';
 
 type ActivityInfoProps = {
   id: number;
