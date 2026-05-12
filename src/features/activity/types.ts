@@ -66,39 +66,6 @@ export const ActivityScheduleSchema = z.object({
 export type ActivityScheduleTime = z.infer<typeof ActivityScheduleTimeSchema>;
 export type ActivitySchedule = z.infer<typeof ActivityScheduleSchema>;
 
-export type CreateActivityRequestBody = {
-  title: string;
-  category: string;
-  description: string;
-  address: string;
-  price: number;
-  schedules: Array<{
-    date: string;
-    startTime: string;
-    endTime: string;
-  }>;
-  bannerImageUrl: string;
-  subImageUrls: string[];
-};
-
-/** POST /activities 응답 (추가됨) */
-export type CreateActivityResponse = {
-  id: number;
-  userId: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  address: string;
-  bannerImageUrl: string;
-  rating: number;
-  reviewCount: number;
-  createdAt: string;
-  updatedAt: string;
-  subImages: ActivitySubImage[];
-  schedules: ActivitySchedule[];
-};
-
 export type GetActivityParams = {
   method?: 'offset' | 'cursor';
   category?: string;
