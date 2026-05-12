@@ -38,6 +38,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
     handleReserve,
     isOwner,
     myBlockedScheduleIds,
+    availableDates,
   } = useReservation(activityId);
 
   return (
@@ -54,6 +55,7 @@ export default function ReservationWidget({ activityId }: ReservationWidgetProps
           setSelected(date);
           setSelectedScheduleId(undefined);
         }}
+        availableDates={availableDates}
       />
 
       {/* 참여 인원 수 */}

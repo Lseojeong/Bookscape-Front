@@ -42,6 +42,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
     handleReserve,
     isOwner,
     myBlockedScheduleIds,
+    availableDates,
   } = useReservation(activityId);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -125,6 +126,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
                 onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
                 onIncrease={() => setHeadCount((prev) => prev + 1)}
                 myBlockedScheduleIds={myBlockedScheduleIds}
+                availableDates={availableDates}
               />
             ) : (
               <HeadcountStep

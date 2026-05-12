@@ -45,6 +45,10 @@ export default function ScheduleList({
         <p className={cn('mb-4 typo-16-medium text-gray-500', emptyClassName)}>
           날짜를 선택해주세요.
         </p>
+      ) : schedules.length === 0 ? (
+        <p className={cn('mb-4 typo-16-medium text-gray-500', emptyClassName)}>
+          예약 가능한 시간이 없습니다.
+        </p>
       ) : (
         <div className="mb-12.5 flex flex-col gap-3 lg:mb-8">
           {schedules.map((schedule) => {

@@ -9,6 +9,7 @@ type ReservationCalendarProps = {
   onSelect: (date: Date | undefined) => void;
   month: Date;
   onMonthChange: (month: Date) => void;
+  availableDates?: string[];
 };
 
 /**
@@ -26,6 +27,7 @@ export default function ReservationCalendar({
   onSelect,
   month,
   onMonthChange,
+  availableDates = [],
 }: ReservationCalendarProps) {
   return (
     <div>
@@ -42,6 +44,13 @@ export default function ReservationCalendar({
         locale={ko}
         showOutsideDays
         disabled={{ before: new Date() }}
+        modifiers={{
+          available: availableDates.map((d) => new Date(d)),
+        }}
+        modifiersClassNames={{
+          available:
+            'after:absolute after:top-1 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:rounded-full after:bg-primary-500',
+        }}
         components={{
           Chevron: ({ orientation }) =>
             orientation === 'left' ? (
@@ -63,7 +72,7 @@ export default function ReservationCalendar({
           weekday: 'aspect-square flex items-center justify-center typo-16-bold text-gray-800', // 요일 각각
           weeks: 'flex flex-col gap-1 md:min-h-80', // 날짜 행들 전체
           week: 'grid grid-cols-7', // 한 주 행
-          day: 'flex items-center justify-center aspect-square', // 날짜 셀 wrapper
+          day: 'relative flex items-center justify-center aspect-square', // 날짜 셀 wrapper
           // 날짜 숫자 버튼
           day_button:
             'w-full h-full flex items-center justify-center rounded-full hover:bg-primary-100 transition-colors',

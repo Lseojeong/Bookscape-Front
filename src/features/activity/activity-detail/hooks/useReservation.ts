@@ -45,6 +45,7 @@ export const useReservation = (activityId: number) => {
       ),
     [myReservationsData]
   );
+  const availableDates = availableSchedules?.map((s) => s.date) ?? [];
 
   const reset = () => {
     setSelected(undefined);
@@ -86,6 +87,7 @@ export const useReservation = (activityId: number) => {
     month,
     setMonth,
     schedules,
+    availableDates,
     reset,
     handleReserve,
     isOwner,
