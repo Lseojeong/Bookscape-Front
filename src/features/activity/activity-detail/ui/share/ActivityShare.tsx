@@ -1,7 +1,13 @@
 'use client';
 
-import { LinkIcon } from '@/shared/assets/icons';
+import { KakaoIcon, LinkIcon } from '@/shared/assets/icons';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
+
+type ActivityShareProps = {
+  title: string;
+  description: string;
+  bannerImageUrl: string;
+};
 
 /**
  * 체험 공유 컴포넌트입니다.
@@ -13,7 +19,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
  * <ActivityShare />
  * ```
  */
-export default function ActivityShare() {
+export default function ActivityShare({ title, description, bannerImageUrl }: ActivityShareProps) {
   const { showToast } = useToastStore();
 
   const handleCopyUrl = async () => {
@@ -21,10 +27,46 @@ export default function ActivityShare() {
     showToast('check', 'URL이 복사되었습니다.');
   };
 
+  const handleKakaoShare = () => {
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_MAP_KEY!);
+    }
+
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title,
+        description,
+        imageUrl: bannerImageUrl,
+        link: {
+          mobileWebUrl: window.location.href,
+          webUrl: window.location.href,
+        },
+      },
+      buttons: [
+        {
+          title: '체험 보러가기',
+          link: {
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
+          },
+        },
+      ],
+    });
+  };
+
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-3">
       <button type="button" onClick={handleCopyUrl} aria-label="URL 복사">
         <LinkIcon />
+      </button>
+      <button
+        type="button"
+        onClick={handleKakaoShare}
+        aria-label="카카오톡 공유"
+        className="flex h-9 w-9 items-center justify-center rounded-full bg-kakao-bg"
+      >
+        <KakaoIcon />
       </button>
     </div>
   );

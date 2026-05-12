@@ -13,6 +13,8 @@ type ActivityInfoProps = {
   rating: number;
   reviewCount: number;
   address: string;
+  description: string;
+  bannerImageUrl: string;
   className?: string;
 };
 
@@ -42,6 +44,8 @@ export default function ActivityInfo({
   rating,
   reviewCount,
   address,
+  description,
+  bannerImageUrl,
   className,
 }: ActivityInfoProps) {
   return (
@@ -71,7 +75,7 @@ export default function ActivityInfo({
       {/* 주소, 공유 기능 */}
       <div className="flex items-center justify-between">
         <ActivityAddress address={address} />
-        <ActivityShare />
+        <ActivityShare title={title} description={description} bannerImageUrl={bannerImageUrl} />
       </div>
     </div>
   );
