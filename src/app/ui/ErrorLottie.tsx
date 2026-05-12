@@ -8,6 +8,13 @@ type ErrorLottieProps = {
   className?: string;
 };
 
+/**
+ * 500 에러 페이지에서 사용되는 Lottie 애니메이션 컴포넌트입니다.
+ *
+ * @example
+ * <ErrorLottie />
+ * <ErrorLottie className="h-40 w-40" />
+ */
 export default function ErrorLottie({ className }: ErrorLottieProps) {
   return (
     <Lottie
