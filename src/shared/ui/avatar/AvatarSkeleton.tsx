@@ -11,9 +11,5 @@ export default function AvatarSkeleton({
   size?: AvatarSize;
   className?: string;
 }) {
-  return (
-    <>
-      <Skeleton className={cn('rounded-full', avatarSizeClassNames[size], className)} />
-    </>
-  );
+  return <Skeleton className={cn('rounded-full', avatarSizeClassNames[size], className)} />;
 }
