@@ -3,7 +3,7 @@ import { getMyActivityReservations } from '@/features/my-page/apis';
 import type { SellerReservationStatus } from '@/features/my-page/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
-const RESERVATIONS_PAGE_SIZE = 3;
+const RESERVATIONS_PAGE_SIZE = 8;
 
 /**
  * 내 체험 예약 목록 조회 훅
