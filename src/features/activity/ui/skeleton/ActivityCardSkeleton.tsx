@@ -18,7 +18,7 @@ export default function ActivityCardSkeleton({ className }: { className?: string
         {/* 제목 */}
         <Skeleton className="h-4 w-4/5 rounded-xl md:h-5 md:w-2/3" />
         {/* 리뷰 */}
-        <Skeleton className="h-4 w-16 rounded-xl md:h-5 md:w-2/7" />
+        <Skeleton className="h-4 w-16 rounded-xl md:h-5 md:w-1/4" />
       </div>
       {/* 가격 */}
       <Skeleton className="h-4 w-20 rounded-xl md:h-5 md:w-2/5" />
