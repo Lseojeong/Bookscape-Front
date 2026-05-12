@@ -1,13 +1,13 @@
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { useCreateReservation } from '@/features/activity/activity-detail/mutations/useCreateReservation';
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
-import { useAvailableSchedule } from '@/features/activity/activity-detail/queries/useAvailableSchedule';
+import { useCreateReservation } from '@/features/reservation/activity-panel/mutations/useCreateReservation';
+import { useAvailableSchedule } from '@/features/reservation/activity-panel/queries/useAvailableSchedule';
+import { useMyReservations } from '@/features/reservation/activity-panel/queries/useMyReservations';
 import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
-import { useMyReservations } from '../queries/useMyReservations';
 
 export const useReservation = (activityId: number) => {
   // 외부 훅

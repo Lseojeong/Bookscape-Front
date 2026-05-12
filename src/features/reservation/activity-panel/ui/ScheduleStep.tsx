@@ -1,9 +1,9 @@
 'use client';
 
-import HeadCountControl from '@/features/activity/activity-detail/ui/reservation/HeadCountControl';
-import ReservationCalendar from '@/features/activity/activity-detail/ui/reservation/ReservationCalendar';
-import ScheduleList from '@/features/activity/activity-detail/ui/reservation/ScheduleList';
 import { ActivityScheduleTime } from '@/features/activity/types';
+import HeadCountControl from '@/features/reservation/activity-panel/ui/HeadCountControl';
+import ReservationCalendar from '@/features/reservation/activity-panel/ui/ReservationCalendar';
+import ScheduleList from '@/features/reservation/activity-panel/ui/ScheduleList';
 
 type ScheduleStepProps = {
   selected?: Date;

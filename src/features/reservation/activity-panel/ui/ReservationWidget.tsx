@@ -1,9 +1,9 @@
 'use client';
 
-import { useReservation } from '@/features/activity/activity-detail/hooks/useReservation';
-import HeadCountControl from '@/features/activity/activity-detail/ui/reservation/HeadCountControl';
-import ReservationCalendar from '@/features/activity/activity-detail/ui/reservation/ReservationCalendar';
-import ScheduleList from '@/features/activity/activity-detail/ui/reservation/ScheduleList';
+import { useReservation } from '@/features/reservation/activity-panel/hooks/useReservation';
+import HeadCountControl from '@/features/reservation/activity-panel/ui/HeadCountControl';
+import ReservationCalendar from '@/features/reservation/activity-panel/ui/ReservationCalendar';
+import ScheduleList from '@/features/reservation/activity-panel/ui/ScheduleList';
 import Button from '@/shared/ui/button/Button';
 import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import PriceDisplay from '@/shared/ui/price/PriceDisplay';

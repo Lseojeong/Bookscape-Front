@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import ActivityDetail from '@/features/activity/activity-detail/ui/activity-info/ActivityDetail';
-import ReservationBar from '@/features/activity/activity-detail/ui/reservation/ReservationBar';
-import ReservationWidget from '@/features/activity/activity-detail/ui/reservation/ReservationWidget';
 import { getActivityDetail } from '@/features/activity/apis';
+import ReservationBar from '@/features/reservation/activity-panel/ui/ReservationBar';
+import ReservationWidget from '@/features/reservation/activity-panel/ui/ReservationWidget';
 
 type Props = {
   params: Promise<{ id: string }>;

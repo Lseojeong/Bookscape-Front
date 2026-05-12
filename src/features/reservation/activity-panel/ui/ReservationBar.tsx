@@ -1,9 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useReservation } from '@/features/activity/activity-detail/hooks/useReservation';
-import HeadcountStep from '@/features/activity/activity-detail/ui/reservation/HeadcountStep';
-import ScheduleStep from '@/features/activity/activity-detail/ui/reservation/ScheduleStep';
+import { useReservation } from '@/features/reservation/activity-panel/hooks/useReservation';
+import HeadcountStep from '@/features/reservation/activity-panel/ui/HeadcountStep';
+import ScheduleStep from '@/features/reservation/activity-panel/ui/ScheduleStep';
 import { ChevronRightIcon } from '@/shared/assets/icons';
 import Button from '@/shared/ui/button/Button';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
