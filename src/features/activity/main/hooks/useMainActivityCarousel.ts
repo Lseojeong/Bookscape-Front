@@ -13,7 +13,12 @@ export default function useMainActivityCarousel() {
   const [canScrollNext, setCanScrollNext] = useState(false);
 
   /** 인기 체험 api 호출 */
-  const { data: activityData = [] } = useHotActivityData(ACTIVITY_FETCH_LIMIT);
+  const {
+    data: activityData = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useHotActivityData(ACTIVITY_FETCH_LIMIT);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -71,5 +76,8 @@ export default function useMainActivityCarousel() {
     canScrollNext,
     scrollPrev,
     scrollNext,
+    isLoading,
+    isError,
+    refetch,
   };
 }
