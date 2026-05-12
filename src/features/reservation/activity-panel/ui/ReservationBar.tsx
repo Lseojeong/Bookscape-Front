@@ -67,6 +67,12 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
     setDragY(0); // 원위치
   };
 
+  const handleClose = () => {
+    setIsOpen(false);
+    setStep('schedule');
+    reset();
+  };
+
   return (
     <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">
       <div className="flex flex-col gap-2 border-t border-gray-100 bg-white px-4 py-3">
@@ -84,11 +90,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
       </div>
       <OverlayLayer
         isOpen={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-          setStep('schedule');
-          reset();
-        }}
+        onClose={handleClose}
         position="bottom"
         variant="sheet"
         ariaLabel="예약 날짜 선택"
