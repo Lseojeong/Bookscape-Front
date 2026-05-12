@@ -22,13 +22,26 @@ export const deleteActivity = async (id: number) => {
   await bffFetch.delete(`/activities/${id}`);
 };
 
+/**
+ * 메인 페이지의 인기 체험 목록을 조회합니다.
+ * 'most_reviewed' 순으로 정렬된 데이터를 가져오며, Zod를 통해 런타임 데이터 검증을 수행합니다.
+ *
+ * @param size - 조회할 데이터 개수
+ * @returns 검증된 인기 체험 목록 배열
+ * @example
+ * ```ts
+ * const activities = await getHotActivityData(8);
+ * ```
+ */
 export const getHotActivityData = async (size: number) => {
   const result = await get<ActivityResponse>('/activities', {
     method: 'offset',
     sort: 'most_reviewed',
     size,
   });
-  return result?.activities ?? [];
+  const parsed = ActivityResponseSchema.parse(result ?? { activities: [], totalCount: 0 });
+
+  return parsed.activities;
 };
 
 /** 검색 페이지, 전체 체험 목록 페이지 */

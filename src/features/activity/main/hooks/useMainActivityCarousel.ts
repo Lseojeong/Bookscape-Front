@@ -3,7 +3,6 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { useState, useEffect, useCallback, startTransition } from 'react';
 import { useHotActivityData } from '@/features/activity/main/queries/useHotActivityData';
 
-// TODO : 호출 개수 정해야함!
 const ACTIVITY_FETCH_LIMIT = 8;
 
 /**
