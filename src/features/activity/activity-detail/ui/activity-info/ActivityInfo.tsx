@@ -3,6 +3,7 @@ import ActivityKebabMenu from '@/features/activity/activity-detail/ui/activity-i
 import { StarIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
+import ActivityShare from '../share/ActivityShare';
 
 type ActivityInfoProps = {
   id: number;
@@ -67,10 +68,10 @@ export default function ActivityInfo({
           {rating} ({reviewCount})
         </span>
       </div>
-      {/* 주소 */}
+      {/* 주소, 공유 기능 */}
       <div className="flex items-center justify-between">
         <ActivityAddress address={address} />
-        {/* TODO: 공유 버튼 영역 */}
+        <ActivityShare />
       </div>
     </div>
   );
