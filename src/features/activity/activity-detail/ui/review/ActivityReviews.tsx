@@ -26,7 +26,7 @@ const PAGE_SIZE = 3;
 export default function ActivityReviews({ activityId }: ActivityReviewsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('reviewPage') ?? 1);
+  const currentPage = Number(searchParams.get('reviewPage') || 1);
 
   const { data } = useActivityReviews(activityId, currentPage);
 
