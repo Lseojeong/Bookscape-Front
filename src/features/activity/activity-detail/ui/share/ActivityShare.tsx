@@ -16,7 +16,11 @@ type ActivityShareProps = {
  *
  * @example
  * ```tsx
- * <ActivityShare />
+ * <ActivityShare
+ *   title={title}
+ *   description={description}
+ *   bannerImageUrl={bannerImageUrl}
+ * />
  * ```
  */
 export default function ActivityShare({ title, description, bannerImageUrl }: ActivityShareProps) {
