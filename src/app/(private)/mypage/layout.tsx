@@ -1,4 +1,4 @@
-import MyPageSidebar from '@/features/my-page/ui/MyPageSidebar';
+import MyPageSidebar from '@/features/my-page/common/ui/sidebar/MyPageSidebar';
 import type { WithChildren } from '@/shared/types/common';
 
 type MyPageLayoutProps = WithChildren;

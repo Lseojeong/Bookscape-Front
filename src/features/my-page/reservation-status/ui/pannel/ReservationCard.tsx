@@ -34,6 +34,7 @@ export default function ReservationCard({
 }: ReservationCardProps) {
   const [loadingType, setLoadingType] = useState<'confirm' | 'decline' | null>(null);
   const [isDeclineDialogOpen, setIsDeclineDialogOpen] = useState(false);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
   const isPending = reservation.status === 'pending';
   const isConfirmed = reservation.status === 'confirmed';
@@ -84,7 +85,7 @@ export default function ReservationCard({
             theme="primary"
             size="sm"
             className="h-full flex-1"
-            onClick={handleConfirm}
+            onClick={() => setIsConfirmDialogOpen(true)}
             isLoading={loadingType === 'confirm'}
             disabled={isAnyLoading}
           >
@@ -102,6 +103,16 @@ export default function ReservationCard({
           </Button>
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={isConfirmDialogOpen}
+        onClose={() => setIsConfirmDialogOpen(false)}
+        title="예약을 승인할까요?"
+        description="같은 시간대의 나머지 예약은 자동으로 거절됩니다."
+        confirmText="승인하기"
+        cancelText="취소"
+        onConfirm={handleConfirm}
+      />
 
       <ConfirmDialog
         isOpen={isDeclineDialogOpen}
