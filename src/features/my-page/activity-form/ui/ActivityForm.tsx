@@ -78,7 +78,7 @@ export default function ActivityForm({
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = methods;
 
   // 수정 모드일 때 초기 데이터 주입
@@ -220,7 +220,7 @@ export default function ActivityForm({
             size="md"
             className="h-12 w-39.25 md:h-10.75 md:w-30"
             isLoading={isPending} // 폼 제출 중일 때 로딩 상태 표시
-            disabled={isPending}
+            disabled={!isDirty || isPending}
           >
             {mode === 'create' ? '등록하기' : '수정하기'}
           </Button>
