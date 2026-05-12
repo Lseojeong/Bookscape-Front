@@ -6,6 +6,7 @@ import { useActivityDetail } from '@/features/my-page/activity-form/queries/useA
 import ActivityForm, {
   type ActivityInitialData,
 } from '@/features/my-page/activity-form/ui/ActivityForm';
+import { splitAddress } from '@/features/my-page/activity-form/utils/address';
 import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
 import { usePreventGoBack } from '@/shared/hooks/usePreventGoBack';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
@@ -66,24 +67,15 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
   const initialData: ActivityInitialData | undefined = useMemo(() => {
     if (!originalData) return undefined;
 
-    // 주소 분리 로직
-    const fullAddress = originalData.address || '';
-    const firstCommaIndex = fullAddress.indexOf(',');
-    let displayAddress = fullAddress;
-    let displayDetailAddress = '';
-
-    if (firstCommaIndex !== -1) {
-      displayAddress = fullAddress.substring(0, firstCommaIndex).trim();
-      displayDetailAddress = fullAddress.substring(firstCommaIndex + 1).trim();
-    }
+    const { address, detailAddress } = splitAddress(originalData.address);
 
     const result = {
       title: originalData.title,
       category: originalData.category as ActivityFormValues['category'],
       description: originalData.description,
       price: originalData.price,
-      address: displayAddress,
-      detailAddress: displayDetailAddress,
+      address,
+      detailAddress,
       bannerImage: originalData.bannerImageUrl,
       subImages: originalData.subImages?.map((img) => img.imageUrl) || [],
       schedules:
