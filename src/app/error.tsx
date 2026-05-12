@@ -10,10 +10,21 @@ type ErrorPageProps = {
   reset: () => void;
 };
 
-export default function ErrorPage({ reset }: ErrorPageProps) {
+/**
+ * 500(Internal Server Error) 발생 시 표시되는 클라이언트 사이드 에러 페이지 컴포넌트입니다.
+ *
+ * - `error.tsx`는 Next.js App Router의 Error Boundary로 동작합니다.
+ * - `reset()`을 호출하면 해당 세그먼트의 렌더링을 재시도합니다.
+ *
+ * @example
+ * <ErrorPage error={error} reset={reset} />
+ */
+export default function ErrorPage({ error, reset }: ErrorPageProps) {
   useEffect(() => {
-    document.title = '500 - Internal Server Error';
-  }, []);
+    document.title = 'Bookscape | Internal Server Error';
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }, [error]);
 
   const handleRetry = () => reset();
 
