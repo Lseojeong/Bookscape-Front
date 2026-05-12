@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import DeleteActivityDialog from '@/features/my-page/common/ui/DeleteActivityDialog';
+import CancelReservationDialog from '@/features/reservation/reservation-list/ui/CancelReservationDialog';
 import Button from '@/shared/ui/button/Button';
 import { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
@@ -15,6 +16,7 @@ type ReservationCardActionsProps = {
   type: 'reservation';
   status: ReservationStatus;
   reviewSubmitted?: boolean;
+  reservationId?: number;
   activityId?: number;
   onReviewClick?: () => void;
 };
@@ -56,6 +58,47 @@ function ManageCardActions({ activityId }: { activityId: number }) {
   );
 }
 
+function PendingReservationCardActions({
+  reservationId,
+  activityId,
+}: {
+  reservationId: number;
+  activityId: number;
+}) {
+  const [isCancelOpen, setIsCancelOpen] = useState(false);
+
+  return (
+    <>
+      <div className="flex gap-2">
+        <Button
+          as={Link}
+          href={`/activity/${activityId}`}
+          theme="secondary"
+          size="sm"
+          className="w-17 rounded-lg"
+        >
+          예약 변경
+        </Button>
+        <Button
+          type="button"
+          theme="gray"
+          size="sm"
+          className="w-17 rounded-lg"
+          onClick={() => setIsCancelOpen(true)}
+        >
+          예약 취소
+        </Button>
+      </div>
+
+      <CancelReservationDialog
+        reservationId={reservationId}
+        isOpen={isCancelOpen}
+        onClose={() => setIsCancelOpen(false)}
+      />
+    </>
+  );
+}
+
 /**
  * 체험/예약 카드 하단의 액션 버튼 컴포넌트입니다.
  *
@@ -90,28 +133,9 @@ export default function CardActions(props: CardActionsProps) {
 
   // 예약 완료 시 버튼
   if (status === 'pending') {
+    if (!activityId || !props.reservationId) return null;
     return (
-      <div className="flex gap-2">
-        <Button
-          as={Link}
-          href={`/activity/${activityId}`}
-          theme="secondary"
-          size="sm"
-          className="w-17 rounded-lg"
-        >
-          예약 변경
-        </Button>
-        {/* TODO: 예약 취소 확인 모달 연결 필요 */}
-        <Button
-          type="button"
-          theme="gray"
-          size="sm"
-          className="w-17 rounded-lg"
-          onClick={() => alert('예약 취소 버튼 클릭')}
-        >
-          예약 취소
-        </Button>
-      </div>
+      <PendingReservationCardActions reservationId={props.reservationId} activityId={activityId} />
     );
   }
 
