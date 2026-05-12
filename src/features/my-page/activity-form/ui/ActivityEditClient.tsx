@@ -68,19 +68,16 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
 
     // 주소 분리 로직
     const fullAddress = originalData.address || '';
-    // 첫 번째 쉼표의 위치를 찾음.
     const firstCommaIndex = fullAddress.indexOf(',');
     let displayAddress = fullAddress;
     let displayDetailAddress = '';
 
     if (firstCommaIndex !== -1) {
-      // 첫 번째 쉼표 앞부분은 기본 주소
       displayAddress = fullAddress.substring(0, firstCommaIndex).trim();
-      // 첫 번째 쉼표 뒷부분은 상세 주소
       displayDetailAddress = fullAddress.substring(firstCommaIndex + 1).trim();
     }
 
-    return {
+    const result = {
       title: originalData.title,
       category: originalData.category as ActivityFormValues['category'],
       description: originalData.description,
@@ -90,16 +87,14 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
       bannerImage: originalData.bannerImageUrl,
       subImages: originalData.subImages?.map((img) => img.imageUrl) || [],
       schedules:
-        originalData.schedules?.flatMap(
-          (s) =>
-            s.times?.map((t) => ({
-              id: t.id,
-              date: s.date,
-              startTime: t.startTime,
-              endTime: t.endTime,
-            })) || []
-        ) || [],
+        originalData.schedules?.map((s) => ({
+          id: s.id,
+          date: s.date,
+          startTime: s.startTime,
+          endTime: s.endTime,
+        })) || [],
     };
+    return result;
   }, [originalData]);
 
   return (

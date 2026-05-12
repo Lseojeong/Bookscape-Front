@@ -46,14 +46,7 @@ export const useActivityEditSubmit = (
       );
 
       // 스케줄 Diffing
-      const originalFlatSchedules = (originalData.schedules || []).flatMap((s) =>
-        (s.times || []).map((t) => ({
-          id: t.id,
-          date: s.date,
-          startTime: t.startTime,
-          endTime: t.endTime,
-        }))
-      );
+      const originalFlatSchedules = originalData.schedules || [];
 
       const scheduleIdsToRemove: number[] = [];
       const schedulesToAdd: Array<{ date: string; startTime: string; endTime: string }> = [];

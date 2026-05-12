@@ -67,14 +67,10 @@ export const CreateActivityRequestBodySchema = z.object({
 
 /** 체험 스케줄 응답 */
 export const ActivityScheduleSchema = z.object({
+  id: z.number(),
   date: z.string(),
-  times: z.array(
-    z.object({
-      id: z.number(),
-      startTime: z.string(),
-      endTime: z.string(),
-    })
-  ),
+  startTime: z.string(),
+  endTime: z.string(),
 });
 
 /** 체험 등록 응답 */
@@ -102,7 +98,6 @@ export const CreateActivityImageUrlResponseSchema = z.object({
 
 export type CreateActivityRequestBody = z.infer<typeof CreateActivityRequestBodySchema>;
 export type ActivitySchedule = z.infer<typeof ActivityScheduleSchema>;
-export type ActivityScheduleTime = ActivitySchedule['times'][number];
 export type ActivitySubImage = z.infer<typeof SubImageSchema>;
 export type CreateActivityResponse = z.infer<typeof CreateActivityResponseSchema>;
 export type CreateActivityImageUrlResponse = z.infer<typeof CreateActivityImageUrlResponseSchema>;
