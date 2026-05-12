@@ -32,6 +32,10 @@ export default function ActivityShare({ title, description, bannerImageUrl }: Ac
   };
 
   const handleKakaoShare = () => {
+    if (!window.Kakao) {
+      showToast('cancel', '카카오 SDK를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+      return;
+    }
     if (!window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_MAP_KEY!);
     }
