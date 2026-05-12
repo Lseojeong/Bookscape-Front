@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 import {
   MY_RESERVATIONS_PAGE_SIZE,
   useMyReservations,
@@ -14,6 +14,8 @@ import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSe
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
+const RESERVATION_LIST_PATH = '/mypage/reservation-list';
+
 const EMPTY_MAIN_TEXT_BY_STATUS: Record<ReservationStatus | '', string> = {
   '': '아직 예약한 체험이 없어요.\n새로운 체험을 예약해보세요!',
   pending: '예약 완료 내역이 없습니다.\n새로운 체험을 예약해보세요!',
@@ -23,12 +25,48 @@ const EMPTY_MAIN_TEXT_BY_STATUS: Record<ReservationStatus | '', string> = {
   completed: '아직 완료된 내역이 없어요.',
 };
 
+const RESERVATION_STATUS_VALUES = [
+  'pending',
+  'confirmed',
+  'declined',
+  'canceled',
+  'completed',
+] satisfies ReservationStatus[];
+
+const isReservationStatus = (value: string | null): value is ReservationStatus => {
+  return value !== null && RESERVATION_STATUS_VALUES.includes(value as ReservationStatus);
+};
+
+const getReservationListUrl = (status: ReservationStatus | '', searchParams: URLSearchParams) => {
+  const params = new URLSearchParams(searchParams.toString());
+
+  if (status) {
+    params.set('status', status);
+  } else {
+    params.delete('status');
+  }
+
+  const queryString = params.toString();
+
+  return queryString ? `${RESERVATION_LIST_PATH}?${queryString}` : RESERVATION_LIST_PATH;
+};
+
 export default function ReservationListView() {
   const router = useRouter();
-  const [selectedStatus, setSelectedStatus] = useState<ReservationStatus | ''>('pending');
+  const searchParams = useSearchParams();
+
+  const statusParam = searchParams.get('status');
+
+  const selectedStatus: ReservationStatus = isReservationStatus(statusParam)
+    ? statusParam
+    : 'pending';
+
+  const handleSelectStatus = (status: ReservationStatus | '') => {
+    router.replace(getReservationListUrl(status, searchParams));
+  };
 
   const { query } = useMyReservations({
-    status: (selectedStatus || undefined) as MyReservationStatus | undefined,
+    status: selectedStatus as MyReservationStatus,
     size: MY_RESERVATIONS_PAGE_SIZE,
   });
 
@@ -53,7 +91,8 @@ export default function ReservationListView() {
           description="예약내역 변경 및 취소할 수 있습니다."
           onBack={() => router.back()}
         />
-        <StatusFilter selectedStatus={selectedStatus} onSelectStatus={setSelectedStatus} />
+
+        <StatusFilter selectedStatus={selectedStatus} onSelectStatus={handleSelectStatus} />
       </div>
 
       <ReservationListSection

@@ -14,15 +14,17 @@ type HeaderNavProps = {
   theme: HeaderTheme;
   isLoggedIn?: boolean;
   user?: AvatarUser;
+  onLogout: () => void;
 };
 
 type LoggedInActionsProps = {
   theme: HeaderTheme;
   user: AvatarUser;
+  onLogout: () => void;
 };
 
-function LoggedInActions({ theme, user }: LoggedInActionsProps) {
-  return <UserNav theme={theme} user={user} />;
+function LoggedInActions({ theme, user, onLogout }: LoggedInActionsProps) {
+  return <UserNav theme={theme} user={user} onLogout={onLogout} />;
 }
 
 type GuestActionsProps = {
@@ -46,9 +48,9 @@ function GuestActions({ theme }: GuestActionsProps) {
  * @param props.isLoggedIn - 로그인 여부
  * @param props.user - 유저 정보
  */
-export default function HeaderNav({ theme, isLoggedIn = false, user }: HeaderNavProps) {
+export default function HeaderNav({ theme, isLoggedIn = false, user, onLogout }: HeaderNavProps) {
   if (isLoggedIn && user) {
-    return <LoggedInActions theme={theme} user={user} />;
+    return <LoggedInActions theme={theme} user={user} onLogout={onLogout} />;
   }
 
   return <GuestActions theme={theme} />;

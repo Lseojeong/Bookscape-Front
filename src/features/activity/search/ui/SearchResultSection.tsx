@@ -1,9 +1,8 @@
 'use client';
-import SearchActivityList from '@/app/(public)/(explore)/(main)/ui/SearchActivityList';
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import { useSearchResult } from '@/features/activity/search/hooks/useSearchResult';
+import ActivityListWithPagination from '@/features/activity/ui/ActivityListWithPagination';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
-import Pagination from '@/shared/ui/pagination/Pagination';
 import Title from '@/shared/ui/title/Title';
 
 /**
@@ -26,6 +25,9 @@ export default function SearchResultSection() {
     totalPages,
     totalResultCount,
     handlePageChange,
+    isLoading,
+    isError,
+    refetch,
   } = useSearchResult();
 
   return (
@@ -40,12 +42,26 @@ export default function SearchResultSection() {
       </div>
       <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
 
-      {activities.length === 0 ? (
+      {isLoading ? (
+        <></> // TODO: 스켈레톤으로 대체
+      ) : isError ? (
+        <div className="mt-10">
+          <EmptyState
+            type="error"
+            mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
+            onRetry={refetch}
+          />
+        </div>
+      ) : activities.length === 0 ? (
         <EmptyState type="search" mainText={'검색 결과가 없습니다.\n다른 키워드로 검색해주세요!'} />
       ) : (
         <div className="mt-6 flex flex-col items-center gap-6 md:gap-7.5">
-          <SearchActivityList activities={activities} />
-          <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
+          <ActivityListWithPagination
+            activities={activities}
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       )}
     </>

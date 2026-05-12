@@ -1,11 +1,13 @@
-import type { Reservation } from '@/features/my-page/reservation-status/types/reservation';
+import { useState } from 'react';
+import type { MyActivityReservation } from '@/features/my-page/types';
 import Button from '@/shared/ui/button/Button';
+import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import StateBadge from '@/shared/ui/state-badge/StateBadge';
 
 type ReservationCardProps = {
-  reservation: Reservation;
-  onConfirm?: (id: number) => void;
-  onDecline?: (id: number) => void;
+  reservation: MyActivityReservation;
+  onConfirm?: (id: number) => Promise<void>;
+  onDecline?: (id: number) => Promise<void>;
 };
 
 /**
@@ -30,9 +32,34 @@ export default function ReservationCard({
   onConfirm,
   onDecline,
 }: ReservationCardProps) {
+  const [loadingType, setLoadingType] = useState<'confirm' | 'decline' | null>(null);
+  const [isDeclineDialogOpen, setIsDeclineDialogOpen] = useState(false);
+
   const isPending = reservation.status === 'pending';
   const isConfirmed = reservation.status === 'confirmed';
   const isDeclined = reservation.status === 'declined';
+
+  const handleConfirm = async () => {
+    if (!onConfirm) return;
+    setLoadingType('confirm');
+    try {
+      await onConfirm(reservation.id);
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const handleDeclineConfirm = async () => {
+    if (!onDecline) return;
+    setLoadingType('decline');
+    try {
+      await onDecline(reservation.id);
+    } finally {
+      setLoadingType(null);
+    }
+  };
+
+  const isAnyLoading = loadingType !== null;
 
   return (
     <div className="rounded-2xl border border-gray-100 p-4">
@@ -47,7 +74,7 @@ export default function ReservationCard({
             <span className="typo-16-medium">{reservation.headCount}명</span>
           </div>
         </div>
-        {isConfirmed && <StateBadge status="pending" />}
+        {isConfirmed && <StateBadge status="confirmed" />}
         {isDeclined && <StateBadge status="declined" />}
       </div>
 
@@ -57,7 +84,9 @@ export default function ReservationCard({
             theme="primary"
             size="sm"
             className="h-full flex-1"
-            onClick={() => onConfirm(reservation.id)}
+            onClick={handleConfirm}
+            isLoading={loadingType === 'confirm'}
+            disabled={isAnyLoading}
           >
             승인하기
           </Button>
@@ -65,12 +94,24 @@ export default function ReservationCard({
             theme="secondary"
             size="sm"
             className="h-full flex-1 border-gray-100"
-            onClick={() => onDecline(reservation.id)}
+            onClick={() => setIsDeclineDialogOpen(true)}
+            isLoading={loadingType === 'decline'}
+            disabled={isAnyLoading}
           >
             거절하기
           </Button>
         </div>
       )}
+
+      <ConfirmDialog
+        isOpen={isDeclineDialogOpen}
+        onClose={() => setIsDeclineDialogOpen(false)}
+        title="예약을 거절할까요?"
+        description="거절 후에는 되돌릴 수 없습니다."
+        confirmText="거절하기"
+        cancelText="취소"
+        onConfirm={handleDeclineConfirm}
+      />
     </div>
   );
 }
