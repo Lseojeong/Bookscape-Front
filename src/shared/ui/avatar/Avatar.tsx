@@ -1,6 +1,7 @@
 import { avatarSizeClassNames } from '@/shared/ui/avatar/avatarConstants';
 import AvatarFallback from '@/shared/ui/avatar/AvatarFallback';
 import AvatarImage from '@/shared/ui/avatar/AvatarImage';
+import AvatarSkeleton from '@/shared/ui/avatar/AvatarSkeleton';
 import { AvatarProvider } from '@/shared/ui/avatar/context/AvatarProvider';
 import type { AvatarProps } from '@/shared/ui/avatar/types';
 import { cn } from '@/shared/utils/cn';
@@ -43,3 +44,4 @@ export default function Avatar({ children, user, size = 'lg', className }: Avata
 
 Avatar.Img = AvatarImage;
 Avatar.Fallback = AvatarFallback;
+Avatar.Skeleton = AvatarSkeleton;

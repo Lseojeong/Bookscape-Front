@@ -2,7 +2,6 @@
 
 import { useUserStore } from '@/shared/stores/userStore';
 import Avatar from '@/shared/ui/avatar/Avatar';
-import AvatarSkeleton from '@/shared/ui/avatar/AvatarSkeleton';
 import TabNav from '@/shared/ui/tab-bar/TabNav';
 import MyPageNav from './MyPageNav';
 
@@ -38,7 +37,7 @@ export default function MyPageSidebar() {
       <aside className="sticky hidden h-fit w-44.5 shrink-0 rounded-xl border border-gray-50 bg-white px-3.5 py-4 shadow-drop md:top-30 md:block lg:w-72.5 lg:py-6">
         <div className="mb-3 flex justify-center lg:mb-6">
           {!hasHydrated ? (
-            <AvatarSkeleton size="md" className="lg:h-30 lg:w-30" />
+            <Avatar.Skeleton size="md" className="lg:h-30 lg:w-30" />
           ) : (
             <Avatar user={avatarUser} size="md" className="lg:h-30 lg:w-30">
               <Avatar.Img />
