@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ActivityForm, {
   type ActivityInitialData,
 } from '@/features/my-page/activity-form/common/ui/ActivityForm';
@@ -17,6 +17,7 @@ export type ActivityFormPageShellProps = {
   initialData?: ActivityInitialData;
   onSubmitForm: (data: ActivityFormValues) => void;
   isPending?: boolean;
+  isErrorData?: boolean;
   resetToastMessage: string;
   confirmText: string;
   mainClassName?: string;
@@ -29,6 +30,7 @@ export default function ActivityFormPageShell({
   initialData,
   onSubmitForm,
   isPending = false,
+  isErrorData = false,
   resetToastMessage,
   confirmText,
   mainClassName = 'w-full pb-15.25 md:pb-9.25',
@@ -38,6 +40,12 @@ export default function ActivityFormPageShell({
 
   const [modalType, setModalType] = useState<'leave' | 'reset' | null>(null);
   const [formKey, setFormKey] = useState(0);
+
+  useEffect(() => {
+    if (isErrorData) {
+      showToast('cancel', '정보를 불러오지 못했습니다. 다시 시도해 주세요.');
+    }
+  }, [isErrorData, showToast]);
 
   const { confirmLeave } = usePreventGoBack(() => {
     if (modalType !== 'leave') {
@@ -60,7 +68,7 @@ export default function ActivityFormPageShell({
   };
 
   return (
-    <main className={mainClassName}>
+    <div className={mainClassName}>
       <div className={containerClassName}>
         <div className="mb-10">
           <PageHeader title={title} onBack={handleHeaderBackClick} />
@@ -92,6 +100,6 @@ export default function ActivityFormPageShell({
         onConfirmReset={handleConfirmReset}
         confirmText={confirmText}
       />
-    </main>
+    </div>
   );
 }
