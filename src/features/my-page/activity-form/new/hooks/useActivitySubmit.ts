@@ -1,10 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useCreateActivity } from '@/features/my-page/activity-form/mutations/useCreateActivity';
-import { useUploadImage } from '@/features/my-page/activity-form/mutations/useUploadImage';
-import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/utils/images';
-import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
+import { useUploadImage } from '@/features/my-page/activity-form/common/mutations/useUploadImage';
+import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/common/utils/images';
+import { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
+import { useCreateActivity } from '@/features/my-page/activity-form/new/mutations/useCreateActivity';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 

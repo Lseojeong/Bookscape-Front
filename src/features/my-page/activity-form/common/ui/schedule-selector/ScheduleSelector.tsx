@@ -1,11 +1,11 @@
 'use client';
 
-import '@/features/my-page/activity-form/ui/schedule-selector/schedule-calendar.css';
+import '@/features/my-page/activity-form/common/ui/schedule-selector/schedule-calendar.css';
 import { ko } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { useScheduleSelector } from '@/features/my-page/activity-form/hooks/useScheduleSelector';
-import ScheduleCard from '@/features/my-page/activity-form/ui/schedule-selector/ScheduleCard';
+import { useScheduleSelector } from '@/features/my-page/activity-form/common/hooks/useScheduleSelector';
+import ScheduleCard from '@/features/my-page/activity-form/common/ui/schedule-selector/ScheduleCard';
 import { ReservationStatusIcon } from '@/shared/assets/icons';
 import FormField from '@/shared/ui/form/FormField';
 import Input from '@/shared/ui/input/Input';

@@ -1,7 +1,7 @@
 'use client';
 
-import { useActivitySubmit } from '@/features/my-page/activity-form/hooks/useActivitySubmit';
-import ActivityFormPageShell from '@/features/my-page/activity-form/ui/ActivityFormPageShell';
+import ActivityFormPageShell from '@/features/my-page/activity-form/common/ui/ActivityFormPageShell';
+import { useActivitySubmit } from '@/features/my-page/activity-form/new/hooks/useActivitySubmit';
 
 /**
  * 새로운 체험을 등록하는 페이지 컴포넌트입니다.

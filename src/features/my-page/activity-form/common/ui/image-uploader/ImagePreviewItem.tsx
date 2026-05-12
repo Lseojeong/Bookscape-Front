@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import DeleteButton from '@/features/my-page/activity-form/ui/image-uploader/DeleteButton';
+import DeleteButton from '@/features/my-page/activity-form/common/ui/image-uploader/DeleteButton';
 import { cn } from '@/shared/utils/cn';
 
 export type ImagePreviewItemProps = {

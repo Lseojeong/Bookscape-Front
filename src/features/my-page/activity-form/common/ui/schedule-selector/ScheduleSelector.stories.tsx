@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import type { ReactNode } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import ScheduleSelector from '@/features/my-page/activity-form/ui/schedule-selector/ScheduleSelector';
+import ScheduleSelector from '@/features/my-page/activity-form/common/ui/schedule-selector/ScheduleSelector';
 
 const StorybookFormProvider = ({ children }: { children: ReactNode }) => {
   const methods = useForm({

@@ -2,11 +2,11 @@
 
 import { notFound } from 'next/navigation';
 import { useMemo } from 'react';
-import { useActivityEditSubmit } from '@/features/my-page/activity-form/hooks/useActivityEditSubmit';
-import { useActivityDetail } from '@/features/my-page/activity-form/queries/useActivityDetail';
-import ActivityFormPageShell from '@/features/my-page/activity-form/ui/ActivityFormPageShell';
-import { splitAddress } from '@/features/my-page/activity-form/utils/address';
-import type { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
+import ActivityFormPageShell from '@/features/my-page/activity-form/common/ui/ActivityFormPageShell';
+import { splitAddress } from '@/features/my-page/activity-form/common/utils/address';
+import type { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
+import { useActivityEditSubmit } from '@/features/my-page/activity-form/edit/hooks/useActivityEditSubmit';
+import { useActivityDetail } from '@/features/my-page/activity-form/edit/queries/useActivityDetail';
 import { useUserStore } from '@/shared/stores/userStore';
 type ActivityEditClientProps = {
   activityId: number;

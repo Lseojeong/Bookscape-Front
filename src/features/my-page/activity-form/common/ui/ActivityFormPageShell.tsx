@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import ActivityForm, {
   type ActivityInitialData,
-} from '@/features/my-page/activity-form/ui/ActivityForm';
-import LeaveConfirmDialog from '@/features/my-page/activity-form/ui/LeaveConfirmDialog';
-import ResetConfirmDialog from '@/features/my-page/activity-form/ui/ResetConfirmDialog';
-import type { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
+} from '@/features/my-page/activity-form/common/ui/ActivityForm';
+import LeaveConfirmDialog from '@/features/my-page/activity-form/common/ui/LeaveConfirmDialog';
+import ResetConfirmDialog from '@/features/my-page/activity-form/common/ui/ResetConfirmDialog';
+import type { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
 import { usePreventGoBack } from '@/shared/hooks/usePreventGoBack';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';

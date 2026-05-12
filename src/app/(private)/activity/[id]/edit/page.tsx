@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { notFound } from 'next/navigation';
-import { activityDetailQueryOptions } from '@/features/my-page/activity-form/queries/useActivityDetail';
-import ActivityEditClient from '@/features/my-page/activity-form/ui/ActivityEditClient';
+import { activityDetailQueryOptions } from '@/features/my-page/activity-form/edit/queries/useActivityDetail';
+import ActivityEditClient from '@/features/my-page/activity-form/edit/ui/ActivityEditClient';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export default async function ActivityEditPage({ params }: { params: { id: string } }) {

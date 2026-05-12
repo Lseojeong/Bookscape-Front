@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useEffect } from 'react';
 import { useForm, FormProvider, useFormContext } from 'react-hook-form';
-import { AddressInput } from '@/features/my-page/activity-form/ui/address-input/AddressInput';
+import { AddressInput } from '@/features/my-page/activity-form/common/ui/address-input/AddressInput';
 import Button from '@/shared/ui/button/Button';
 
 /**

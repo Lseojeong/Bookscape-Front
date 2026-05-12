@@ -3,14 +3,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/constants/category';
-import { AddressInput } from '@/features/my-page/activity-form/ui/address-input/AddressInput';
-import ImageUploader from '@/features/my-page/activity-form/ui/image-uploader/ImageUploader';
-import ScheduleSelector from '@/features/my-page/activity-form/ui/schedule-selector/ScheduleSelector';
+import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/common/constants/category';
+import { AddressInput } from '@/features/my-page/activity-form/common/ui/address-input/AddressInput';
+import ImageUploader from '@/features/my-page/activity-form/common/ui/image-uploader/ImageUploader';
+import ScheduleSelector from '@/features/my-page/activity-form/common/ui/schedule-selector/ScheduleSelector';
 import {
   activityFormSchema,
   ActivityFormValues,
-} from '@/features/my-page/activity-form/utils/schema';
+} from '@/features/my-page/activity-form/common/utils/schema';
 import Button from '@/shared/ui/button/Button';
 import {
   SelectDropdown,
