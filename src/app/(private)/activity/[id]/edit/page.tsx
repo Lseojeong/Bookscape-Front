@@ -1,4 +1,5 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { notFound } from 'next/navigation';
 import { activityDetailQueryOptions } from '@/features/my-page/activity-form/queries/useActivityDetail';
 import ActivityEditClient from '@/features/my-page/activity-form/ui/ActivityEditClient';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
@@ -9,8 +10,15 @@ export default async function ActivityEditPage({ params }: { params: { id: strin
 
   const queryClient = getQueryClient();
 
-  // 서버 환경에서 초기 데이터 프리페칭
-  await queryClient.prefetchQuery(activityDetailQueryOptions(activityId));
+  try {
+    const activity = await queryClient.fetchQuery(activityDetailQueryOptions(activityId));
+
+    if (!activity) {
+      notFound();
+    }
+  } catch {
+    notFound();
+  }
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

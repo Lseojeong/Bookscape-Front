@@ -1,12 +1,13 @@
 'use client';
 
+import { notFound } from 'next/navigation';
 import { useMemo } from 'react';
 import { useActivityEditSubmit } from '@/features/my-page/activity-form/hooks/useActivityEditSubmit';
 import { useActivityDetail } from '@/features/my-page/activity-form/queries/useActivityDetail';
 import ActivityFormPageShell from '@/features/my-page/activity-form/ui/ActivityFormPageShell';
 import { splitAddress } from '@/features/my-page/activity-form/utils/address';
 import type { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
-
+import { useUserStore } from '@/shared/stores/userStore';
 type ActivityEditClientProps = {
   activityId: number;
 };
@@ -15,8 +16,17 @@ type ActivityEditClientProps = {
  * 체험 수정을 위한 클라이언트 컴포넌트입니다.
  */
 export default function ActivityEditClient({ activityId }: ActivityEditClientProps) {
+  const user = useUserStore((state) => state.user);
+  const hasHydrated = useUserStore((state) => state.hasHydrated);
+
   const { data: originalData } = useActivityDetail(activityId);
   const { submitActivityEdit, isPending } = useActivityEditSubmit(activityId, originalData);
+
+  if (hasHydrated && originalData) {
+    if (user?.id !== originalData.userId) {
+      notFound();
+    }
+  }
 
   const initialData = useMemo(() => {
     if (!originalData) return undefined;
