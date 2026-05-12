@@ -27,8 +27,12 @@ export default function ActivityShare({ title, description, bannerImageUrl }: Ac
   const { showToast } = useToastStore();
 
   const handleCopyUrl = async () => {
-    await navigator.clipboard.writeText(window.location.href);
-    showToast('check', 'URL이 복사되었습니다.');
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      showToast('check', 'URL이 복사되었습니다.');
+    } catch {
+      showToast('cancel', 'URL 복사에 실패했습니다.');
+    }
   };
 
   const handleKakaoShare = () => {
