@@ -7,13 +7,13 @@ import { useReservationDashboardQuery } from '@/features/my-page/reservation-sta
 import { useReservedScheduleQuery } from '@/features/my-page/reservation-status/queries/useReservedScheduleQuery';
 import ReservationCalendar from '@/features/my-page/reservation-status/ui/calendar/ReservationCalendar';
 import ReservationPanel from '@/features/my-page/reservation-status/ui/pannel/ReservationPanel';
+import ReservationStatusClientSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationStatusClientSkeleton';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
 import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTrigger';
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
-import Loading from '@/shared/ui/loading/Loading';
 
 /**
  * 예약 현황 페이지의 클라이언트 컴포넌트
@@ -57,12 +57,7 @@ export default function ReservationStatusClient() {
     requestAnimationFrame(() => setIsPanelOpen(true));
   };
 
-  if (isLoading)
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Loading size={20} color="var(--color-gray-400)" />
-      </div>
-    );
+  if (isLoading) return <ReservationStatusClientSkeleton />;
 
   if (isError)
     return (

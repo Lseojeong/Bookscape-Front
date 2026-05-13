@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import ActivityDescription from '@/features/activity/activity-detail/ui/activity-info/ActivityDescription';
 import ActivityLocation from '@/features/activity/activity-detail/ui/activity-info/ActivityLocation';
+import ActivityReviews from '@/features/activity/activity-detail/ui/review/ActivityReviews';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 import { cn } from '@/shared/utils/cn';
 
 type ActivityTabSectionProps = {
+  activityId: number;
   description: string;
   address: string;
   className?: string;
@@ -47,6 +49,7 @@ const MD_BREAKPOINT = 768;
  */
 
 export default function ActivityTabSection({
+  activityId,
   description,
   address,
   className,
@@ -154,8 +157,10 @@ export default function ActivityTabSection({
         <ActivityLocation address={address} />
         <div className="mt-10 border-b border-gray-100" />
       </div>
-      {/* TODO: 체험 후기 */}
-      <div ref={reviewsRef} />
+      {/* 체험 후기 */}
+      <div ref={reviewsRef}>
+        <ActivityReviews activityId={activityId} />
+      </div>
     </div>
   );
 }
