@@ -51,7 +51,7 @@ export const proxy = (request: NextRequest) => {
 
   const isExpired = accessTokenExpiresAtMs !== undefined && accessTokenExpiresAtMs <= Date.now();
 
-  const isLoggedIn = Boolean(accessToken) && !isExpired;
+  const isLoggedIn = Boolean(accessToken) && accessTokenExpiresAtMs !== undefined && !isExpired;
 
   // 로그인한 사용자는 로그인/회원가입 페이지로 접근하지 못하도록 처리
   if (isLoggedIn && isAuthPath(pathname)) {
