@@ -24,7 +24,6 @@ export default function GuestGuard({ children }: PropsWithChildren) {
     if (!hasHydrated) return;
     if (!user) return;
     router.replace('/');
-    router.refresh();
   }, [hasHydrated, router, user]);
 
   if (!hasHydrated) return null;
