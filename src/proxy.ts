@@ -42,7 +42,7 @@ const isProtectedPath = (pathname: string) => {
   return false;
 };
 
-export function proxy(request: NextRequest) {
+export const proxy = (request: NextRequest) => {
   const pathname = normalizePathname(request.nextUrl.pathname);
   const { search } = request.nextUrl;
 
@@ -72,7 +72,7 @@ export function proxy(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
+};
 
 export const config = {
   matcher: [
