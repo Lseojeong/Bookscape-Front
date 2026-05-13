@@ -1,7 +1,11 @@
-import type {
-  CreateActivityRequestBody,
-  CreateActivityResponse,
-  CreateActivityImageUrlResponse,
+import {
+  type ActivityDetailForForm,
+  type CreateActivityRequestBody,
+  type CreateActivityResponse,
+  type CreateActivityImageUrlResponse,
+  type UpdateMyActivityRequestBody,
+  type UpdateMyActivityResponse,
+  ActivityDetailForFormSchema,
 } from '@/features/my-page/activity-form/types';
 import {
   GetMyActivitiesQuerySchema,
@@ -19,6 +23,7 @@ import type {
   UpdateMyActivityReservationStatusRequestBody,
 } from '@/features/my-page/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
+import { get } from '@/shared/apis/base/publicFetch';
 
 const EMPTY_MY_ACTIVITIES_RESPONSE: GetMyActivitiesResponse = {
   cursorId: null,
@@ -142,4 +147,18 @@ export const createActivity = async (data: CreateActivityRequestBody) => {
  */
 export const uploadImage = async (formData: FormData) => {
   return await bffFetch.postFormData<CreateActivityImageUrlResponse>('/activities/image', formData);
+};
+
+/** 체험 상세 조회 API */
+export const fetchActivityDetail = async (id: number) => {
+  const res = await get<ActivityDetailForForm>(`/activities/${id}`);
+  if (!res) throw new Error('체험 상세 정보를 불러오지 못했습니다.');
+  return ActivityDetailForFormSchema.parse(res);
+};
+
+/** 내 체험 수정 API */
+export const updateMyActivity = async (id: number, data: UpdateMyActivityRequestBody) => {
+  const res = await bffFetch.patch<UpdateMyActivityResponse>(`/my-activities/${id}`, data);
+  if (!res) throw new Error('체험 수정에 실패했습니다.');
+  return res;
 };

@@ -1,9 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useCreateActivity } from '@/features/my-page/activity-form/mutations/useCreateActivity';
-import { useUploadImage } from '@/features/my-page/activity-form/mutations/useUploadImage';
-import { ActivityFormValues } from '@/features/my-page/activity-form/utils/schema';
+import { useUploadImage } from '@/features/my-page/activity-form/common/mutations/useUploadImage';
+import { formatAddress } from '@/features/my-page/activity-form/common/utils/address';
+import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/common/utils/images';
+import { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
+import { useCreateActivity } from '@/features/my-page/activity-form/new/mutations/useCreateActivity';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -20,27 +22,17 @@ export const useActivitySubmit = () => {
     try {
       setIsUploading(true);
 
-      // 배너 이미지 업로드 처리
-      const bannerImageUrl =
-        data.bannerImage instanceof File
-          ? await uploadImage(data.bannerImage)
-          : (data.bannerImage as string);
-
-      // 소개 이미지 병렬 업로드 처리
-      const subImageUrls = await Promise.all(
-        (data.subImages || []).map(async (img) =>
-          img instanceof File ? await uploadImage(img) : (img as string)
-        )
-      );
+      const bannerImageUrl = await getImageUrl(data.bannerImage, uploadImage);
+      const subImageUrls = await getImageUrls(data.subImages || [], uploadImage);
 
       // 최종 페이로드 가공
       const payload = {
         title: data.title,
         category: data.category,
         description: data.description,
-        address: `${data.address} ${data.detailAddress}`.trim(),
-        price: data.price!,
-        bannerImageUrl,
+        address: formatAddress(data.address, data.detailAddress),
+        price: data.price,
+        bannerImageUrl: bannerImageUrl as string,
         subImageUrls,
         schedules: data.schedules.map((s) => ({
           date: s.date,
@@ -52,7 +44,7 @@ export const useActivitySubmit = () => {
       // 등록 API가 완료될 때까지 기다림
       await createActivityAsync(payload);
       showToast('check', '체험이 성공적으로 등록되었습니다.');
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES() });
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES() });
       router.push('/mypage/activity');
     } catch {
       showToast('cancel', '체험 등록에 실패했습니다. 다시 시도해주세요.');

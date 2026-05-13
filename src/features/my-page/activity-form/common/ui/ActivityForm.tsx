@@ -3,14 +3,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/constants/category';
-import { AddressInput } from '@/features/my-page/activity-form/ui/address-input/AddressInput';
-import ImageUploader from '@/features/my-page/activity-form/ui/image-uploader/ImageUploader';
-import ScheduleSelector from '@/features/my-page/activity-form/ui/schedule-selector/ScheduleSelector';
+import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/common/constants/category';
+import { AddressInput } from '@/features/my-page/activity-form/common/ui/address-input/AddressInput';
+import ImageUploader from '@/features/my-page/activity-form/common/ui/image-uploader/ImageUploader';
+import ScheduleSelector from '@/features/my-page/activity-form/common/ui/schedule-selector/ScheduleSelector';
 import {
   activityFormSchema,
   ActivityFormValues,
-} from '@/features/my-page/activity-form/utils/schema';
+} from '@/features/my-page/activity-form/common/utils/schema';
 import Button from '@/shared/ui/button/Button';
 import {
   SelectDropdown,
@@ -78,7 +78,7 @@ export default function ActivityForm({
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = methods;
 
   // 수정 모드일 때 초기 데이터 주입
@@ -220,7 +220,7 @@ export default function ActivityForm({
             size="md"
             className="h-12 w-39.25 md:h-10.75 md:w-30"
             isLoading={isPending} // 폼 제출 중일 때 로딩 상태 표시
-            disabled={isPending}
+            disabled={!isDirty || isPending}
           >
             {mode === 'create' ? '등록하기' : '수정하기'}
           </Button>

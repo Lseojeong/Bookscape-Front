@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import ImagePreviewItem from '@/features/my-page/activity-form/ui/image-uploader/ImagePreviewItem';
+import ImagePreviewItem from '@/features/my-page/activity-form/common/ui/image-uploader/ImagePreviewItem';
 import { PlusIcon } from '@/shared/assets/icons';
 import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 import Button from '@/shared/ui/button/Button';

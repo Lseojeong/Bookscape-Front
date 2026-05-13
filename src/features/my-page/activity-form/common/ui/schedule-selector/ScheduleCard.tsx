@@ -2,10 +2,10 @@
 
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { DURATIONS, START_TIMES } from '@/features/my-page/activity-form/constants/schedule';
-import { useScheduleCard } from '@/features/my-page/activity-form/hooks/useScheduleCard';
+import { DURATIONS, START_TIMES } from '@/features/my-page/activity-form/common/constants/schedule';
+import { useScheduleCard } from '@/features/my-page/activity-form/common/hooks/useScheduleCard';
+import TimeSlotChip from '@/features/my-page/activity-form/common/ui/schedule-selector/TimeSlotChip';
 import { Slot } from '@/features/my-page/activity-form/types';
-import TimeSlotChip from '@/features/my-page/activity-form/ui/schedule-selector/TimeSlotChip';
 import { CaretDownIcon, TrashIcon } from '@/shared/assets/icons';
 import {
   SelectDropdown,
