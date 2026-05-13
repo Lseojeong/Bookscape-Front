@@ -37,7 +37,7 @@ const isAuthPath = (pathname: string) => pathname === '/login' || pathname === '
 const isProtectedPath = (pathname: string) => {
   if (pathname.startsWith('/mypage')) return true;
   if (pathname.startsWith('/activity/new')) return true;
-  if (/^\/activity\/[^/]+\/edit$/.test(pathname)) return true;
+  if (/^\/activity\/[^/]+\/edit(\/.*)?$/.test(pathname)) return true;
 
   return false;
 };
