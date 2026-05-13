@@ -8,7 +8,7 @@ const decodeBase64Url = (value: string): string => {
   const padLength = (4 - (base64.length % 4)) % 4;
   const padded = base64 + '='.repeat(padLength);
 
-  return atob(padded);
+  return new TextDecoder().decode(Uint8Array.from(atob(padded), (c) => c.charCodeAt(0)));
 };
 
 const getJwtExpiresAtMs = (token: string): number | undefined => {
