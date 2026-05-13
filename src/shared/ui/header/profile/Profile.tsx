@@ -32,10 +32,14 @@ export default function Profile({
 }: ProfileProps) {
   return (
     <div className="flex items-center gap-2.5">
-      <Avatar user={user} size={size}>
-        <Avatar.Img loading="eager" />
-        <Avatar.Fallback />
-      </Avatar>
+      {!user ? (
+        <Avatar.Skeleton size="sm" />
+      ) : (
+        <Avatar user={user} size={size}>
+          <Avatar.Img loading="eager" />
+          <Avatar.Fallback />
+        </Avatar>
+      )}
       <span className={cn('typo-14-medium', nicknameClassName)}>{user?.nickname ?? '사용자'}</span>
     </div>
   );

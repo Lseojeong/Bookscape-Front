@@ -12,7 +12,7 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <Suspense fallback={<div>...</div>}>
+      <Suspense fallback={null}>
         <HeroBanner />
         {children}
       </Suspense>

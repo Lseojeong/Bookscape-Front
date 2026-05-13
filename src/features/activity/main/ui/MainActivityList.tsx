@@ -1,11 +1,13 @@
 'use client';
 import Link from 'next/link';
+import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
 import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActivityCarousel';
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
 import CarouselArrowButton from '@/features/activity/main/ui/CarouselArrowButton';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * 메인 페이지 인기 체험 목록 컴포넌트입니다.
@@ -36,7 +38,21 @@ export default function MainActivityList() {
       </Title>
 
       {isLoading ? (
-        <></> // TODO: 스켈레톤으로 대체
+        <>
+          {/* 기본: 1개 반 노출, md: 2개 노출, lg: 8개 노출 */}
+          <div className="flex gap-4 overflow-hidden md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-6">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <ActivityCardSkeleton
+                key={i}
+                className={cn(
+                  'w-[calc(70%-6px)] shrink-0',
+                  'md:w-auto md:shrink',
+                  i >= 2 ? 'hidden lg:block' : ''
+                )}
+              />
+            ))}
+          </div>
+        </>
       ) : isError ? (
         <div className="mt-10">
           <EmptyState
