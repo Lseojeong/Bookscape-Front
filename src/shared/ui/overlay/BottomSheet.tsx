@@ -44,14 +44,13 @@ export default function BottomSheet({
 }: BottomSheetProps) {
   const startYRef = useRef<number>(0);
   const [dragY, setDragY] = useState(0);
+  const handleClose = () => {
+    setDragY(0);
+    onClose();
+  };
 
   useBodyScrollLock({ isLocked: isOpen });
   useEscapeKey({ isEnabled: isOpen, onEscape: handleClose });
-
-  function handleClose() {
-    setDragY(0);
-    onClose();
-  }
 
   const handleTouchStart = (e: React.TouchEvent) => {
     startYRef.current = e.touches[0].clientY;
