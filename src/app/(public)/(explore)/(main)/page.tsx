@@ -1,6 +1,16 @@
+import { Metadata } from 'next';
 import MainSectionLayout from '@/app/(public)/(explore)/(main)/ui/MainSectionLayout';
 import MainActivityList from '@/features/activity/main/ui/MainActivityList';
 import MainCategoryList from '@/features/activity/main/ui/MainCategoryList';
+
+export const metadata: Metadata = {
+  title: { absolute: '북스케이프 | 당신의 일상을 특별하게' },
+  description: '요가, 도자기, 베이킹까지 북스케이프에서 나만의 특별한 체험를 예약하세요.',
+  openGraph: {
+    title: '북스케이프 | 당신의 일상을 특별하게',
+    description: '요가, 도자기, 베이킹까지 북스케이프에서 나만의 특별한 체험를 예약하세요.',
+  },
+};
 
 /**
  * 메인 페이지 컴포넌트입니다.

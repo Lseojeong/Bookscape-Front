@@ -1,6 +1,15 @@
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 import ActivitiesPageHeader from '@/features/activity/activities/ui/ActivitiesPageHeader';
 import AllActivitiesSection from '@/features/activity/activities/ui/AllActivitiesSection';
+
+export const metadata: Metadata = {
+  title: '모든 체험 둘러보기',
+  openGraph: {
+    title: '모든 체험 둘러보기 | 북스케이프',
+    description: '카테고리와 맞춤 검색으로 내 취향에 딱 맞는 체험을 북스케이프에서 찾아보세요.',
+  },
+};
 
 /**
  * 체험 목록 페이지 컴포넌트입니다.

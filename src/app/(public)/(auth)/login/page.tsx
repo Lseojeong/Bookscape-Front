@@ -1,5 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Metadata } from 'next';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,6 +19,15 @@ import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
+
+export const metadata: Metadata = {
+  title: '로그인',
+  //NOTE: 검색 엔진에 노출되면 SEO에 좋지 않기 때문에 봇을 막음 (크롤 버젯 낭비 예방)
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 /**
  * 로그인 페이지 컴포넌트입니다.
