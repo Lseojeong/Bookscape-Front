@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { CardDefaultImage } from '@/shared/assets/images';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import { cn } from '@/shared/utils/cn';
 
@@ -32,12 +33,17 @@ export default function BaseCardImage({
 }: BaseCardImageProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const showSkeleton = useDelayedLoading(!isLoaded);
 
   const src = bannerImageUrl && !hasError ? bannerImageUrl : CardDefaultImage;
 
   return (
     <div className={cn('relative h-full w-full overflow-hidden', containerClassName)}>
-      {!isLoaded && <Skeleton className="absolute inset-0" />}
+      {!isLoaded && !showSkeleton ? (
+        <div className="absolute inset-0 bg-gray-50" />
+      ) : !isLoaded && showSkeleton ? (
+        <Skeleton className="absolute inset-0" />
+      ) : null}
       <Image
         src={src}
         alt={alt ?? '체험 배너 이미지'}
