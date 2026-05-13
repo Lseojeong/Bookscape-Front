@@ -15,7 +15,7 @@ export const useMyActivities = ({
   const userId = useUserStore((s) => s.user?.id);
 
   const infiniteQuery = useInfiniteQuery({
-    queryKey: QUERY_KEYS.MY_ACTIVITIES(size),
+    queryKey: QUERY_KEYS.MY_ACTIVITIES_INFINITE(size),
     enabled: !!userId,
     initialPageParam: undefined as number | undefined,
     queryFn: async ({ pageParam }) =>

@@ -11,7 +11,7 @@ import { QUERY_KEYS } from '@/shared/constants/queryKey';
  */
 export const useMyActivitiesQuery = () => {
   return useQuery({
-    queryKey: QUERY_KEYS.MY_ACTIVITIES(),
+    queryKey: QUERY_KEYS.MY_ACTIVITIES(100),
     queryFn: () => getMyActivities({ size: 100 }),
     select: (data) => data.activities,
   });
