@@ -17,10 +17,10 @@ export default function AllActivitiesSection() {
     <>
       {isLoading ? (
         <>
-          {/* ~ md: 4개 노출, lg: 8개 노출 */}
+          {/* ~ md: 6개 노출, lg: 12개 노출 */}
           <div className="mt-5 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
-              <ActivityCardSkeleton key={i} className={i >= 4 ? 'hidden lg:block' : ''} />
+              <ActivityCardSkeleton key={i} className={i >= 6 ? 'hidden lg:block' : ''} />
             ))}
           </div>
         </>

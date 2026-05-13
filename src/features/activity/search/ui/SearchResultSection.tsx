@@ -5,6 +5,7 @@ import CategoryFilter from '@/features/activity/main/ui/category-filter/Category
 import { useSearchResult } from '@/features/activity/search/hooks/useSearchResult';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * 검색 결과 섹션 컴포넌트입니다.
@@ -45,10 +46,16 @@ export default function SearchResultSection() {
 
       {isLoading ? (
         <>
-          {/* ~ md: 4개 노출, lg: 8개 노출 */}
+          {/* 기본 : 6개 노출, md: 4개 노출, lg: 8개 노출 */}
           <div className="mt-10 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
-              <ActivityCardSkeleton key={i} className={i >= 4 ? 'hidden lg:block' : ''} />
+              <ActivityCardSkeleton
+                key={i}
+                className={cn(
+                  i >= 4 && i < 6 ? 'md:hidden lg:block' : '',
+                  i >= 6 ? 'hidden lg:block' : ''
+                )}
+              />
             ))}
           </div>
         </>
