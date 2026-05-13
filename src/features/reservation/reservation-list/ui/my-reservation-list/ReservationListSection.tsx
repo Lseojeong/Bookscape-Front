@@ -2,9 +2,10 @@
 
 import { useMemo } from 'react';
 import ReservationCard from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
+import ReservationCardSkeleton from '@/features/reservation/reservation-list/ui/skeleton/ReservationCardSkeleton';
 import type { MyReservation } from '@/features/reservation/types';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
-import Loading from '@/shared/ui/loading/Loading';
+import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 import { formatYmdToDot } from '@/shared/utils/dateFormat';
 
@@ -40,9 +41,13 @@ export default function ReservationListSection({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-10">
-        {/* TODO: 예약내역 로딩 스켈레톤 UI로 교체 */}
-        <Loading />
+      <div className="flex flex-col gap-3">
+        <SkeletonDate />
+        <div className="flex flex-col gap-7.5">
+          <ReservationCardSkeleton />
+          <ReservationCardSkeleton />
+          <ReservationCardSkeleton />
+        </div>
       </div>
     );
   }
@@ -76,4 +81,8 @@ export default function ReservationListSection({
       ))}
     </div>
   );
+}
+
+function SkeletonDate() {
+  return <Skeleton className="h-5 w-24 rounded-md" />;
 }
