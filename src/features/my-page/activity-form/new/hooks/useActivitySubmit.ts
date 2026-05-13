@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useUploadImage } from '@/features/my-page/activity-form/common/mutations/useUploadImage';
+import { formatAddress } from '@/features/my-page/activity-form/common/utils/address';
 import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/common/utils/images';
 import { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
 import { useCreateActivity } from '@/features/my-page/activity-form/new/mutations/useCreateActivity';
@@ -24,17 +25,12 @@ export const useActivitySubmit = () => {
       const bannerImageUrl = await getImageUrl(data.bannerImage, uploadImage);
       const subImageUrls = await getImageUrls(data.subImages || [], uploadImage);
 
-      // 주소를 합칠 때 쉼표를 구분자로 사용
-      const formattedAddress = data.detailAddress
-        ? `${data.address}, ${data.detailAddress}`
-        : data.address;
-
       // 최종 페이로드 가공
       const payload = {
         title: data.title,
         category: data.category,
         description: data.description,
-        address: formattedAddress,
+        address: formatAddress(data.address, data.detailAddress),
         price: data.price,
         bannerImageUrl: bannerImageUrl as string,
         subImageUrls,

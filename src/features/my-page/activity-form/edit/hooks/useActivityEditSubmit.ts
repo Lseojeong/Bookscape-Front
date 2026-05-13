@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useUploadImage } from '@/features/my-page/activity-form/common/mutations/useUploadImage';
+import { formatAddress } from '@/features/my-page/activity-form/common/utils/address';
 import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/common/utils/images';
 import type { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
 import { useUpdateActivity } from '@/features/my-page/activity-form/edit/mutations/useUpdateActivity';
@@ -84,16 +85,12 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
         }
       });
 
-      const formattedAddress = formData.detailAddress
-        ? `${formData.address}, ${formData.detailAddress}`
-        : formData.address;
-
       const payload = {
         title: formData.title,
         category: formData.category,
         description: formData.description,
         price: formData.price,
-        address: formattedAddress.trim(),
+        address: formatAddress(formData.address, formData.detailAddress),
         bannerImageUrl: bannerImageUrl as string,
         subImageIdsToRemove,
         subImageUrlsToAdd,

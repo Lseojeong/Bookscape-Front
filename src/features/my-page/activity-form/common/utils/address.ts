@@ -18,3 +18,11 @@ export const splitAddress = (fullAddress?: string | null) => {
     detailAddress: fullAddress.substring(firstCommaIndex + 1).trim(),
   };
 };
+
+/**
+ * 기본 주소와 상세 주소를 쉼표(,)로 결합합니다.
+ */
+export const formatAddress = (address: string, detailAddress?: string): string => {
+  const formatted = detailAddress ? `${address}, ${detailAddress}` : address;
+  return formatted.trim();
+};
