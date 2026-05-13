@@ -1,36 +1,39 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useDeleteActivity } from '@/features/my-page/common/mutations/useDeleteActivity';
+import { useCancelMyReservation } from '@/features/reservation/reservation-list/mutations/useCancelMyReservation';
 import { ApiError } from '@/shared/apis/apiError';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
-type DeleteActivityDialogProps = {
-  id: number;
+type CancelReservationDialogProps = {
+  reservationId: number;
   isOpen: boolean;
   onClose: () => void;
 };
 
-export default function DeleteActivityDialog({ id, isOpen, onClose }: DeleteActivityDialogProps) {
+export default function CancelReservationDialog({
+  reservationId,
+  isOpen,
+  onClose,
+}: CancelReservationDialogProps) {
   const router = useRouter();
-  const { mutate: deleteActivity } = useDeleteActivity();
+  const { mutate: cancelReservation } = useCancelMyReservation();
   const { showToast } = useToastStore();
 
   return (
     <ConfirmDialog
       isOpen={isOpen}
       onClose={onClose}
-      title="체험을 삭제하시겠습니까?"
-      description="삭제할 경우, 다시 되돌릴 수 없습니다."
-      confirmText="삭제하기"
+      title="예약을 취소하시겠어요?"
+      description="취소하면 해당 예약은 즉시 무효 처리됩니다."
+      confirmText="취소하기"
       cancelText="아니오"
       onCancel={onClose}
       onConfirm={() => {
-        deleteActivity(id, {
+        cancelReservation(reservationId, {
           onSuccess: () => {
-            showToast('check', '체험이 삭제되었습니다.');
-            router.push('/mypage/activity');
+            showToast('check', '예약이 취소되었습니다.');
           },
           onError: (error) => {
             if (error instanceof ApiError) {
@@ -39,12 +42,11 @@ export default function DeleteActivityDialog({ id, isOpen, onClose }: DeleteActi
                 router.push('/login');
                 return;
               }
-
               showToast('cancel', error.message);
               return;
             }
 
-            const message = error instanceof Error ? error.message : '체험 삭제에 실패했습니다.';
+            const message = error instanceof Error ? error.message : '예약 취소에 실패했습니다.';
             showToast('cancel', message);
           },
         });
