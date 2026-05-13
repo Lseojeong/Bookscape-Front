@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-// ─── UI 컴포넌트 전용 타입 ─────────────────────────────────────
+/** UI 컴포넌트 전용 타입 */
 export type Slot = {
   startTime: string;
   endTime: string;
@@ -32,7 +32,7 @@ export const NestedScheduleSchema = z.object({
   times: z.array(z.object({ id: z.number(), startTime: z.string(), endTime: z.string() })),
 });
 
-// ─── 폼 초기 데이터용 상세 조회 (GET 응답) ────────────────────
+/** 폼 초기 데이터용 상세 조회 (GET 응답) */
 export const ActivityDetailForFormSchema = z.object({
   id: z.number(),
   userId: z.number(),
@@ -51,7 +51,7 @@ export const ActivityDetailForFormSchema = z.object({
 });
 export type ActivityDetailForForm = z.infer<typeof ActivityDetailForFormSchema>;
 
-// ─── 체험 등록 (POST 요청 및 응답) ──────────────────────────
+/** 체험 등록 (POST 요청 및 응답) */
 export const CreateActivityRequestBodySchema = z.object({
   title: z.string(),
   category: z.string(),
@@ -94,7 +94,7 @@ export type CreateActivityRequestBody = z.infer<typeof CreateActivityRequestBody
 export type CreateActivityResponse = z.infer<typeof CreateActivityResponseSchema>;
 export type CreateActivityImageUrlResponse = z.infer<typeof CreateActivityImageUrlResponseSchema>;
 
-// ─── 체험 수정 (PATCH 요청 및 응답) ─────────────────────────
+/** 체험 수정 (PATCH 요청 및 응답) */
 export const UpdateMyActivityRequestBodySchema = z.object({
   title: z.string(),
   category: z.string(),
