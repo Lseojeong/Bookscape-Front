@@ -3,11 +3,10 @@
 import useIsMobile from '@/features/my-page/reservation-status/hooks/useIsMobile';
 import ReservationPanelContent from '@/features/my-page/reservation-status/ui/pannel/ReservationPanelContent';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
+import BottomSheet from '@/shared/ui/overlay/BottomSheet';
 import useBodyScrollLock from '@/shared/ui/overlay/hooks/useBodyScrollLock';
 import useEscapeKey from '@/shared/ui/overlay/hooks/useEscapeKey';
-import OverlayBackdrop from '@/shared/ui/overlay/primitives/OverlayBackdrop';
-import OverlayPortal from '@/shared/ui/overlay/primitives/OverlayPortal';
-import OverlaySurface from '@/shared/ui/overlay/primitives/OverlaySurface';
+import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 
 type ReservationPanelProps = {
   isOpen: boolean;
@@ -48,37 +47,38 @@ export default function ReservationPanel({
 
   if (!date) return null;
 
-  return (
-    <OverlayPortal>
-      <div
-        className={`fixed inset-0 layer-modal transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
-        }`}
-      >
-        <OverlayBackdrop onClick={onClose} ariaLabel="닫기" />
-      </div>
+  const content = (
+    <ReservationPanelContent
+      date={date}
+      activityId={activityId}
+      schedules={schedules}
+      isSchedulesLoading={isSchedulesLoading}
+      onClose={onClose}
+    />
+  );
 
-      <OverlaySurface
-        position={isMobile ? 'bottom' : 'right'}
-        variant={isMobile ? 'sheet' : 'panel'}
-        tone="surface"
-        elevation="card"
-        className={`transition-transform duration-300 ease-in-out ${
-          isOpen
-            ? 'translate-x-0 translate-y-0'
-            : isMobile
-              ? 'translate-y-full'
-              : 'translate-x-full'
-        }`}
-      >
-        <ReservationPanelContent
-          date={date}
-          activityId={activityId}
-          schedules={schedules}
-          isSchedulesLoading={isSchedulesLoading}
-          onClose={onClose}
-        />
-      </OverlaySurface>
-    </OverlayPortal>
+  // 모바일: BottomSheet
+  if (isMobile) {
+    return (
+      <BottomSheet isOpen={isOpen} onClose={onClose} ariaLabel="예약 현황">
+        <div className="px-6 pt-2 pb-7.5">{content}</div>
+      </BottomSheet>
+    );
+  }
+
+  return (
+    <OverlayLayer
+      isOpen={isOpen}
+      onClose={onClose}
+      position="right"
+      variant="panel"
+      tone="surface"
+      elevation="card"
+      ariaLabel="예약 현황 패널"
+      surfaceClassName="w-full max-w-[400px]"
+      contentClassName="h-full"
+    >
+      {content}
+    </OverlayLayer>
   );
 }
