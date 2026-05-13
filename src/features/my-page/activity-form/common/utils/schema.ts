@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/constants/category';
-import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
+import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/common/constants/category';
+import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/common/constants/validation';
 import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 
 export const scheduleSchema = z.object({

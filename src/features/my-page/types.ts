@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-// ─── 내 체험 목록 조회 ───────────────────────────────────────────
+/** 내 체험 목록 조회 */
 
 export const GetMyActivitiesQuerySchema = z.object({
   cursorId: z.number().optional(),
@@ -31,7 +31,7 @@ export const GetMyActivitiesResponseSchema = z.object({
 });
 export type GetMyActivitiesResponse = z.infer<typeof GetMyActivitiesResponseSchema>;
 
-// ─── 내 체험 월별 예약 현황 조회 ────────────────────────────────
+/** 내 체험 월별 예약 현황 조회 */
 
 export const GetMyActivityReservationDashboardQuerySchema = z.object({
   year: z.string(),
@@ -60,7 +60,7 @@ export type GetMyActivityReservationDashboardResponse = z.infer<
   typeof GetMyActivityReservationDashboardResponseSchema
 >;
 
-// ─── 내 체험 날짜별 예약 스케줄 조회 ────────────────────────────
+/** 내 체험 날짜별 예약 스케줄 조회 */
 
 export const GetMyActivityReservedScheduleQuerySchema = z.object({
   date: z.string(),
@@ -88,7 +88,7 @@ export type GetMyActivityReservedScheduleResponse = z.infer<
   typeof GetMyActivityReservedScheduleResponseSchema
 >;
 
-// ─── 내 체험 예약 목록 조회 ─────────────────────────────────────
+/** 내 체험 예약 목록 조회 */
 
 export const SellerReservationStatusSchema = z.enum(['declined', 'pending', 'confirmed']);
 export type SellerReservationStatus = z.infer<typeof SellerReservationStatusSchema>;
@@ -129,7 +129,7 @@ export type GetMyActivityReservationsResponse = z.infer<
   typeof GetMyActivityReservationsResponseSchema
 >;
 
-// ─── 내 체험 예약 상태 업데이트 ─────────────────────────────────
+/** 내 체험 예약 상태 업데이트 */
 
 export const UpdateMyActivityReservationStatusRequestBodySchema = z.object({
   status: SellerReservationStatusSchema,
@@ -158,65 +158,6 @@ export type UpdateMyActivityReservationStatusResponse = z.infer<
   typeof UpdateMyActivityReservationStatusResponseSchema
 >;
 
-// ─── 내 체험 삭제 ───────────────────────────────────────────────
+/** 내 체험 삭제 */
 
 export type DeleteMyActivityResponse = undefined;
-
-/** 체험 수정 요청 */
-export const UpdateMyActivityRequestBodySchema = z.object({
-  title: z.string(),
-  category: z.string(),
-  description: z.string(),
-  price: z.number(),
-  address: z.string(),
-  bannerImageUrl: z.string(),
-  subImageIdsToRemove: z.array(z.number()),
-  subImageUrlsToAdd: z.array(z.string()),
-  scheduleIdsToRemove: z.array(z.number()),
-  schedulesToAdd: z.array(
-    z.object({
-      date: z.string(),
-      startTime: z.string(),
-      endTime: z.string(),
-    })
-  ),
-});
-
-/** 체험 수정 응답 내 스케줄 */
-export const UpdateMyActivityScheduleSchema = z.object({
-  date: z.string(),
-  times: z.array(
-    z.object({
-      id: z.number(),
-      startTime: z.string(),
-      endTime: z.string(),
-    })
-  ),
-});
-
-/** 체험 수정 응답 내 서브 이미지 */
-export const UpdateMyActivitySubImageSchema = z.object({
-  id: z.number(),
-  imageUrl: z.string(),
-});
-
-/** 체험 수정 응답 */
-export const UpdateMyActivityResponseSchema = z.object({
-  id: z.number(),
-  userId: z.number(),
-  title: z.string(),
-  description: z.string(),
-  category: z.string(),
-  price: z.number(),
-  address: z.string(),
-  bannerImageUrl: z.string(),
-  rating: z.number(),
-  reviewCount: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  subImages: z.array(UpdateMyActivitySubImageSchema),
-  schedules: z.array(UpdateMyActivityScheduleSchema),
-});
-
-export type UpdateMyActivityRequestBody = z.infer<typeof UpdateMyActivityRequestBodySchema>;
-export type UpdateMyActivityResponse = z.infer<typeof UpdateMyActivityResponseSchema>;

@@ -20,7 +20,7 @@ type ImageCarouselProps = {
  * <ImageCarousel images={['https://...', 'https://...']} />
  * ```
  */
-export default function ImageCarousel({ images }: ImageCarouselProps) {
+export default function ImageCarousel({ images = [] }: ImageCarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 4000, stopOnInteraction: false }),
   ]);

@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
+import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/common/constants/validation';
 import { ScheduleGroup, Slot } from '@/features/my-page/activity-form/types';
 import useOutsideClick from '@/shared/hooks/useOutsideClick';
 

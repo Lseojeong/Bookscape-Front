@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
-import { Slot } from '@/features/my-page/activity-form/types';
+import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/common/constants/validation';
 import {
   calculateEndTime,
   findOverlapSlot,
   isExceedingMidnight,
-} from '@/features/my-page/activity-form/utils/schedule';
+} from '@/features/my-page/activity-form/common/utils/schedule';
+import { Slot } from '@/features/my-page/activity-form/types';
 
 type UseScheduleCardProps = {
   slots: Slot[];
