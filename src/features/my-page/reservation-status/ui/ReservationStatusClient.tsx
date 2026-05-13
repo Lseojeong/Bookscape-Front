@@ -8,6 +8,7 @@ import { useReservedScheduleQuery } from '@/features/my-page/reservation-status/
 import ReservationCalendar from '@/features/my-page/reservation-status/ui/calendar/ReservationCalendar';
 import ReservationPanel from '@/features/my-page/reservation-status/ui/pannel/ReservationPanel';
 import ReservationStatusClientSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationStatusClientSkeleton';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
 import SelectDropdownContent from '@/shared/ui/dropdown/select/SelectDropdownContent';
 import SelectDropdownItem from '@/shared/ui/dropdown/select/SelectDropdownItem';
@@ -33,6 +34,7 @@ export default function ReservationStatusClient() {
 
   // 내 체험 리스트 조회
   const { data: activities = [], isError, isLoading, refetch } = useMyActivitiesQuery();
+  const showSkeleton = useDelayedLoading(isLoading);
 
   // 선택된 체험 ID (미선택 시 첫 번째 체험 자동 선택)
   const activityId = selectedActivityId ?? activities[0]?.id ?? null;
@@ -57,7 +59,8 @@ export default function ReservationStatusClient() {
     requestAnimationFrame(() => setIsPanelOpen(true));
   };
 
-  if (isLoading) return <ReservationStatusClientSkeleton />;
+  if (isLoading && !showSkeleton) return null;
+  if (showSkeleton) return <ReservationStatusClientSkeleton />;
 
   if (isError)
     return (

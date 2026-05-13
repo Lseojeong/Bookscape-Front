@@ -7,12 +7,14 @@ import {
 } from '@/features/my-page/my-activity/queries/useMyActivities';
 import MyActivityCard from '@/features/my-page/my-activity/ui/my-activity-card/MyActivityCard';
 import MyActivityCardSkeleton from '@/features/my-page/my-activity/ui/skeleton/MyActivityCardSkeleton';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
 
 export default function MyActivityList() {
   const query = useMyActivities({ size: MY_ACTIVITIES_PAGE_SIZE });
+  const showSkeleton = useDelayedLoading(query.isPending);
 
   const activities = useMemo(() => {
     return query.data?.pages.flatMap((page) => page.activities) ?? [];
@@ -27,7 +29,11 @@ export default function MyActivityList() {
     fetchNextPage: query.fetchNextPage,
   });
 
-  if (query.isPending && activities.length === 0) {
+  if (query.isPending && activities.length === 0 && !showSkeleton) {
+    return null;
+  }
+
+  if (query.isPending && activities.length === 0 && showSkeleton) {
     return (
       <div className="flex flex-col gap-4 md:gap-7.5">
         <MyActivityCardSkeleton />

@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import ReservationCard from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
 import ReservationCardSkeleton from '@/features/reservation/reservation-list/ui/skeleton/ReservationCardSkeleton';
 import type { MyReservation } from '@/features/reservation/types';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
@@ -24,6 +25,7 @@ export default function ReservationListSection({
   selectedStatus,
   emptyMainTextByStatus,
 }: ReservationListSectionProps) {
+  const showSkeleton = useDelayedLoading(isLoading);
   const reservationsByDate = useMemo(() => {
     const group: Record<string, MyReservation[]> = {};
     const dateOrder: string[] = [];
@@ -39,7 +41,11 @@ export default function ReservationListSection({
     return dateOrder.map((date) => ({ date, items: group[date] ?? [] }));
   }, [reservations]);
 
-  if (isLoading) {
+  if (isLoading && !showSkeleton) {
+    return null;
+  }
+
+  if (showSkeleton) {
     return (
       <div className="flex flex-col gap-3">
         <SkeletonDate />
