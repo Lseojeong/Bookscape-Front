@@ -1,6 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
@@ -26,6 +26,7 @@ import { cn } from '@/shared/utils/cn';
  */
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const setSession = useUserStore((state) => state.setSession);
   const { showToast } = useToastStore();
   const methods = useForm({
@@ -59,7 +60,10 @@ export default function LoginPage() {
 
           // 쿠키 상태 동기화를 위해 refresh 후 이동
           router.refresh();
-          router.push('/');
+          const redirect = searchParams.get('redirect');
+          const safeRedirect =
+            redirect && redirect.startsWith('/') && !redirect.startsWith('//') ? redirect : '/';
+          router.push(safeRedirect);
         }
       } catch (error) {
         if (error instanceof ApiError) {
@@ -74,7 +78,7 @@ export default function LoginPage() {
         }
       }
     },
-    [router, setError, setSession, showToast]
+    [router, searchParams, setError, setSession, showToast]
   );
 
   return (
