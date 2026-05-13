@@ -23,7 +23,10 @@ import type { ReservationCardProps } from './ReservationCard';
  * <ReservationCardInfo data={data} />
  * ```
  */
-export default function ReservationCardInfo({ data }: ReservationCardProps) {
+export default function ReservationCardInfo({
+  data,
+  onReservationChangeClick,
+}: ReservationCardProps) {
   const { id, activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
     data;
   const { title } = activity;
@@ -68,6 +71,7 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
           reservationId={id}
           activityId={activity.id}
           onReviewClick={() => setIsReviewOpen(true)}
+          onReservationChangeClick={() => onReservationChangeClick?.(data)}
         />
       </div>
 
