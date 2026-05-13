@@ -25,7 +25,7 @@ export default function MyActivityCreateButton() {
         aria-label="체험 등록하기"
         className="md:hidden"
       >
-        <PlusIcon />
+        <PlusIcon className="h-6 w-6" />
       </Button>
     </>
   );

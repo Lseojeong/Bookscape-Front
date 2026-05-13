@@ -1,8 +1,8 @@
 'use client';
 import { cva } from 'class-variance-authority';
 import { useRouter } from 'next/navigation';
-import NotificationButton from '@/features/notification/ui/NotificationButton';
 import { useState } from 'react';
+import NotificationButton from '@/features/notification/ui/NotificationButton';
 import type { AvatarUser } from '@/shared/ui/avatar/types';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import {

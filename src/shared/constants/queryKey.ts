@@ -10,6 +10,11 @@ export const QUERY_KEYS = {
 
   /** 메인 - 인기 체험 조회 */
   HOT_ACTIVITY: (size: number) => ['activities', 'hot', size] as const,
+
+  /** 예약 가능일 조회 */
+  AVAILABLE_SCHEDULE: (activityId: number, year: string, month: string) =>
+    ['activity', activityId, 'available-schedule', year, month] as const,
+
   /** 검색 및 체험 목록 데이터 조회 */
   ACTIVITY_LIST: (params: GetActivityParams) => ['activities', params] as const,
   /** 로그인한 사용자 정보 조회 */
@@ -26,6 +31,11 @@ export const QUERY_KEYS = {
 
   /** 내 체험 관리 목록 조회 */
   MY_ACTIVITIES: (size?: number) => ['my-activities', size ?? 10] as const,
+
+  /** 체험 후기 조회 */
+  ACTIVITY_REVIEWS: (activityId: number, page: number) =>
+    ['activity', activityId, 'reviews', page] as const,
+
   /** 내 체험 월별 예약 현황 조회 */
   RESERVATION_DASHBOARD: (activityId: number | null, year: string, month: string) =>
     ['my-activities', activityId, 'reservation-dashboard', year, month] as const,
