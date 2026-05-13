@@ -6,7 +6,7 @@ import AllActivitiesSection from '@/features/activity/activities/ui/AllActivitie
 export const metadata: Metadata = {
   title: '모든 체험 둘러보기',
   openGraph: {
-    title: '모든 체험 둘러보기 | 북스케이프',
+    title: '모든 체험 둘러보기',
     description: '카테고리와 맞춤 검색으로 내 취향에 딱 맞는 체험을 북스케이프에서 찾아보세요.',
   },
 };

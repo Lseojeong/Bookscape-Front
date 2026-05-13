@@ -1,5 +1,10 @@
+import { Metadata } from 'next';
 import MyInfoClient from '@/features/user/ui/MyInfoClient';
 import MyInfoPageHeader from '@/features/user/ui/MyInfoPageHeader';
+
+export const metadata: Metadata = {
+  title: '내 정보',
+};
 
 /**
  * 내 정보 페이지

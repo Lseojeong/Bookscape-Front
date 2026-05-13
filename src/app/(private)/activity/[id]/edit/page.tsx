@@ -1,8 +1,13 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { activityDetailQueryOptions } from '@/features/my-page/activity-form/edit/queries/useActivityDetail';
 import ActivityEditClient from '@/features/my-page/activity-form/edit/ui/ActivityEditClient';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
+
+export const metadata: Metadata = {
+  title: '내 체험 수정',
+};
 
 export default async function ActivityEditPage({ params }: { params: { id: string } }) {
   const { id } = await params;

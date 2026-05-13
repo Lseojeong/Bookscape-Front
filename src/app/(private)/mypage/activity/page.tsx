@@ -1,6 +1,11 @@
+import { Metadata } from 'next';
 import MyActivityCreateButton from '@/features/my-page/my-activity/ui/MyActivityCreateButton';
 import MyActivityList from '@/features/my-page/my-activity/ui/MyActivityList';
 import MyActivityPageHeader from '@/features/my-page/my-activity/ui/MyActivityPageHeader';
+
+export const metadata: Metadata = {
+  title: '내 체험 관리',
+};
 
 export default function MyActivityPage() {
   return (

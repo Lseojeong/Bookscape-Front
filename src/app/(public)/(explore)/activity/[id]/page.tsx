@@ -17,24 +17,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // 잘못된 ID면 기본 제목 반환
   if (isNaN(activityId) || activityId <= 0) {
-    return { title: '체험 상세 | 북스케이프' };
+    return { title: '체험 상세' };
   }
 
   try {
     const activity = await getActivityDetail(activityId);
 
     return {
-      title: `${activity.title} | 북스케이프`,
+      title: `${activity.title}`,
       description: activity.description || '북스케이프에서 특별한 체험을 예약하고 즐겨보세요.',
       openGraph: {
-        title: `${activity.title} | 북스케이프`,
+        title: `${activity.title}`,
         description: activity.description,
         images: [activity.bannerImageUrl],
       },
     };
   } catch {
     // API 통신 실패 시 기본 메타데이터 반환
-    return { title: '체험 상세 | 북스케이프' };
+    return { title: '체험 상세' };
   }
 }
 
