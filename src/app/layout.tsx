@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '북스케이프: bookscape',
     description: '나만의 특별한 체험을 찾고 경험해보세요!',
-    url: 'https://bookscape-team1.vercel.app/',
+    url: 'https://bookscape-team1.vercel.app',
     siteName: '북스케이프',
     locale: 'ko_KR',
     type: 'website',
