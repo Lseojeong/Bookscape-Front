@@ -42,7 +42,6 @@ export default function BaseCardImage({
         src={src}
         alt={alt ?? '체험 배너 이미지'}
         fill
-        unoptimized
         className={cn('object-cover', !isLoaded && 'invisible', imageClassName)}
         onLoad={() => setIsLoaded(true)}
         onError={() => {
