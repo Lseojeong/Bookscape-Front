@@ -95,7 +95,7 @@ export default function BottomSheet({
               <div className="h-1 w-19 rounded-full bg-gray-300" />
             </div>
             {/* 콘텐츠 */}
-            <div className="flex flex-col overflow-y-auto">{children}</div>
+            <div className="flex min-h-0 flex-col overflow-y-auto">{children}</div>
           </div>
         </OverlaySurface>
       </div>
