@@ -111,6 +111,32 @@ declare global {
       Postcode: KakaoPostcodeConstructor;
       maps: KakaoMaps;
     };
+    // 카카오톡 공유
+    Kakao: {
+      init: (key: string) => void;
+      isInitialized: () => boolean;
+      Share: {
+        sendDefault: (options: {
+          objectType: string;
+          content: {
+            title: string;
+            description?: string;
+            imageUrl?: string;
+            link: {
+              mobileWebUrl: string;
+              webUrl: string;
+            };
+          };
+          buttons?: Array<{
+            title: string;
+            link: {
+              mobileWebUrl: string;
+              webUrl: string;
+            };
+          }>;
+        }) => void;
+      };
+    };
   }
 }
 
