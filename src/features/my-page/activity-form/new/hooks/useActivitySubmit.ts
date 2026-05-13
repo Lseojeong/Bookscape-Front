@@ -44,7 +44,7 @@ export const useActivitySubmit = () => {
       // 등록 API가 완료될 때까지 기다림
       await createActivityAsync(payload);
       showToast('check', '체험이 성공적으로 등록되었습니다.');
-      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES() });
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES_BASE() });
       router.push('/mypage/activity');
     } catch {
       showToast('cancel', '체험 등록에 실패했습니다. 다시 시도해주세요.');

@@ -29,20 +29,30 @@ export const QUERY_KEYS = {
   MY_NOTIFICATIONS: (size?: number) =>
     [...QUERY_KEYS.MY_NOTIFICATIONS_BASE(), size ?? 'default'] as const,
 
-  /** 내 체험 관리 목록 조회 */
-  MY_ACTIVITIES: (size?: number) => ['my-activities', size ?? 10] as const,
+  /** 내 체험 목록 조회 - prefix */
+  MY_ACTIVITIES_BASE: () => ['my-activities'] as const,
+
+  /** 내 체험 목록 조회(일반 리스트) */
+  MY_ACTIVITIES: (size?: number) =>
+    [...QUERY_KEYS.MY_ACTIVITIES_BASE(), 'list', size ?? 10] as const,
+
+  /** 내 체험 목록 조회(무한 스크롤) - prefix */
+  MY_ACTIVITIES_INFINITE_BASE: () => [...QUERY_KEYS.MY_ACTIVITIES_BASE(), 'infinite'] as const,
+
+  /** 내 체험 목록 조회(무한 스크롤) */
+  MY_ACTIVITIES_INFINITE: (size?: number) =>
+    [...QUERY_KEYS.MY_ACTIVITIES_INFINITE_BASE(), size ?? 10] as const,
 
   /** 체험 후기 조회 */
   ACTIVITY_REVIEWS: (activityId: number, page: number) =>
     ['activity', activityId, 'reviews', page] as const,
-
   /** 내 체험 월별 예약 현황 조회 */
   RESERVATION_DASHBOARD: (activityId: number | null, year: string, month: string) =>
-    ['my-activities', activityId, 'reservation-dashboard', year, month] as const,
+    [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId, 'reservation-dashboard', year, month] as const,
   /** 내 체험 날짜별 예약 스케줄 조회 */
   RESERVED_SCHEDULE: (activityId: number | null, date: string | null) =>
-    ['my-activities', activityId, 'reserved-schedule', date] as const,
+    [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId, 'reserved-schedule', date] as const,
   /** 내 체험 예약 목록 조회 */
   RESERVATIONS: (activityId: number | null, scheduleId: number, status: string) =>
-    ['my-activities', activityId, 'reservations', scheduleId, status] as const,
+    [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId, 'reservations', scheduleId, status] as const,
 } as const;
