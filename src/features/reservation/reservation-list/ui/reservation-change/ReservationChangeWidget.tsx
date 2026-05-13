@@ -29,12 +29,12 @@ export default function ReservationChangeWidget({
     availableDates,
     myBlockedScheduleIds,
     isUpdating,
-    handleChangeReservation,
+    submit,
   } = useReservationChange(reservation);
 
   const handleSubmit = async () => {
-    await handleChangeReservation();
-    onSuccess?.();
+    const ok = await submit();
+    if (ok) onSuccess?.();
   };
 
   return (

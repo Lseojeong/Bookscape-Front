@@ -35,7 +35,7 @@ export default function ReservationChangeSheet({
     myBlockedScheduleIds,
     isUpdating,
     reset,
-    handleChangeReservation,
+    submit,
   } = useReservationChange(reservation);
 
   const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');
@@ -49,8 +49,8 @@ export default function ReservationChangeSheet({
       setStep('headcount');
       return;
     }
-    await handleChangeReservation();
-    handleClose();
+    const ok = await submit();
+    if (ok) handleClose();
   };
 
   const handleClose = () => {

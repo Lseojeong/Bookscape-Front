@@ -47,23 +47,23 @@ export const useReservationChange = (reservation: MyReservation) => {
     setMonth(initialDate);
   };
 
-  const handleChangeReservation = async () => {
-    if (!selectedScheduleId) return;
-
+  const submit = async (): Promise<boolean> => {
+    if (!selectedScheduleId) return false;
     try {
       await updateMutation.mutateAsync({
         reservationId,
         body: { scheduleId: selectedScheduleId, headCount },
       });
       showToast('check', '예약이 변경되었습니다.');
+      return true;
     } catch (error: unknown) {
       if (error instanceof ApiError && error.status === 401) {
         showToast('cancel', '로그인을 해주세요.');
-        return;
+        return false;
       }
       const message = error instanceof Error ? error.message : '예약 변경에 실패했습니다.';
       showToast('cancel', message);
-      throw error;
+      return false;
     }
   };
 
@@ -83,6 +83,6 @@ export const useReservationChange = (reservation: MyReservation) => {
     myBlockedScheduleIds,
     isUpdating: updateMutation.isPending,
     reset,
-    handleChangeReservation,
+    submit,
   };
 };
