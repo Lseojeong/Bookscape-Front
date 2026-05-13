@@ -1,33 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const DEFAULT_DELAY_MS = 200;
 
 /**
- * 로딩 상태가 짧게(기본 200ms 미만) 끝나는 경우 스켈레톤이 깜빡이지 않도록,
- * 일정 시간 이상 로딩이 지속될 때만 `true`를 반환합니다.
+ * 로딩이 시작된 뒤 `delay`(기본 200ms) 이상 지속될 때만 `true`를 반환합니다.
+ *
+ * @description
+ * - 로딩 시작 → `delay` 동안 `false`
+ * - `delay` 이후에도 로딩 중이면 `true`
+ * - 로딩 종료 → 즉시 `false`
+ *
+ * @example
+ * ```tsx
+ * const isSkeletonVisible = useDelayedLoading(isLoading);
+ * if (isLoading && !isSkeletonVisible) return null;
+ * if (isSkeletonVisible) return <Skeleton />;
+ * ```
  */
-export default function useDelayedLoading(isLoading: boolean) {
-  const [showLoading, setShowLoading] = useState(false);
+const useDelayedLoading = (isLoading: boolean, delay: number = DEFAULT_DELAY_MS) => {
+  const [isDelayedLoading, setIsDelayedLoading] = useState(false);
+  const delayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (!isLoading) return;
+    if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
+    if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
 
-    // 로딩이 다시 시작됐을 때 이전 로딩에서 `true`가 남아있을 수 있어, 다음 틱에서 리셋합니다.
-    const resetId = setTimeout(() => setShowLoading(false), 0);
-    const timeoutId = setTimeout(() => setShowLoading(true), DEFAULT_DELAY_MS);
+    if (isLoading) {
+      delayTimerRef.current = setTimeout(() => setIsDelayedLoading(true), delay);
+      return () => {
+        if (delayTimerRef.current) clearTimeout(delayTimerRef.current);
+      };
+    }
 
+    // 로딩 종료 시 즉시 숨김. (동기 setState는 lint에 걸릴 수 있어 타이머로 넘깁니다.)
+    resetTimerRef.current = setTimeout(() => setIsDelayedLoading(false), 0);
     return () => {
-      clearTimeout(resetId);
-      clearTimeout(timeoutId);
+      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
     };
-  }, [isLoading]);
+  }, [delay, isLoading]);
 
-  // 로딩이 끝나면 즉시 숨김(상태값은 다음 틱에 정리)
-  useEffect(() => {
-    if (isLoading) return;
-    const id = setTimeout(() => setShowLoading(false), 0);
-    return () => clearTimeout(id);
-  }, [isLoading]);
+  return isLoading && isDelayedLoading;
+};
 
-  return isLoading ? showLoading : false;
-}
+export default useDelayedLoading;
