@@ -9,27 +9,24 @@ import { useEffect, useState } from 'react';
  * const objectUrl = useObjectUrl(file);
  * ```
  */
-export default function useObjectUrl(file: File | null | undefined) {
+const useObjectUrl = (file: File | null | undefined) => {
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!file) {
-      queueMicrotask(() => {
-        setObjectUrl(null);
-      });
+      // eslint-disable-next-line
+      setObjectUrl(null);
       return;
     }
 
     const url = URL.createObjectURL(file);
-
-    queueMicrotask(() => {
-      setObjectUrl(url);
-    });
+    setObjectUrl(url);
 
     return () => {
       URL.revokeObjectURL(url);
     };
   }, [file]);
-
   return objectUrl;
-}
+};
+
+export default useObjectUrl;
