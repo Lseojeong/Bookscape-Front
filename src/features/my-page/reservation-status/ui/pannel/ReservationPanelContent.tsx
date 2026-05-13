@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import useIsMobile from '@/features/my-page/reservation-status/hooks/useIsMobile';
 import { useReservationPanel } from '@/features/my-page/reservation-status/hooks/useReservationPanel';
 import { usePatchReservationStatus } from '@/features/my-page/reservation-status/mutations/usePatchReservationStatus';
 import { useReservationsQuery } from '@/features/my-page/reservation-status/queries/useReservationsQuery';
@@ -129,8 +130,10 @@ export default function ReservationPanelContent({
     await patchStatus({ reservationId, status: 'declined' });
   };
 
+  const isMobile = useIsMobile();
+
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden px-6 py-8">
+    <div className="relative flex h-full w-full flex-col overflow-hidden">
       {/* 헤더 */}
       <div className="shrink-0">
         {isAllLoading ? (
@@ -138,14 +141,16 @@ export default function ReservationPanelContent({
         ) : (
           <p className="typo-18-bold lg:typo-24-bold">{formatDate(date)}</p>
         )}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-700 lg:top-5 lg:right-5"
-          aria-label="닫기"
-        >
-          <DeleteIcon className="h-8 w-8" />
-        </button>
+        {!isMobile && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-0 right-0 cursor-pointer text-gray-500 hover:text-gray-700"
+            aria-label="닫기"
+          >
+            <DeleteIcon className="h-8 w-8" />
+          </button>
+        )}
       </div>
 
       {/* 탭 - 최초 진입 시만 스켈레톤 */}
