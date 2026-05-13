@@ -1,26 +1,33 @@
 import type { MetadataRoute } from 'next';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
+// 개별 체험 데이터 타입
 type ActivityResponse = {
   id: number;
   updatedAt: string;
 };
 
+// 전체 체험 데이터 타입
+type ActivitiesResponse = {
+  activities: ActivityResponse[];
+};
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://bookscape-team1.vercel.app';
-  const teamId = '22-1';
 
   // 동적 페이지
   let dynamicRoutes: MetadataRoute.Sitemap = [];
 
   try {
-    const activities = await serverFetch.get<ActivityResponse[]>(
-      `/${teamId}/activities`,
-      undefined,
+    const response = await serverFetch.get<ActivitiesResponse>(
+      `/activities`,
+      { method: 'offset', size: 100 },
       { cache: 'no-store' }
     );
 
-    if (activities) {
+    const activities = response?.activities || [];
+
+    if (activities.length > 0) {
       dynamicRoutes = activities.map((activity) => ({
         url: `${baseUrl}/activity/${activity.id}`,
         lastModified: new Date(activity.updatedAt), // 마지막 수정 시간
@@ -29,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }));
     }
   } catch (error) {
-    //NOTE: 브라우저 화면이 없는 서버 환경이므로 console.error 사용하여 에러 확인 (버셀 대시보드 로그에서 확인 가능)
+    //NOTE: 브라우저 화면이 없는 서버 환경이므로 console.error 사용하여 에러 확인
     console.error('Sitemap 생성 중 활동 데이터를 불러오지 못했습니다:', error);
   }
 
