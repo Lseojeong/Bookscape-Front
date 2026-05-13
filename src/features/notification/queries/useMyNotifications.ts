@@ -38,7 +38,7 @@ export const useMyNotifications = ({ size = MY_NOTIFICATIONS_PAGE_SIZE } = {}) =
     staleTime: MY_NOTIFICATIONS_STALE_TIME_MS,
     refetchInterval: MY_NOTIFICATIONS_REFETCH_INTERVAL_MS,
     refetchOnMount: false,
-    refetchOnReconnect: false,
+    refetchOnReconnect: true,
     refetchOnWindowFocus: 'always',
     retry: 1,
   });
