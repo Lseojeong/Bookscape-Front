@@ -39,7 +39,7 @@ export const useMyNotifications = ({ size = MY_NOTIFICATIONS_PAGE_SIZE } = {}) =
     refetchInterval: MY_NOTIFICATIONS_REFETCH_INTERVAL_MS,
     refetchOnMount: false,
     refetchOnReconnect: true,
-    refetchOnWindowFocus: 'always',
+    refetchOnWindowFocus: true,
     retry: 1,
   });
 
