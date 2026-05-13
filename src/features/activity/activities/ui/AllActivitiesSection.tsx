@@ -1,6 +1,7 @@
 'use client';
 import { useAllActivityList } from '@/features/activity/activities/hooks/useAllActivityList';
-import ActivityListWithPagination from '@/features/activity/ui/ActivityListWithPagination';
+import ActivityListWithPagination from '@/features/activity/common/ui/ActivityListWithPagination';
+import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 
 /**
@@ -12,25 +13,26 @@ export default function AllActivitiesSection() {
   const { page, activities, totalPages, handlePageChange, isLoading, isError, refetch } =
     useAllActivityList();
 
-  // TODO: 스켈레톤으로 대체
-  if (isLoading) {
-    return;
-  }
-
-  if (isError) {
-    return (
-      <div className="mt-10">
-        <EmptyState
-          type="error"
-          mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
-          onRetry={refetch}
-        />
-      </div>
-    );
-  }
   return (
     <>
-      {activities.length === 0 ? (
+      {isLoading ? (
+        <>
+          {/* ~ md: 6개 노출, lg: 12개 노출 */}
+          <div className="mt-5 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <ActivityCardSkeleton key={i} className={i >= 6 ? 'hidden lg:block' : ''} />
+            ))}
+          </div>
+        </>
+      ) : isError ? (
+        <div className="mt-10">
+          <EmptyState
+            type="error"
+            mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
+            onRetry={refetch}
+          />
+        </div>
+      ) : activities.length === 0 ? (
         <div className="mt-10">
           <EmptyState
             type="experience"

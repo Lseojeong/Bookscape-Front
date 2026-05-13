@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import ImagePreviewItem from '@/features/my-page/activity-form/common/ui/image-uploader/ImagePreviewItem';
 import { PlusIcon } from '@/shared/assets/icons';
-import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
+import { IMAGE_RULES } from '@/shared/constants/file';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
 import { cn } from '@/shared/utils/cn';
+import { validateImageFile } from '@/shared/utils/file';
 
 export type ImageUploaderProps = {
   label?: string;
@@ -64,16 +65,9 @@ export default function ImageUploader({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 파일 용량 검사
-    if (file.size > IMAGE_RULES.MAX_SIZE) {
-      setLocalError(IMAGE_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED);
-      e.target.value = '';
-      return;
-    }
-
-    // 파일 확장자 검사
-    if (!(IMAGE_RULES.ACCEPTED_TYPES as readonly string[]).includes(file.type)) {
-      setLocalError(IMAGE_ERROR_MESSAGES.IMAGE_TYPE_INVALID);
+    const errorMessage = validateImageFile(file);
+    if (errorMessage) {
+      setLocalError(errorMessage);
       e.target.value = '';
       return;
     }

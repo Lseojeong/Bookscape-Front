@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/common/constants/category';
 import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/common/constants/validation';
-import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
+import { imageFileSchema } from '@/shared/utils/file';
 
 export const scheduleSchema = z.object({
   id: z.number().optional(), // 기존 스케줄 식별용
@@ -9,18 +9,6 @@ export const scheduleSchema = z.object({
   startTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
   endTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
 });
-
-/**
- * 이미지 파일 유효성 검사 스키마
- * 새롭게 업로드되는 File 객체의 용량과 확장자를 검사합니다.
- */
-export const imageFileSchema = z
-  .instanceof(File)
-  .refine((file) => file.size <= IMAGE_RULES.MAX_SIZE, IMAGE_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED)
-  .refine(
-    (file) => (IMAGE_RULES.ACCEPTED_TYPES as readonly string[]).includes(file.type),
-    IMAGE_ERROR_MESSAGES.IMAGE_TYPE_INVALID
-  );
 
 /**
  * 체험 등록 및 수정 폼 유효성 검사 스키마입니다.

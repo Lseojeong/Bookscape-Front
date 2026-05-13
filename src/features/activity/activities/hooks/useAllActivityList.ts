@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { useActivityList } from '@/features/activity/hooks/useActivityList';
+import { useActivityList } from '@/features/activity/common/hooks/useActivityList';
 
 /**
  * 체험 목록 페이지의 상태와 핸들러를 관리하는 훅입니다.
