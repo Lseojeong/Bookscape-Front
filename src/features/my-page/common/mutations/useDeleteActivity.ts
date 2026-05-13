@@ -31,8 +31,6 @@ export const useDeleteActivity = () => {
         return { ...old, pages: nextPages };
       });
 
-      queryClient.removeQueries({ queryKey: [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId] });
-
       return { previousQueries };
     },
     onError: (_error, _activityId, context) => {
