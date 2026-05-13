@@ -72,10 +72,8 @@ export default function ReservationPanel({
       onClose={onClose}
       position="right"
       variant="panel"
-      tone="surface"
       elevation="card"
       ariaLabel="예약 현황 패널"
-      surfaceClassName="w-full max-w-[400px]"
       contentClassName="h-full"
     >
       {content}
