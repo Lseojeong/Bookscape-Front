@@ -2,17 +2,8 @@
 
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
-export const useActivityShare = () => {
+export const useKakaoShare = () => {
   const { showToast } = useToastStore();
-
-  const handleCopyUrl = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      showToast('check', 'URL이 복사되었습니다.');
-    } catch {
-      showToast('cancel', 'URL 복사에 실패했습니다.');
-    }
-  };
 
   const handleKakaoShare = (title: string, description: string, bannerImageUrl: string) => {
     if (!window.Kakao?.isInitialized()) {
@@ -43,5 +34,5 @@ export const useActivityShare = () => {
     });
   };
 
-  return { handleCopyUrl, handleKakaoShare };
+  return { handleKakaoShare };
 };

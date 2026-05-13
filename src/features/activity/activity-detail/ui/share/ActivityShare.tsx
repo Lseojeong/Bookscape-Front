@@ -1,6 +1,7 @@
 'use client';
 
-import { useActivityShare } from '@/features/activity/activity-detail/hooks/useActivityShare';
+import { useCopyUrl } from '@/features/activity/activity-detail/hooks/useCopyUrl';
+import { useKakaoShare } from '@/features/activity/activity-detail/hooks/useKakaoShare';
 import { KakaoIcon, LinkIcon } from '@/shared/assets/icons';
 
 type ActivityShareProps = {
@@ -24,7 +25,8 @@ type ActivityShareProps = {
  * ```
  */
 export default function ActivityShare({ title, description, bannerImageUrl }: ActivityShareProps) {
-  const { handleCopyUrl, handleKakaoShare } = useActivityShare();
+  const { handleCopyUrl } = useCopyUrl();
+  const { handleKakaoShare } = useKakaoShare();
 
   return (
     <div className="flex items-center gap-3">
