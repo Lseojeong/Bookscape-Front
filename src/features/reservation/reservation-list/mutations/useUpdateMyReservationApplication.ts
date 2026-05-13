@@ -11,6 +11,11 @@ import type {
 type UpdateMyReservationApplicationVariables = {
   reservationId: number;
   body: UpdateMyReservationApplicationRequestBody;
+  optimistic?: {
+    date?: string;
+    startTime?: string;
+    endTime?: string;
+  };
 };
 
 const hasPages = (
@@ -31,7 +36,7 @@ export const useUpdateMyReservationApplication = () => {
   return useMutation({
     mutationFn: ({ reservationId, body }: UpdateMyReservationApplicationVariables) =>
       updateMyReservationApplication(reservationId, body),
-    onMutate: async ({ reservationId, body }) => {
+    onMutate: async ({ reservationId, body, optimistic }) => {
       await queryClient.cancelQueries({ queryKey: ['my-reservations'] });
 
       const previousQueries = queryClient.getQueriesData({ queryKey: ['my-reservations'] });
@@ -47,7 +52,14 @@ export const useUpdateMyReservationApplication = () => {
             ...page,
             reservations: page.reservations.map((r) =>
               r.id === reservationId
-                ? { ...r, scheduleId: body.scheduleId, headCount: body.headCount }
+                ? {
+                    ...r,
+                    scheduleId: body.scheduleId,
+                    headCount: body.headCount,
+                    ...(optimistic?.date ? { date: optimistic.date } : null),
+                    ...(optimistic?.startTime ? { startTime: optimistic.startTime } : null),
+                    ...(optimistic?.endTime ? { endTime: optimistic.endTime } : null),
+                  }
                 : r
             ),
           }));
@@ -61,7 +73,14 @@ export const useUpdateMyReservationApplication = () => {
             ...page,
             reservations: page.reservations.map((r) =>
               r.id === reservationId
-                ? { ...r, scheduleId: body.scheduleId, headCount: body.headCount }
+                ? {
+                    ...r,
+                    scheduleId: body.scheduleId,
+                    headCount: body.headCount,
+                    ...(optimistic?.date ? { date: optimistic.date } : null),
+                    ...(optimistic?.startTime ? { startTime: optimistic.startTime } : null),
+                    ...(optimistic?.endTime ? { endTime: optimistic.endTime } : null),
+                  }
                 : r
             ),
           };

@@ -67,10 +67,16 @@ export const useReservationChange = (reservation: MyReservation) => {
    */
   const submit = async (): Promise<boolean> => {
     if (!selectedScheduleId) return false;
+    const optimisticSchedule = schedules.find((s) => s.id === selectedScheduleId);
     try {
       await updateMutation.mutateAsync({
         reservationId,
         body: { scheduleId: selectedScheduleId, headCount },
+        optimistic: {
+          date: selectedDateStr ?? undefined,
+          startTime: optimisticSchedule?.startTime,
+          endTime: optimisticSchedule?.endTime,
+        },
       });
       showToast('check', '예약이 변경되었습니다.');
       return true;
