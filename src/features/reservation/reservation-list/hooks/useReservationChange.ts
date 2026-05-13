@@ -9,6 +9,19 @@ import type { MyReservation } from '@/features/reservation/types';
 import { ApiError } from '@/shared/apis/apiError';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
+/**
+ * ## useReservationChange
+ *
+ * 예약 변경(신청 변경) UI에서 사용하는 상태/데이터/액션을 제공하는 훅입니다.
+ *
+ * @remarks
+ * - 캘린더/시간대/인원 선택에 필요한 상태를 보관합니다.
+ * - 예약 변경 요청을 수행하고, 성공/실패 토스트를 표시합니다.
+ * - `submit()`은 성공 여부만 `boolean`으로 반환하며(throw 하지 않음),
+ *   overlay 닫기/step 초기화는 UI 컨테이너에서 처리합니다.
+ *
+ * @param reservation 변경 대상 예약
+ */
 export const useReservationChange = (reservation: MyReservation) => {
   const activityId = reservation.activity.id;
   const reservationId = reservation.id;
@@ -47,6 +60,11 @@ export const useReservationChange = (reservation: MyReservation) => {
     setMonth(initialDate);
   };
 
+  /**
+   * 예약 변경 API를 호출합니다.
+   *
+   * @returns 성공 시 `true`, 실패(검증 실패/401 포함) 시 `false`
+   */
   const submit = async (): Promise<boolean> => {
     if (!selectedScheduleId) return false;
     try {

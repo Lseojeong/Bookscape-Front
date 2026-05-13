@@ -10,6 +10,14 @@ type ReservationChangePanelProps = {
   onClose: () => void;
 };
 
+/**
+ * ## ReservationChangePanel
+ *
+ * PC에서 사용하는 예약 변경 오른쪽 패널 컨테이너입니다.
+ *
+ * @remarks
+ * - Overlay 레이아웃(오른쪽 패널)만 담당하고, 실제 콘텐츠는 `ReservationChangeContent`에서 렌더링합니다.
+ */
 export default function ReservationChangePanel({
   isOpen,
   reservation,

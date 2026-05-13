@@ -11,6 +11,14 @@ type ReservationChangeSheetProps = {
   onClose: () => void;
 };
 
+/**
+ * ## ReservationChangeSheet
+ *
+ * 모바일에서 사용하는 예약 변경 바텀시트 컨테이너입니다.
+ *
+ * @remarks
+ * - BottomSheet 레이아웃만 담당하고, 실제 콘텐츠는 `ReservationChangeContent`에서 렌더링합니다.
+ */
 export default function ReservationChangeSheet({
   isOpen,
   reservation,

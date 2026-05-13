@@ -17,6 +17,20 @@ type ReservationChangeContentProps = {
   onClose: () => void;
 };
 
+/**
+ * ## ReservationChangeContent
+ *
+ * 예약 변경 UI의 "내용" 컴포넌트입니다.
+ *
+ * @remarks
+ * - 컨테이너(`ReservationChangePanel`, `ReservationChangeSheet`)와 분리되어 있어
+ *   동일한 로직/상태를 PC 패널과 모바일 시트에서 재사용합니다.
+ * - 성공 시에는 내부에서 `onClose()`를 호출하고, 선택 상태를 초기화합니다.
+ *
+ * @param variant `panel`(PC) 또는 `sheet`(모바일)
+ * @param reservation 변경 대상 예약
+ * @param onClose overlay 닫기 콜백
+ */
 export default function ReservationChangeContent({
   variant,
   reservation,
