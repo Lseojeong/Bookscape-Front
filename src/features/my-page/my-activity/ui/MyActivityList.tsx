@@ -29,16 +29,14 @@ export default function MyActivityList() {
     fetchNextPage: query.fetchNextPage,
   });
 
-  if (query.isPending && activities.length === 0 && !isSkeletonVisible) {
-    return null;
-  }
+  if (query.isPending && activities.length === 0) {
+    if (!isSkeletonVisible) return null;
 
-  if (query.isPending && activities.length === 0 && isSkeletonVisible) {
     return (
       <div className="flex flex-col gap-4 md:gap-7.5">
-        <MyActivityCardSkeleton />
-        <MyActivityCardSkeleton />
-        <MyActivityCardSkeleton />
+        {Array.from({ length: 3 }).map((_, i) => (
+          <MyActivityCardSkeleton key={i} />
+        ))}
       </div>
     );
   }

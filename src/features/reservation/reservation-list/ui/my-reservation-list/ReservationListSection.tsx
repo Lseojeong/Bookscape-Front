@@ -50,9 +50,9 @@ export default function ReservationListSection({
       <div className="flex flex-col gap-3">
         <SkeletonDate />
         <div className="flex flex-col gap-7.5">
-          <ReservationCardSkeleton />
-          <ReservationCardSkeleton />
-          <ReservationCardSkeleton />
+          {Array.from({ length: 3 }).map((_, i) => (
+            <ReservationCardSkeleton key={i} />
+          ))}
         </div>
       </div>
     );
