@@ -37,7 +37,7 @@ export default function ActivityShare({ title, description, bannerImageUrl }: Ac
 
   const handleKakaoShare = () => {
     if (!window.Kakao) {
-      showToast('cancel', '카카오 SDK를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+      showToast('cancel', '카카오 공유 기능을 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.');
       return;
     }
     if (!window.Kakao.isInitialized()) {
