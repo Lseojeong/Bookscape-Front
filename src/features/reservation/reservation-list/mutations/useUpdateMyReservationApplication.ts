@@ -2,8 +2,16 @@
 
 import type { InfiniteData, QueryKey } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { cancelMyReservation } from '@/features/reservation/apis';
-import type { GetMyReservationsResponse } from '@/features/reservation/types';
+import { updateMyReservationApplication } from '@/features/reservation/apis';
+import type {
+  GetMyReservationsResponse,
+  UpdateMyReservationApplicationRequestBody,
+} from '@/features/reservation/types';
+
+type UpdateMyReservationApplicationVariables = {
+  reservationId: number;
+  body: UpdateMyReservationApplicationRequestBody;
+};
 
 const hasPages = (
   value: unknown
@@ -17,12 +25,13 @@ const hasReservations = (value: unknown): value is GetMyReservationsResponse => 
   return Array.isArray((value as { reservations?: unknown }).reservations);
 };
 
-export const useCancelMyReservation = () => {
+export const useUpdateMyReservationApplication = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (reservationId: number) => cancelMyReservation(reservationId),
-    onMutate: async (reservationId) => {
+    mutationFn: ({ reservationId, body }: UpdateMyReservationApplicationVariables) =>
+      updateMyReservationApplication(reservationId, body),
+    onMutate: async ({ reservationId, body }) => {
       await queryClient.cancelQueries({ queryKey: ['my-reservations'] });
 
       const previousQueries = queryClient.getQueriesData({ queryKey: ['my-reservations'] });
@@ -30,12 +39,16 @@ export const useCancelMyReservation = () => {
       queryClient.setQueriesData({ queryKey: ['my-reservations'] }, (old) => {
         if (!old) return old;
 
+        // `my-reservations` may be cached either as an infinite query (with `pages`)
+        // or as a single page result (with `reservations`).
         if (hasPages(old)) {
           const infinite = old;
           const nextPages = infinite.pages.map((page) => ({
             ...page,
             reservations: page.reservations.map((r) =>
-              r.id === reservationId ? { ...r, status: 'canceled' as const } : r
+              r.id === reservationId
+                ? { ...r, scheduleId: body.scheduleId, headCount: body.headCount }
+                : r
             ),
           }));
 
@@ -47,7 +60,9 @@ export const useCancelMyReservation = () => {
           return {
             ...page,
             reservations: page.reservations.map((r) =>
-              r.id === reservationId ? { ...r, status: 'canceled' as const } : r
+              r.id === reservationId
+                ? { ...r, scheduleId: body.scheduleId, headCount: body.headCount }
+                : r
             ),
           };
         }
@@ -57,7 +72,7 @@ export const useCancelMyReservation = () => {
 
       return { previousQueries };
     },
-    onError: (_error, _reservationId, context) => {
+    onError: (_error, _variables, context) => {
       context?.previousQueries?.forEach(([queryKey, data]) => {
         queryClient.setQueryData(queryKey as QueryKey, data);
       });
