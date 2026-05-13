@@ -2,7 +2,7 @@
 
 import type { MyReservation } from '@/features/reservation/types';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
-import ReservationChangeWidget from './ReservationChangeWidget';
+import ReservationChangeContent from './ReservationChangeContent';
 
 type ReservationChangePanelProps = {
   isOpen: boolean;
@@ -27,7 +27,7 @@ export default function ReservationChangePanel({
       surfaceClassName="w-[520px]"
       contentClassName="h-full overflow-y-auto p-7.5"
     >
-      <ReservationChangeWidget reservation={reservation} onSuccess={onClose} />
+      <ReservationChangeContent variant="panel" reservation={reservation} onClose={onClose} />
     </OverlayLayer>
   );
 }
