@@ -25,7 +25,7 @@ export default function ReservationListSection({
   selectedStatus,
   emptyMainTextByStatus,
 }: ReservationListSectionProps) {
-  const showSkeleton = useDelayedLoading(isLoading);
+  const isSkeletonVisible = useDelayedLoading(isLoading);
   const reservationsByDate = useMemo(() => {
     const group: Record<string, MyReservation[]> = {};
     const dateOrder: string[] = [];
@@ -41,11 +41,11 @@ export default function ReservationListSection({
     return dateOrder.map((date) => ({ date, items: group[date] ?? [] }));
   }, [reservations]);
 
-  if (isLoading && !showSkeleton) {
+  if (isLoading && !isSkeletonVisible) {
     return null;
   }
 
-  if (showSkeleton) {
+  if (isSkeletonVisible) {
     return (
       <div className="flex flex-col gap-3">
         <SkeletonDate />

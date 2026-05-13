@@ -34,7 +34,7 @@ export default function ReservationStatusClient() {
 
   // 내 체험 리스트 조회
   const { data: activities = [], isError, isLoading, refetch } = useMyActivitiesQuery();
-  const showSkeleton = useDelayedLoading(isLoading);
+  const isSkeletonVisible = useDelayedLoading(isLoading);
 
   // 선택된 체험 ID (미선택 시 첫 번째 체험 자동 선택)
   const activityId = selectedActivityId ?? activities[0]?.id ?? null;
@@ -59,8 +59,8 @@ export default function ReservationStatusClient() {
     requestAnimationFrame(() => setIsPanelOpen(true));
   };
 
-  if (isLoading && !showSkeleton) return null;
-  if (showSkeleton) return <ReservationStatusClientSkeleton />;
+  if (isLoading && !isSkeletonVisible) return null;
+  if (isSkeletonVisible) return <ReservationStatusClientSkeleton />;
 
   if (isError)
     return (

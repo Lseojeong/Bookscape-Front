@@ -13,11 +13,11 @@ import EmptyState from '@/shared/ui/empty-state/EmptyState';
 export default function AllActivitiesSection() {
   const { page, activities, totalPages, handlePageChange, isLoading, isError, refetch } =
     useAllActivityList();
-  const showSkeleton = useDelayedLoading(isLoading);
+  const isSkeletonVisible = useDelayedLoading(isLoading);
 
   return (
     <>
-      {isLoading && !showSkeleton ? null : showSkeleton ? (
+      {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
         <>
           {/* ~ md: 6개 노출, lg: 12개 노출 */}
           <div className="mt-5 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">

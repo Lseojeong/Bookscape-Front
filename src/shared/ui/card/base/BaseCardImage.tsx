@@ -33,15 +33,15 @@ export default function BaseCardImage({
 }: BaseCardImageProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const showSkeleton = useDelayedLoading(!isLoaded);
+  const isSkeletonVisible = useDelayedLoading(!isLoaded);
 
   const src = bannerImageUrl && !hasError ? bannerImageUrl : CardDefaultImage;
 
   return (
     <div className={cn('relative h-full w-full overflow-hidden', containerClassName)}>
-      {!isLoaded && !showSkeleton ? (
+      {!isLoaded && !isSkeletonVisible ? (
         <div className="absolute inset-0 bg-gray-50" />
-      ) : !isLoaded && showSkeleton ? (
+      ) : !isLoaded && isSkeletonVisible ? (
         <Skeleton className="absolute inset-0" />
       ) : null}
       <Image

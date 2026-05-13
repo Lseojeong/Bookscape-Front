@@ -32,7 +32,7 @@ export default function SearchResultSection() {
     isError,
     refetch,
   } = useSearchResult();
-  const showSkeleton = useDelayedLoading(isLoading);
+  const isSkeletonVisible = useDelayedLoading(isLoading);
 
   return (
     <>
@@ -46,7 +46,7 @@ export default function SearchResultSection() {
       </div>
       <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
 
-      {isLoading && !showSkeleton ? null : showSkeleton ? (
+      {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
         <>
           {/* 기본 : 6개 노출, md: 4개 노출, lg: 8개 노출 */}
           <div className="mt-10 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">

@@ -14,7 +14,7 @@ import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSe
 
 export default function MyActivityList() {
   const query = useMyActivities({ size: MY_ACTIVITIES_PAGE_SIZE });
-  const showSkeleton = useDelayedLoading(query.isPending);
+  const isSkeletonVisible = useDelayedLoading(query.isPending);
 
   const activities = useMemo(() => {
     return query.data?.pages.flatMap((page) => page.activities) ?? [];
@@ -29,11 +29,11 @@ export default function MyActivityList() {
     fetchNextPage: query.fetchNextPage,
   });
 
-  if (query.isPending && activities.length === 0 && !showSkeleton) {
+  if (query.isPending && activities.length === 0 && !isSkeletonVisible) {
     return null;
   }
 
-  if (query.isPending && activities.length === 0 && showSkeleton) {
+  if (query.isPending && activities.length === 0 && isSkeletonVisible) {
     return (
       <div className="flex flex-col gap-4 md:gap-7.5">
         <MyActivityCardSkeleton />
