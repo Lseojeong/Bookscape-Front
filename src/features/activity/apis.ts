@@ -3,13 +3,16 @@ import {
   ActivityDetailSchema,
   ActivityResponse,
   ActivityScheduleSchema,
+  ActivityReviewsResponseSchema,
   ActivityResponseSchema,
   GetActivityParams,
+  GetActivityReviewsParams,
 } from '@/features/activity/types';
 import { CreateActivityReservationRequestBody } from '@/features/reservation/types';
 import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
 
+/** 체험 상세 조회 */
 export const getActivityDetail = async (id: number) => {
   const data = await get(`/activities/${id}`);
   const activity = ActivityDetailSchema.parse(data);
@@ -75,4 +78,14 @@ export const getActivityListData = async ({
     size,
   });
   return ActivityResponseSchema.parse(data ?? { activities: [], totalCount: 0 });
+};
+
+/** 체험 후기 조회 */
+export const getActivityReviews = async ({
+  activityId,
+  page = 1,
+  size = 3,
+}: GetActivityReviewsParams) => {
+  const data = await get(`/activities/${activityId}/reviews`, { page, size });
+  return ActivityReviewsResponseSchema.parse(data);
 };
