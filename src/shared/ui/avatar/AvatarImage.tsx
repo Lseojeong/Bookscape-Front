@@ -14,7 +14,6 @@ export default function AvatarImage(props: AvatarImgProps) {
       fill
       className="object-cover"
       onError={() => setImageError(true)}
-      unoptimized // TODO : 스토리북으로 확인했을 때를 위해 임시로 작성, 배포 시 삭제 필요
       {...props}
     />
   );
