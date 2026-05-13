@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateReservationStatus } from '@/features/my-page/apis';
 import type { SellerReservationStatus } from '@/features/my-page/types';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 /**
@@ -39,13 +40,13 @@ export const usePatchReservationStatus = (
       // 이후 백그라운드에서 갱신
       await Promise.all([
         queryClient.invalidateQueries({
-          queryKey: ['my-activities', activityId, 'reservations'],
+          queryKey: [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId, 'reservations'],
         }),
         queryClient.invalidateQueries({
-          queryKey: ['my-activities', activityId, 'reserved-schedule'],
+          queryKey: [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId, 'reserved-schedule'],
         }),
         queryClient.invalidateQueries({
-          queryKey: ['my-activities', activityId, 'reservation-dashboard'],
+          queryKey: [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId, 'reservation-dashboard'],
         }),
       ]);
     },

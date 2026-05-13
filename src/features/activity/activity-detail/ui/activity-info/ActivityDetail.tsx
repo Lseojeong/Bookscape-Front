@@ -35,6 +35,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
       />
       {/* 탭바 */}
       <ActivityTabSection
+        activityId={activity.id}
         description={activity.description}
         address={activity.address}
         className="mt-7"

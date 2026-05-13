@@ -3,6 +3,7 @@ import ActivityDetail from '@/features/activity/activity-detail/ui/activity-info
 import { getActivityDetail } from '@/features/activity/apis';
 import ReservationBar from '@/features/reservation/activity-panel/ui/ReservationBar';
 import ReservationWidget from '@/features/reservation/activity-panel/ui/ReservationWidget';
+import { ApiError } from '@/shared/apis/apiError';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -16,13 +17,18 @@ export default async function ActivityDetailPage({ params }: Props) {
     notFound();
   }
 
-  const activity = await getActivityDetail(activityId);
+  const activity = await getActivityDetail(activityId).catch((error) => {
+    if (error instanceof ApiError && error.status === 404) {
+      notFound();
+    }
+    throw error;
+  });
 
   if (!activity) notFound();
 
   return (
     <>
-      <div className="mx-auto max-w-280 px-6 pt-7.5 pb-30 md:px-7.5 md:pt-8.5 lg:flex lg:gap-10 lg:px-10 lg:pt-22 lg:pb-0">
+      <div className="mx-auto max-w-280 px-6 pt-7.5 pb-30 md:px-7.5 md:pt-8.5 lg:flex lg:gap-10 lg:px-10 lg:pt-22">
         <ActivityDetail activity={activity} />
         <aside className="hidden lg:block lg:w-102.5">
           <ReservationWidget activityId={activityId} />

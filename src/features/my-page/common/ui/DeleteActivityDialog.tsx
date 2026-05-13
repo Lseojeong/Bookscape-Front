@@ -1,5 +1,8 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { useDeleteActivity } from '@/features/my-page/common/mutations/useDeleteActivity';
+import { ApiError } from '@/shared/apis/apiError';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -30,6 +33,17 @@ export default function DeleteActivityDialog({ id, isOpen, onClose }: DeleteActi
             router.push('/mypage/activity');
           },
           onError: (error) => {
+            if (error instanceof ApiError) {
+              if (error.status === 401) {
+                showToast('cancel', '로그인이 필요합니다.');
+                router.push('/login');
+                return;
+              }
+
+              showToast('cancel', error.message);
+              return;
+            }
+
             const message = error instanceof Error ? error.message : '체험 삭제에 실패했습니다.';
             showToast('cancel', message);
           },

@@ -6,6 +6,10 @@ import { useReservationPanel } from '@/features/my-page/reservation-status/hooks
 import { usePatchReservationStatus } from '@/features/my-page/reservation-status/mutations/usePatchReservationStatus';
 import { useReservationsQuery } from '@/features/my-page/reservation-status/queries/useReservationsQuery';
 import ReservationCard from '@/features/my-page/reservation-status/ui/pannel/ReservationCard';
+import ReservationCardSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationCardSkeleton';
+import ReservationDropdownSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationDropdownSkeleton';
+import ReservationPanelContentSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationPanelContentSkeleton';
+import ReservationTabBarSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationTabBarSkeleton';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
@@ -17,7 +21,7 @@ import SelectDropdownTrigger from '@/shared/ui/dropdown/select/SelectDropdownTri
 import SelectDropdownValue from '@/shared/ui/dropdown/select/SelectDropdownValue';
 import FormLabel from '@/shared/ui/form/FormLabel';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
-import Loading from '@/shared/ui/loading/Loading';
+import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 
 type ReservationPanelContentProps = {
@@ -132,7 +136,11 @@ export default function ReservationPanelContent({
     <div className="relative flex h-full w-full flex-col overflow-hidden">
       {/* 헤더 */}
       <div className="shrink-0">
-        <p className="typo-18-bold lg:typo-24-bold">{formatDate(date)}</p>
+        {isAllLoading ? (
+          <Skeleton className="h-6 w-30 rounded-xl md:w-2/6" />
+        ) : (
+          <p className="typo-18-bold lg:typo-24-bold">{formatDate(date)}</p>
+        )}
         {!isMobile && (
           <button
             type="button"
@@ -148,11 +156,7 @@ export default function ReservationPanelContent({
       {/* 탭 - 최초 진입 시만 스켈레톤 */}
       <div className="mt-4.5 shrink-0">
         {isAllLoading ? (
-          <div className="flex gap-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-10 flex-1 animate-pulse rounded-lg" />
-            ))}
-          </div>
+          <ReservationTabBarSkeleton />
         ) : (
           <TabBar
             tabs={TABS}
@@ -166,9 +170,7 @@ export default function ReservationPanelContent({
       {/* 콘텐츠 - 최초 진입 시 전체 로딩 */}
       <div className="flex min-h-0 flex-1 flex-col">
         {isAllLoading ? (
-          <div className="mt-6 flex justify-center">
-            <Loading size={16} color="var(--color-gray-400)" />
-          </div>
+          <ReservationPanelContentSkeleton />
         ) : availableSchedules.length === 0 ? (
           <p className="mt-3 text-center typo-14-medium text-gray-400">
             {TAB_LABELS[activeTab]} 내역이 없습니다.
@@ -178,26 +180,30 @@ export default function ReservationPanelContent({
             {/* 시간대 선택 */}
             <div className="md:w-1/2 lg:w-full">
               <FormLabel className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약 시간</FormLabel>
-              <SelectDropdown
-                value={String(selectedScheduleId)}
-                onChangeValue={(id) => setSelectedScheduleId(Number(id))}
-              >
-                <SelectDropdownTrigger>
-                  <SelectDropdownValue
-                    render={(value) => {
-                      const s = availableSchedules.find((s) => String(s.scheduleId) === value);
-                      return s ? `${s.startTime}~${s.endTime}` : '';
-                    }}
-                  />
-                </SelectDropdownTrigger>
-                <SelectDropdownContent>
-                  {availableSchedules.map((s) => (
-                    <SelectDropdownItem key={s.scheduleId} value={String(s.scheduleId)}>
-                      {s.startTime}~{s.endTime}
-                    </SelectDropdownItem>
-                  ))}
-                </SelectDropdownContent>
-              </SelectDropdown>
+              {isLoading ? (
+                <ReservationDropdownSkeleton />
+              ) : (
+                <SelectDropdown
+                  value={String(selectedScheduleId)}
+                  onChangeValue={(id) => setSelectedScheduleId(Number(id))}
+                >
+                  <SelectDropdownTrigger>
+                    <SelectDropdownValue
+                      render={(value) => {
+                        const s = availableSchedules.find((s) => String(s.scheduleId) === value);
+                        return s ? `${s.startTime}~${s.endTime}` : '';
+                      }}
+                    />
+                  </SelectDropdownTrigger>
+                  <SelectDropdownContent>
+                    {availableSchedules.map((s) => (
+                      <SelectDropdownItem key={s.scheduleId} value={String(s.scheduleId)}>
+                        {s.startTime}~{s.endTime}
+                      </SelectDropdownItem>
+                    ))}
+                  </SelectDropdownContent>
+                </SelectDropdown>
+              )}
             </div>
 
             {/* 카드 목록 - 무한스크롤 적용 */}
@@ -206,10 +212,11 @@ export default function ReservationPanelContent({
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <div className="flex flex-col gap-3">
                   {isLoading ? (
-                    // TODO: 스켈레톤 UI로 교체
-                    <div className="flex justify-center">
-                      <Loading size={16} color="var(--color-gray-400)" />
-                    </div>
+                    <>
+                      {Array.from({ length: 2 }).map((_, i) => (
+                        <ReservationCardSkeleton key={i} />
+                      ))}
+                    </>
                   ) : isError ? (
                     <div className="flex flex-col items-center gap-3">
                       <p className="text-center typo-14-medium whitespace-pre-line text-gray-400">
