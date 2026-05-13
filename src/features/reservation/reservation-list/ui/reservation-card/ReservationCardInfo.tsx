@@ -65,6 +65,7 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
           type="reservation"
           status={status}
           reviewSubmitted={reviewSubmitted}
+          reservationId={id}
           activityId={activity.id}
           onReviewClick={() => setIsReviewOpen(true)}
         />

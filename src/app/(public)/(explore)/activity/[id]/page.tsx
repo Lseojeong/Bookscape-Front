@@ -3,6 +3,7 @@ import ActivityDetail from '@/features/activity/activity-detail/ui/activity-info
 import { getActivityDetail } from '@/features/activity/apis';
 import ReservationBar from '@/features/reservation/activity-panel/ui/ReservationBar';
 import ReservationWidget from '@/features/reservation/activity-panel/ui/ReservationWidget';
+import { ApiError } from '@/shared/apis/apiError';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -16,7 +17,12 @@ export default async function ActivityDetailPage({ params }: Props) {
     notFound();
   }
 
-  const activity = await getActivityDetail(activityId);
+  const activity = await getActivityDetail(activityId).catch((error) => {
+    if (error instanceof ApiError && error.status === 404) {
+      notFound();
+    }
+    throw error;
+  });
 
   if (!activity) notFound();
 
