@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
-import MyPageSidebar from '@/features/my-page/common/ui/MyPageSidebar';
+import MyPageSidebar from '@/features/my-page/common/ui/sidebar/MyPageSidebar';
 
 const meta: Meta<typeof MyPageSidebar> = {
   title: 'Features/MyPage/MyPageSidebar',
