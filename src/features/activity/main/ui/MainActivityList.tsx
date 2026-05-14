@@ -42,7 +42,7 @@ export default function MainActivityList() {
       {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
         <>
           {/* 기본: 1개 반 노출, md: 2개 노출, lg: 8개 노출 */}
-          <div className="flex gap-4 overflow-visible md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-6">
+          <div className="flex gap-4 overflow-hidden p-2 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
               <ActivityCardSkeleton
                 key={i}
