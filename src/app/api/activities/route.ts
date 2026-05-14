@@ -1,4 +1,4 @@
-import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/constants/validation';
+import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/common/constants/validation';
 import type {
   CreateActivityRequestBody,
   CreateActivityResponse,

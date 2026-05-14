@@ -5,8 +5,8 @@ import { cn } from '@/shared/utils/cn';
 import ActivityCardInfo from './ActivityCardInfo';
 
 /**
- * TODO: 임시 타입 정의 (삭제 예정)
- * - 현재 API 응답 구조를 정의하지않아 페이지 기능 구현 시 정의 후 삭제 예정
+ * ActivityCard에서 사용하는 데이터 타입
+ * - Activity 전체 타입에 의존하지 않고 필요한 값만 명시적으로 정의
  */
 export type ActivityCardData = {
   title: string;

@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { useActivityList } from '@/features/activity/hooks/useActivityList';
-import { useActivityListData } from '@/features/activity/queries/useActivityListData';
+import { useActivityList } from '@/features/activity/common/hooks/useActivityList';
+import { useActivityListData } from '@/features/activity/common/queries/useActivityListData';
 
 /**
  * 검색 결과 페이지의 상태 및 데이터 패칭 로직을 관리하는 훅입니다.
@@ -18,13 +18,22 @@ export const useSearchResult = () => {
   const keyword = searchParams.get('keyword') ?? '';
   const category = searchParams.get('category') ?? '전체';
 
-  const { page, activities, totalCount, totalPages, updateParams, handlePageChange } =
-    useActivityList({
-      keyword,
-      category,
-      pageSize: { mobile: 6, tablet: 4, desktop: 8 },
-      basePath: '/search',
-    });
+  const {
+    page,
+    activities,
+    totalCount,
+    totalPages,
+    updateParams,
+    handlePageChange,
+    isLoading,
+    isError,
+    refetch,
+  } = useActivityList({
+    keyword,
+    category,
+    pageSize: { mobile: 6, tablet: 4, desktop: 8 },
+    basePath: '/search',
+  });
 
   const handleChangeCategory = (newCategory: string) => {
     updateParams({ category: newCategory, page: '1' });
@@ -48,5 +57,8 @@ export const useSearchResult = () => {
     totalPages,
     totalResultCount,
     handlePageChange,
+    isLoading,
+    isError,
+    refetch,
   };
 };

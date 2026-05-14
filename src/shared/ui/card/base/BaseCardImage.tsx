@@ -2,6 +2,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { CardDefaultImage } from '@/shared/assets/images';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
+import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import { cn } from '@/shared/utils/cn';
 
 type BaseCardImageProps = {
@@ -30,19 +32,27 @@ export default function BaseCardImage({
   imageClassName,
 }: BaseCardImageProps) {
   const [hasError, setHasError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const isSkeletonVisible = useDelayedLoading(!isLoaded);
 
   const src = bannerImageUrl && !hasError ? bannerImageUrl : CardDefaultImage;
 
   return (
     <div className={cn('relative h-full w-full overflow-hidden', containerClassName)}>
+      {!isLoaded && !isSkeletonVisible ? (
+        <div className="absolute inset-0 bg-gray-50" />
+      ) : !isLoaded && isSkeletonVisible ? (
+        <Skeleton className="absolute inset-0" />
+      ) : null}
       <Image
         src={src}
         alt={alt ?? '체험 배너 이미지'}
         fill
-        unoptimized // TODO : 스토리북에서 미리보기를 위해 임시로 작성, 배포 시 삭제 필요
-        className={cn('object-cover', imageClassName)}
+        className={cn('object-cover', !isLoaded && 'invisible', imageClassName)}
+        onLoad={() => setIsLoaded(true)}
         onError={() => {
           if (!hasError) setHasError(true);
+          setIsLoaded(true);
         }}
       />
     </div>

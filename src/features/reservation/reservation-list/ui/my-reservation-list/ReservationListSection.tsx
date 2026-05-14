@@ -2,9 +2,11 @@
 
 import { useMemo } from 'react';
 import ReservationCard from '@/features/reservation/reservation-list/ui/reservation-card/ReservationCard';
+import ReservationCardSkeleton from '@/features/reservation/reservation-list/ui/skeleton/ReservationCardSkeleton';
 import type { MyReservation } from '@/features/reservation/types';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
-import Loading from '@/shared/ui/loading/Loading';
+import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 import { formatYmdToDot } from '@/shared/utils/dateFormat';
 
@@ -14,6 +16,7 @@ type ReservationListSectionProps = {
   reservations: MyReservation[];
   selectedStatus: ReservationStatus | '';
   emptyMainTextByStatus: Record<ReservationStatus | '', string>;
+  onReservationChangeClick?: (reservation: MyReservation) => void;
 };
 
 export default function ReservationListSection({
@@ -22,7 +25,9 @@ export default function ReservationListSection({
   reservations,
   selectedStatus,
   emptyMainTextByStatus,
+  onReservationChangeClick,
 }: ReservationListSectionProps) {
+  const isSkeletonVisible = useDelayedLoading(isLoading);
   const reservationsByDate = useMemo(() => {
     const group: Record<string, MyReservation[]> = {};
     const dateOrder: string[] = [];
@@ -38,11 +43,19 @@ export default function ReservationListSection({
     return dateOrder.map((date) => ({ date, items: group[date] ?? [] }));
   }, [reservations]);
 
-  if (isLoading) {
+  if (isLoading && !isSkeletonVisible) {
+    return null;
+  }
+
+  if (isSkeletonVisible) {
     return (
-      <div className="flex justify-center py-10">
-        {/* TODO: 예약내역 로딩 스켈레톤 UI로 교체 */}
-        <Loading />
+      <div className="flex flex-col gap-3">
+        <SkeletonDate />
+        <div className="flex flex-col gap-7.5">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <ReservationCardSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -68,7 +81,11 @@ export default function ReservationListSection({
           <p className="typo-16-bold text-gray-800">{formatYmdToDot(date)}</p>
           <div className="flex flex-col gap-7.5">
             {items.map((reservation) => (
-              <ReservationCard key={reservation.id} data={reservation} />
+              <ReservationCard
+                key={reservation.id}
+                data={reservation}
+                onReservationChangeClick={onReservationChangeClick}
+              />
             ))}
           </div>
           {index !== reservationsByDate.length - 1 && <div className="mt-5 h-px bg-gray-50" />}
@@ -76,4 +93,8 @@ export default function ReservationListSection({
       ))}
     </div>
   );
+}
+
+function SkeletonDate() {
+  return <Skeleton className="h-5 w-24 rounded-md" />;
 }

@@ -1,9 +1,12 @@
 'use client';
+import ActivityListWithPagination from '@/features/activity/common/ui/ActivityListWithPagination';
+import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import { useSearchResult } from '@/features/activity/search/hooks/useSearchResult';
-import ActivityListWithPagination from '@/features/activity/ui/ActivityListWithPagination';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
+import { cn } from '@/shared/utils/cn';
 
 /**
  * 검색 결과 섹션 컴포넌트입니다.
@@ -25,7 +28,11 @@ export default function SearchResultSection() {
     totalPages,
     totalResultCount,
     handlePageChange,
+    isLoading,
+    isError,
+    refetch,
   } = useSearchResult();
+  const isSkeletonVisible = useDelayedLoading(isLoading);
 
   return (
     <>
@@ -39,7 +46,30 @@ export default function SearchResultSection() {
       </div>
       <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
 
-      {activities.length === 0 ? (
+      {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
+        <>
+          {/* 기본 : 6개 노출, md: 4개 노출, lg: 8개 노출 */}
+          <div className="mt-10 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <ActivityCardSkeleton
+                key={i}
+                className={cn(
+                  i >= 4 && i < 6 ? 'md:hidden lg:block' : '',
+                  i >= 6 ? 'hidden lg:block' : ''
+                )}
+              />
+            ))}
+          </div>
+        </>
+      ) : isError ? (
+        <div className="mt-10">
+          <EmptyState
+            type="error"
+            mainText={'문제가 발생했어요.\n잠시 후 다시 시도해주세요.'}
+            onRetry={refetch}
+          />
+        </div>
+      ) : activities.length === 0 ? (
         <EmptyState type="search" mainText={'검색 결과가 없습니다.\n다른 키워드로 검색해주세요!'} />
       ) : (
         <div className="mt-6 flex flex-col items-center gap-6 md:gap-7.5">

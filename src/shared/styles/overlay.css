@@ -26,6 +26,10 @@
   @apply w-full rounded-2xl bg-white p-6 shadow-card;
 }
 
+.overlay-surface-panel {
+  @apply w-full rounded-l-2xl rounded-r-none bg-white p-6 shadow-card;
+}
+
 .dialog-surface-animation {
   will-change: transform, opacity;
   animation: dialogSlideUp 350ms ease-out both;

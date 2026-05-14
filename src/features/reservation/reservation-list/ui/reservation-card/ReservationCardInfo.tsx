@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { RESERVATION_UI_MESSAGES } from '@/features/reservation/reservation-list/constants/messages';
+import { useExpiredPendingReservation } from '@/features/reservation/reservation-list/hooks/useExpiredPendingReservation';
 import { useCreateMyReservationReviewMutation } from '@/features/reservation/reservation-list/mutations/useCreateMyReservationReviewMutation';
 import ReviewModal from '@/features/reservation/reservation-list/ui/review-modal/ReviewModal';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
@@ -23,7 +25,10 @@ import type { ReservationCardProps } from './ReservationCard';
  * <ReservationCardInfo data={data} />
  * ```
  */
-export default function ReservationCardInfo({ data }: ReservationCardProps) {
+export default function ReservationCardInfo({
+  data,
+  onReservationChangeClick,
+}: ReservationCardProps) {
   const { id, activity, totalPrice, headCount, status, date, startTime, endTime, reviewSubmitted } =
     data;
   const { title } = activity;
@@ -32,11 +37,22 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
   const createReviewMutation = useCreateMyReservationReviewMutation();
 
   const scheduleText = formatReservationScheduleText({ date, startTime, endTime, headCount });
+  const isExpiredPending = useExpiredPendingReservation({ status, date, startTime });
+  const pendingDisabledMessage = RESERVATION_UI_MESSAGES.PENDING_CHANGE_DISABLED_EXPIRED;
 
   return (
     <BaseCardInfo className={cn(cardInfoStyles)}>
-      {/* 예약 상태 뱃지 */}
-      <StateBadge status={status} className="w-fit" />
+      <div className="flex items-center justify-between gap-3">
+        {/* 예약 상태 뱃지 */}
+        <StateBadge
+          status={status}
+          labelOverride={isExpiredPending ? '만료(미승인)' : undefined}
+          className="w-fit"
+        />
+        {isExpiredPending && (
+          <p className="typo-12-medium text-gray-500">{pendingDisabledMessage}</p>
+        )}
+      </div>
 
       {/* 체험명 + 예약 일정 */}
       <div className="mt-2 mb-2 flex flex-col gap-1 lg:mt-3 lg:mb-1.5 lg:gap-2">
@@ -65,8 +81,12 @@ export default function ReservationCardInfo({ data }: ReservationCardProps) {
           type="reservation"
           status={status}
           reviewSubmitted={reviewSubmitted}
+          reservationId={id}
           activityId={activity.id}
           onReviewClick={() => setIsReviewOpen(true)}
+          onReservationChangeClick={() => onReservationChangeClick?.(data)}
+          isChangeDisabled={isExpiredPending}
+          changeDisabledMessage={isExpiredPending ? pendingDisabledMessage : undefined}
         />
       </div>
 
