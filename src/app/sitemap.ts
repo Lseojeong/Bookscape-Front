@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const response = await serverFetch.get<ActivitiesResponse>(
       `/activities`,
-      { method: 'offset', size: 100 },
+      { method: 'offset', size: 1000 },
       { cache: 'no-store' }
     );
 
