@@ -25,8 +25,16 @@ type ProfileImageUploadProps = {
  * @param initialImageUrl - 초기 프로필 이미지 URL
  * @param onFileChange - 파일 선택 시 호출되는 콜백
  * @param onReset - 기본 프로필로 변경 시 호출되는 콜백
- *
- */ export default function ImageUploadBox({
+ * @example
+ * ```tsx
+ * <ImageUploadBox
+ *   initialImageUrl="https://example.com/profile.jpg"
+ *   onFileChange={(file) => console.log(file)}
+ *   onReset={() => console.log('reset')}
+ * />
+ * ```
+ */
+export default function ImageUploadBox({
   initialImageUrl,
   onFileChange,
   onReset,
