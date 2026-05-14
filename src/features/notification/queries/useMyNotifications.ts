@@ -28,7 +28,7 @@ export const useMyNotifications = ({ size = MY_NOTIFICATIONS_PAGE_SIZE } = {}) =
     QueryKey,
     number | undefined
   >({
-    queryKey: QUERY_KEYS.MY_NOTIFICATIONS(size),
+    queryKey: QUERY_KEYS.MY_NOTIFICATIONS(userId, size),
     enabled: !!userId,
     initialPageParam: undefined,
     queryFn: async ({ pageParam }) =>

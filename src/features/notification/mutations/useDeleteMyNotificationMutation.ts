@@ -2,23 +2,29 @@ import type { InfiniteData } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteMyNotification } from '@/features/notification/apis';
 import type { GetMyNotificationsParsedResponse } from '@/features/notification/types';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { useUserStore } from '@/shared/stores/userStore';
 
 export const useDeleteMyNotificationMutation = () => {
   const queryClient = useQueryClient();
+  const userId = useUserStore((s) => s.user?.id);
+  const myNotificationsQueryKey = QUERY_KEYS.MY_NOTIFICATIONS_BASE(userId);
 
   return useMutation({
     mutationFn: deleteMyNotification,
     onMutate: async (notificationId) => {
-      await queryClient.cancelQueries({ queryKey: ['my-notifications'] });
+      if (!userId) return;
+
+      await queryClient.cancelQueries({ queryKey: myNotificationsQueryKey });
 
       const previousQueries = queryClient.getQueriesData<
         InfiniteData<GetMyNotificationsParsedResponse>
       >({
-        queryKey: ['my-notifications'],
+        queryKey: myNotificationsQueryKey,
       });
 
       queryClient.setQueriesData<InfiniteData<GetMyNotificationsParsedResponse>>(
-        { queryKey: ['my-notifications'] },
+        { queryKey: myNotificationsQueryKey },
         (old) => {
           if (!old) return old;
           return {
@@ -42,7 +48,8 @@ export const useDeleteMyNotificationMutation = () => {
     // onMutate에서 이미 낙관적 업데이트를 수행합니다.
     onSuccess: () => {},
     onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey: ['my-notifications'] });
+      if (!userId) return;
+      void queryClient.invalidateQueries({ queryKey: myNotificationsQueryKey });
     },
   });
 };

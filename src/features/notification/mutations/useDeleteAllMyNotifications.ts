@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { deleteMyNotification } from '@/features/notification/apis';
 import type { GetMyNotificationsParsedResponse } from '@/features/notification/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 type UseDeleteAllMyNotificationsParams = {
@@ -16,12 +17,14 @@ type UseDeleteAllMyNotificationsParams = {
 export const useDeleteAllMyNotifications = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToastStore();
+  const userId = useUserStore((s) => s.user?.id);
 
   const deleteAll = useCallback(
     async ({ ids, onStart }: UseDeleteAllMyNotificationsParams) => {
       if (ids.length === 0) return;
+      if (!userId) return;
 
-      const myNotificationsQueryKey = QUERY_KEYS.MY_NOTIFICATIONS_BASE();
+      const myNotificationsQueryKey = QUERY_KEYS.MY_NOTIFICATIONS_BASE(userId);
 
       onStart?.();
 
@@ -74,7 +77,7 @@ export const useDeleteAllMyNotifications = () => {
         queryKey: myNotificationsQueryKey,
       });
     },
-    [queryClient, showToast]
+    [queryClient, showToast, userId]
   );
 
   return { deleteAll };
