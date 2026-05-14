@@ -1,16 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { getMe } from '@/features/user/apis';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { userMeQueryOptions } from '@/features/user/queries/userMeQueryOptions';
 
 /**
  * 내 정보 조회 훅
  *
  * @description
- * 로그인한 사용자의 정보를 조회합니다.
+ * - `userMeQueryOptions`를 기반으로 로그인한 사용자의 정보를 조회합니다.
+
  */
-export const useMyInfoQuery = () => {
-  return useQuery({
-    queryKey: QUERY_KEYS.USER_ME(),
-    queryFn: getMe,
-  });
-};
+export const useMyInfoQuery = () => useQuery(userMeQueryOptions());

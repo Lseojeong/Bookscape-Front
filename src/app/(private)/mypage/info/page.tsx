@@ -1,8 +1,7 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import { getMe } from '@/features/user/apis';
+import { userMeQueryOptions } from '@/features/user/queries/userMeQueryOptions';
 import MyInfoClient from '@/features/user/ui/MyInfoClient';
 import MyInfoPageHeader from '@/features/user/ui/MyInfoPageHeader';
-import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 /**
  * 내 정보 페이지
@@ -16,10 +15,7 @@ import { getQueryClient } from '@/shared/utils/getQueryClient';
 export default async function MyInfoPage() {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: QUERY_KEYS.USER_ME(),
-    queryFn: getMe,
-  });
+  await queryClient.prefetchQuery(userMeQueryOptions());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
