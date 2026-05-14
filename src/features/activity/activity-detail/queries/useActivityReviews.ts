@@ -13,7 +13,7 @@ export const useActivityReviews = (
 
   return useQuery({
     queryKey: QUERY_KEYS.ACTIVITY_REVIEWS(activityId, page),
-    queryFn: () => getActivityReviews({ activityId, page }),
+    queryFn: () => getActivityReviews({ activityId, page, size: 3 }),
     initialData: page === 1 ? initialData : undefined,
     initialDataUpdatedAt: page === 1 && initialData ? initialDataUpdatedAt : undefined,
   });
