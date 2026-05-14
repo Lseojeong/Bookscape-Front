@@ -28,12 +28,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const activities = response?.activities || [];
 
     if (activities.length > 0) {
-      dynamicRoutes = activities.map((activity) => ({
-        url: `${baseUrl}/activity/${activity.id}`,
-        lastModified: new Date(activity.updatedAt), // 마지막 수정 시간
-        changeFrequency: 'weekly' as const, // 주에 한 번 확인
-        priority: 0.8, // 페이지 중요도
-      }));
+      dynamicRoutes = activities
+        .filter((activity) => {
+          const date = new Date(activity.updatedAt);
+          return !isNaN(date.getTime()); // 날짜가 유효할 때만 통과
+        })
+        .map((activity) => ({
+          url: `${baseUrl}/activity/${activity.id}`,
+          lastModified: new Date(activity.updatedAt), // 마지막 수정 시간
+          changeFrequency: 'weekly' as const, // 주에 한 번 확인
+          priority: 0.8, // 페이지 중요도
+        }));
     }
   } catch (error) {
     //NOTE: 브라우저 화면이 없는 서버 환경이므로 console.error 사용하여 에러 확인
