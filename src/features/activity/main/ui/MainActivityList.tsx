@@ -42,17 +42,20 @@ export default function MainActivityList() {
       {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
         <>
           {/* 기본: 1개 반 노출, md: 2개 노출, lg: 8개 노출 */}
-          <div className="flex gap-4 overflow-hidden p-2 md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-6">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <ActivityCardSkeleton
-                key={i}
-                className={cn(
-                  'w-[calc(70%-6px)] shrink-0',
-                  'md:w-auto md:shrink',
-                  i >= 2 ? 'hidden lg:block' : ''
-                )}
-              />
-            ))}
+          <div className="overflow-hidden pb-4">
+            <ul className="flex gap-4 md:gap-5 lg:gap-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <li
+                  key={i}
+                  className={cn(
+                    'w-[calc((100%-50px*2)/2)] min-w-50 flex-none md:w-[calc((100%-20px*1)/2)] lg:w-[calc((100%-24px*3)/4)]',
+                    i >= 3 ? 'hidden lg:block' : ''
+                  )}
+                >
+                  <ActivityCardSkeleton />
+                </li>
+              ))}
+            </ul>
           </div>
         </>
       ) : isError ? (
