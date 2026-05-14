@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { getAuthCookie } from '@/features/auth/utils/cookies';
 import { FetchRequestOptions, QueryParams, RequestConfig } from '@/shared/apis/base/coreFetch';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
@@ -34,8 +34,7 @@ const request = async <T>({
   ...options
 }: RequestConfig): Promise<T | null> => {
   // 1. 쿠키에서 토큰 꺼내기
-  const cookieStore = await cookies();
-  const token = cookieStore.get('accessToken')?.value;
+  const token = await getAuthCookie('accessToken');
 
   // 2. 기존 headers + Authorization 병합
   const headers = new Headers(options.headers ?? {});

@@ -78,6 +78,9 @@ export default function OverlayLayer({
     return null;
   }
 
+  const surfaceBaseClassName =
+    position === 'right' && variant === 'panel' ? 'overlay-surface-panel' : 'overlay-surface';
+
   return (
     <OverlayPortal>
       <div
@@ -102,7 +105,7 @@ export default function OverlayLayer({
             role="dialog"
             aria-modal="true"
             aria-label={ariaLabel}
-            className={cn('overlay-surface', contentClassName)}
+            className={cn(surfaceBaseClassName, contentClassName)}
           >
             {children}
           </div>

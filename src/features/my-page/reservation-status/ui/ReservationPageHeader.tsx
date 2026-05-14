@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 
 /**
@@ -9,12 +8,10 @@ import PageHeader from '@/shared/ui/page-header/PageHeader';
  * - `useRouter`를 사용하므로 클라이언트 컴포넌트로 분리합니다.
  */
 export default function ReservationPageHeader() {
-  const router = useRouter();
   return (
     <PageHeader
       title="예약 현황"
       description="내 체험에 예약된 내역들을 한 눈에 확인할 수 있습니다."
-      onBack={() => router.back()}
     />
   );
 }
