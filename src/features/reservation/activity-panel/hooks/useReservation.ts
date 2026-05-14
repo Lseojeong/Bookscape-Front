@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
-import type { ActivityDetail } from '@/features/activity/types';
+import type { ActivityDetail, ActivitySchedule } from '@/features/activity/types';
 import { useCreateReservation } from '@/features/reservation/activity-panel/mutations/useCreateReservation';
 import { useAvailableSchedule } from '@/features/reservation/activity-panel/queries/useAvailableSchedule';
 import { useMyReservations } from '@/features/reservation/activity-panel/queries/useMyReservations';
@@ -12,11 +12,19 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 type InitialOptions = {
   initialActivityData?: ActivityDetail;
+  initialScheduleData?: ActivitySchedule[];
+  initialScheduleYear?: string;
+  initialScheduleMonth?: string;
 };
 
 export const useReservation = (
   activityId: number,
-  { initialActivityData }: InitialOptions = {}
+  {
+    initialActivityData,
+    initialScheduleData,
+    initialScheduleYear,
+    initialScheduleMonth,
+  }: InitialOptions = {}
 ) => {
   // 외부 훅
   const { data } = useActivityDetail(activityId, initialActivityData);
@@ -39,7 +47,11 @@ export const useReservation = (
   const monthStr = format(month, 'MM');
 
   // 파생 훅
-  const { data: availableSchedules } = useAvailableSchedule(activityId, year, monthStr);
+  const { data: availableSchedules } = useAvailableSchedule(activityId, year, monthStr, {
+    initialData: initialScheduleData,
+    initialYear: initialScheduleYear,
+    initialMonth: initialScheduleMonth,
+  });
 
   // 파생 값
   const selectedDateStr = selected ? format(selected, 'yyyy-MM-dd') : null;

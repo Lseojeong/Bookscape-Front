@@ -1,6 +1,6 @@
 'use client';
 
-import type { ActivityDetail } from '@/features/activity/types';
+import type { ActivityDetail, ActivitySchedule } from '@/features/activity/types';
 import { useReservation } from '@/features/reservation/activity-panel/hooks/useReservation';
 import HeadCountControl from '@/features/reservation/activity-panel/ui/HeadCountControl';
 import ReservationCalendar from '@/features/reservation/activity-panel/ui/ReservationCalendar';
@@ -12,6 +12,9 @@ import PriceDisplay from '@/shared/ui/price/PriceDisplay';
 type ReservationWidgetProps = {
   activityId: number;
   initialActivityData?: ActivityDetail;
+  initialScheduleData?: ActivitySchedule[];
+  initialScheduleYear?: string;
+  initialScheduleMonth?: string;
 };
 
 /**
@@ -25,12 +28,18 @@ type ReservationWidgetProps = {
  * <ReservationWidget
  *   activityId={activityId}
  *   initialActivityData={initialActivityData}
+ *   initialScheduleData={initialScheduleData}
+ *   initialScheduleYear={initialScheduleYear}
+ *   initialScheduleMonth={initialScheduleMonth}
  * />
  * ```
  */
 export default function ReservationWidget({
   activityId,
   initialActivityData,
+  initialScheduleData,
+  initialScheduleYear,
+  initialScheduleMonth,
 }: ReservationWidgetProps) {
   const {
     price,
@@ -47,7 +56,12 @@ export default function ReservationWidget({
     isOwner,
     myBlockedScheduleIds,
     availableDates,
-  } = useReservation(activityId, { initialActivityData });
+  } = useReservation(activityId, {
+    initialActivityData,
+    initialScheduleData,
+    initialScheduleYear,
+    initialScheduleMonth,
+  });
 
   return (
     <div className="flex flex-col gap-6 rounded-3xl border border-gray-50 p-7.5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
