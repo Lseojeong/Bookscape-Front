@@ -28,6 +28,9 @@ type ToastStore = {
  *
  * // 경고
  * showToast('warning', '작업 중 문제가 발생했습니다.');
+ *
+ * // 정보
+ * showToast('info', '알림을 확인해주세요.');
  * ```
  */
 export const useToastStore = create<ToastStore>((set) => ({
