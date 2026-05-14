@@ -86,11 +86,7 @@ export default function ReservationListView() {
   return (
     <div className="flex flex-col gap-7.5 pb-17.5">
       <div className="flex flex-col gap-3.5">
-        <PageHeader
-          title="예약내역"
-          description="예약내역 변경 및 취소할 수 있습니다."
-          onBack={() => router.back()}
-        />
+        <PageHeader title="예약내역" description="예약내역 변경 및 취소할 수 있습니다." />
 
         <StatusFilter selectedStatus={selectedStatus} onSelectStatus={handleSelectStatus} />
       </div>

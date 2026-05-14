@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 
 /**
@@ -10,13 +9,5 @@ import PageHeader from '@/shared/ui/page-header/PageHeader';
  * `useRouter`를 사용하므로 클라이언트 컴포넌트로 분리합니다.
  */
 export default function MyInfoPageHeader() {
-  const router = useRouter();
-
-  return (
-    <PageHeader
-      title="내 정보"
-      description="닉네임과 비밀번호를 수정하실 수 있습니다."
-      onBack={() => router.back()}
-    />
-  );
+  return <PageHeader title="내 정보" description="닉네임과 비밀번호를 수정하실 수 있습니다." />;
 }
