@@ -53,7 +53,6 @@ export default function ActivityFormPageShell({
     }
   });
 
-  const handleHeaderBackClick = () => setModalType('leave');
   const handleCancelClick = () => setModalType('reset');
 
   const handleConfirmLeave = () => {
@@ -71,7 +70,7 @@ export default function ActivityFormPageShell({
     <div className={mainClassName}>
       <div className={containerClassName}>
         <div className="mb-10">
-          <PageHeader title={title} onBack={handleHeaderBackClick} />
+          <PageHeader title={title} />
         </div>
 
         {/* 수정 모드일 때는 데이터가 있어야만 렌더링, 등록 모드는 항상 렌더링 */}
