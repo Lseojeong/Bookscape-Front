@@ -25,8 +25,7 @@ const BFF_BASE_URL = '/api';
  * ```
  */
 
-const isAuthEndpoint = (endpoint: string) =>
-  endpoint.startsWith('/auth') || endpoint.startsWith('/oauth');
+const isAuthEndpoint = (endpoint: string) => /^\/(auth|oauth)(\/|$)/.test(endpoint);
 
 type RefreshAuthTokensResponse = {
   success: boolean;
