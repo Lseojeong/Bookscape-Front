@@ -1,5 +1,5 @@
 import Image, { ImageProps } from 'next/image';
-import SpeechBubble from '@/app/(public)/(auth)/ui/SpeechBubble';
+import SpeechBubble from '@/features/auth/ui/SpeechBubble';
 import { SkyImage } from '@/shared/assets/images';
 
 /**
