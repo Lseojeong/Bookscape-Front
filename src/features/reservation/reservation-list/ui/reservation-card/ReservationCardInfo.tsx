@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { RESERVATION_UI_MESSAGES } from '@/features/reservation/reservation-list/constants/messages';
+import { useExpiredPendingReservation } from '@/features/reservation/reservation-list/hooks/useExpiredPendingReservation';
 import { useCreateMyReservationReviewMutation } from '@/features/reservation/reservation-list/mutations/useCreateMyReservationReviewMutation';
 import ReviewModal from '@/features/reservation/reservation-list/ui/review-modal/ReviewModal';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
@@ -35,13 +37,8 @@ export default function ReservationCardInfo({
   const createReviewMutation = useCreateMyReservationReviewMutation();
 
   const scheduleText = formatReservationScheduleText({ date, startTime, endTime, headCount });
-  const isExpiredPending = useMemo(() => {
-    if (status !== 'pending') return false;
-    const startAt = new Date(`${date}T${startTime}:00`);
-    if (Number.isNaN(startAt.getTime())) return false;
-    return startAt.getTime() < new Date().getTime();
-  }, [status, date, startTime]);
-  const pendingDisabledMessage = '승인 기한이 지나 예약 변경은 할 수 없어요.';
+  const isExpiredPending = useExpiredPendingReservation({ status, date, startTime });
+  const pendingDisabledMessage = RESERVATION_UI_MESSAGES.PENDING_CHANGE_DISABLED_EXPIRED;
 
   return (
     <BaseCardInfo className={cn(cardInfoStyles)}>
