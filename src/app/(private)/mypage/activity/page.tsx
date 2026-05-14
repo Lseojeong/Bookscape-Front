@@ -4,7 +4,7 @@ import PageHeader from '@/shared/ui/page-header/PageHeader';
 
 export default function MyActivityPage() {
   return (
-    <div className="mb-10 flex w-full flex-col gap-4 md:w-119 md:gap-7.5 lg:w-160">
+    <div className="mypage-content">
       {/* Page Header */}
       <div className="flex items-start justify-between">
         <PageHeader
