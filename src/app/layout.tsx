@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import AuthTokenRefreshProvider from '@/features/auth/providers/AuthTokenRefreshProvider';
+import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
 import { SITE_URL } from '@/shared/constants/url';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
@@ -22,20 +23,13 @@ export const metadata: Metadata = {
   keywords: ['체험', '원데이클래스', '예약', '북스케이프', 'bookscape', '액티비티'],
 
   openGraph: {
-    title: '북스케이프: bookscape',
-    description: '나만의 특별한 체험을 찾고 경험해보세요!',
+    ...COMMON_OPEN_GRAPH,
     url: '/',
-    siteName: 'Bookscape',
-    images: ['/og-image.png'],
-    locale: 'ko_KR',
-    type: 'website',
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: '북스케이프: bookscape',
-    description: '체험을 만들고, 찾고, 예약까지 한 번에 북스케이프에서 경험해보세요!',
-    images: [`${SITE_URL}/og-image.png`],
+    images: ['/og-image.png'],
   },
 };
 

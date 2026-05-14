@@ -2,12 +2,14 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import ActivitiesPageHeader from '@/features/activity/activities/ui/ActivitiesPageHeader';
 import AllActivitiesSection from '@/features/activity/activities/ui/AllActivitiesSection';
+import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
 
 export const metadata: Metadata = {
   title: '모든 체험 둘러보기',
+  description: '카테고리와 맞춤 검색으로 내 취향에 딱 맞는 체험을 북스케이프에서 찾아보세요.',
   openGraph: {
-    title: '모든 체험 둘러보기',
-    description: '카테고리와 맞춤 검색으로 내 취향에 딱 맞는 체험을 북스케이프에서 찾아보세요.',
+    ...COMMON_OPEN_GRAPH,
+    url: '/activities',
   },
 };
 
