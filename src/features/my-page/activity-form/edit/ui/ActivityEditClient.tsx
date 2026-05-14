@@ -54,7 +54,6 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
 
   return (
     <ActivityFormPageShell
-      title="내 체험 수정"
       mode="edit"
       initialData={initialData}
       onSubmitForm={submitActivityEdit}
@@ -62,7 +61,7 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
       resetToastMessage="수정 전 상태로 초기화되었습니다."
       confirmText="계속 수정하기"
       mainClassName=""
-      containerClassName="mx-auto w-full max-w-3xl px-4 pt-10 md:px-0 md:pt-14"
+      containerClassName="w-full" // 여백은 부모에서 잡을 거라 가로폭만 다 차지하도록 설정
     />
   );
 }
