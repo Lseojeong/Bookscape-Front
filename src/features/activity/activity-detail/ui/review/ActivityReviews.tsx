@@ -4,11 +4,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useActivityReviews } from '@/features/activity/activity-detail/queries/useActivityReviews';
 import ReviewList from '@/features/activity/activity-detail/ui/review/ReviewList';
 import ReviewSummary from '@/features/activity/activity-detail/ui/review/ReviewSummary';
+import type { ActivityReviewsResponse } from '@/features/activity/types';
 import Pagination from '@/shared/ui/pagination/Pagination';
 import Title from '@/shared/ui/title/Title';
 
 type ActivityReviewsProps = {
   activityId: number;
+  initialData?: ActivityReviewsResponse;
 };
 
 const PAGE_SIZE = 3;
@@ -20,15 +22,18 @@ const PAGE_SIZE = 3;
  *
  * @example
  * ```tsx
- * <ActivityReviews activityId={activityId} />
+ * <ActivityReviews
+ *   activityId={activityId}
+ *   initialData={initialReviewsData}
+ * />
  * ```
  */
-export default function ActivityReviews({ activityId }: ActivityReviewsProps) {
+export default function ActivityReviews({ activityId, initialData }: ActivityReviewsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('reviewPage') || 1);
 
-  const { data } = useActivityReviews(activityId, currentPage);
+  const { data } = useActivityReviews(activityId, currentPage, initialData);
 
   const totalPages = Math.ceil((data?.totalCount ?? 0) / PAGE_SIZE);
 
