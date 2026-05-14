@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
+import { SITE_URL } from '@/shared/constants/url';
 
 // 개별 체험 데이터 타입
 type ActivityResponse = {
@@ -13,8 +14,7 @@ type ActivitiesResponse = {
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://bookscape-team1.vercel.app';
-
+  const baseUrl = SITE_URL;
   // 동적 페이지
   let dynamicRoutes: MetadataRoute.Sitemap = [];
 

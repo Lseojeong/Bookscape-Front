@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import AuthTokenRefreshProvider from '@/features/auth/providers/AuthTokenRefreshProvider';
+import { SITE_URL } from '@/shared/constants/url';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
@@ -11,6 +12,8 @@ import '@/shared/styles/globals.css';
 
 // 공통 메타 데이터 및 OG 설정
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+
   title: {
     default: '북스케이프: bookscape',
     template: '%s | 북스케이프',
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '북스케이프: bookscape',
     description: '나만의 특별한 체험을 찾고 경험해보세요!',
-    url: 'https://bookscape-team1.vercel.app',
+    url: '/',
     siteName: '북스케이프',
     locale: 'ko_KR',
     type: 'website',
