@@ -22,6 +22,7 @@ import LocationIcon from './ic-location.svg';
 import LogoutIcon from './ic-logout.svg';
 import MenuIcon from './ic-menu.svg';
 import MinusIcon from './ic-minus.svg';
+import NoticeIcon from './ic-notice.svg';
 import NotificationIcon from './ic-notification.svg';
 import PlusIcon from './ic-plus.svg';
 import ReservationListIcon from './ic-reservation-list.svg';
@@ -58,6 +59,7 @@ export {
   LogoutIcon,
   MenuIcon,
   MinusIcon,
+  NoticeIcon,
   NotificationIcon,
   PlusIcon,
   ReservationListIcon,

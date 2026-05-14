@@ -4,7 +4,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import Toast from './Toast';
 
 /**
- * 전역 토스트 목록을 화면 하단 중앙에 렌더링하는 컴포넌트입니다.
+ * 전역 토스트 목록을 화면 오른쪽 하단에 렌더링하는 컴포넌트입니다.
  */
 export default function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
