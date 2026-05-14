@@ -93,16 +93,31 @@ const request = <T>({
   const url = `${BFF_BASE_URL}${endpoint}${buildQueryString(query)}`;
   const doRequest = () => coreFetch<T>(url, { ...options, method, credentials: 'include' }, body);
 
-  return doRequest().catch(async (error) => {
-    // 401이면(= access token 만료 가능성) refresh 후 1회 재시도합니다.
-    if (error instanceof ApiError && error.status === 401 && !isAuthEndpoint(endpoint)) {
-      const refreshed = await refreshTokensOnce();
-      if (refreshed) return doRequest();
+  return (async () => {
+    try {
+      return await doRequest();
+    } catch (error) {
+      // 401이면(= access token 만료 가능성) refresh 후 1회 재시도합니다.
+      if (error instanceof ApiError && error.status === 401 && !isAuthEndpoint(endpoint)) {
+        const refreshed = await refreshTokensOnce();
+        if (!refreshed) {
+          await clearSessionExpired();
+          throw error;
+        }
 
-      await clearSessionExpired();
+        try {
+          return await doRequest();
+        } catch (retryError) {
+          if (retryError instanceof ApiError && retryError.status === 401) {
+            await clearSessionExpired();
+          }
+          throw retryError;
+        }
+      }
+
+      throw error;
     }
-    throw error;
-  });
+  })();
 };
 
 /** HTTP 메서드 유틸리티 */
