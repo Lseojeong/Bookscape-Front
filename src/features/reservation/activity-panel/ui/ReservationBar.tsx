@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { ActivityDetail } from '@/features/activity/types';
 import { useReservation } from '@/features/reservation/activity-panel/hooks/useReservation';
 import HeadcountStep from '@/features/reservation/activity-panel/ui/HeadcountStep';
 import ScheduleStep from '@/features/reservation/activity-panel/ui/ScheduleStep';
@@ -12,6 +13,7 @@ import { cn } from '@/shared/utils/cn';
 
 type ReservationBarProps = {
   activityId: number;
+  initialActivityData?: ActivityDetail;
 };
 
 /**
@@ -23,10 +25,13 @@ type ReservationBarProps = {
  *
  * @example
  * ```tsx
- * <ReservationBar activityId={activityId} />
+ * <ReservationBar
+ *   activityId={activityId}
+ *   initialActivityData={initialActivityData}
+ * />
  * ```
  */
-export default function ReservationBar({ activityId }: ReservationBarProps) {
+export default function ReservationBar({ activityId, initialActivityData }: ReservationBarProps) {
   const {
     price,
     selected,
@@ -43,7 +48,7 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
     isOwner,
     myBlockedScheduleIds,
     availableDates,
-  } = useReservation(activityId);
+  } = useReservation(activityId, { initialActivityData });
 
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');

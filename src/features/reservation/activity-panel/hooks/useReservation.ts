@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
+import type { ActivityDetail } from '@/features/activity/types';
 import { useCreateReservation } from '@/features/reservation/activity-panel/mutations/useCreateReservation';
 import { useAvailableSchedule } from '@/features/reservation/activity-panel/queries/useAvailableSchedule';
 import { useMyReservations } from '@/features/reservation/activity-panel/queries/useMyReservations';
@@ -9,9 +10,16 @@ import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
-export const useReservation = (activityId: number) => {
+type InitialOptions = {
+  initialActivityData?: ActivityDetail;
+};
+
+export const useReservation = (
+  activityId: number,
+  { initialActivityData }: InitialOptions = {}
+) => {
   // 외부 훅
-  const { data } = useActivityDetail(activityId);
+  const { data } = useActivityDetail(activityId, initialActivityData);
   const { user } = useUserStore();
   const { showToast } = useToastStore();
   const { mutate: createReservation } = useCreateReservation(activityId);
