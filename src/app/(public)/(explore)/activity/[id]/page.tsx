@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: activity.description || '북스케이프에서 특별한 체험을 예약하고 즐겨보세요.',
       openGraph: {
         title: `${activity.title}`,
-        description: activity.description,
+        description: activity.description || '북스케이프에서 특별한 체험을 예약하고 즐겨보세요.',
         images: [activity.bannerImageUrl],
       },
     };
