@@ -15,9 +15,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const activityId = Number(id);
 
-  // 잘못된 ID면 기본 제목 반환
+  // 잘못된 ID일 시 반환
   if (isNaN(activityId) || activityId <= 0) {
-    return { title: '체험 상세' };
+    return { title: '페이지를 찾을 수 없습니다', description: '요청하신 체험을 찾을 수 없습니다.' };
   }
 
   try {
@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     };
   } catch {
-    // API 통신 실패 시 기본 메타데이터 반환
-    return { title: '체험 상세' };
+    // API 통신 실패 시 반환
+    return { title: '페이지를 찾을 수 없습니다', description: '요청하신 체험을 찾을 수 없습니다.' };
   }
 }
 
