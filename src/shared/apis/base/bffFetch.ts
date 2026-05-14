@@ -1,3 +1,4 @@
+import { ApiError } from '@/shared/apis/apiError';
 import {
   coreFetch,
   FetchRequestOptions,
@@ -24,6 +25,63 @@ const BFF_BASE_URL = '/api';
  * ```
  */
 
+const isAuthEndpoint = (endpoint: string) =>
+  endpoint.startsWith('/auth') || endpoint.startsWith('/oauth');
+
+type RefreshAuthTokensResponse = {
+  success: boolean;
+  accessTokenExpiresAt: number;
+};
+
+let refreshPromise: Promise<boolean> | null = null;
+
+const syncAccessTokenExpiryToStore = async (accessTokenExpiresAt: number) => {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const { useUserStore } = await import('@/shared/stores/userStore');
+    const { user } = useUserStore.getState();
+    if (!user) return;
+    useUserStore.getState().setSession({ user, accessTokenExpiresAt });
+  } catch {
+    // store import 실패/환경 이슈는 무시하고 네트워크 흐름만 유지합니다.
+  }
+};
+
+const clearSessionExpired = async () => {
+  if (typeof window === 'undefined') return;
+  try {
+    const { useUserStore } = await import('@/shared/stores/userStore');
+    useUserStore.getState().clearSession('expired');
+  } catch {
+    // ignore
+  }
+};
+
+const refreshTokensOnce = async (): Promise<boolean> => {
+  if (refreshPromise) return refreshPromise;
+
+  refreshPromise = (async () => {
+    try {
+      const data = await coreFetch<RefreshAuthTokensResponse>(
+        `${BFF_BASE_URL}/auth/tokens`,
+        { method: 'POST', credentials: 'include' },
+        undefined
+      );
+      const accessTokenExpiresAt = data?.accessTokenExpiresAt;
+      if (!accessTokenExpiresAt) return false;
+      await syncAccessTokenExpiryToStore(accessTokenExpiresAt);
+      return true;
+    } catch {
+      return false;
+    } finally {
+      refreshPromise = null;
+    }
+  })();
+
+  return refreshPromise;
+};
+
 /** bffFetch 내부 공통 요청 함수 */
 const request = <T>({
   endpoint,
@@ -33,7 +91,18 @@ const request = <T>({
   ...options
 }: RequestConfig): Promise<T | null> => {
   const url = `${BFF_BASE_URL}${endpoint}${buildQueryString(query)}`;
-  return coreFetch<T>(url, { ...options, method, credentials: 'include' }, body);
+  const doRequest = () => coreFetch<T>(url, { ...options, method, credentials: 'include' }, body);
+
+  return doRequest().catch(async (error) => {
+    // 401이면(= access token 만료 가능성) refresh 후 1회 재시도합니다.
+    if (error instanceof ApiError && error.status === 401 && !isAuthEndpoint(endpoint)) {
+      const refreshed = await refreshTokensOnce();
+      if (refreshed) return doRequest();
+
+      await clearSessionExpired();
+    }
+    throw error;
+  });
 };
 
 /** HTTP 메서드 유틸리티 */
