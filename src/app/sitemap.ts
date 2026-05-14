@@ -46,12 +46,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // 정적 페이지
-  const staticRoutes = ['', '/activities', '/search', '/login', '/signup'].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'daily' as const, // 매일 확인
-    priority: route === '' ? 1 : 0.8, // 우선순위: 메인 > 체험목록
-  }));
+  const staticRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1, // 메인 페이지
+    },
+    {
+      url: `${baseUrl}/activities`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8, // 체험 목록
+    },
+    {
+      url: `${baseUrl}/search`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.3, // 검색 페이지
+    },
+    {
+      url: `${baseUrl}/signup`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.2, // 회원가입
+    },
+    {
+      url: `${baseUrl}/login`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.1, // 로그인
+    },
+  ];
 
   return [...staticRoutes, ...dynamicRoutes];
 }
