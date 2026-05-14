@@ -53,7 +53,7 @@ export default function NotificationButton({ theme = 'light' }: NotificationButt
     hasNew,
     lastSeenAtMs,
     markSeen: () => markSeenMutation.mutateAsync(),
-    onEmpty: () => showToast('warning', '알림이 없습니다.'),
+    onEmpty: () => showToast('info', '알림이 없습니다.'),
   });
 
   useOutsideClick(notificationRef, dropdown.close, dropdown.isOpen);
