@@ -3,6 +3,7 @@ import ActivityListWithPagination from '@/features/activity/common/ui/ActivityLi
 import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
 import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
 import { useSearchResult } from '@/features/activity/search/hooks/useSearchResult';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
@@ -31,6 +32,7 @@ export default function SearchResultSection() {
     isError,
     refetch,
   } = useSearchResult();
+  const isSkeletonVisible = useDelayedLoading(isLoading);
 
   return (
     <>
@@ -44,7 +46,7 @@ export default function SearchResultSection() {
       </div>
       <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
 
-      {isLoading ? (
+      {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
         <>
           {/* 기본 : 6개 노출, md: 4개 노출, lg: 8개 노출 */}
           <div className="mt-10 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">

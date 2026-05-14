@@ -12,6 +12,7 @@ import ReservationPanelContentSkeleton from '@/features/my-page/reservation-stat
 import ReservationTabBarSkeleton from '@/features/my-page/reservation-status/ui/skeleton/ReservationTabBarSkeleton';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
 import { DeleteIcon } from '@/shared/assets/icons';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import Button from '@/shared/ui/button/Button';
 import SelectDropdown from '@/shared/ui/dropdown/select/SelectDropdown';
@@ -103,6 +104,7 @@ export default function ReservationPanelContent({
   }
 
   const isAllLoading = !isInitialLoaded;
+  const showReservationsSkeleton = useDelayedLoading(isLoading);
 
   const TABS = [
     {
@@ -180,7 +182,7 @@ export default function ReservationPanelContent({
             {/* 시간대 선택 */}
             <div className="md:w-1/2 lg:w-full">
               <FormLabel className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약 시간</FormLabel>
-              {isLoading ? (
+              {isLoading && !showReservationsSkeleton ? null : showReservationsSkeleton ? (
                 <ReservationDropdownSkeleton />
               ) : (
                 <SelectDropdown
@@ -211,7 +213,7 @@ export default function ReservationPanelContent({
               <FormLabel className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약내역</FormLabel>
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <div className="flex flex-col gap-3">
-                  {isLoading ? (
+                  {isLoading && !showReservationsSkeleton ? null : showReservationsSkeleton ? (
                     <>
                       {Array.from({ length: 2 }).map((_, i) => (
                         <ReservationCardSkeleton key={i} />

@@ -5,6 +5,7 @@ import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActiv
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
 import CarouselArrowButton from '@/features/activity/main/ui/CarouselArrowButton';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
@@ -30,6 +31,7 @@ export default function MainActivityList() {
     isError,
     refetch,
   } = useMainActivityCarousel();
+  const isSkeletonVisible = useDelayedLoading(isLoading);
 
   return (
     <article className="flex w-full flex-col gap-5 py-8">
@@ -37,7 +39,7 @@ export default function MainActivityList() {
         🔥 <span className="text-secondary-500">HOT</span> 인기 체험
       </Title>
 
-      {isLoading ? (
+      {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
         <>
           {/* 기본: 1개 반 노출, md: 2개 노출, lg: 8개 노출 */}
           <div className="flex gap-4 overflow-hidden md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-6">

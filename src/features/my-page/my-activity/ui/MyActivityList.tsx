@@ -6,13 +6,15 @@ import {
   useMyActivities,
 } from '@/features/my-page/my-activity/queries/useMyActivities';
 import MyActivityCard from '@/features/my-page/my-activity/ui/my-activity-card/MyActivityCard';
+import MyActivityCardSkeleton from '@/features/my-page/my-activity/ui/skeleton/MyActivityCardSkeleton';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
-import Loading from '@/shared/ui/loading/Loading';
 
 export default function MyActivityList() {
   const query = useMyActivities({ size: MY_ACTIVITIES_PAGE_SIZE });
+  const isSkeletonVisible = useDelayedLoading(query.isPending);
 
   const activities = useMemo(() => {
     return query.data?.pages.flatMap((page) => page.activities) ?? [];
@@ -28,10 +30,13 @@ export default function MyActivityList() {
   });
 
   if (query.isPending && activities.length === 0) {
-    // TODO: 스켈레톤 UI로 교체
+    if (!isSkeletonVisible) return null;
+
     return (
-      <div className="flex justify-center py-10">
-        <Loading />
+      <div className="flex flex-col gap-4 md:gap-7.5">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <MyActivityCardSkeleton key={i} />
+        ))}
       </div>
     );
   }
