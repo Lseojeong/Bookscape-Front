@@ -14,7 +14,7 @@ import { cn } from '@/shared/utils/cn';
 export default function ActivityCardSkeleton({ className }: { className?: string }) {
   return (
     <div className={cn(cardWrapStyles, className)}>
-      <Skeleton className="relative mb-16.5 h-44 w-full overflow-hidden rounded-xl md:mb-19 md:h-93.5 lg:h-72.5" />
+      <Skeleton className="mb-16.5 h-44 w-full rounded-xl md:mb-19 md:h-93.5 lg:h-72.5" />
       <BaseCardInfo className="absolute bottom-0 p-4 md:px-7.5 md:py-5">
         <div className="flex flex-col gap-2.5 md:gap-4.5">
           <div className="flex flex-col gap-2">
