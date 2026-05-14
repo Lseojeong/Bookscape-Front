@@ -5,6 +5,13 @@ import { useActivitySubmit } from '@/features/my-page/activity-form/new/hooks/us
 
 /**
  * 새로운 체험을 등록하는 컴포넌트입니다.
+ *
+ * @example
+ * ```tsx
+ * export default function ActivityNewPage() {
+ *   return <ActivityNewClient/>;
+ * }
+ * ```
  */
 export default function ActivityNewClient() {
   const { submitActivity, isPending } = useActivitySubmit();
