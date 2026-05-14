@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '북스케이프: bookscape',
     description: '체험을 만들고, 찾고, 예약까지 한 번에 북스케이프에서 경험해보세요!',
-    images: ['SITE_URL/og-image.png'],
+    images: [`${SITE_URL}/og-image.png`],
   },
 };
 
