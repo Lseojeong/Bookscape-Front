@@ -4,15 +4,16 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { EditIcon } from '@/shared/assets/icons';
 import { DefaultProfileImage } from '@/shared/assets/images';
-import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
+import { IMAGE_RULES } from '@/shared/constants/file';
+import useObjectUrl from '@/shared/hooks/useObjectUrl';
 import Button from '@/shared/ui/button/Button';
+import { validateImageFile } from '@/shared/utils/file';
 
 type ProfileImageUploadProps = {
   initialImageUrl?: string | null;
   onFileChange?: (file: File) => void;
   onReset?: () => void;
 };
-
 /**
  * 이미지 업로드 박스 컴포넌트 (UI)
  *
@@ -24,55 +25,39 @@ type ProfileImageUploadProps = {
  * @param initialImageUrl - 초기 프로필 이미지 URL
  * @param onFileChange - 파일 선택 시 호출되는 콜백
  * @param onReset - 기본 프로필로 변경 시 호출되는 콜백
- */
-export default function ImageUploadBox({
+ *
+ */ export default function ImageUploadBox({
   initialImageUrl,
   onFileChange,
   onReset,
 }: ProfileImageUploadProps) {
-  const [objectUrl, setObjectUrl] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(initialImageUrl ?? null);
+  const objectUrl = useObjectUrl(file);
   const previewImage = objectUrl ?? currentImageUrl;
 
-  const validateFile = (file: File): string | null => {
-    if (file.size > IMAGE_RULES.MAX_SIZE) {
-      return IMAGE_ERROR_MESSAGES.IMAGE_SIZE_EXCEEDED;
-    }
-    if (
-      !IMAGE_RULES.ACCEPTED_TYPES.includes(file.type as (typeof IMAGE_RULES.ACCEPTED_TYPES)[number])
-    ) {
-      return IMAGE_ERROR_MESSAGES.IMAGE_TYPE_INVALID;
-    }
-    return null;
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const selected = e.target.files?.[0];
+    if (!selected) return;
 
-    const validationError = validateFile(file);
+    const validationError = validateImageFile(selected);
     if (validationError) {
       setError(validationError);
       e.target.value = '';
       return;
     }
 
-    const nextObjectUrl = URL.createObjectURL(file);
-    setObjectUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev);
-      return nextObjectUrl;
-    });
-
-    onFileChange?.(file);
+    setError(null);
+    setFile(selected);
+    onFileChange?.(selected);
     e.target.value = '';
   };
 
   const handleReset = () => {
-    if (objectUrl) URL.revokeObjectURL(objectUrl);
-    setObjectUrl(null);
+    setFile(null);
     setCurrentImageUrl(null);
     setError(null);
     onReset?.();
@@ -82,30 +67,23 @@ export default function ImageUploadBox({
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* 프로필 이미지 */}
       <div className="relative">
         <div className="relative h-30 w-30 overflow-hidden rounded-full bg-primary-100">
           {previewImage ? (
-            objectUrl ? (
-              <Image
-                src={previewImage}
-                alt="프로필 이미지 미리보기"
-                fill
-                unoptimized
-                className="object-cover"
-              />
-            ) : (
-              <Image src={previewImage} alt="프로필 이미지" fill className="object-cover" />
-            )
+            <Image
+              src={previewImage}
+              alt={objectUrl ? '프로필 이미지 미리보기' : '프로필 이미지'}
+              fill
+              unoptimized={!!objectUrl}
+              className="object-cover"
+            />
           ) : (
-            // 기본 이미지
             <div className="flex h-full w-full items-center justify-center">
               <DefaultProfileImage />
             </div>
           )}
         </div>
 
-        {/* 편집 버튼 */}
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
@@ -115,7 +93,6 @@ export default function ImageUploadBox({
           <EditIcon className="h-4 w-4" />
         </button>
 
-        {/* 숨겨진 파일 input */}
         <input
           ref={inputRef}
           type="file"
@@ -125,7 +102,6 @@ export default function ImageUploadBox({
         />
       </div>
 
-      {/* 기본 프로필로 변경 버튼 */}
       <Button
         theme="secondary"
         size="sm"
