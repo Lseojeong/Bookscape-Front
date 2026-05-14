@@ -37,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           url: `${baseUrl}/activity/${activity.id}`,
           lastModified: new Date(activity.updatedAt), // 마지막 수정 시간
           changeFrequency: 'weekly' as const, // 주에 한 번 확인
-          priority: 0.8, // 페이지 중요도
+          priority: 0.9, // 페이지 중요도
         }));
     }
   } catch (error) {
@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // 정적 페이지
-  const staticRoutes = ['', '/activities'].map((route) => ({
+  const staticRoutes = ['', '/activities', '/search', '/login', '/signup'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'daily' as const, // 매일 확인
