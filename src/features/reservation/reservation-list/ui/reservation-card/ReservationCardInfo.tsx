@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useCreateMyReservationReviewMutation } from '@/features/reservation/reservation-list/mutations/useCreateMyReservationReviewMutation';
 import ReviewModal from '@/features/reservation/reservation-list/ui/review-modal/ReviewModal';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
@@ -35,11 +35,27 @@ export default function ReservationCardInfo({
   const createReviewMutation = useCreateMyReservationReviewMutation();
 
   const scheduleText = formatReservationScheduleText({ date, startTime, endTime, headCount });
+  const isExpiredPending = useMemo(() => {
+    if (status !== 'pending') return false;
+    const startAt = new Date(`${date}T${startTime}:00`);
+    if (Number.isNaN(startAt.getTime())) return false;
+    return startAt.getTime() < new Date().getTime();
+  }, [status, date, startTime]);
+  const pendingDisabledMessage = '승인 기한이 지나 예약 변경은 할 수 없어요.';
 
   return (
     <BaseCardInfo className={cn(cardInfoStyles)}>
-      {/* 예약 상태 뱃지 */}
-      <StateBadge status={status} className="w-fit" />
+      <div className="flex items-center justify-between gap-3">
+        {/* 예약 상태 뱃지 */}
+        <StateBadge
+          status={status}
+          labelOverride={isExpiredPending ? '만료(미승인)' : undefined}
+          className="w-fit"
+        />
+        {isExpiredPending && (
+          <p className="typo-12-medium text-gray-500">{pendingDisabledMessage}</p>
+        )}
+      </div>
 
       {/* 체험명 + 예약 일정 */}
       <div className="mt-2 mb-2 flex flex-col gap-1 lg:mt-3 lg:mb-1.5 lg:gap-2">
@@ -72,6 +88,8 @@ export default function ReservationCardInfo({
           activityId={activity.id}
           onReviewClick={() => setIsReviewOpen(true)}
           onReservationChangeClick={() => onReservationChangeClick?.(data)}
+          isChangeDisabled={isExpiredPending}
+          changeDisabledMessage={isExpiredPending ? pendingDisabledMessage : undefined}
         />
       </div>
 
