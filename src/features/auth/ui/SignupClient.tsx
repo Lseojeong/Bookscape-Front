@@ -20,6 +20,11 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 /**
  * 이메일, 닉네임, 비밀번호, 비밀번호 확인 입력 폼을 제공하며, react-hook-form으로 폼 상태를 관리합니다.
  * 하단에 카카오 회원가입 및 로그인 페이지 이동 링크가 포함됩니다.
+ *
+ * @example
+ * ```tsx
+ * <SignupClient />
+ * ```
  */
 export default function SignupClient() {
   const router = useRouter();

@@ -22,6 +22,11 @@ import { cn } from '@/shared/utils/cn';
 /**
  * 이메일과 비밀번호를 통한 인증을 처리합니다.
  * 성공 시 유저 정보를 Zustand 스토어에 저장하고 메인 페이지로 이동합니다.
+ *
+ * @example
+ * ```tsx
+ * <LoginClient />
+ * ```
  */
 export default function LoginClient() {
   const router = useRouter();
