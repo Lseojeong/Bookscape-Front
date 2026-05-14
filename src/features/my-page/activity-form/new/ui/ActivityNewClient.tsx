@@ -16,8 +16,6 @@ export default function ActivityNewClient() {
       isPending={isPending}
       resetToastMessage="내용이 초기화되었습니다."
       confirmText="계속 작성하기"
-      mainClassName=""
-      containerClassName="w-full"
     />
   );
 }

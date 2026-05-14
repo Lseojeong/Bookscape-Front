@@ -60,8 +60,6 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
       isPending={isPending}
       resetToastMessage="수정 전 상태로 초기화되었습니다."
       confirmText="계속 수정하기"
-      mainClassName=""
-      containerClassName="w-full" // 여백은 부모에서 잡을 거라 가로폭만 다 차지하도록 설정
     />
   );
 }
