@@ -22,6 +22,17 @@ export type ActivityFormPageShellProps = {
   containerClassName?: string;
 };
 
+/**
+ * 체험 등록 및 수정 페이지의 공통 레이아웃과 비즈니스 로직을 관리하는 쉘 컴포넌트입니다.
+ *
+ * @example
+ * <ActivityFormPageShell
+ *   mode="create"
+ *   onSubmitForm={handleSubmit}
+ *   resetToastMessage="초기화되었습니다."
+ *   confirmText="확인"
+ * />
+ */
 export default function ActivityFormPageShell({
   mode,
   initialData,
