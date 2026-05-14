@@ -1,15 +1,18 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   MY_RESERVATIONS_PAGE_SIZE,
   useInfiniteMyReservations,
 } from '@/features/reservation/reservation-list/queries/useInfiniteMyReservations';
 import ReservationListSection from '@/features/reservation/reservation-list/ui/my-reservation-list/ReservationListSection';
+import ReservationChangePanel from '@/features/reservation/reservation-list/ui/reservation-change/ReservationChangePanel';
+import ReservationChangeSheet from '@/features/reservation/reservation-list/ui/reservation-change/ReservationChangeSheet';
 import StatusFilter from '@/features/reservation/reservation-list/ui/status-filter/StatusFilter';
-import type { MyReservationStatus } from '@/features/reservation/types';
+import type { MyReservation, MyReservationStatus } from '@/features/reservation/types';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
@@ -54,6 +57,8 @@ const getReservationListUrl = (status: ReservationStatus | '', searchParams: URL
 export default function ReservationListView() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const [activeReservation, setActiveReservation] = useState<MyReservation | null>(null);
 
   const statusParam = searchParams.get('status');
 
@@ -97,6 +102,7 @@ export default function ReservationListView() {
         reservations={reservations}
         selectedStatus={selectedStatus}
         emptyMainTextByStatus={EMPTY_MAIN_TEXT_BY_STATUS}
+        onReservationChangeClick={(reservation) => setActiveReservation(reservation)}
       />
 
       <InfiniteScrollSentinel
@@ -106,6 +112,22 @@ export default function ReservationListView() {
         onRetryFetchNextPage={() => query.fetchNextPage()}
         setSentinel={setSentinel}
       />
+
+      {activeReservation ? (
+        isDesktop ? (
+          <ReservationChangePanel
+            isOpen
+            reservation={activeReservation}
+            onClose={() => setActiveReservation(null)}
+          />
+        ) : (
+          <ReservationChangeSheet
+            isOpen
+            reservation={activeReservation}
+            onClose={() => setActiveReservation(null)}
+          />
+        )
+      ) : null}
     </div>
   );
 }

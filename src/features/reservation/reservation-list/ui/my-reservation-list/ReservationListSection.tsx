@@ -16,6 +16,7 @@ type ReservationListSectionProps = {
   reservations: MyReservation[];
   selectedStatus: ReservationStatus | '';
   emptyMainTextByStatus: Record<ReservationStatus | '', string>;
+  onReservationChangeClick?: (reservation: MyReservation) => void;
 };
 
 export default function ReservationListSection({
@@ -24,6 +25,7 @@ export default function ReservationListSection({
   reservations,
   selectedStatus,
   emptyMainTextByStatus,
+  onReservationChangeClick,
 }: ReservationListSectionProps) {
   const isSkeletonVisible = useDelayedLoading(isLoading);
   const reservationsByDate = useMemo(() => {
@@ -79,7 +81,11 @@ export default function ReservationListSection({
           <p className="typo-16-bold text-gray-800">{formatYmdToDot(date)}</p>
           <div className="flex flex-col gap-7.5">
             {items.map((reservation) => (
-              <ReservationCard key={reservation.id} data={reservation} />
+              <ReservationCard
+                key={reservation.id}
+                data={reservation}
+                onReservationChangeClick={onReservationChangeClick}
+              />
             ))}
           </div>
           {index !== reservationsByDate.length - 1 && <div className="mt-5 h-px bg-gray-50" />}

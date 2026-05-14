@@ -1,8 +1,8 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import useBottomSheetDrag from '@/shared/ui/bottom-sheet/hooks/useBottomSheetDrag';
 import useBodyScrollLock from '@/shared/ui/overlay/hooks/useBodyScrollLock';
-import useBottomSheetDrag from '@/shared/ui/overlay/hooks/useBottomSheetDrag';
 import useEscapeKey from '@/shared/ui/overlay/hooks/useEscapeKey';
 import OverlayBackdrop from '@/shared/ui/overlay/primitives/OverlayBackdrop';
 import OverlayPortal from '@/shared/ui/overlay/primitives/OverlayPortal';
