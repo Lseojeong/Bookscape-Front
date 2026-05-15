@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   description: '체험을 만들고, 찾고, 예약까지 한 번에 북스케이프에서 경험해보세요!',
   keywords: ['체험', '원데이클래스', '예약', '북스케이프', 'bookscape', '액티비티'],
 
+  verification: {
+    // NOTE: 구글 서치 콘솔 인증을 위한 환경 변수입니다. 빌드 시점에 해당 값이 존재해야 메타 태그가 생성됩니다.
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+  },
+
   openGraph: {
     ...COMMON_OPEN_GRAPH,
     url: '/',
