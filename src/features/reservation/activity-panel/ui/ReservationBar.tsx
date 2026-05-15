@@ -5,8 +5,8 @@ import { useReservation } from '@/features/reservation/activity-panel/hooks/useR
 import HeadcountStep from '@/features/reservation/activity-panel/ui/HeadcountStep';
 import ScheduleStep from '@/features/reservation/activity-panel/ui/ScheduleStep';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
+import BottomSheet from '@/shared/ui/bottom-sheet/BottomSheet';
 import Button from '@/shared/ui/button/Button';
-import BottomSheet from '@/shared/ui/overlay/BottomSheet';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
 import { cn } from '@/shared/utils/cn';
 

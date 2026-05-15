@@ -4,6 +4,7 @@ export type ReservationStatus = 'pending' | 'confirmed' | 'completed' | 'decline
 
 export type StateBadgeProps = {
   status: ReservationStatus;
+  labelOverride?: string;
   className?: string;
 };
 
@@ -49,8 +50,9 @@ const RESERVATION_BADGE_MAP: Record<ReservationStatus, { label: string; classNam
  * <StateBadge status={reservations.status} />
  * ```
  */
-export default function StateBadge({ status, className }: StateBadgeProps) {
+export default function StateBadge({ status, labelOverride, className }: StateBadgeProps) {
   const { label, className: badgeClassName } = RESERVATION_BADGE_MAP[status];
+  const finalLabel = labelOverride ?? label;
 
   return (
     <span
@@ -60,7 +62,7 @@ export default function StateBadge({ status, className }: StateBadgeProps) {
         className
       )}
     >
-      {label}
+      {finalLabel}
     </span>
   );
 }

@@ -19,6 +19,9 @@ type ReservationCardActionsProps = {
   reservationId?: number;
   activityId?: number;
   onReviewClick?: () => void;
+  onReservationChangeClick?: () => void;
+  isChangeDisabled?: boolean;
+  changeDisabledMessage?: string;
 };
 
 type CardActionsProps = ManageCardActionsProps | ReservationCardActionsProps;
@@ -61,24 +64,46 @@ function ManageCardActions({ activityId }: { activityId: number }) {
 function PendingReservationCardActions({
   reservationId,
   activityId,
+  onReservationChangeClick,
+  isChangeDisabled,
+  changeDisabledMessage,
 }: {
   reservationId: number;
   activityId: number;
+  onReservationChangeClick?: () => void;
+  isChangeDisabled?: boolean;
+  changeDisabledMessage?: string;
 }) {
   const [isCancelOpen, setIsCancelOpen] = useState(false);
 
   return (
     <>
       <div className="flex gap-2">
-        <Button
-          as={Link}
-          href={`/activity/${activityId}`}
-          theme="secondary"
-          size="sm"
-          className="w-17 rounded-lg"
-        >
-          예약 변경
-        </Button>
+        {onReservationChangeClick ? (
+          <Button
+            theme="secondary"
+            size="sm"
+            className="w-17 rounded-lg"
+            type="button"
+            onClick={onReservationChangeClick}
+            disabled={isChangeDisabled}
+            title={isChangeDisabled ? changeDisabledMessage : undefined}
+          >
+            예약 변경
+          </Button>
+        ) : (
+          <Button
+            as={Link}
+            href={`/activity/${activityId}`}
+            theme="secondary"
+            size="sm"
+            className="w-17 rounded-lg"
+            disabled={isChangeDisabled}
+            title={isChangeDisabled ? changeDisabledMessage : undefined}
+          >
+            예약 변경
+          </Button>
+        )}
         <Button
           type="button"
           theme="gray"
@@ -135,7 +160,13 @@ export default function CardActions(props: CardActionsProps) {
   if (status === 'pending') {
     if (!activityId || !props.reservationId) return null;
     return (
-      <PendingReservationCardActions reservationId={props.reservationId} activityId={activityId} />
+      <PendingReservationCardActions
+        reservationId={props.reservationId}
+        activityId={activityId}
+        onReservationChangeClick={props.onReservationChangeClick}
+        isChangeDisabled={props.isChangeDisabled}
+        changeDisabledMessage={props.changeDisabledMessage}
+      />
     );
   }
 

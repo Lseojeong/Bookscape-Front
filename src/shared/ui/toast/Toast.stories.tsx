@@ -37,3 +37,12 @@ export const Warning: Story = {
     onClose: fn(),
   },
 };
+
+// 정보 토스트
+export const Info: Story = {
+  args: {
+    type: 'info',
+    message: '알림을 확인해주세요.',
+    onClose: fn(),
+  },
+};

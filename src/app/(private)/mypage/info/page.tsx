@@ -1,6 +1,8 @@
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import { userMeQueryOptions } from '@/features/user/queries/userMeQueryOptions';
 import MyInfoClient from '@/features/user/ui/MyInfoClient';
 import MyInfoPageHeader from '@/features/user/ui/MyInfoPageHeader';
-
+import { getQueryClient } from '@/shared/utils/getQueryClient';
 /**
  * 내 정보 페이지
  *
@@ -11,10 +13,16 @@ import MyInfoPageHeader from '@/features/user/ui/MyInfoPageHeader';
  * - 비밀번호 변경 (소셜 로그인 유저 제외)
  */
 export default async function MyInfoPage() {
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery(userMeQueryOptions());
+
   return (
-    <div>
-      <MyInfoPageHeader />
-      <MyInfoClient />
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div>
+        <MyInfoPageHeader />
+        <MyInfoClient />
+      </div>
+    </HydrationBoundary>
   );
 }

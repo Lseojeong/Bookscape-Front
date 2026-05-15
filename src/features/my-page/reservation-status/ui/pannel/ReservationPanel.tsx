@@ -3,7 +3,7 @@
 import useIsMobile from '@/features/my-page/reservation-status/hooks/useIsMobile';
 import ReservationPanelContent from '@/features/my-page/reservation-status/ui/pannel/ReservationPanelContent';
 import type { MyActivityReservedScheduleItem } from '@/features/my-page/types';
-import BottomSheet from '@/shared/ui/overlay/BottomSheet';
+import BottomSheet from '@/shared/ui/bottom-sheet/BottomSheet';
 import useBodyScrollLock from '@/shared/ui/overlay/hooks/useBodyScrollLock';
 import useEscapeKey from '@/shared/ui/overlay/hooks/useEscapeKey';
 import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';

@@ -8,7 +8,7 @@ import { useUserStore } from '@/shared/stores/userStore';
 export const MY_NOTIFICATIONS_PAGE_SIZE = 10;
 
 export const MY_NOTIFICATIONS_STALE_TIME_MS = 1000 * 10;
-export const MY_NOTIFICATIONS_REFETCH_INTERVAL_MS = 1000 * 30;
+export const MY_NOTIFICATIONS_REFETCH_INTERVAL_MS = 1000 * 60;
 
 const EMPTY_RESPONSE: GetMyNotificationsParsedResponse = {
   cursorId: null,
@@ -37,6 +37,9 @@ export const useMyNotifications = ({ size = MY_NOTIFICATIONS_PAGE_SIZE } = {}) =
     networkMode: 'always',
     staleTime: MY_NOTIFICATIONS_STALE_TIME_MS,
     refetchInterval: MY_NOTIFICATIONS_REFETCH_INTERVAL_MS,
+    refetchOnMount: false,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
     retry: 1,
   });
 
