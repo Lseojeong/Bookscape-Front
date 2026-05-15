@@ -11,6 +11,10 @@ describe('schedule utils', () => {
       expect(isExceedingMidnight('20:00', 5)).toBe(true); // 25시
     });
 
+    it('시작 시간에 분이 포함되어 자정을 넘기는 경우 true를 반환한다', () => {
+      expect(isExceedingMidnight('23:30', 1)).toBe(true); // 24:30
+    });
+
     it('시작 시간과 진행 시간을 더해 24시 이하이면 false를 반환한다', () => {
       expect(isExceedingMidnight('18:00', 2)).toBe(false); // 20시
       expect(isExceedingMidnight('20:00', 4)).toBe(false); // 24시
