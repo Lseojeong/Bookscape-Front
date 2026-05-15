@@ -110,4 +110,16 @@ describe('useActivityList Hook 테스트', () => {
 
     expect(useActivityListData).toHaveBeenCalledWith(expect.objectContaining({ category: '문화' }));
   });
+
+  it('정렬 조건 변경 시 URL의 sort 파라미터가 업데이트되어야 한다', () => {
+    const { result } = renderHook(() => useActivityList(defaultParams));
+
+    act(() => {
+      // 최신순(latest)에서 평점순(most_reviewed)으로 변경
+      result.current.updateParams({ sort: 'most_reviewed' });
+    });
+
+    // router.push가 호출될 때 sort=most_reviewed가 포함되어 있는지 확인
+    expect(mockPush).toHaveBeenCalledWith(expect.stringContaining('sort=most_reviewed'));
+  });
 });
