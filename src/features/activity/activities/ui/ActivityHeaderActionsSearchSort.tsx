@@ -3,7 +3,7 @@ import { useAllActivityList } from '@/features/activity/activities/hooks/useAllA
 import SortSelectDropdown from '@/features/activity/activities/ui/SortSelectDropdown';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
 
-export function ActivityHeaderActionsSearchSort() {
+export default function ActivityHeaderActionsSearchSort() {
   const { sort, handleChangeSort } = useAllActivityList();
   return (
     <>

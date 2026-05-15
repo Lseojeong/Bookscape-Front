@@ -1,5 +1,5 @@
 import ActivityHeaderActionsCategorySort from '@/features/activity/activities/ui/ActivityHeaderActionsCategorySort';
-import { ActivityHeaderActionsSearchSort } from '@/features/activity/activities/ui/ActivityHeaderActionsSearchSort';
+import ActivityHeaderActionsSearchSort from '@/features/activity/activities/ui/ActivityHeaderActionsSearchSort';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
 
