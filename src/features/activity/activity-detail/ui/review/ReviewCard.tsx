@@ -27,7 +27,7 @@ export default function ReviewCard({ nickname, rating, content, createdAt }: Rev
   const formattedDate = formatYmdToDot(createdAt.slice(0, 10));
 
   return (
-    <div className="rounded-3xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+    <div className="rounded-3xl p-5 shadow-card">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <p className="typo-14-bold text-gray-950 md:typo-16-bold">{nickname}</p>

@@ -11,7 +11,7 @@ export default function ToastContainer() {
 
   return (
     <div className="fixed right-0 bottom-10 left-0 layer-toast flex justify-center px-4 md:justify-end md:px-10">
-      <div className="flex flex-col gap-2 md:w-auto md:items-end">
+      <div className="flex w-full max-w-[min(420px,calc(100vw-2rem))] flex-col gap-2 md:items-end">
         {toasts.map((toast) => (
           <Toast
             key={toast.id}

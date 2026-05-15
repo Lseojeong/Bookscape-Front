@@ -1,5 +1,11 @@
-import ReservationPageHeader from '@/features/my-page/reservation-status/ui/ReservationPageHeader';
+import { Metadata } from 'next';
 import ReservationStatusClient from '@/features/my-page/reservation-status/ui/ReservationStatusClient';
+import PageHeader from '@/shared/ui/page-header/PageHeader';
+
+export const metadata: Metadata = {
+  title: '예약 현황',
+};
+
 /**
  * 예약 현황 페이지 (서버 컴포넌트)
  *
@@ -9,7 +15,10 @@ import ReservationStatusClient from '@/features/my-page/reservation-status/ui/Re
 export default function ReservationStatusPage() {
   return (
     <div className="mb-10 flex w-full flex-col gap-6 md:w-119 lg:w-160">
-      <ReservationPageHeader />
+      <PageHeader
+        title="예약 현황"
+        description="내 체험에 예약된 내역들을 한 눈에 확인할 수 있습니다."
+      />
       <ReservationStatusClient />
     </div>
   );

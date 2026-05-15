@@ -1,10 +1,14 @@
 import ActivityInfo from '@/features/activity/activity-detail/ui/activity-info/ActivityInfo';
 import ImageCarousel from '@/features/activity/activity-detail/ui/activity-info/ImageCarousel';
 import ActivityTabSection from '@/features/activity/activity-detail/ui/tab/ActivityTabSection';
-import type { ActivityDetail as ActivityDetailType } from '@/features/activity/types';
+import type {
+  ActivityDetail as ActivityDetailType,
+  ActivityReviewsResponse,
+} from '@/features/activity/types';
 
 type ActivityDetailProps = {
   activity: ActivityDetailType & { images: string[] };
+  initialReviewsData?: ActivityReviewsResponse;
 };
 
 /**
@@ -14,10 +18,10 @@ type ActivityDetailProps = {
  *
  * @example
  * ```tsx
- * <ActivityDetail activity={activity} />
+ * <ActivityDetail activity={activity} initialReviewsData={initialReviewsData} />
  * ```
  */
-export default function ActivityDetail({ activity }: ActivityDetailProps) {
+export default function ActivityDetail({ activity, initialReviewsData }: ActivityDetailProps) {
   return (
     <section className="lg:w-167.5">
       {/* 이미지 캐러셀 */}
@@ -40,6 +44,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
         activityId={activity.id}
         description={activity.description}
         address={activity.address}
+        initialReviewsData={initialReviewsData}
         className="mt-7"
       />
     </section>
