@@ -20,7 +20,7 @@ export default function ActivityReviewsSkeleton() {
 
       {/* ReviewCard 3개 */}
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="mb-4 rounded-3xl p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+        <div key={i} className="mb-4 rounded-3xl p-5 shadow-card">
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Skeleton className="h-4 w-16 rounded md:h-5" />

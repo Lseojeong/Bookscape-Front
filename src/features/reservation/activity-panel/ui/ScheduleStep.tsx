@@ -77,7 +77,7 @@ export default function ScheduleStep({
           availableDates={availableDates}
         />
       </div>
-      <div className="mt-6 md:w-75 md:rounded-2xl md:p-6 md:shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+      <div className="mt-6 md:w-75 md:rounded-2xl md:p-6 md:shadow-card">
         {/* 예약 가능한 시간 */}
         <ScheduleList
           selected={selected}
