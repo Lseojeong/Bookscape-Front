@@ -2,6 +2,12 @@
 
 import Script from 'next/script';
 
+/**
+ * 카카오 SDK를 초기화하는 컴포넌트입니다.
+ *
+ * @example
+ * <KakaoInit />
+ */
 export default function KakaoInit() {
   return (
     <Script
