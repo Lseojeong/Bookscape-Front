@@ -1,13 +1,10 @@
 import { format } from 'date-fns';
 import { notFound } from 'next/navigation';
 import ActivityDetail from '@/features/activity/activity-detail/ui/activity-info/ActivityDetail';
-import {
-  getActivityDetail,
-  getActivityReviews,
-  getAvailableSchedule,
-} from '@/features/activity/apis';
+import { getActivityDetail, getActivityReviews } from '@/features/activity/apis';
 import ReservationBar from '@/features/reservation/activity-panel/ui/ReservationBar';
 import ReservationWidget from '@/features/reservation/activity-panel/ui/ReservationWidget';
+import { getAvailableSchedule } from '@/features/reservation/apis';
 import { ApiError } from '@/shared/apis/apiError';
 
 type Props = {

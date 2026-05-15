@@ -1,15 +1,11 @@
-import { z } from 'zod';
 import {
   ActivityDetailSchema,
   ActivityResponse,
-  ActivityScheduleSchema,
   ActivityReviewsResponseSchema,
   ActivityResponseSchema,
   GetActivityParams,
   GetActivityReviewsParams,
 } from '@/features/activity/types';
-import { CreateActivityReservationRequestBody } from '@/features/reservation/types';
-import { bffFetch } from '@/shared/apis/base/bffFetch';
 import { get } from '@/shared/apis/base/publicFetch';
 
 /** 체험 상세 조회 */
@@ -21,21 +17,6 @@ export const getActivityDetail = async (id: number) => {
   const images = [activity.bannerImageUrl, ...activity.subImages.map((img) => img.imageUrl)];
 
   return { ...activity, images };
-};
-
-/** 예약 가능일 조회 */
-export const getAvailableSchedule = async (activityId: number, year: string, month: string) => {
-  const data = await get(
-    `/activities/${activityId}/available-schedule?year=${year}&month=${month}`
-  );
-  return z.array(ActivityScheduleSchema).parse(data);
-};
-
-export const createReservation = async (
-  activityId: number,
-  body: CreateActivityReservationRequestBody
-) => {
-  return bffFetch.post(`/activities/${activityId}/reservations`, body);
 };
 
 /**

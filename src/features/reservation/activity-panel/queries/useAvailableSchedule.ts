@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { getAvailableSchedule } from '@/features/activity/apis';
 import type { ActivitySchedule } from '@/features/activity/types';
+import { getAvailableSchedule } from '@/features/reservation/apis';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 type Options = {
