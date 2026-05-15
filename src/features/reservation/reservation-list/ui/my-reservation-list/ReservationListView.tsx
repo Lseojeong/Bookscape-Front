@@ -14,7 +14,6 @@ import type { MyReservation, MyReservationStatus } from '@/features/reservation/
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
-import PageHeader from '@/shared/ui/page-header/PageHeader';
 import type { ReservationStatus } from '@/shared/ui/state-badge/StateBadge';
 
 const RESERVATION_LIST_PATH = '/mypage/reservation-list';
@@ -91,8 +90,6 @@ export default function ReservationListView() {
   return (
     <div className="flex flex-col gap-7.5 pb-17.5">
       <div className="flex flex-col gap-3.5">
-        <PageHeader title="예약내역" description="예약내역 변경 및 취소할 수 있습니다." />
-
         <StatusFilter selectedStatus={selectedStatus} onSelectStatus={handleSelectStatus} />
       </div>
 
