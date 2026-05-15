@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   description: '체험을 만들고, 찾고, 예약까지 한 번에 북스케이프에서 경험해보세요!',
   keywords: ['체험', '원데이클래스', '예약', '북스케이프', 'bookscape', '액티비티'],
 
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
+
   openGraph: {
     ...COMMON_OPEN_GRAPH,
     url: '/',
