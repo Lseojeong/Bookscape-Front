@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { activityDetailQueryOptions } from '@/features/my-page/activity-form/edit/queries/useActivityDetail';
 import ActivityEditClient from '@/features/my-page/activity-form/edit/ui/ActivityEditClient';
+import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 
 export const metadata: Metadata = {
@@ -26,8 +27,14 @@ export default async function ActivityEditPage({ params }: { params: { id: strin
   }
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ActivityEditClient activityId={activityId} />
-    </HydrationBoundary>
+    <>
+      <div className="mb-10">
+        <PageHeader title="내 체험 수정" />
+      </div>
+
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ActivityEditClient activityId={activityId} />
+      </HydrationBoundary>
+    </>
   );
 }

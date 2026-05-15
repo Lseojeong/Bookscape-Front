@@ -2,6 +2,7 @@ import type { InfiniteData, QueryKey } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteActivity } from '@/features/my-page/apis';
 import type { GetMyActivitiesResponse } from '@/features/my-page/types';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
 
 export const useDeleteActivity = () => {
   const queryClient = useQueryClient();
@@ -9,15 +10,15 @@ export const useDeleteActivity = () => {
   return useMutation({
     mutationFn: (activityId: number) => deleteActivity(activityId),
     onMutate: async (activityId) => {
-      await queryClient.cancelQueries({ queryKey: ['my-activities'] });
+      await queryClient.cancelQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES_INFINITE_BASE() });
 
       const previousQueries = queryClient.getQueriesData<
         InfiniteData<GetMyActivitiesResponse, number | undefined>
-      >({ queryKey: ['my-activities'] });
+      >({ queryKey: QUERY_KEYS.MY_ACTIVITIES_INFINITE_BASE() });
 
       queryClient.setQueriesData<
         InfiniteData<GetMyActivitiesResponse, number | undefined> | undefined
-      >({ queryKey: ['my-activities'] }, (old) => {
+      >({ queryKey: QUERY_KEYS.MY_ACTIVITIES_INFINITE_BASE() }, (old) => {
         if (!old) return old;
 
         const nextPages = old.pages.map((page) => {
@@ -30,8 +31,6 @@ export const useDeleteActivity = () => {
         return { ...old, pages: nextPages };
       });
 
-      queryClient.removeQueries({ queryKey: ['my-activities', activityId] });
-
       return { previousQueries };
     },
     onError: (_error, _activityId, context) => {
@@ -40,8 +39,8 @@ export const useDeleteActivity = () => {
       });
     },
     onSettled: (_data, _error, activityId) => {
-      queryClient.removeQueries({ queryKey: ['my-activities', activityId] });
-      queryClient.invalidateQueries({ queryKey: ['my-activities'] });
+      queryClient.removeQueries({ queryKey: [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES_BASE() });
     },
   });
 };

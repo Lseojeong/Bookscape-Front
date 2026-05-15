@@ -18,7 +18,6 @@ export default function ActivityNewClient() {
 
   return (
     <ActivityFormPageShell
-      title="내 체험 등록"
       mode="create"
       onSubmitForm={submitActivity}
       isPending={isPending}

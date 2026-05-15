@@ -8,7 +8,7 @@ export const useCreateActivity = () => {
   return useMutation({
     mutationFn: createActivity,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES() });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES_BASE() });
     },
   });
 };

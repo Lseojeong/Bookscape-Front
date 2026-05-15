@@ -1,12 +1,12 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useReservation } from '@/features/reservation/activity-panel/hooks/useReservation';
 import HeadcountStep from '@/features/reservation/activity-panel/ui/HeadcountStep';
 import ScheduleStep from '@/features/reservation/activity-panel/ui/ScheduleStep';
 import { useMediaQuery } from '@/shared/hooks/useMediaQuery';
+import BottomSheet from '@/shared/ui/bottom-sheet/BottomSheet';
 import Button from '@/shared/ui/button/Button';
-import OverlayLayer from '@/shared/ui/overlay/layer/OverlayLayer';
 import TotalPrice from '@/shared/ui/price/TotalPrice';
 import { cn } from '@/shared/utils/cn';
 
@@ -48,9 +48,6 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState<'schedule' | 'headcount'>('schedule');
 
-  const startYRef = useRef<number>(0);
-  const [dragY, setDragY] = useState(0);
-
   const isMobile = useMediaQuery('(max-width: 767px)');
   const canReserve = Boolean(selected && selectedScheduleId);
   const isScheduleStep = step === 'schedule';
@@ -63,22 +60,6 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
       return;
     }
     handleReserve();
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    startYRef.current = e.touches[0].clientY;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    const diff = e.touches[0].clientY - startYRef.current;
-    if (diff > 0) setDragY(diff); // 아래로만 이동
-  };
-
-  const handleTouchEnd = () => {
-    if (dragY > 100) {
-      setIsOpen(false);
-    }
-    setDragY(0); // 원위치
   };
 
   const handleClose = () => {
@@ -106,78 +87,59 @@ export default function ReservationBar({ activityId }: ReservationBarProps) {
           예약하기
         </Button>
       </div>
-      <OverlayLayer
+      <BottomSheet
         isOpen={isOpen}
         onClose={handleClose}
-        position="bottom"
-        variant="sheet"
         ariaLabel="예약 날짜 선택"
         surfaceClassName={cn(
-          'h-auto! max-h-[calc(100dvh-80px)]',
-          step === 'headcount' && 'max-h-none'
+          'h-auto! max-h-[90dvh]! px-7.5',
+          step === 'headcount' && 'max-h-none!'
         )}
-        contentClassName={cn('rounded-t-3xl! rounded-b-none!', step === 'schedule' && 'h-full')}
-        surfaceStyle={{
-          transform: `translateY(${dragY}px)`,
-          transition: dragY === 0 ? 'transform 0.3s ease' : 'none',
-        }}
       >
-        <div className="flex flex-col">
-          {/* 핸들바 */}
-          <div
-            className="flex justify-center pt-1 pb-3"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            <div className="h-1 w-19 rounded-full bg-gray-300" />
-          </div>
-          {/* 콘텐츠 */}
-          <div className="flex-1 overflow-y-auto px-6">
-            {step === 'schedule' ? (
-              <ScheduleStep
-                selected={selected}
-                selectedScheduleId={selectedScheduleId}
-                headCount={headCount}
-                schedules={schedules}
-                month={month}
-                onSelectDate={(date) => {
-                  setSelected(date);
-                  setSelectedScheduleId(undefined);
-                }}
-                onSelectSchedule={(id) => {
-                  setSelectedScheduleId(id);
-                }}
-                onMonthChange={setMonth}
-                onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
-                onIncrease={() => setHeadCount((prev) => prev + 1)}
-                myBlockedScheduleIds={myBlockedScheduleIds}
-                availableDates={availableDates}
-              />
-            ) : (
-              <HeadcountStep
-                headCount={headCount}
-                onBack={() => setStep('schedule')}
-                onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
-                onIncrease={() => setHeadCount((prev) => prev + 1)}
-              />
-            )}
-          </div>
-          <div className="relative">
-            {/* 예약하기 버튼 */}
-            <Button
-              theme="primary"
-              size="lg"
-              className="w-full"
-              disabled={primaryButtonDisabled}
-              type="button"
-              onClick={handlePrimaryButtonClick}
-            >
-              {primaryButtonLabel}
-            </Button>
-          </div>
+        <div className="flex-1 overflow-y-auto">
+          {step === 'schedule' ? (
+            <ScheduleStep
+              selected={selected}
+              selectedScheduleId={selectedScheduleId}
+              headCount={headCount}
+              schedules={schedules}
+              month={month}
+              onSelectDate={(date) => {
+                setSelected(date);
+                setSelectedScheduleId(undefined);
+              }}
+              onSelectSchedule={(id) => {
+                setSelectedScheduleId(id);
+              }}
+              onMonthChange={setMonth}
+              onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
+              onIncrease={() => setHeadCount((prev) => prev + 1)}
+              myBlockedScheduleIds={myBlockedScheduleIds}
+              availableDates={availableDates}
+            />
+          ) : (
+            <HeadcountStep
+              headCount={headCount}
+              onBack={() => setStep('schedule')}
+              onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
+              onIncrease={() => setHeadCount((prev) => prev + 1)}
+            />
+          )}
         </div>
-      </OverlayLayer>
+        <div className="relative shrink-0 pb-7">
+          {/* 예약하기 버튼 */}
+          <Button
+            theme="primary"
+            size="lg"
+            className="w-full"
+            disabled={primaryButtonDisabled}
+            type="button"
+            onClick={handlePrimaryButtonClick}
+          >
+            {primaryButtonLabel}
+          </Button>
+        </div>
+      </BottomSheet>
     </div>
   );
 }

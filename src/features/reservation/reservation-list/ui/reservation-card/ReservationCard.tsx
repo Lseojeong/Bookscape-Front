@@ -8,6 +8,7 @@ import ReservationCardInfo from './ReservationCardInfo';
 
 export type ReservationCardProps = {
   data: MyReservation;
+  onReservationChangeClick?: (reservation: MyReservation) => void;
 };
 
 /**
@@ -21,7 +22,7 @@ export type ReservationCardProps = {
  * <ReservationCard data={data} />
  * ```
  */
-export default function ReservationCard({ data }: ReservationCardProps) {
+export default function ReservationCard({ data, onReservationChangeClick }: ReservationCardProps) {
   const router = useRouter();
 
   const handleClickCard = (e: React.MouseEvent | React.KeyboardEvent) => {
@@ -47,7 +48,7 @@ export default function ReservationCard({ data }: ReservationCardProps) {
       />
       {/* 정보 영역 */}
       <div className="relative layer-base w-full">
-        <ReservationCardInfo data={data} />
+        <ReservationCardInfo data={data} onReservationChangeClick={onReservationChangeClick} />
       </div>
     </div>
   );

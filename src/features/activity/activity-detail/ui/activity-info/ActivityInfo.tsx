@@ -1,5 +1,6 @@
 import ActivityAddress from '@/features/activity/activity-detail/ui/activity-info/ActivityAddress';
 import ActivityKebabMenu from '@/features/activity/activity-detail/ui/activity-info/ActivityKebabMenu';
+import ActivityShare from '@/features/activity/activity-detail/ui/share/ActivityShare';
 import { StarIcon } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
@@ -12,6 +13,8 @@ type ActivityInfoProps = {
   rating: number;
   reviewCount: number;
   address: string;
+  description: string;
+  bannerImageUrl: string;
   className?: string;
 };
 
@@ -41,6 +44,8 @@ export default function ActivityInfo({
   rating,
   reviewCount,
   address,
+  description,
+  bannerImageUrl,
   className,
 }: ActivityInfoProps) {
   return (
@@ -67,10 +72,10 @@ export default function ActivityInfo({
           {rating} ({reviewCount})
         </span>
       </div>
-      {/* 주소 */}
+      {/* 주소, 공유 기능 */}
       <div className="flex items-center justify-between">
         <ActivityAddress address={address} />
-        {/* TODO: 공유 버튼 영역 */}
+        <ActivityShare title={title} description={description} bannerImageUrl={bannerImageUrl} />
       </div>
     </div>
   );

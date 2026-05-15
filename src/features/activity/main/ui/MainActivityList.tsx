@@ -5,6 +5,7 @@ import useMainActivityCarousel from '@/features/activity/main/hooks/useMainActiv
 import ActivityCard from '@/features/activity/main/ui/activity-card/ActivityCard';
 import CarouselArrowButton from '@/features/activity/main/ui/CarouselArrowButton';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/shared/assets/icons';
+import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
@@ -30,6 +31,7 @@ export default function MainActivityList() {
     isError,
     refetch,
   } = useMainActivityCarousel();
+  const isSkeletonVisible = useDelayedLoading(isLoading);
 
   return (
     <article className="flex w-full flex-col gap-5 py-8">
@@ -37,20 +39,23 @@ export default function MainActivityList() {
         🔥 <span className="text-secondary-500">HOT</span> 인기 체험
       </Title>
 
-      {isLoading ? (
+      {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
         <>
           {/* 기본: 1개 반 노출, md: 2개 노출, lg: 8개 노출 */}
-          <div className="flex gap-4 overflow-hidden md:grid md:grid-cols-2 md:gap-5 lg:grid-cols-4 lg:gap-6">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <ActivityCardSkeleton
-                key={i}
-                className={cn(
-                  'w-[calc(70%-6px)] shrink-0',
-                  'md:w-auto md:shrink',
-                  i >= 2 ? 'hidden lg:block' : ''
-                )}
-              />
-            ))}
+          <div className="overflow-hidden pb-4">
+            <ul className="flex gap-4 md:gap-5 lg:gap-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <li
+                  key={i}
+                  className={cn(
+                    'w-[calc((100%-50px*2)/2)] min-w-50 flex-none md:w-[calc((100%-20px*1)/2)] lg:w-[calc((100%-24px*3)/4)]',
+                    i >= 3 ? 'hidden lg:block' : ''
+                  )}
+                >
+                  <ActivityCardSkeleton />
+                </li>
+              ))}
+            </ul>
           </div>
         </>
       ) : isError ? (

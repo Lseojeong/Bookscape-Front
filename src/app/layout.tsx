@@ -61,6 +61,12 @@ export default function RootLayout({
               src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`}
               strategy="afterInteractive"
             />
+            <Script
+              src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+              integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
+              crossOrigin="anonymous"
+              strategy="afterInteractive"
+            />
             <ToastContainer />
           </AuthTokenRefreshProvider>
         </QueryProvider>

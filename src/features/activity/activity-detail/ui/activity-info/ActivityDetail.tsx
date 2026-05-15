@@ -31,6 +31,8 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
         rating={activity.rating}
         reviewCount={activity.reviewCount}
         address={activity.address}
+        description={activity.description}
+        bannerImageUrl={activity.bannerImageUrl}
         className="mt-7"
       />
       {/* 탭바 */}

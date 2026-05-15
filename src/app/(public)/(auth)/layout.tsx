@@ -1,4 +1,7 @@
+'use client';
+import { usePathname } from 'next/navigation';
 import AuthBranding from '@/app/(public)/(auth)/ui/AuthBranding';
+import GuestGuard from '@/features/auth/guards/GuestGuard';
 import { cn } from '@/shared/utils/cn';
 
 /**
@@ -11,9 +14,14 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isSignupPage = pathname.includes('/signup');
+
   return (
     <main className="flex min-h-dvh w-full items-center justify-center xl:justify-between">
-      <div className={cn('mx-auto w-full max-w-187 px-6 md:px-13.5')}>{children}</div>
+      <div className={cn('mx-auto w-full max-w-187 px-6 md:px-13.5', isSignupPage && 'py-20')}>
+        <GuestGuard>{children}</GuestGuard>
+      </div>
       <div
         className={cn(
           'hidden shrink-0 transition-all xl:block',
