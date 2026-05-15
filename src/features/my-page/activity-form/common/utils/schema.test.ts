@@ -59,4 +59,14 @@ describe('activityFormSchema - schedules 유효성 검사', () => {
     const result = schedulesSchema.safeParse(validSchedules);
     expect(result.success).toBe(true);
   });
+
+  it('필수 값이 공백 문자열인 경우 에러를 반환한다', () => {
+    const invalidSchedule = [{ id: 1, date: '   ', startTime: '   ', endTime: '   ' }];
+    const result = schedulesSchema.safeParse(invalidSchedule);
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0].message).toBe(ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED);
+    }
+  });
 });
