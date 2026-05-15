@@ -1,8 +1,5 @@
-'use client';
-
-import { useAllActivityList } from '@/features/activity/activities/hooks/useAllActivityList';
-import SortSelectDropdown from '@/features/activity/activities/ui/SortSelectDropdown';
-import CategoryFilter from '@/features/activity/main/ui/category-filter/CategoryFilter';
+import ActivityHeaderActionsCategorySort from '@/features/activity/activities/ui/ActivityHeaderActionsCategorySort';
+import { ActivityHeaderActionsSearchSort } from '@/features/activity/activities/ui/ActivityHeaderActionsSearchSort';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 import SearchInput from '@/shared/ui/search-input/SearchInput';
 
@@ -20,8 +17,6 @@ import SearchInput from '@/shared/ui/search-input/SearchInput';
  * - 하단: CategoryFilter + SortSelectDropdown
  */
 export default function ActivitiesPageHeader() {
-  const { category, sort, handleChangeCategory, handleChangeSort } = useAllActivityList();
-
   return (
     <div className="flex flex-col gap-3 sm:gap-9">
       {/* SearchInput — 모바일에서만 상단 full width */}
@@ -34,22 +29,12 @@ export default function ActivitiesPageHeader() {
         <div className="grow">
           <PageHeader title="체험활동" description="체험을 탐색할 수 있습니다" />
         </div>
-        <div className="hidden sm:block">
-          <SearchInput className="h-14! rounded-2xl! px-4! typo-14-medium! shadow-none sm:min-w-79.25" />
-        </div>
-        <div className="sm:hidden">
-          <SortSelectDropdown sortValue={sort} onChangeSortValue={handleChangeSort} />
-        </div>
+        <ActivityHeaderActionsSearchSort />
       </div>
 
       {/* CategoryFilter + (데스크탑: SortSelectDropdown) */}
       <div className="flex items-center">
-        <div className="grow">
-          <CategoryFilter selectedCategory={category} onChangeCategory={handleChangeCategory} />
-        </div>
-        <div className="ml-5 hidden min-w-40 sm:block">
-          <SortSelectDropdown sortValue={sort} onChangeSortValue={handleChangeSort} />
-        </div>
+        <ActivityHeaderActionsCategorySort />
       </div>
     </div>
   );
