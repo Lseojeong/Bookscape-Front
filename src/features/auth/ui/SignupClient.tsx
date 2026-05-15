@@ -7,7 +7,6 @@ import { signupUser } from '@/features/auth/apis/auth';
 import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import AuthFooter from '@/features/auth/ui/AuthFooter';
 import AuthForm from '@/features/auth/ui/AuthForm';
-import AuthHeadline from '@/features/auth/ui/AuthHeadline';
 import { SignupFormValues, signupSchema } from '@/features/auth/utils/schema';
 import { ApiError } from '@/shared/apis/apiError';
 import Button from '@/shared/ui/button/Button';
@@ -77,7 +76,6 @@ export default function SignupClient() {
 
   return (
     <>
-      <AuthHeadline />
       <div className="mt-17 md:mt-22">
         <AuthForm onSubmit={handleSubmit(handleSignup)}>
           <FormField label="이메일" errorMessage={errors.email?.message}>

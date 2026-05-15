@@ -1,5 +1,5 @@
+import AuthBranding from '@/app/(public)/(auth)/ui/AuthBranding';
 import GuestGuard from '@/features/auth/guards/GuestGuard';
-import AuthBranding from '@/features/auth/ui/AuthBranding';
 import { cn } from '@/shared/utils/cn';
 
 /**

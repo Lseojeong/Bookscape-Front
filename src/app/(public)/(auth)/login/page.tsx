@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import AuthHeadline from '@/app/(public)/(auth)/ui/AuthHeadline';
 import LoginClient from '@/features/auth/ui/LoginClient';
 
 export const metadata: Metadata = {
@@ -11,5 +12,10 @@ export const metadata: Metadata = {
  * 로그인 페이지 서버 컴포넌트입니다.
  */
 export default function LoginPage() {
-  return <LoginClient />;
+  return (
+    <>
+      <AuthHeadline />
+      <LoginClient />
+    </>
+  );
 }
