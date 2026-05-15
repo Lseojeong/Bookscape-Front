@@ -1,5 +1,11 @@
+import { Metadata } from 'next';
 import ReservationStatusClient from '@/features/my-page/reservation-status/ui/ReservationStatusClient';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
+
+export const metadata: Metadata = {
+  title: '예약 현황',
+};
+
 /**
  * 예약 현황 페이지 (서버 컴포넌트)
  *

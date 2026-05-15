@@ -21,7 +21,7 @@ type ErrorPageProps = {
  */
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   useEffect(() => {
-    document.title = 'Bookscape | Internal Server Error';
+    document.title = 'Internal Server Error | 북스케이프';
     // eslint-disable-next-line no-console
     console.error(error);
   }, [error]);
