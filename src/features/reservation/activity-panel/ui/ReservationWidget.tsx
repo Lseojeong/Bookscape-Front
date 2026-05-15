@@ -64,7 +64,7 @@ export default function ReservationWidget({
   });
 
   return (
-    <div className="flex flex-col gap-6 rounded-3xl border border-gray-50 p-7.5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+    <div className="flex flex-col gap-6 rounded-3xl border border-gray-50 p-7.5 shadow-card">
       {/* 가격 */}
       <PerPersonPrice pricePerPerson={price} />
 
