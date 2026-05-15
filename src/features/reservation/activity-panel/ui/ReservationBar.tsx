@@ -99,8 +99,8 @@ export default function ReservationBar({
 
   return (
     <div className="fixed right-0 bottom-0 left-0 layer-header lg:hidden">
-      <div className="flex flex-col gap-2 border-t border-gray-100 bg-white px-4 py-3 pb-8">
-        <div className="my-3.5">
+      <div className="flex flex-col gap-2 border-t border-gray-100 bg-white px-4 pb-8">
+        <div className="my-5">
           <TotalPrice totalPrice={price} headCount={1} />
         </div>
         <Button
