@@ -22,16 +22,14 @@ export default async function ActivityEditPage({ params }: { params: { id: strin
   }
 
   return (
-    // 서버 단에서 레이아웃과 헤더를 먼저 그림
-    <div className="w-full pb-15.25 md:pb-9.25">
-      <div className="mx-auto w-full max-w-3xl px-4 pt-10 md:px-0 md:pt-14">
-        <div className="mb-10">
-          <PageHeader title="내 체험 수정" />
-        </div>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <ActivityEditClient activityId={activityId} />
-        </HydrationBoundary>
+    <>
+      <div className="mb-10">
+        <PageHeader title="내 체험 수정" />
       </div>
-    </div>
+
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ActivityEditClient activityId={activityId} />
+      </HydrationBoundary>
+    </>
   );
 }
