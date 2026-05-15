@@ -23,7 +23,8 @@ export const metadata: Metadata = {
   keywords: ['체험', '원데이클래스', '예약', '북스케이프', 'bookscape', '액티비티'],
 
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION,
+    // NOTE: 구글 서치 콘솔 인증을 위한 환경 변수입니다. 빌드 시점에 해당 값이 존재해야 메타 태그가 생성됩니다.
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
   },
 
   openGraph: {
