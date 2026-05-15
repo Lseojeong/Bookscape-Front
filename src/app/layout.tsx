@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
+import KakaoInit from '@/app/ui/KakaoInit';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import AuthTokenRefreshProvider from '@/features/auth/providers/AuthTokenRefreshProvider';
 import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
@@ -10,7 +11,6 @@ import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
 import ToastContainer from '@/shared/ui/toast/ToastContainer';
 import '@/shared/styles/globals.css';
-import KakaoInit from './ui/KakaoInit';
 
 // 공통 메타 데이터 및 OG 설정
 export const metadata: Metadata = {
