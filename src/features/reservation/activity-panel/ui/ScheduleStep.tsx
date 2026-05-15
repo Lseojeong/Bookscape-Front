@@ -18,6 +18,9 @@ type ScheduleStepProps = {
   onIncrease: () => void;
   myBlockedScheduleIds: Set<number>;
   availableDates?: string[];
+  isScheduleLoading?: boolean;
+  isScheduleError?: boolean;
+  onRetrySchedule?: () => void;
 };
 
 /**
@@ -39,6 +42,9 @@ type ScheduleStepProps = {
  *   onMonthChange={setMonth}
  *   onDecrease={() => setHeadCount((prev) => Math.max(1, prev - 1))}
  *   onIncrease={() => setHeadCount((prev) => prev + 1)}
+ *   isScheduleLoading={isScheduleLoading}
+ *   isScheduleError={isScheduleError}
+ *   onRetrySchedule={refetchSchedule}
  * />
  * ```
  */
@@ -55,6 +61,9 @@ export default function ScheduleStep({
   onIncrease,
   myBlockedScheduleIds,
   availableDates,
+  isScheduleLoading,
+  isScheduleError,
+  onRetrySchedule,
 }: ScheduleStepProps) {
   return (
     <div className="md:flex md:justify-center md:gap-6 md:py-6">
@@ -76,6 +85,9 @@ export default function ScheduleStep({
           selectedScheduleId={selectedScheduleId}
           disabledScheduleIds={myBlockedScheduleIds}
           onSelectSchedule={onSelectSchedule}
+          isLoading={isScheduleLoading}
+          isError={isScheduleError}
+          onRetry={onRetrySchedule}
           emptyClassName="mb-8 flex items-center justify-center"
         />
 

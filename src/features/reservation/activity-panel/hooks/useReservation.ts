@@ -47,7 +47,12 @@ export const useReservation = (
   const monthStr = format(month, 'MM');
 
   // 파생 훅
-  const { data: availableSchedules } = useAvailableSchedule(activityId, year, monthStr, {
+  const {
+    data: availableSchedules,
+    isLoading: isScheduleLoading,
+    isError: isScheduleError,
+    refetch: refetchSchedule,
+  } = useAvailableSchedule(activityId, year, monthStr, {
     initialData: initialScheduleData,
     initialYear: initialScheduleYear,
     initialMonth: initialScheduleMonth,
@@ -112,5 +117,8 @@ export const useReservation = (
     handleReserve,
     isOwner,
     myBlockedScheduleIds,
+    isScheduleLoading,
+    isScheduleError,
+    refetchSchedule,
   };
 };

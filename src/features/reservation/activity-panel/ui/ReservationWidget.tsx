@@ -56,6 +56,9 @@ export default function ReservationWidget({
     isOwner,
     myBlockedScheduleIds,
     availableDates,
+    isScheduleLoading,
+    isScheduleError,
+    refetchSchedule,
   } = useReservation(activityId, {
     initialActivityData,
     initialScheduleData,
@@ -96,6 +99,9 @@ export default function ReservationWidget({
         selectedScheduleId={selectedScheduleId}
         onSelectSchedule={(id) => setSelectedScheduleId(id)}
         disabledScheduleIds={myBlockedScheduleIds}
+        isLoading={isScheduleLoading}
+        isError={isScheduleError}
+        onRetry={refetchSchedule}
         className="border-b border-gray-50"
       />
 
