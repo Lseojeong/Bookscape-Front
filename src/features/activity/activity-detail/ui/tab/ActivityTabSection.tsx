@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import ActivityDescription from '@/features/activity/activity-detail/ui/activity-info/ActivityDescription';
 import ActivityLocation from '@/features/activity/activity-detail/ui/activity-info/ActivityLocation';
 import ActivityReviews from '@/features/activity/activity-detail/ui/review/ActivityReviews';
+import type { ActivityReviewsResponse } from '@/features/activity/types';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
 import { cn } from '@/shared/utils/cn';
 
@@ -11,6 +12,7 @@ type ActivityTabSectionProps = {
   activityId: number;
   description: string;
   address: string;
+  initialReviewsData?: ActivityReviewsResponse;
   className?: string;
 };
 
@@ -44,7 +46,12 @@ const MD_BREAKPOINT = 768;
  *
  * @example
  * ```tsx
- * <ActivityTabSection description={activity.description} address={activity.address} />
+ * <ActivityTabSection
+ *   activityId={activity.id}
+ *   description={activity.description}
+ *   address={activity.address}
+ *   initialReviewsData={initialReviewsData}
+ * />
  * ```
  */
 
@@ -52,6 +59,7 @@ export default function ActivityTabSection({
   activityId,
   description,
   address,
+  initialReviewsData,
   className,
 }: ActivityTabSectionProps) {
   const [activeTab, setActiveTab] = useState<string>(TAB_IDS.DESCRIPTION);
@@ -159,7 +167,7 @@ export default function ActivityTabSection({
       </div>
       {/* 체험 후기 */}
       <div ref={reviewsRef}>
-        <ActivityReviews activityId={activityId} />
+        <ActivityReviews activityId={activityId} initialData={initialReviewsData} />
       </div>
     </div>
   );

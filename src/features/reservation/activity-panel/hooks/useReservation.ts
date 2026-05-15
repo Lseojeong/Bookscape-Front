@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useActivityDetail } from '@/features/activity/activity-detail/queries/useActivityDetail';
+import type { ActivityDetail, ActivitySchedule } from '@/features/activity/types';
 import { useCreateReservation } from '@/features/reservation/activity-panel/mutations/useCreateReservation';
 import { useAvailableSchedule } from '@/features/reservation/activity-panel/queries/useAvailableSchedule';
 import { useMyReservations } from '@/features/reservation/activity-panel/queries/useMyReservations';
@@ -9,9 +10,24 @@ import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
-export const useReservation = (activityId: number) => {
+type InitialOptions = {
+  initialActivityData?: ActivityDetail;
+  initialScheduleData?: ActivitySchedule[];
+  initialScheduleYear?: string;
+  initialScheduleMonth?: string;
+};
+
+export const useReservation = (
+  activityId: number,
+  {
+    initialActivityData,
+    initialScheduleData,
+    initialScheduleYear,
+    initialScheduleMonth,
+  }: InitialOptions = {}
+) => {
   // 외부 훅
-  const { data } = useActivityDetail(activityId);
+  const { data } = useActivityDetail(activityId, initialActivityData);
   const { user } = useUserStore();
   const { showToast } = useToastStore();
   const { mutate: createReservation } = useCreateReservation(activityId);
@@ -31,7 +47,16 @@ export const useReservation = (activityId: number) => {
   const monthStr = format(month, 'MM');
 
   // 파생 훅
-  const { data: availableSchedules } = useAvailableSchedule(activityId, year, monthStr);
+  const {
+    data: availableSchedules,
+    isLoading: isScheduleLoading,
+    isError: isScheduleError,
+    refetch: refetchSchedule,
+  } = useAvailableSchedule(activityId, year, monthStr, {
+    initialData: initialScheduleData,
+    initialYear: initialScheduleYear,
+    initialMonth: initialScheduleMonth,
+  });
 
   // 파생 값
   const selectedDateStr = selected ? format(selected, 'yyyy-MM-dd') : null;
@@ -92,5 +117,8 @@ export const useReservation = (activityId: number) => {
     handleReserve,
     isOwner,
     myBlockedScheduleIds,
+    isScheduleLoading,
+    isScheduleError,
+    refetchSchedule,
   };
 };
