@@ -1,7 +1,7 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import { userMeQueryOptions } from '@/features/user/queries/userMeQueryOptions';
 import MyInfoClient from '@/features/user/ui/MyInfoClient';
-import MyInfoPageHeader from '@/features/user/ui/MyInfoPageHeader';
+import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { getQueryClient } from '@/shared/utils/getQueryClient';
 /**
  * 내 정보 페이지
@@ -20,7 +20,7 @@ export default async function MyInfoPage() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div>
-        <MyInfoPageHeader />
+        <PageHeader title="내 정보" description="닉네임과 비밀번호를 수정하실 수 있습니다." />
         <MyInfoClient />
       </div>
     </HydrationBoundary>
