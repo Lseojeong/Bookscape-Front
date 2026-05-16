@@ -11,7 +11,7 @@ import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
 import ToastContainer from '@/shared/ui/toast/ToastContainer';
 import '@/shared/styles/globals.css';
 
-const structuredData = {
+const STRUCTURED_DATA = {
   '@context': 'https://schema.org',
   '@graph': [
     {
@@ -72,13 +72,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable}`}>
-      <head>
+      <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
         />
-      </head>
-      <body>
         <QueryProvider>
           <AuthTokenRefreshProvider>
             <AuthSessionSync />
