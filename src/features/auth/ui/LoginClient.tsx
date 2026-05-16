@@ -17,7 +17,9 @@ import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
+import { removeDotSuffix } from '@/shared/utils/stringFormat';
 
+const AUTH_CLIENT_MESSAGE = '이메일 또는 비밀번호를 확인해 주세요';
 /**
  * 이메일과 비밀번호를 통한 인증을 처리합니다.
  * 성공 시 유저 정보를 Zustand 스토어에 저장하고 메인 페이지로 이동합니다.
@@ -70,10 +72,13 @@ export default function LoginClient() {
         }
       } catch (error) {
         if (error instanceof ApiError) {
-          // 서버에서 내려온 에러 (401, 400 등)
+          // 404는 서버 메시지, 그 외 에러는 고정 메시지 사용
+          const message =
+            error.status === 404 ? removeDotSuffix(error.message) : AUTH_CLIENT_MESSAGE;
+
           setError('root', {
             type: 'server',
-            message: error.message,
+            message,
           });
         } else {
           // 네트워크 에러 등
@@ -88,7 +93,7 @@ export default function LoginClient() {
     <>
       <div className="mt-17 md:mt-22">
         <AuthForm onSubmit={handleSubmit(handleLogin)}>
-          <FormField label="이메일">
+          <FormField label="이메일" errorMessage={errors.email?.message}>
             <FormInput
               type="email"
               name="email"
@@ -97,7 +102,7 @@ export default function LoginClient() {
             />
           </FormField>
 
-          <FormField label="비밀번호">
+          <FormField label="비밀번호" errorMessage={errors.password?.message}>
             <PasswordInput
               name="password"
               control={control}
