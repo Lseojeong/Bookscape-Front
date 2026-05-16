@@ -43,6 +43,7 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   // ImageUploadBox 강제 리마운트용 key
   const [imageBoxKey, setImageBoxKey] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     control,
@@ -86,6 +87,7 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
     isOauth || (newPassword ? !!passwordConfirm.trim() && Object.keys(errors).length === 0 : true);
 
   const isDisabled =
+    isSubmitting ||
     (!isDirty && !isImageChanged) ||
     !nickname.trim() ||
     Object.keys(errors).length > 0 ||
@@ -108,29 +110,38 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
   };
 
   const onSubmit = async (values: ProfileFormValues) => {
-    let imageUrl = profileImageUrl;
+    setIsSubmitting(true);
+    try {
+      let imageUrl = profileImageUrl;
 
-    if (selectedFile) {
-      try {
-        const result = await createMyProfileImageUrl(selectedFile);
-        imageUrl = result?.profileImageUrl ?? profileImageUrl;
-      } catch {
-        showToast('cancel', '이미지 업로드에 실패했습니다. 다시 시도해주세요.');
-        return;
+      if (selectedFile) {
+        try {
+          const result = await createMyProfileImageUrl(selectedFile);
+          imageUrl = result?.profileImageUrl ?? profileImageUrl;
+        } catch {
+          showToast('cancel', '이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+          return;
+        }
       }
-    }
 
-    const body: UpdateMyProfileRequestBody = {
-      nickname: values.nickname,
-      profileImageUrl: imageUrl,
-    };
-    if (!isOauth && values.newPassword !== '') {
-      body.newPassword = values.newPassword;
-    }
+      const body: UpdateMyProfileRequestBody = {
+        nickname: values.nickname,
+        profileImageUrl: imageUrl,
+      };
+      if (!isOauth && values.newPassword !== '') {
+        body.newPassword = values.newPassword;
+      }
 
-    await onUpdateUser(body);
-    setSelectedFile(null);
-    reset({ nickname: values.nickname, newPassword: '', passwordConfirm: '' });
+      try {
+        await onUpdateUser(body);
+        setSelectedFile(null);
+        reset({ nickname: values.nickname, newPassword: '', passwordConfirm: '' });
+      } catch {
+        showToast('cancel', '프로필 수정에 실패했습니다. 다시 시도해주세요.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -177,6 +188,7 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
           size="sm"
           className="h-10.5 w-30"
           onClick={handleCancel}
+          disabled={isSubmitting}
         >
           취소하기
         </Button>
@@ -186,6 +198,7 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
           size="sm"
           className="ml-3 h-10.5 w-30"
           disabled={isDisabled}
+          isLoading={isSubmitting}
         >
           저장하기
         </Button>
