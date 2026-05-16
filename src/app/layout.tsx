@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
-import KakaoInit from '@/app/ui/KakaoInit';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import AuthTokenRefreshProvider from '@/features/auth/providers/AuthTokenRefreshProvider';
 import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
 import { SITE_URL } from '@/shared/constants/url';
+import KakaoInit from '@/shared/providers/KakaoInit';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
