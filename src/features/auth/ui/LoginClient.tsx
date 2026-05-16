@@ -18,6 +18,7 @@ import PasswordInput from '@/shared/ui/input/PasswordInput';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
 
+const AUTH_CLIENT_MESSAGE = '이메일 또는 비밀번호를 확인해 주세요';
 /**
  * 이메일과 비밀번호를 통한 인증을 처리합니다.
  * 성공 시 유저 정보를 Zustand 스토어에 저장하고 메인 페이지로 이동합니다.
@@ -74,7 +75,7 @@ export default function LoginClient() {
           const message =
             error.status === 404
               ? error.message.replace(/\.$/, '') // 마지막 온점 제거
-              : '이메일 또는 비밀번호를 확인해 주세요';
+              : AUTH_CLIENT_MESSAGE;
 
           setError('root', {
             type: 'server',
