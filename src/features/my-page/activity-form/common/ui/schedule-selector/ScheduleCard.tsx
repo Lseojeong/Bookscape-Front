@@ -69,7 +69,10 @@ export default function ScheduleCard({
       >
         <div className="flex items-center gap-1">
           <CaretDownIcon
-            className={`h-6 w-6 text-gray-950 transition-transform duration-200 ${!isExpanded ? '-rotate-90' : ''}`}
+            className={cn(
+              'h-6 w-6 shrink-0 text-gray-950 transition-transform duration-200',
+              !isExpanded && '-translate-y-1 -rotate-90'
+            )}
           />
           <h4 className="typo-16-bold text-black">{format(date, 'yyyy년 MM월 dd일')}</h4>
         </div>
