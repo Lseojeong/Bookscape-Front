@@ -3,16 +3,39 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import AuthTokenRefreshProvider from '@/features/auth/providers/AuthTokenRefreshProvider';
+import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
+import { SITE_URL } from '@/shared/constants/url';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
 import ToastContainer from '@/shared/ui/toast/ToastContainer';
 import '@/shared/styles/globals.css';
 
-//TODO: 메타태그 수정하기
+// 공통 메타 데이터 및 OG 설정
 export const metadata: Metadata = {
-  title: '북스케이프: bookscape',
+  metadataBase: new URL(SITE_URL),
+
+  title: {
+    default: '북스케이프: bookscape',
+    template: '%s | 북스케이프',
+  },
   description: '체험을 만들고, 찾고, 예약까지 한 번에 북스케이프에서 경험해보세요!',
+  keywords: ['체험', '원데이클래스', '예약', '북스케이프', 'bookscape', '액티비티'],
+
+  verification: {
+    // NOTE: 구글 서치 콘솔 인증을 위한 환경 변수입니다. 빌드 시점에 해당 값이 존재해야 메타 태그가 생성됩니다.
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+  },
+
+  openGraph: {
+    ...COMMON_OPEN_GRAPH,
+    url: '/',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
+  },
 };
 
 // 폰트 파일 로드 + CSS 변수 등록

@@ -60,6 +60,9 @@ export default function ReservationBar({
     isOwner,
     myBlockedScheduleIds,
     availableDates,
+    isScheduleLoading,
+    isScheduleError,
+    refetchSchedule,
   } = useReservation(activityId, {
     initialActivityData,
     initialScheduleData,
@@ -138,6 +141,9 @@ export default function ReservationBar({
               onIncrease={() => setHeadCount((prev) => prev + 1)}
               myBlockedScheduleIds={myBlockedScheduleIds}
               availableDates={availableDates}
+              isScheduleLoading={isScheduleLoading}
+              isScheduleError={isScheduleError}
+              onRetrySchedule={refetchSchedule}
             />
           ) : (
             <HeadcountStep

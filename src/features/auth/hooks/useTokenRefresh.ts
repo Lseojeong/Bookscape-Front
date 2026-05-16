@@ -1,4 +1,5 @@
 'use client';
+import * as Sentry from '@sentry/nextjs';
 import { useEffect, useRef } from 'react';
 import { refreshAuthTokens } from '@/features/auth/apis/auth';
 import { ApiError } from '@/shared/apis/apiError';
@@ -25,6 +26,8 @@ export const useTokenRefresh = () => {
 
   // 동시에 여러 재발급 요청이 발생하지 않도록 방지
   const isRefreshing = useRef(false);
+  // refresh 실패가 반복될 때 이벤트 폭주 방지
+  const lastCapturedAtRef = useRef(0);
 
   useEffect(() => {
     if (!accessTokenExpiresAt || !user) return;
@@ -44,6 +47,18 @@ export const useTokenRefresh = () => {
         const data = await refreshAuthTokens();
         const newExpiredAt = data?.accessTokenExpiresAt;
 
+        // 성공 응답이지만 만료 시간이 없으면 이후 스케줄링이 꼬일 수 있어 기록해둡니다.
+        if (!newExpiredAt) {
+          const nowForCapture = Date.now();
+          if (nowForCapture - lastCapturedAtRef.current > 10 * 60 * 1000) {
+            lastCapturedAtRef.current = nowForCapture;
+            Sentry.captureMessage('[Auth] refreshAuthTokens missing accessTokenExpiresAt', {
+              level: 'warning',
+              tags: { feature: 'auth', op: 'refresh_tokens' },
+            });
+          }
+        }
+
         if (newExpiredAt && user) {
           const currentUser = useUserStore.getState().user;
           if (currentUser) {
@@ -56,6 +71,15 @@ export const useTokenRefresh = () => {
           clearSession('expired');
           showToast('warning', '로그인 시간이 만료되었습니다. 다시 로그인해 주세요.');
           return;
+        }
+
+        // 예상 밖 에러(네트워크/서버/파싱 등)는 Sentry에 남겨 원인 추적이 가능하게 합니다.
+        const nowForCapture = Date.now();
+        if (nowForCapture - lastCapturedAtRef.current > 60 * 1000) {
+          lastCapturedAtRef.current = nowForCapture;
+          Sentry.captureException(error, {
+            tags: { feature: 'auth', op: 'refresh_tokens' },
+          });
         }
       } finally {
         isRefreshing.current = false;

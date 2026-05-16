@@ -8,7 +8,7 @@ import NotFoundLottie from '@/app/ui/NotFoundLottie';
  * 사용자가 존재하지 않는 경로로 접근했을 때 브라우저 탭 타이틀에 반영됩니다.
  */
 export const metadata: Metadata = {
-  title: 'Bookscape | Page Not Found',
+  title: 'Page Not Found',
 };
 
 /**

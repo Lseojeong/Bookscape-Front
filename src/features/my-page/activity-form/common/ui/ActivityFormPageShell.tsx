@@ -8,11 +8,9 @@ import LeaveConfirmDialog from '@/features/my-page/activity-form/common/ui/Leave
 import ResetConfirmDialog from '@/features/my-page/activity-form/common/ui/ResetConfirmDialog';
 import type { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
 import { usePreventGoBack } from '@/shared/hooks/usePreventGoBack';
-import PageHeader from '@/shared/ui/page-header/PageHeader';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 export type ActivityFormPageShellProps = {
-  title: string;
   mode: 'create' | 'edit';
   initialData?: ActivityInitialData;
   onSubmitForm: (data: ActivityFormValues) => void;
@@ -24,8 +22,18 @@ export type ActivityFormPageShellProps = {
   containerClassName?: string;
 };
 
+/**
+ * 체험 등록 및 수정 페이지의 공통 레이아웃과 비즈니스 로직을 관리하는 쉘 컴포넌트입니다.
+ *
+ * @example
+ * <ActivityFormPageShell
+ *   mode="create"
+ *   onSubmitForm={handleSubmit}
+ *   resetToastMessage="초기화되었습니다."
+ *   confirmText="확인"
+ * />
+ */
 export default function ActivityFormPageShell({
-  title,
   mode,
   initialData,
   onSubmitForm,
@@ -33,8 +41,8 @@ export default function ActivityFormPageShell({
   isErrorData = false,
   resetToastMessage,
   confirmText,
-  mainClassName = 'w-full pb-15.25 md:pb-9.25',
-  containerClassName = 'mx-auto w-full max-w-3xl px-4 pt-10 md:px-0 md:pt-14',
+  mainClassName = '', // 여백은 부모에서 잡을 거라 기본값 초기화
+  containerClassName = 'w-full', // 가로폭만 다 차지하도록 설정
 }: ActivityFormPageShellProps) {
   const { showToast } = useToastStore();
 
@@ -69,10 +77,6 @@ export default function ActivityFormPageShell({
   return (
     <div className={mainClassName}>
       <div className={containerClassName}>
-        <div className="mb-10">
-          <PageHeader title={title} />
-        </div>
-
         {/* 수정 모드일 때는 데이터가 있어야만 렌더링, 등록 모드는 항상 렌더링 */}
         {(mode === 'create' || initialData) && (
           <ActivityForm
