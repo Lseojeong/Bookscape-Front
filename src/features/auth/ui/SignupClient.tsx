@@ -63,7 +63,7 @@ export default function SignupClient() {
         if (error instanceof ApiError) {
           setError('root', {
             type: 'server',
-            message: removeDotSuffix(error.message), // 마지막 온점 제거
+            message: removeDotSuffix(error.message),
           });
         } else {
           // 네트워크 에러 등

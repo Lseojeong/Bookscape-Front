@@ -74,9 +74,7 @@ export default function LoginClient() {
         if (error instanceof ApiError) {
           // 404는 서버 메시지, 그 외 에러는 고정 메시지 사용
           const message =
-            error.status === 404
-              ? removeDotSuffix(error.message) // 마지막 온점 제거
-              : AUTH_CLIENT_MESSAGE;
+            error.status === 404 ? removeDotSuffix(error.message) : AUTH_CLIENT_MESSAGE;
 
           setError('root', {
             type: 'server',
