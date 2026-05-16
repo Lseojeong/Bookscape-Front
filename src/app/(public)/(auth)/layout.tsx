@@ -1,4 +1,3 @@
-'use client';
 import AuthBranding from '@/app/(public)/(auth)/ui/AuthBranding';
 import GuestGuard from '@/features/auth/guards/GuestGuard';
 import { cn } from '@/shared/utils/cn';
@@ -15,7 +14,7 @@ export default function AuthLayout({
 }>) {
   return (
     <main className="flex min-h-dvh w-full items-center justify-center xl:justify-between">
-      <div className={cn('mx-auto w-full max-w-187 px-6 py-20 md:px-13.5')}>
+      <div className="mx-auto w-full max-w-187 px-6 py-20 md:px-13.5">
         <GuestGuard>{children}</GuestGuard>
       </div>
       <div
