@@ -20,7 +20,7 @@ const dropdownContentVariants = {
 };
 
 const dropdownScrollAreaVariants = {
-  basic: 'max-h-83 w-full overflow-y-auto overflow-x-hidden p-3 scrollbar-thin',
+  basic: 'max-h-83 overflow-y-auto overflow-x-hidden p-3 scrollbar-thin',
   shadow: '',
 };
 
