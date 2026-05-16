@@ -11,6 +11,25 @@ import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
 import ToastContainer from '@/shared/ui/toast/ToastContainer';
 import '@/shared/styles/globals.css';
 
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      name: '북스케이프',
+      alternateName: 'Bookscape',
+      url: SITE_URL,
+    },
+    {
+      '@type': 'Organization',
+      name: '북스케이프',
+      alternateName: 'Bookscape',
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon.png`,
+    },
+  ],
+} as const;
+
 // 공통 메타 데이터 및 OG 설정
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -53,6 +72,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${pretendard.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </head>
       <body>
         <QueryProvider>
           <AuthTokenRefreshProvider>
