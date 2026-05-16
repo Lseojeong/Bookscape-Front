@@ -70,7 +70,7 @@ export default function LoginClient() {
         }
       } catch (error) {
         if (error instanceof ApiError) {
-          // 404는 서버 메시지, 400은 고정 메시지 사용
+          // 404는 서버 메시지, 그 외 에러는 고정 메시지 사용
           const message =
             error.status === 404
               ? error.message.replace(/\.$/, '') // 마지막 온점 제거
