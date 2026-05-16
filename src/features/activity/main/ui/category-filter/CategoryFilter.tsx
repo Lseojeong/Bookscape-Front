@@ -1,6 +1,7 @@
+import { ACTIVITY_CATEGORIES } from '@/shared/constants/category';
 import FilterButton from '@/shared/ui/filter-button/FilterButton';
 
-const CATEGORY_LIST = ['전체', '문화 · 예술', '식음료', '투어', '관광', '웰빙'];
+const CATEGORY_LIST = ['전체', ...ACTIVITY_CATEGORIES];
 
 type CategoryFilterProps = {
   selectedCategory: string;
