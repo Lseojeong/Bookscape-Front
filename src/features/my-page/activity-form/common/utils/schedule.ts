@@ -2,8 +2,9 @@ import { Slot } from '@/features/my-page/activity-form/types';
 
 /** 24시간 초과 여부 확인 */
 export const isExceedingMidnight = (start: string, duration: number): boolean => {
-  const [hour] = start.split(':').map(Number);
-  return hour + duration > 24;
+  const [hour, minute] = start.split(':').map(Number);
+  const endHour = hour + duration;
+  return endHour > 24 || (endHour === 24 && minute > 0);
 };
 
 /** 시작 시간과 진행 시간을 더해 종료 시간 계산 */

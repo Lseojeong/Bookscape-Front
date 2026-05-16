@@ -1,13 +1,13 @@
 import { z } from 'zod';
-import { ACTIVITY_CATEGORIES } from '@/features/my-page/activity-form/common/constants/category';
 import { ACTIVITY_ERROR_MESSAGES } from '@/features/my-page/activity-form/common/constants/validation';
+import { ACTIVITY_CATEGORIES } from '@/shared/constants/category';
 import { imageFileSchema } from '@/shared/utils/file';
 
 export const scheduleSchema = z.object({
   id: z.number().optional(), // 기존 스케줄 식별용
-  date: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
-  startTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
-  endTime: z.string().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
+  date: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
+  startTime: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
+  endTime: z.string().trim().min(1, ACTIVITY_ERROR_MESSAGES.SCHEDULE_REQUIRED),
 });
 
 /**
