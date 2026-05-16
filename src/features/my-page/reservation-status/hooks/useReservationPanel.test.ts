@@ -106,7 +106,7 @@ describe('useReservationPanel', () => {
         result.current.handleTabChange('confirmed');
       });
 
-      // available 없으면 schedules[0].scheduleId로 fallback
+      //NOTE: available 없으면 schedules[0].scheduleId로 fallback
       expect(result.current.selectedScheduleId).toBe(1);
     });
   });
