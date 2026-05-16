@@ -17,6 +17,7 @@ import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
+import { removeDotSuffix } from '@/shared/utils/stringFormat';
 
 const AUTH_CLIENT_MESSAGE = '이메일 또는 비밀번호를 확인해 주세요';
 /**
@@ -74,7 +75,7 @@ export default function LoginClient() {
           // 404는 서버 메시지, 그 외 에러는 고정 메시지 사용
           const message =
             error.status === 404
-              ? error.message.replace(/\.$/, '') // 마지막 온점 제거
+              ? removeDotSuffix(error.message) // 마지막 온점 제거
               : AUTH_CLIENT_MESSAGE;
 
           setError('root', {
