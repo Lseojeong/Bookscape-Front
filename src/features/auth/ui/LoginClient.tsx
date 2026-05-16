@@ -88,7 +88,7 @@ export default function LoginClient() {
     <>
       <div className="mt-17 md:mt-22">
         <AuthForm onSubmit={handleSubmit(handleLogin)}>
-          <FormField label="이메일">
+          <FormField label="이메일" errorMessage={errors.email?.message}>
             <FormInput
               type="email"
               name="email"
@@ -97,7 +97,7 @@ export default function LoginClient() {
             />
           </FormField>
 
-          <FormField label="비밀번호">
+          <FormField label="비밀번호" errorMessage={errors.password?.message}>
             <PasswordInput
               name="password"
               control={control}
