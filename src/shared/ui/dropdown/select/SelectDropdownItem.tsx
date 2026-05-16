@@ -99,7 +99,9 @@ export default function SelectDropdownItem<T = string>({
       onClick={selectOption}
       onKeyDown={handleKeyDown}
     >
-      {children}
+      <span className="block max-w-full min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
+        {children}
+      </span>
     </li>
   );
 }
