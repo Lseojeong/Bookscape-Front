@@ -4,7 +4,9 @@ import type {
   SellerReservationStatus,
 } from '@/features/my-page/types';
 
-const getInitialTab = (schedules: MyActivityReservedScheduleItem[]): SellerReservationStatus => {
+export const getInitialTab = (
+  schedules: MyActivityReservedScheduleItem[]
+): SellerReservationStatus => {
   if (schedules.some((s) => s.count.pending > 0)) return 'pending';
   if (schedules.some((s) => s.count.confirmed > 0)) return 'confirmed';
   if (schedules.some((s) => s.count.declined > 0)) return 'declined';
