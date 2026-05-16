@@ -132,9 +132,13 @@ export default function ProfileForm({ user, onUpdateUser }: ProfileFormProps) {
         body.newPassword = values.newPassword;
       }
 
-      await onUpdateUser(body);
-      setSelectedFile(null);
-      reset({ nickname: values.nickname, newPassword: '', passwordConfirm: '' });
+      try {
+        await onUpdateUser(body);
+        setSelectedFile(null);
+        reset({ nickname: values.nickname, newPassword: '', passwordConfirm: '' });
+      } catch {
+        showToast('cancel', '프로필 수정에 실패했습니다. 다시 시도해주세요.');
+      }
     } finally {
       setIsSubmitting(false);
     }
