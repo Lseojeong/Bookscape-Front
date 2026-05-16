@@ -15,8 +15,13 @@ type SelectDropdownContentProps = WithChildren & {
 };
 
 const dropdownContentVariants = {
-  basic: 'max-h-83 w-full overflow-y-auto rounded-2xl border border-gray-100 p-3 scrollbar-thin',
+  basic: 'w-full rounded-2xl border border-gray-100',
   shadow: dropdownListShadowStyle,
+};
+
+const dropdownScrollAreaVariants = {
+  basic: 'max-h-83 overflow-y-auto overflow-x-hidden p-3 scrollbar-thin',
+  shadow: '',
 };
 
 /**
@@ -36,12 +41,14 @@ export default function SelectDropdownContent({ children, className }: SelectDro
   }
 
   return (
-    <ul
-      role="listbox"
-      aria-labelledby={triggerId}
-      className={cn(dropdownListBase, dropdownContentVariants[variants], className)}
-    >
-      {children}
-    </ul>
+    <div className={cn(dropdownListBase, dropdownContentVariants[variants], className)}>
+      <ul
+        role="listbox"
+        aria-labelledby={triggerId}
+        className={cn('flex w-full flex-col gap-1', dropdownScrollAreaVariants[variants])}
+      >
+        {children}
+      </ul>
+    </div>
   );
 }
