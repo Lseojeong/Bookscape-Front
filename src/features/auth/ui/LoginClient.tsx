@@ -70,10 +70,14 @@ export default function LoginClient() {
         }
       } catch (error) {
         if (error instanceof ApiError) {
-          // 서버에서 내려온 에러 (401, 400 등)
+          const message =
+            error.status === 404
+              ? error.message.replace(/\.$/, '') // 마지막 온점 제거
+              : '이메일 또는 비밀번호를 확인해 주세요';
+
           setError('root', {
             type: 'server',
-            message: error.message,
+            message,
           });
         } else {
           // 네트워크 에러 등

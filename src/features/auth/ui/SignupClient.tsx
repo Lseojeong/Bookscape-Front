@@ -60,10 +60,9 @@ export default function SignupClient() {
         router.push('/login');
       } catch (error) {
         if (error instanceof ApiError) {
-          // 서버에서 내려온 에러 (409 이메일 중복 등)
           setError('root', {
             type: 'server',
-            message: error.message,
+            message: error.message.replace(/\.$/, ''), // 마지막 온점 제거
           });
         } else {
           // 네트워크 에러 등
