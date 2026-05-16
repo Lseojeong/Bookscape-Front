@@ -15,9 +15,7 @@ const makeSchedule = (
   count,
 });
 
-// ────────────────────────────────────────────
-// getInitialTab 직접 테스트
-// ────────────────────────────────────────────
+// getInitialTab 테스트
 describe('getInitialTab', () => {
   it('pending이 있으면 pending을 반환한다', () => {
     const schedules = [makeSchedule(1, { pending: 2, confirmed: 0, declined: 0 })];
@@ -52,9 +50,8 @@ describe('getInitialTab', () => {
   });
 });
 
-// ────────────────────────────────────────────
 // useReservationPanel 훅 테스트
-// ────────────────────────────────────────────
+
 describe('useReservationPanel', () => {
   describe('activeTab 초기값', () => {
     it('pending이 있으면 초기 탭은 pending이다', () => {
