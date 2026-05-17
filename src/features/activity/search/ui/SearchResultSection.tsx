@@ -37,7 +37,7 @@ export default function SearchResultSection() {
   return (
     <>
       <div className="mb-5 md:mb-7 lg:mb-10">
-        <Title as="h2" size="18" weight="medium" className="text-gray-950 md:typo-24-medium">
+        <Title as="h1" size="18" weight="medium" className="text-gray-950 md:typo-24-medium">
           <span className="typo-18-bold md:typo-24-bold">{keyword}</span>으로 검색한 결과입니다.
         </Title>
         <p className="typo-14-medium text-gray-700 md:typo-18-medium">

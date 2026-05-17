@@ -1,6 +1,7 @@
 import BaseCardImage from '@/shared/ui/card/base/BaseCardImage';
 import BaseCardInfo from '@/shared/ui/card/base/BaseCardInfo';
 import { cardWrapStyles } from '@/shared/ui/card/cardStyles';
+import { TitleAs } from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 import ActivityCardInfo from './ActivityCardInfo';
 
@@ -17,6 +18,7 @@ export type ActivityCardData = {
 };
 export type ActivityCardProps = {
   data: ActivityCardData;
+  titleTag?: TitleAs;
 };
 
 /**
@@ -36,7 +38,7 @@ export type ActivityCardProps = {
  * </div>
  * ```
  */
-export default function ActivityCard({ data }: ActivityCardProps) {
+export default function ActivityCard({ data, titleTag }: ActivityCardProps) {
   const { bannerImageUrl } = data;
 
   return (
@@ -49,7 +51,7 @@ export default function ActivityCard({ data }: ActivityCardProps) {
 
       {/* 정보 영역 */}
       <BaseCardInfo className="absolute bottom-0 p-4 md:px-7.5 md:py-5">
-        <ActivityCardInfo data={data} />
+        <ActivityCardInfo data={data} titleTag={titleTag} />
       </BaseCardInfo>
     </div>
   );
