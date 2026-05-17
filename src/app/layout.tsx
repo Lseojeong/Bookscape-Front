@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
@@ -67,7 +67,7 @@ const pretendard = localFont({
 });
 
 // 모바일 입력 필드 자동 줌 방지
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1, // iOS Safari의 input 자동 줌인 방지
