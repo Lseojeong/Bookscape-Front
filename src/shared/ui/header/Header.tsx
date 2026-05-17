@@ -73,7 +73,7 @@ export default function Header({ isLoggedIn = false, user, className, onLogout }
   const { isScrolled } = useScroll({ isEnabled: isScrollThemedPage });
 
   const theme: HeaderTheme = isScrollThemedPage && !isScrolled ? 'primary' : 'light';
-  const LogoWrapper = pathname === '/' || pathname === '/search' ? 'h1' : 'div';
+  const LogoWrapper = pathname === '/' ? 'h1' : 'div';
   const isMyPage = pathname.startsWith('/mypage');
   const isActivityDetail = pathname.startsWith('/activity/');
   const shouldUseSolidLightBg = isActivityDetail || isMyPage;
