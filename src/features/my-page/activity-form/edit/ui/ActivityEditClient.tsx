@@ -23,7 +23,7 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
   const { submitActivityEdit, isPending } = useActivityEditSubmit(activityId, originalData);
 
   if (hasHydrated && originalData) {
-    if (user?.id !== originalData.userId) {
+    if (user && user.id !== originalData.userId) {
       notFound();
     }
   }
