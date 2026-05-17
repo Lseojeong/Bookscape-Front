@@ -11,7 +11,7 @@
   /* 10 단위 스케일 (max: 100) */
   --z-index-background: 0; /* Background */
   --z-index-base: 10; /* Base Content */
-  --z-index-sticky: 20; /* Sticky UI (between base and header) */
+  --z-index-sub-navigation: 20; /* Sub-navigation (between base and header) */
   --z-index-header: 30; /* Navigation & Layout */
   --z-index-dropdown: 40; /* Floating UI */
   --z-index-modal-backdrop: 50; /* Full-screen Overlays */
@@ -27,8 +27,8 @@
   z-index: var(--z-index-base);
 }
 
-@utility layer-sticky {
-  z-index: var(--z-index-sticky);
+@utility layer-sub-navigation {
+  z-index: var(--z-index-sub-navigation);
 }
 
 @utility layer-header {
