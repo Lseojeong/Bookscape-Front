@@ -68,25 +68,24 @@ type HeaderProps = {
  * @param props.className - 추가 클래스
  */
 export default function Header({ isLoggedIn = false, user, className, onLogout }: HeaderProps) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   const isScrollThemedPage = pathname === '/' || pathname === '/search';
   const { isScrolled } = useScroll({ isEnabled: isScrollThemedPage });
 
   const theme: HeaderTheme = isScrollThemedPage && !isScrolled ? 'primary' : 'light';
   const LogoWrapper = pathname === '/' || pathname === '/search' ? 'h1' : 'div';
   const isMyPage = pathname.startsWith('/mypage');
-  const isActivityDetail = /^\/activity\/\d+/.test(pathname ?? '');
-  const shouldUseSolidLightBg = theme === 'light' && (isActivityDetail || isMyPage);
-  const myPageLightBgOverrideClassName =
-    theme === 'light' && isMyPage && !isActivityDetail ? 'md:bg-white/60 md:backdrop-blur' : '';
+  const isActivityDetail = pathname.startsWith('/activity/');
+  const shouldUseSolidLightBg = isActivityDetail || isMyPage;
+  const myPageLightBgOverrideClassName = isMyPage ? 'md:bg-white/60 md:backdrop-blur' : '';
 
   return (
     <header
       className={cn(
         'sticky top-0 layer-header',
         headerVariants({ theme }),
-        shouldUseSolidLightBg && 'bg-white backdrop-blur-none',
-        myPageLightBgOverrideClassName,
+        theme === 'light' && shouldUseSolidLightBg && 'bg-white backdrop-blur-none',
+        theme === 'light' && myPageLightBgOverrideClassName,
         className
       )}
     >
