@@ -57,7 +57,7 @@ export default function StateBadge({ status, labelOverride, className }: StateBa
   return (
     <span
       className={cn(
-        'inline-flex h-6 items-center rounded-full px-2 pt-px align-middle typo-13-bold',
+        'inline-flex h-6 items-center rounded-full px-2 pt-px align-middle typo-13-bold whitespace-nowrap',
         badgeClassName,
         className
       )}
