@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
+import { Suspense } from 'react';
 import AuthExpiredRedirect from '@/features/auth/providers/AuthExpiredRedirect';
 import AuthSessionGuard from '@/features/auth/providers/AuthSessionGuard';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
@@ -90,7 +91,9 @@ export default function RootLayout({
           <AuthTokenRefreshProvider>
             <AuthSessionSync />
             <AuthSessionGuard />
-            <AuthExpiredRedirect />
+            <Suspense fallback={null}>
+              <AuthExpiredRedirect />
+            </Suspense>
             {children}
             <Script
               src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
