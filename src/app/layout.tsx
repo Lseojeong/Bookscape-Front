@@ -66,6 +66,14 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
+// 모바일 입력 필드 자동 줌 방지
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1, // iOS Safari의 input 자동 줌인 방지
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
