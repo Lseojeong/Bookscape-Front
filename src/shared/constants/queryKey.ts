@@ -19,9 +19,11 @@ export const QUERY_KEYS = {
   ACTIVITY_LIST: (params: GetActivityParams) => ['activities', params] as const,
   /** 로그인한 사용자 정보 조회 */
   USER_ME: () => ['users', 'me'] as const,
+  /** 내 예약 내역 조회 - prefix */
+  MY_RESERVATIONS_BASE: () => ['my-reservations'] as const,
   /** 내 예약 내역 조회 */
   MY_RESERVATIONS: (status?: string, size?: number) =>
-    ['my-reservations', status ?? 'all', size ?? 'default'] as const,
+    [...QUERY_KEYS.MY_RESERVATIONS_BASE(), status ?? 'all', size ?? 'default'] as const,
   /** 내 알림 조회 - prefix */
   MY_NOTIFICATIONS_BASE: () => ['my-notifications'] as const,
 
