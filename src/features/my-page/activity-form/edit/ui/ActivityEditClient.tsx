@@ -22,12 +22,6 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
   const { data: originalData } = useActivityDetail(activityId);
   const { submitActivityEdit, isPending } = useActivityEditSubmit(activityId, originalData);
 
-  if (hasHydrated && originalData) {
-    if (user && user.id !== originalData.userId) {
-      notFound();
-    }
-  }
-
   const initialData = useMemo(() => {
     if (!originalData) return undefined;
 
@@ -51,6 +45,14 @@ export default function ActivityEditClient({ activityId }: ActivityEditClientPro
         })) || [],
     };
   }, [originalData]);
+
+  if (hasHydrated && originalData) {
+    if (!user) return null;
+
+    if (user.id !== originalData.userId) {
+      notFound();
+    }
+  }
 
   return (
     <ActivityFormPageShell
