@@ -15,12 +15,15 @@ export const isExceedingMidnight = (start: string, duration: number): boolean =>
 export const calculateEndTime = (start: string, duration: number): string => {
   const [hour, min] = start.split(':').map(Number);
 
-  // 전체 시간을 분 단위로 변환한 뒤 1분을 뺌
-  const totalMinutes = hour * 60 + min + duration * 60 - 1;
+  const totalMinutes = hour * 60 + min + duration * 60;
 
-  // 다시 시간과 분으로 변환
   const endHour = Math.floor(totalMinutes / 60);
   const endMin = totalMinutes % 60;
+
+  // 24:00인 경우에만 23:59로 예외 처리
+  if (endHour === 24 && endMin === 0) {
+    return '23:59';
+  }
 
   return `${String(endHour).padStart(2, '0')}:${String(endMin).padStart(2, '0')}`;
 };
