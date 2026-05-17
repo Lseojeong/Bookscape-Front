@@ -50,19 +50,21 @@ export default function HeadCountControl({
         )}
       >
         <button
-          className="flex h-5 w-5 items-center justify-center typo-16-medium text-gray-700"
+          className="flex h-5 w-5 items-center justify-center text-gray-800"
           onClick={onDecrease}
           type="button"
+          aria-label="인원 수 감소"
         >
-          <MinusIcon />
+          <MinusIcon className="h-5 w-5" aria-hidden="true" />
         </button>
         <span className="w-10 text-center typo-16-bold text-gray-800">{headCount}</span>
         <button
-          className="flex h-5 w-5 items-center justify-center typo-16-medium text-gray-700"
+          className="flex h-5 w-5 items-center justify-center text-gray-800"
           onClick={onIncrease}
           type="button"
+          aria-label="인원 수 증가"
         >
-          <PlusIcon />
+          <PlusIcon className="h-5 w-5" aria-hidden="true" />
         </button>
       </div>
     </div>
