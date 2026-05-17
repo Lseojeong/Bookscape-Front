@@ -62,6 +62,7 @@ export default function NotificationButton({ theme = 'light' }: NotificationButt
     void (async () => {
       try {
         await deleteMutation.mutateAsync(id);
+        showToast('check', '알림을 삭제했습니다.');
         if (notifications.length === 1) dropdown.close();
       } catch {
         showToast('cancel', '알림 삭제에 실패했습니다.');
