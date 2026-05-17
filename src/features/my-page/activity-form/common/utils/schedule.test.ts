@@ -23,12 +23,20 @@ describe('schedule utils', () => {
   });
 
   describe('calculateEndTime', () => {
-    it('시작 시간에 진행 시간을 더해 종료 시간을 포맷팅하여 반환한다', () => {
+    it('시작 시간에 진행 시간을 더해 종료 시간을 반환한다', () => {
+      // 09:00 + 2시간 = 11:00
       expect(calculateEndTime('09:00', 2)).toBe('11:00');
+      // 14:30 + 3시간 = 17:30
       expect(calculateEndTime('14:30', 3)).toBe('17:30');
     });
 
+    it('자정(24:00)에 도달하는 경우 23:59로 예외 처리한다', () => {
+      // 23:00 + 1시간 = 24:00 -> 23:59
+      expect(calculateEndTime('23:00', 1)).toBe('23:59');
+    });
+
     it('한 자리 수 시간일 경우 앞에 0을 붙여 2자리로 유지한다', () => {
+      // 07:00 + 2시간 = 09:00
       expect(calculateEndTime('07:00', 2)).toBe('09:00');
     });
   });

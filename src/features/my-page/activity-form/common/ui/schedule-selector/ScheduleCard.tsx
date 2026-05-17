@@ -17,6 +17,7 @@ import {
 } from '@/shared/ui/dropdown/select';
 import FormField from '@/shared/ui/form/FormField';
 import { cn } from '@/shared/utils/cn';
+import { formatEndTime } from '@/shared/utils/time';
 
 type ScheduleCardProps = {
   date: Date;
@@ -144,7 +145,7 @@ export default function ScheduleCard({
                       key={`${slot.startTime}-${slot.endTime}`}
                       onRemove={() => onRemoveSlot(index)}
                     >
-                      {slot.startTime} ~ {slot.endTime}
+                      {slot.startTime} ~ {formatEndTime(slot.endTime)}
                     </TimeSlotChip>
                   ))}
                 </div>
