@@ -170,7 +170,7 @@ export default function ReservationPanelContent({
       </div>
 
       {/* 콘텐츠 - 최초 진입 시 전체 로딩 */}
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
         {isAllLoading ? (
           <ReservationPanelContentSkeleton />
         ) : availableSchedules.length === 0 ? (
