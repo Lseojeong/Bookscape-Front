@@ -14,7 +14,7 @@ import { requireParams } from '@/shared/apis/bff/requireParams';
  *
  * - Backend: `PATCH /{teamId}/my-activities/{activityId}/reservations/{reservationId}`
  *
- * @param body `{ status: "declined" | "pending" | "confirmed" }`
+ * @param body `{ status: "declined" | "confirmed" }`
  * @returns 수정된 예약 (`UpdateMyActivityReservationStatusResponse`)
  */
 export const PATCH = createAuthorizedRoute<

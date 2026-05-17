@@ -15,6 +15,7 @@ import FormField from '@/shared/ui/form/FormField';
 import FormInput from '@/shared/ui/form/FormInput';
 import PasswordInput from '@/shared/ui/input/PasswordInput';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
+import { removeDotSuffix } from '@/shared/utils/stringFormat';
 
 /**
  * 이메일, 닉네임, 비밀번호, 비밀번호 확인 입력 폼을 제공하며, react-hook-form으로 폼 상태를 관리합니다.
@@ -60,10 +61,9 @@ export default function SignupClient() {
         router.push('/login');
       } catch (error) {
         if (error instanceof ApiError) {
-          // 서버에서 내려온 에러 (409 이메일 중복 등)
           setError('root', {
             type: 'server',
-            message: error.message,
+            message: removeDotSuffix(error.message),
           });
         } else {
           // 네트워크 에러 등

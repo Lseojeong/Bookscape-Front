@@ -21,7 +21,7 @@ export default function ActivitiesPageHeader() {
     <div className="flex flex-col gap-3 sm:gap-9">
       {/* SearchInput — 모바일에서만 상단 full width */}
       <div className="sm:hidden">
-        <SearchInput className="h-14! w-full rounded-2xl! px-4! typo-14-medium! shadow-none" />
+        <SearchInput className="h-14! w-full rounded-2xl! px-4! shadow-none" />
       </div>
 
       {/* PageHeader + (모바일: SortSelectDropdown | 데스크탑: SearchInput) */}
