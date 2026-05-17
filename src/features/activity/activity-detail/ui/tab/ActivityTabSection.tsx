@@ -147,7 +147,7 @@ export default function ActivityTabSection({
 
   return (
     <div className={cn(className)}>
-      <div ref={tabBarRef} className="sticky top-12 layer-base bg-white md:top-20">
+      <div ref={tabBarRef} className="sticky top-12 layer-sticky bg-white md:top-20">
         <TabBar
           tabs={TABS}
           activeTab={activeTab}
