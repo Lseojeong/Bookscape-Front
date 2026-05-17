@@ -67,25 +67,27 @@ export default function ImageUploader({
   const { showToast } = useToastStore();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    let file = e.target.files?.[0];
+    // 이벤트가 터지자마자 현재의 타겟을 변수에 묶어둠
+    const target = e.target;
+
+    let file = target.files?.[0];
     if (!file) return;
 
     try {
-      setIsConverting(true); // 로딩 시작
+      setIsConverting(true);
 
-      // 유틸 함수를 호출하여 파일 덮어쓰기
       file = await convertHeicToJpeg(file);
 
-      // 변환된 파일을 이벤트 객체에 덮어쓰기
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(file);
-      e.target.files = dataTransfer.files; // input 요소의 files 업데이트
 
-      // 유효성 검사 및 폼 상태 업데이트
+      // 지연이 발생해도 묶어둔 target 변수를 사용
+      target.files = dataTransfer.files;
+
       const validationError = validateImageFile(file);
       if (validationError) {
         setLocalError(validationError);
-        e.target.value = '';
+        target.value = '';
         return;
       }
 
@@ -94,8 +96,8 @@ export default function ImageUploader({
     } catch {
       showToast('cancel', '이미지 포맷 변환에 실패했습니다. 다른 이미지를 사용해주세요.');
     } finally {
-      setIsConverting(false); // 로딩 종료
-      e.target.value = ''; // input 초기화
+      setIsConverting(false);
+      target.value = ''; // e.target 대신 target 사용
     }
   };
 
