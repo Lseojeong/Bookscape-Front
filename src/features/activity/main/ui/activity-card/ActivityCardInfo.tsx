@@ -18,7 +18,7 @@ type ActivityCardInfoProps = {
  *
  * @example
  * ```tsx
- * <ActivityCardInfo data={data} />
+ * <ActivityCardInfo data={data} titleTag="h2"/>
  * ```
  */
 export default function ActivityCardInfo({ data, titleTag = 'h3' }: ActivityCardInfoProps) {
