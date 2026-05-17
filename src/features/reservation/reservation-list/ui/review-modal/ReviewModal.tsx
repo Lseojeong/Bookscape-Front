@@ -101,7 +101,7 @@ export default function ReviewModal({
       ariaLabel="리뷰 작성"
       position="center"
       variant="dialog"
-      surfaceClassName="w-96.25"
+      surfaceClassName="w-[calc(100%-32px)] max-w-96.25"
       contentClassName="dialog-surface-animation rounded-[30px] px-7.5 py-8"
       closeOnOverlayClick={!shouldBlockAutoClose}
       closeOnEsc={!shouldBlockAutoClose}
