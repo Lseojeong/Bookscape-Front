@@ -2,6 +2,38 @@ import { z } from 'zod';
 import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 
 /**
+ * 이미지 파일이 HEIC/HEIF 형식일 경우 JPEG 포맷의 새로운 File 객체로 변환하여 반환합니다.
+ * 형식이 아닐 경우 원본 파일을 그대로 반환합니다.
+ *
+ * @example
+ * ```ts
+ * const convertedFile = await convertHeicToJpeg(file);
+ * ```
+ */
+export const convertHeicToJpeg = async (file: File): Promise<File> => {
+  const isHeic = file.name.toLowerCase().endsWith('.heic') || file.type === 'image/heic';
+  const isHeif = file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heif';
+
+  if (!isHeic && !isHeif) {
+    return file;
+  }
+
+  // heic2any 라이브러리를 동적 임포트하여 초기 번들 사이즈 증가 방지
+  const heic2any = (await import('heic2any')).default;
+
+  const convertedBlob = await heic2any({
+    blob: file,
+    toType: 'image/jpeg',
+    quality: 0.8,
+  });
+
+  const blob = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
+  const newFileName = file.name.replace(/\.(heic|heif)$/i, '.jpg');
+
+  return new File([blob], newFileName, { type: 'image/jpeg' });
+};
+
+/**
  * 업로드된 이미지 파일의 용량과 확장자를 수동으로 검사합니다.
  *
  * @example

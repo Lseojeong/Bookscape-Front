@@ -140,4 +140,10 @@ declare global {
   }
 }
 
+/**
+ * 애플 기기의 고효율 이미지 포맷(HEIC/HEIF)을 브라우저에서 지원하는 JPEG/PNG로
+ * 클라이언트 사이드에서 변환해 주는 외부 라이브러리 'heic2any'의 모듈 선언입니다.
+ */
+declare module 'heic2any';
+
 export {};

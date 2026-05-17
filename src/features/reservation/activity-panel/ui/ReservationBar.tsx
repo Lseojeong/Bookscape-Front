@@ -118,10 +118,7 @@ export default function ReservationBar({
         isOpen={isOpen}
         onClose={handleClose}
         ariaLabel="예약 날짜 선택"
-        surfaceClassName={cn(
-          'h-auto! max-h-[90dvh]! px-7.5',
-          step === 'headcount' && 'max-h-none!'
-        )}
+        surfaceClassName={cn('px-7.5', step === 'headcount' && 'max-h-none!')}
       >
         <div className="flex-1 overflow-y-auto">
           {step === 'schedule' ? (

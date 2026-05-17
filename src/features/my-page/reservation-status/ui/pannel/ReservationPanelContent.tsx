@@ -170,7 +170,7 @@ export default function ReservationPanelContent({
       </div>
 
       {/* 콘텐츠 - 최초 진입 시 전체 로딩 */}
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
         {isAllLoading ? (
           <ReservationPanelContentSkeleton />
         ) : availableSchedules.length === 0 ? (
@@ -211,7 +211,7 @@ export default function ReservationPanelContent({
             {/* 카드 목록 - 무한스크롤 적용 */}
             <div className="flex min-h-0 flex-1 flex-col md:w-1/2 lg:w-full">
               <FormLabel className="mt-5 mb-3 typo-18-bold lg:mt-7.5">예약내역</FormLabel>
-              <div className="min-h-0 flex-1 overflow-y-auto">
+              <div className="min-h-0 flex-1">
                 <div className="flex flex-col gap-3">
                   {isLoading && !showReservationsSkeleton ? null : showReservationsSkeleton ? (
                     <>

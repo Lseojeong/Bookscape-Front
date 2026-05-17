@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import AuthExpiredRedirect from '@/features/auth/providers/AuthExpiredRedirect';
@@ -7,11 +7,31 @@ import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import AuthTokenRefreshProvider from '@/features/auth/providers/AuthTokenRefreshProvider';
 import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
 import { SITE_URL } from '@/shared/constants/url';
+import KakaoInit from '@/shared/providers/KakaoInit';
 import QueryProvider from '@/shared/providers/QueryProvider';
 import { OVERLAY_ROOT_ID } from '@/shared/ui/overlay/constants';
 import OverlayRoot from '@/shared/ui/overlay/root/OverlayRoot';
 import ToastContainer from '@/shared/ui/toast/ToastContainer';
 import '@/shared/styles/globals.css';
+
+const STRUCTURED_DATA = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      name: '북스케이프',
+      alternateName: 'Bookscape',
+      url: SITE_URL,
+    },
+    {
+      '@type': 'Organization',
+      name: '북스케이프',
+      alternateName: 'Bookscape',
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon.png`,
+    },
+  ],
+} as const;
 
 // 공통 메타 데이터 및 OG 설정
 export const metadata: Metadata = {
@@ -48,6 +68,12 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
+// 기본 뷰포트 설정
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -56,6 +82,10 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${pretendard.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+        />
         <QueryProvider>
           <AuthTokenRefreshProvider>
             <AuthSessionSync />
@@ -70,12 +100,7 @@ export default function RootLayout({
               src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&libraries=services&autoload=false`}
               strategy="afterInteractive"
             />
-            <Script
-              src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
-              integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
-              crossOrigin="anonymous"
-              strategy="afterInteractive"
-            />
+            <KakaoInit />
             <ToastContainer />
           </AuthTokenRefreshProvider>
         </QueryProvider>
