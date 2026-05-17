@@ -38,7 +38,7 @@ export default function MainCategoryList() {
           className="inline-flex items-center typo-16-medium text-primary-700 md:typo-20-medium"
         >
           전체 보기
-          <span className="flex h-4 w-4 items-center md:h-6 md:w-6">
+          <span className="flex h-4 w-4 items-center justify-center md:h-6 md:w-6">
             <ChevronRightBlueIcon />
           </span>
         </Link>
