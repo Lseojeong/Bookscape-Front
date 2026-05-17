@@ -2,16 +2,10 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+import { isProtectedPath } from '@/features/auth/utils/path';
 import { getMe } from '@/features/user/apis';
 import { ApiError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
-
-const isProtectedPath = (pathname: string) => {
-  if (pathname.startsWith('/mypage')) return true;
-  if (pathname.startsWith('/activity/new')) return true;
-  if (/^\/activity\/[^/]+\/edit(\/.*)?$/.test(pathname)) return true;
-  return false;
-};
 
 /**
  * CSR 네비게이션 시점에 세션을 재확인하여,
