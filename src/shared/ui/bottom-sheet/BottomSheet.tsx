@@ -47,7 +47,7 @@ export default function BottomSheet({
           variant="sheet"
           tone="surface"
           elevation="card"
-          className={cn('h-auto!', surfaceClassName)}
+          className={cn('h-auto! max-h-[90dvh] overflow-y-auto', surfaceClassName)}
           style={{
             transform: `translateY(${dragY}px)`,
             transition: dragY === 0 ? 'transform 0.3s ease' : 'none',
