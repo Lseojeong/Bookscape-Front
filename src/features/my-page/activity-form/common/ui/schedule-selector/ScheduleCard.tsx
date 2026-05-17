@@ -1,10 +1,11 @@
 'use client';
 
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { DURATIONS, START_TIMES } from '@/features/my-page/activity-form/common/constants/schedule';
 import { useScheduleCard } from '@/features/my-page/activity-form/common/hooks/useScheduleCard';
 import TimeSlotChip from '@/features/my-page/activity-form/common/ui/schedule-selector/TimeSlotChip';
+import { getAvailableStartTimes } from '@/features/my-page/activity-form/common/utils/schedule';
 import { Slot } from '@/features/my-page/activity-form/types';
 import { CaretDownIcon, TrashIcon } from '@/shared/assets/icons';
 import {
@@ -31,11 +32,11 @@ type ScheduleCardProps = {
  *
  * @example
  * <ScheduleCard
- *   date={new Date()}
- *   slots={[{ startTime: '09:00', endTime: '11:00' }]}
- *   onRemoveCard={() => handleRemoveGroup('2026-05-12')}
- *   onAddSlot={(newSlot) => handleAddSlot(index, newSlot)}
- *   onRemoveSlot={(slotIndex) => handleRemoveSlot(index, slotIndex)}
+ * date={new Date()}
+ * slots={[{ startTime: '09:00', endTime: '11:00' }]}
+ * onRemoveCard={() => handleRemoveGroup('2026-05-12')}
+ * onAddSlot={(newSlot) => handleAddSlot(index, newSlot)}
+ * onRemoveSlot={(slotIndex) => handleRemoveSlot(index, slotIndex)}
  * />
  */
 export default function ScheduleCard({
@@ -48,6 +49,11 @@ export default function ScheduleCard({
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const { tempStartTime, tempDuration, overlapError, handleStartTimeChange, handleDurationChange } =
     useScheduleCard({ slots, onAddSlot });
+
+  // date가 변경될 때만 필터링 로직을 재실행하도록 useMemo 적용
+  const availableStartTimes = useMemo(() => {
+    return getAvailableStartTimes(date, START_TIMES);
+  }, [date]);
 
   return (
     <div className="flex w-full flex-col rounded-2xl border border-gray-100 bg-white">
@@ -98,7 +104,7 @@ export default function ScheduleCard({
                   <SelectDropdownValue placeholder="시작 시간" />
                 </SelectDropdownTrigger>
                 <SelectDropdownContent>
-                  {START_TIMES.map((time) => (
+                  {availableStartTimes.map((time) => (
                     <SelectDropdownItem key={time} value={time}>
                       {time}
                     </SelectDropdownItem>

@@ -1,4 +1,25 @@
+import { isSameDay } from 'date-fns';
 import { Slot } from '@/features/my-page/activity-form/types';
+
+/**
+ * 선택된 날짜에 따라 예약 가능한 시작 시간 목록을 필터링합니다.
+ * 당일일 경우 현재 시간 이하의 슬롯은 제외하여 미래의 시간만 반환합니다.
+ *
+ * @param date 선택된 달력 날짜
+ * @param allTimes 전체 시작 시간 배열
+ * @example
+ * getAvailableStartTimes(new Date(), ['09:00', '10:00', '11:00'])
+ */
+export const getAvailableStartTimes = (date: Date, allTimes: string[]): string[] => {
+  const now = new Date();
+  const isToday = isSameDay(date, now);
+
+  return allTimes.filter((time) => {
+    if (!isToday) return true;
+    const [hour] = time.split(':').map(Number);
+    return hour > now.getHours();
+  });
+};
 
 /** 24시간 초과 여부 확인 */
 export const isExceedingMidnight = (start: string, duration: number): boolean => {
