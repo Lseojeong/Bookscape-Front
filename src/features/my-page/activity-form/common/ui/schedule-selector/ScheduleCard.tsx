@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { DURATIONS, START_TIMES } from '@/features/my-page/activity-form/common/constants/schedule';
 import { useScheduleCard } from '@/features/my-page/activity-form/common/hooks/useScheduleCard';
 import TimeSlotChip from '@/features/my-page/activity-form/common/ui/schedule-selector/TimeSlotChip';
+import { getAvailableStartTimes } from '@/features/my-page/activity-form/common/utils/schedule';
 import { Slot } from '@/features/my-page/activity-form/types';
 import { CaretDownIcon, TrashIcon } from '@/shared/assets/icons';
 import {
@@ -48,6 +49,8 @@ export default function ScheduleCard({
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const { tempStartTime, tempDuration, overlapError, handleStartTimeChange, handleDurationChange } =
     useScheduleCard({ slots, onAddSlot });
+
+  const availableStartTimes = getAvailableStartTimes(date, START_TIMES);
 
   return (
     <div className="flex w-full flex-col rounded-2xl border border-gray-100 bg-white">
@@ -98,7 +101,7 @@ export default function ScheduleCard({
                   <SelectDropdownValue placeholder="시작 시간" />
                 </SelectDropdownTrigger>
                 <SelectDropdownContent>
-                  {START_TIMES.map((time) => (
+                  {availableStartTimes.map((time) => (
                     <SelectDropdownItem key={time} value={time}>
                       {time}
                     </SelectDropdownItem>

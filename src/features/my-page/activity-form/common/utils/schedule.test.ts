@@ -2,6 +2,7 @@ import {
   isExceedingMidnight,
   calculateEndTime,
   findOverlapSlot,
+  getAvailableStartTimes,
 } from '@/features/my-page/activity-form/common/utils/schedule';
 
 describe('schedule utils', () => {
@@ -47,6 +48,43 @@ describe('schedule utils', () => {
     it('기존 슬롯과 겹치지 않는 빈 시간대면 undefined를 반환한다', () => {
       const overlap = findOverlapSlot(existingSlots, '11:00', '13:00');
       expect(overlap).toBeUndefined();
+    });
+  });
+
+  describe('getAvailableStartTimes', () => {
+    beforeEach(() => {
+      // 시간에 의존하는 함수이기 때문에 가짜 시간 사용
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      // 테스트가 끝나면 실제 시간으로 되돌림
+      jest.useRealTimers();
+    });
+
+    it('오늘 날짜를 선택하면 현재 시간 이하의 시간대는 필터링한다', () => {
+      // 현재 시간을 26년 5월 20일 15시로 고정
+      jest.setSystemTime(new Date('2026-05-20T15:30:00'));
+
+      const today = new Date('2026-05-20T00:00:00'); // 달력에서 오늘 선택
+      const allTimes = ['13:00', '14:00', '15:00', '16:00', '17:00'];
+
+      const result = getAvailableStartTimes(today, allTimes);
+
+      // 16시부터 남아있어야 함
+      expect(result).toEqual(['16:00', '17:00']);
+    });
+
+    it('미래의 날짜를 선택하면 시간대 필터링 없이 모두 반환한다', () => {
+      jest.setSystemTime(new Date('2026-05-20T15:30:00'));
+
+      const tomorrow = new Date('2026-05-21T00:00:00'); // 내일 선택
+      const allTimes = ['09:00', '12:00', '15:00'];
+
+      const result = getAvailableStartTimes(tomorrow, allTimes);
+
+      // 미래 날짜이므로 과거/현재 상관없이 전부 통과되어야 함
+      expect(result).toEqual(['09:00', '12:00', '15:00']);
     });
   });
 });
