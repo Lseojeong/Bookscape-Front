@@ -59,15 +59,15 @@ export default function NotificationButton({ theme = 'light' }: NotificationButt
   useOutsideClick(notificationRef, dropdown.close, dropdown.isOpen);
 
   const handleDeleteOne = (id: number) => {
-    void (async () => {
-      try {
-        await deleteMutation.mutateAsync(id);
+    deleteMutation.mutate(id, {
+      onSuccess: () => {
         showToast('check', '알림을 삭제했습니다.');
         if (notifications.length === 1) dropdown.close();
-      } catch {
+      },
+      onError: () => {
         showToast('cancel', '알림 삭제에 실패했습니다.');
-      }
-    })();
+      },
+    });
   };
 
   const handleDeleteAll = async () => {
