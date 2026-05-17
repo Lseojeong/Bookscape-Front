@@ -35,10 +35,10 @@ export default function MainCategoryList() {
         </Title>
         <Link
           href="/activities"
-          className="hidden items-center typo-20-medium text-primary-700 md:inline-flex"
+          className="inline-flex items-center typo-16-medium leading-[100%] text-primary-700 md:typo-20-medium"
         >
           전체 보기
-          <span className="flex items-center">
+          <span className="flex h-4 w-4 items-center md:h-6 md:w-6">
             <ChevronRightBlueIcon />
           </span>
         </Link>
