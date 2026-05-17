@@ -35,7 +35,7 @@ export default function MainCategoryList() {
         </Title>
         <Link
           href="/activities"
-          className="inline-flex items-center typo-16-medium leading-[100%] text-primary-700 md:typo-20-medium"
+          className="inline-flex items-center typo-16-medium text-primary-700 md:typo-20-medium"
         >
           전체 보기
           <span className="flex h-4 w-4 items-center md:h-6 md:w-6">
