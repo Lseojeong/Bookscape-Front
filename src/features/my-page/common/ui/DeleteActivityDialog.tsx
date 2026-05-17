@@ -28,6 +28,7 @@ export default function DeleteActivityDialog({ id, isOpen, onClose }: DeleteActi
       closeOnConfirm={false}
       onCancel={onClose}
       onConfirm={async () => {
+        if (deleteMutation.isPending) return;
         try {
           await deleteMutation.mutateAsync(id);
           showToast('check', '체험이 삭제되었습니다.');
