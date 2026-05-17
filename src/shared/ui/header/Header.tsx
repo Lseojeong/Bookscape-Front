@@ -74,9 +74,22 @@ export default function Header({ isLoggedIn = false, user, className, onLogout }
 
   const theme: HeaderTheme = isScrollThemedPage && !isScrolled ? 'primary' : 'light';
   const LogoWrapper = pathname === '/' || pathname === '/search' ? 'h1' : 'div';
+  const isMyPage = pathname.startsWith('/mypage');
+  const isActivityDetail = /^\/activity\/\d+/.test(pathname ?? '');
+  const shouldUseSolidLightBg = theme === 'light' && (isActivityDetail || isMyPage);
+  const myPageLightBgOverrideClassName =
+    theme === 'light' && isMyPage && !isActivityDetail ? 'md:bg-white/60 md:backdrop-blur' : '';
 
   return (
-    <header className={cn('sticky top-0 layer-header', headerVariants({ theme }), className)}>
+    <header
+      className={cn(
+        'sticky top-0 layer-header',
+        headerVariants({ theme }),
+        shouldUseSolidLightBg && 'bg-white backdrop-blur-none',
+        myPageLightBgOverrideClassName,
+        className
+      )}
+    >
       <div className="shell-inner">
         <LogoWrapper className="leading-none">
           <Logo variant={logoVariantByTheme[theme]} className="h-6 md:h-7" />
