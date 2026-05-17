@@ -7,11 +7,21 @@ export const isExceedingMidnight = (start: string, duration: number): boolean =>
   return endHour > 24 || (endHour === 24 && minute > 0);
 };
 
-/** 시작 시간과 진행 시간을 더해 종료 시간 계산 */
+/**
+ * 시작 시간과 진행 시간을 더해 종료 시간 계산
+ * (시간 겹침 및 24:00 익일 파싱 버그 방지를 위해 1분을 차감함)
+ */
 export const calculateEndTime = (start: string, duration: number): string => {
   const [hour, min] = start.split(':').map(Number);
-  const endHour = hour + duration;
-  return `${String(endHour).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+
+  // 전체 시간을 분 단위로 변환한 뒤 1분을 뺌
+  const totalMinutes = hour * 60 + min + duration * 60 - 1;
+
+  // 다시 시간과 분으로 변환
+  const endHour = Math.floor(totalMinutes / 60);
+  const endMin = totalMinutes % 60;
+
+  return `${String(endHour).padStart(2, '0')}:${String(endMin).padStart(2, '0')}`;
 };
 
 /** 기존 슬롯들과 비교하여 겹치는 시간대가 있는지 확인 */
