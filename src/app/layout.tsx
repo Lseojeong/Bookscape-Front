@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
+import AuthExpiredRedirect from '@/features/auth/providers/AuthExpiredRedirect';
+import AuthSessionGuard from '@/features/auth/providers/AuthSessionGuard';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
 import AuthTokenRefreshProvider from '@/features/auth/providers/AuthTokenRefreshProvider';
 import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
@@ -57,6 +59,8 @@ export default function RootLayout({
         <QueryProvider>
           <AuthTokenRefreshProvider>
             <AuthSessionSync />
+            <AuthSessionGuard />
+            <AuthExpiredRedirect />
             {children}
             <Script
               src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
