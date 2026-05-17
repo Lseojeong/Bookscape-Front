@@ -87,13 +87,13 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
         />
+        <Suspense fallback={null}>
+          <AuthExpiredRedirect />
+        </Suspense>
         <QueryProvider>
           <AuthTokenRefreshProvider>
             <AuthSessionSync />
             <AuthSessionGuard />
-            <Suspense fallback={null}>
-              <AuthExpiredRedirect />
-            </Suspense>
             {children}
             <Script
               src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
