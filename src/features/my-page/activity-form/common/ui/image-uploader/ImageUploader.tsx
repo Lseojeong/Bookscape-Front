@@ -79,11 +79,7 @@ export default function ImageUploader({
       // 변환된 파일을 이벤트 객체에 덮어쓰기
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(file);
-      Object.defineProperty(e.target, 'files', {
-        value: dataTransfer.files,
-        configurable: true, // 두 번째 업로드 시에도 속성을 재정의할 수 있도록 허용
-        writable: true, // 값을 다시 쓸 수 있도록 허용
-      });
+      e.target.files = dataTransfer.files; // input 요소의 files 업데이트
 
       // 유효성 검사 및 폼 상태 업데이트
       const validationError = validateImageFile(file);
