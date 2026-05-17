@@ -17,7 +17,7 @@
     "build-storybook": "storybook build",
     "test": "jest",
     "svgo:out": "rm -rf .svgo-out && svgo --config svgo.config.mjs -rf src/shared/assets -o .svgo-out",
-    "svgo:write": "rm -rf .svgo-out && svgo --config svgo.config.mjs -rf src/shared/assets -o .svgo-out && find .svgo-out -type f -name '*.svg' -print0 | while IFS= read -r -d '' f; do dst=\"src/shared/assets/${f#.svgo-out/}\"; cp \"$f\" \"$dst\"; done && rm -rf .svgo-out"
+    "svgo:write": "svgo --config svgo.config.mjs -rf src/shared/assets -o src/shared/assets"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
