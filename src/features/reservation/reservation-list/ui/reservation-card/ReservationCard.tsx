@@ -28,6 +28,8 @@ export default function ReservationCard({ data, onReservationChangeClick }: Rese
   const handleClickCard = (e: React.MouseEvent | React.KeyboardEvent) => {
     // 내부의 버튼이나 링크 클릭 시에는 카드 전체 클릭 이벤트가 발생하지 않도록 방지
     if ((e.target as HTMLElement).closest('button, a')) return;
+    // 모달(Portal) 내부 클릭은 카드 클릭(상세 이동)으로 처리하지 않습니다.
+    if ((e.target as HTMLElement).closest('#overlay-root, #modal-root')) return;
     if (e.type === 'click' || (e as React.KeyboardEvent).key === 'Enter') {
       router.push(`/activity/${data.activity.id}`);
     }
