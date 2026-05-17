@@ -9,7 +9,8 @@ export const isExceedingMidnight = (start: string, duration: number): boolean =>
 
 /**
  * 시작 시간과 진행 시간을 더해 종료 시간 계산
- * (시간 겹침 및 24:00 익일 파싱 버그 방지를 위해 1분을 차감함)
+ * (24:00 익일 파싱 버그 방지를 위해 24:00인 경우 23:59로 반환)
+ * @example calculateEndTime('09:00', 2) // '11:00'
  */
 export const calculateEndTime = (start: string, duration: number): string => {
   const [hour, min] = start.split(':').map(Number);
