@@ -46,7 +46,7 @@ describe('useTokenRefresh', () => {
     jest.useRealTimers();
   });
 
-  it('refresh 실패(401/403)이면 세션을 비우고 토스트를 띄운다', async () => {
+  it('refresh 실패(401)이면 세션을 비우고 토스트를 띄운다', async () => {
     mockRefreshAuthTokens.mockRejectedValueOnce(new ApiError(401, 'Unauthorized'));
 
     const clearSessionSpy = jest.spyOn(useUserStore.getState(), 'clearSession');

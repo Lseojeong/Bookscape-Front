@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { isProtectedPath } from '@/features/auth/utils/path';
 import { getMe } from '@/features/user/apis';
@@ -12,12 +12,10 @@ import { useUserStore } from '@/shared/stores/userStore';
  * 쿠키 만료/삭제로 store가 stale해진 경우 즉시 guest 상태로 교정합니다.
  *
  * - protected 경로에서만 동작합니다.
- * - 401/403이면 clearSession('expired') 후 로그인으로 이동합니다.
+ * - 401이면 clearSession('expired')로 guest 상태를 복구합니다.
  */
 export default function AuthSessionGuard() {
-  const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const hasHydrated = useUserStore((state) => state.hasHydrated);
   const user = useUserStore((state) => state.user);
   const accessTokenExpiresAt = useUserStore((state) => state.accessTokenExpiresAt);
@@ -33,23 +31,19 @@ export default function AuthSessionGuard() {
     if (lastCheckedPathRef.current === pathname) return;
     lastCheckedPathRef.current = pathname;
 
-    const search = searchParams?.toString();
-    const redirect = `${pathname}${search ? `?${search}` : ''}`;
-
     const check = async () => {
       try {
         await getMe();
       } catch (error) {
-        if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+        if (error instanceof ApiError && error.status === 401) {
           clearSession('expired');
-          router.replace(`/login?redirect=${encodeURIComponent(redirect)}`);
           return;
         }
       }
     };
 
     void check();
-  }, [accessTokenExpiresAt, clearSession, hasHydrated, pathname, router, searchParams, user]);
+  }, [accessTokenExpiresAt, clearSession, hasHydrated, pathname, user]);
 
   return null;
 }
