@@ -15,7 +15,7 @@ export const useMarkMyNotificationsSeenMutation = () => {
       if (!userId) return;
       const now = Date.now();
       queryClient.setQueriesData<InfiniteData<GetMyNotificationsParsedResponse>>(
-        { queryKey: QUERY_KEYS.MY_NOTIFICATIONS_BASE(userId) },
+        { queryKey: QUERY_KEYS.MY_NOTIFICATIONS_BASE() },
         (old) => {
           if (!old) return old;
           return {

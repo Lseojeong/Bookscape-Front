@@ -23,11 +23,11 @@ export const QUERY_KEYS = {
   MY_RESERVATIONS: (status?: string, size?: number) =>
     ['my-reservations', status ?? 'all', size ?? 'default'] as const,
   /** 내 알림 조회 - prefix */
-  MY_NOTIFICATIONS_BASE: (userId?: number) => ['my-notifications', userId ?? 'anonymous'] as const,
+  MY_NOTIFICATIONS_BASE: () => ['my-notifications'] as const,
 
   /** 내 알림 조회 */
-  MY_NOTIFICATIONS: (userId?: number, size?: number) =>
-    [...QUERY_KEYS.MY_NOTIFICATIONS_BASE(userId), size ?? 'default'] as const,
+  MY_NOTIFICATIONS: (size?: number) =>
+    [...QUERY_KEYS.MY_NOTIFICATIONS_BASE(), size ?? 'default'] as const,
 
   /** 내 체험 목록 조회 - prefix */
   MY_ACTIVITIES_BASE: () => ['my-activities'] as const,
