@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateReservationStatus } from '@/features/my-page/apis';
-import type { UpdateReservationStatus } from '@/features/my-page/types';
+import type { UpdateMyActivityReservationStatus } from '@/features/my-page/types';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -17,7 +17,7 @@ import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
  */
 export const usePatchReservationStatus = (
   activityId: number | null,
-  onSuccess?: (status: UpdateReservationStatus) => void
+  onSuccess?: (status: UpdateMyActivityReservationStatus) => void
 ) => {
   const queryClient = useQueryClient();
   const { showToast } = useToastStore();
@@ -28,7 +28,7 @@ export const usePatchReservationStatus = (
       status,
     }: {
       reservationId: number;
-      status: UpdateReservationStatus;
+      status: UpdateMyActivityReservationStatus;
     }) => {
       if (!activityId) throw new Error('activityId가 없습니다.');
       return updateReservationStatus(activityId, reservationId, { status });
