@@ -46,7 +46,9 @@ export default function ReservationCardInfo({
         {/* 예약 상태 뱃지 */}
         <StateBadge
           status={isExpiredPending ? 'declined' : status}
-          labelOverride={isExpiredPending ? '만료(미승인)' : undefined}
+          labelOverride={
+            isExpiredPending ? RESERVATION_UI_MESSAGES.EXPIRED_PENDING_BADGE_LABEL : undefined
+          }
           className="w-fit"
         />
       </div>
