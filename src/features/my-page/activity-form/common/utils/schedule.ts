@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { isSameDay } from 'date-fns';
 import { Slot } from '@/features/my-page/activity-form/types';
 
 /**
@@ -7,16 +7,17 @@ import { Slot } from '@/features/my-page/activity-form/types';
  *
  * @param date 선택된 달력 날짜
  * @param allTimes 전체 시작 시간 배열
+ * @example
+ * getAvailableStartTimes(new Date(), ['09:00', '10:00', '11:00'])
  */
 export const getAvailableStartTimes = (date: Date, allTimes: string[]): string[] => {
   const now = new Date();
-  const isToday = format(date, 'yyyy-MM-dd') === format(now, 'yyyy-MM-dd');
-  const currentHour = now.getHours();
+  const isToday = isSameDay(date, now);
 
   return allTimes.filter((time) => {
     if (!isToday) return true;
     const [hour] = time.split(':').map(Number);
-    return hour > currentHour;
+    return hour > now.getHours();
   });
 };
 
