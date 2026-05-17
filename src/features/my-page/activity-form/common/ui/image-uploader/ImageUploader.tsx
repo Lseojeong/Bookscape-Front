@@ -6,8 +6,9 @@ import { PlusIcon } from '@/shared/assets/icons';
 import { IMAGE_RULES } from '@/shared/constants/file';
 import Button from '@/shared/ui/button/Button';
 import FormField from '@/shared/ui/form/FormField';
+import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
-import { validateImageFile } from '@/shared/utils/file';
+import { validateImageFile, convertHeicToJpeg } from '@/shared/utils/file';
 
 export type ImageUploaderProps = {
   label?: string;
@@ -53,29 +54,53 @@ export default function ImageUploader({
 }: ImageUploaderProps) {
   // 컴포넌트 내부에서 즉시 유효성 검사 에러를 띄워줄 상태
   const [localError, setLocalError] = useState<string>('');
+  const [isConverting, setIsConverting] = useState<boolean>(false);
 
   const count = images.length;
-  const isDisabled = count >= maxCount;
+  // 변환 중이거나 갯수가 다 차면 버튼 비활성화
+  const isDisabled = count >= maxCount || isConverting;
 
   // 로컬 에러가 있으면 먼저 보여주고, 없으면 Zod 에러를 보여줌
   const displayError = localError || errorMessage;
   const isError = !!displayError;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const { showToast } = useToastStore();
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file = e.target.files?.[0];
     if (!file) return;
 
-    const errorMessage = validateImageFile(file);
-    if (errorMessage) {
-      setLocalError(errorMessage);
-      e.target.value = '';
-      return;
+    try {
+      setIsConverting(true); // 로딩 시작
+
+      // 유틸 함수를 호출하여 파일 덮어쓰기
+      file = await convertHeicToJpeg(file);
+
+      // 변환된 파일을 이벤트 객체에 덮어쓰기
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      Object.defineProperty(e.target, 'files', {
+        value: dataTransfer.files,
+        configurable: true, // 두 번째 업로드 시에도 속성을 재정의할 수 있도록 허용
+        writable: true, // 값을 다시 쓸 수 있도록 허용
+      });
+
+      // 유효성 검사 및 폼 상태 업데이트
+      const validationError = validateImageFile(file);
+      if (validationError) {
+        setLocalError(validationError);
+        e.target.value = '';
+        return;
+      }
+
+      setLocalError('');
+      onChange(e);
+    } catch {
+      showToast('cancel', '이미지 포맷 변환에 실패했습니다. 다른 이미지를 사용해주세요.');
+    } finally {
+      setIsConverting(false); // 로딩 종료
+      e.target.value = ''; // input 초기화
     }
-
-    setLocalError('');
-
-    onChange(e);
-    e.target.value = '';
   };
 
   return (
@@ -97,7 +122,8 @@ export default function ImageUploader({
             className={cn(
               'pointer-events-none h-7 w-7 bg-primary-500 text-white md:h-10.5 md:w-10.5',
               'group-hover:bg-primary-600',
-              'aria-disabled:bg-gray-50 aria-disabled:text-gray-500'
+              'aria-disabled:bg-gray-50 aria-disabled:text-gray-500',
+              isConverting && 'animate-pulse opacity-50'
             )}
           >
             <PlusIcon className="h-4 w-4 md:h-6 md:w-6" />
