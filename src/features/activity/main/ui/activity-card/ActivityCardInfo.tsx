@@ -2,7 +2,7 @@ import PerPersonPrice from '@/shared/ui/price/PerPersonPrice';
 import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
 import Title, { TitleAs } from '@/shared/ui/title/Title';
 
-type ActivityCardInfo = {
+type ActivityCardInfoProps = {
   data: {
     title: string;
     reviewCount: number;
@@ -21,7 +21,7 @@ type ActivityCardInfo = {
  * <ActivityCardInfo data={data} />
  * ```
  */
-export default function ActivityCardInfo({ data, titleTag = 'h3' }: ActivityCardInfo) {
+export default function ActivityCardInfo({ data, titleTag = 'h3' }: ActivityCardInfoProps) {
   const { title, reviewCount, rating, price } = data;
   return (
     <div className="flex flex-col gap-2.5 md:gap-4.5">
