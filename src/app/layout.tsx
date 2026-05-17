@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import AuthSessionSync from '@/features/auth/providers/AuthSessionSync';
@@ -65,6 +65,12 @@ const pretendard = localFont({
   weight: '100 900',
   variable: '--font-pretendard',
 });
+
+// 기본 뷰포트 설정
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export default function RootLayout({
   children,
