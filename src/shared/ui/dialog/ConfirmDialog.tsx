@@ -14,6 +14,8 @@ export type ConfirmDialogProps = {
   onConfirm?: () => void | Promise<void>;
   /** '아니오' 버튼 클릭 시 실행할 콜백 */
   onCancel?: () => void;
+  /** 확인 버튼 클릭 시 즉시 닫을지 여부 (기본값: true) */
+  closeOnConfirm?: boolean;
   confirmText?: string;
   cancelText?: string;
   ariaLabel?: string;
@@ -54,6 +56,7 @@ export default function ConfirmDialog({
   description,
   onConfirm,
   onCancel,
+  closeOnConfirm = true,
   confirmText = '네',
   cancelText = '아니오',
   ariaLabel = '확인 다이얼로그',
@@ -65,7 +68,7 @@ export default function ConfirmDialog({
   };
 
   const handleConfirm = async () => {
-    onClose();
+    if (closeOnConfirm) onClose();
     await onConfirm?.();
   };
 
