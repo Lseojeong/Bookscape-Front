@@ -1,16 +1,25 @@
-import heic2any from 'heic2any';
 import { z } from 'zod';
 import { IMAGE_RULES, IMAGE_ERROR_MESSAGES } from '@/shared/constants/file';
 
 /**
- * 이미지 파일이 HEIC 형식일 경우 JPEG 포맷의 새로운 File 객체로 변환하여 반환합니다.
- * HEIC 형식이 아닐 경우 원본 파일을 그대로 반환합니다.
+ * 이미지 파일이 HEIC/HEIF 형식일 경우 JPEG 포맷의 새로운 File 객체로 변환하여 반환합니다.
+ * 형식이 아닐 경우 원본 파일을 그대로 반환합니다.
+ *
+ * @example
+ * ```ts
+ * const convertedFile = await convertHeicToJpeg(file);
+ * ```
  */
 export const convertHeicToJpeg = async (file: File): Promise<File> => {
-  // HEIC가 아니면 바로 원본 반환
-  if (!file.name.toLowerCase().endsWith('.heic') && file.type !== 'image/heic') {
+  const isHeic = file.name.toLowerCase().endsWith('.heic') || file.type === 'image/heic';
+  const isHeif = file.name.toLowerCase().endsWith('.heif') || file.type === 'image/heif';
+
+  if (!isHeic && !isHeif) {
     return file;
   }
+
+  // heic2any 라이브러리를 동적 임포트하여 초기 번들 사이즈 증가 방지
+  const heic2any = (await import('heic2any')).default;
 
   const convertedBlob = await heic2any({
     blob: file,
@@ -19,7 +28,7 @@ export const convertHeicToJpeg = async (file: File): Promise<File> => {
   });
 
   const blob = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
-  const newFileName = file.name.replace(/\.heic$/i, '.jpg');
+  const newFileName = file.name.replace(/\.(heic|heif)$/i, '.jpg');
 
   return new File([blob], newFileName, { type: 'image/jpeg' });
 };
