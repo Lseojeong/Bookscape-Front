@@ -62,7 +62,7 @@ export default function HeadCountControl({
           onClick={onIncrease}
           type="button"
         >
-          <PlusIcon />
+          <PlusIcon className="h-5 w-5" />
         </button>
       </div>
     </div>
