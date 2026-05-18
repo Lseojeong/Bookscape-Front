@@ -1,6 +1,19 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { UserResponse } from '@/features/user/types';
+import { QUERY_KEYS } from '@/shared/constants/queryKey';
+import { getQueryClient } from '@/shared/utils/getQueryClient';
+
+const clearAuthRelatedQueryCache = () => {
+  if (typeof window === 'undefined') return;
+  const queryClient = getQueryClient();
+
+  // NOTE: 계정 전환/로그아웃 시 이전 사용자 데이터가 화면에 남지 않도록 관련 캐시를 제거합니다.
+  queryClient.removeQueries({ queryKey: QUERY_KEYS.USER_ME() });
+  queryClient.removeQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES_BASE() });
+  queryClient.removeQueries({ queryKey: QUERY_KEYS.MY_RESERVATIONS_BASE() });
+  queryClient.removeQueries({ queryKey: QUERY_KEYS.MY_NOTIFICATIONS_BASE() });
+};
 
 /**
  * ## SessionEndReason
@@ -93,7 +106,8 @@ export const useUserStore = create<
             false,
             'user/setSession'
           ),
-        clearSession: (reason) =>
+        clearSession: (reason) => {
+          clearAuthRelatedQueryCache();
           set(
             {
               user: undefined,
@@ -102,7 +116,8 @@ export const useUserStore = create<
             },
             false,
             'user/clearSession'
-          ),
+          );
+        },
         setHasHydrated: (hasHydrated) => set({ hasHydrated }, false, 'user/setHasHydrated'),
       }),
       {

@@ -10,7 +10,9 @@ export const useDeleteActivity = () => {
   return useMutation({
     mutationFn: (activityId: number) => deleteActivity(activityId),
     onMutate: async (activityId) => {
-      await queryClient.cancelQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES_INFINITE_BASE() });
+      await queryClient.cancelQueries({
+        queryKey: QUERY_KEYS.MY_ACTIVITIES_INFINITE_BASE(),
+      });
 
       const previousQueries = queryClient.getQueriesData<
         InfiniteData<GetMyActivitiesResponse, number | undefined>
@@ -39,7 +41,9 @@ export const useDeleteActivity = () => {
       });
     },
     onSettled: (_data, _error, activityId) => {
-      queryClient.removeQueries({ queryKey: [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId] });
+      queryClient.removeQueries({
+        queryKey: [...QUERY_KEYS.MY_ACTIVITIES_BASE(), activityId],
+      });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.MY_ACTIVITIES_BASE() });
     },
   });
