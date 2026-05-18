@@ -47,7 +47,7 @@ export default function BottomSheet({
           variant="sheet"
           tone="surface"
           elevation="card"
-          className={cn('max-h-[90dvh] overflow-hidden', surfaceClassName)}
+          className={cn('h-auto max-h-[90dvh] overflow-hidden', surfaceClassName)}
           style={{
             transform: `translateY(${dragY}px)`,
             transition: dragY === 0 ? 'transform 0.3s ease' : 'none',
@@ -58,7 +58,7 @@ export default function BottomSheet({
             role="dialog"
             aria-modal="true"
             aria-label={ariaLabel}
-            className="flex h-full flex-col"
+            className="flex max-h-[90dvh] flex-col"
           >
             {/* 핸들바 */}
             <div className="flex shrink-0 justify-center pt-4 pb-3" {...handlers}>
@@ -66,7 +66,7 @@ export default function BottomSheet({
             </div>
 
             {/* 콘텐츠 */}
-            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
+            <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
           </div>
         </OverlaySurface>
       </div>
