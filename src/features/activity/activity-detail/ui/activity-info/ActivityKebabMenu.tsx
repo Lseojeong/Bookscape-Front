@@ -41,7 +41,7 @@ export default function ActivityKebabMenu({ id, userId }: ActivityKebabMenuProps
     <>
       <ActionDropdown>
         <ActionDropdownTrigger ariaLabel="메뉴 열기" className="flex cursor-pointer items-center">
-          <MenuIcon aria-hidden />
+          <MenuIcon aria-hidden className="h-7 w-7" />
         </ActionDropdownTrigger>
         <ActionDropdownContent className="right-0 left-auto">
           <ActionDropdownItem onClick={() => router.push(`/activity/${id}/edit`)}>
