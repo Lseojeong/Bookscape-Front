@@ -12,7 +12,7 @@ type SpeechBubbleProps = React.HTMLAttributes<HTMLDivElement> & {
 export default function SpeechBubble({ isFlipped, className, children }: SpeechBubbleProps) {
   return (
     <div className={cn('relative w-full', isFlipped && '-scale-x-100', className)}>
-      <div className="w-77.5">
+      <div className="h-32.5 w-77.5">
         <SpeechBubbleImage />
       </div>
       <p
