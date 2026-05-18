@@ -1,20 +1,21 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import {
-  ArtIcon,
+  ArtIconPng,
   ChevronRightBlueIcon,
-  FoodIcon,
-  SightseeingIcon,
-  TourIcon,
-  WellbeingIcon,
+  FoodIconPng,
+  SightseeingIconPng,
+  TourIconPng,
+  WellbeingIconPng,
 } from '@/shared/assets/icons';
 import Title from '@/shared/ui/title/Title';
 
 const CATEGORY_OPTIONS = [
-  { value: '문화 · 예술', label: '문화 · 예술', iconSrc: ArtIcon },
-  { value: '식음료', label: '식음료', iconSrc: FoodIcon },
-  { value: '투어', label: '투어', iconSrc: TourIcon },
-  { value: '관광', label: '관광', iconSrc: SightseeingIcon },
-  { value: '웰빙', label: '웰빙', iconSrc: WellbeingIcon },
+  { value: '문화 · 예술', label: '문화 · 예술', iconSrc: ArtIconPng },
+  { value: '식음료', label: '식음료', iconSrc: FoodIconPng },
+  { value: '투어', label: '투어', iconSrc: TourIconPng },
+  { value: '관광', label: '관광', iconSrc: SightseeingIconPng },
+  { value: '웰빙', label: '웰빙', iconSrc: WellbeingIconPng },
 ];
 
 /**
@@ -58,7 +59,16 @@ export default function MainCategoryList() {
                 href={`/activities?category=${encodeURIComponent(category.value)}`}
                 className="flex w-full max-w-30 flex-col items-center gap-5 rounded-full border-gray-50 px-3.5 py-6.25 shadow-drop md:max-w-40 md:min-w-30 md:gap-8 md:px-5 md:py-12.5"
               >
-                <Icon className="h-15 w-15 md:h-30 md:w-30" />
+                <Image
+                  src={Icon}
+                  alt="이미지"
+                  width={240}
+                  height={240}
+                  priority
+                  className="h-15 w-15 md:h-30 md:w-30"
+                  unoptimized // PNG 원본 유지
+                />
+                {/* <Icon className="h-15 w-15 md:h-30 md:w-30" /> */}
                 <span className="text-center typo-13-medium text-gray-700 md:typo-20-medium">
                   {category.label}
                 </span>
