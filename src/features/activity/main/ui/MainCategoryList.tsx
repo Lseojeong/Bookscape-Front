@@ -66,9 +66,8 @@ export default function MainCategoryList() {
                   height={120}
                   priority
                   className="h-15 w-15 md:h-30 md:w-30"
-                  unoptimized // PNG 원본 유지
+                  unoptimized
                 />
-                {/* <Icon className="h-15 w-15 md:h-30 md:w-30" /> */}
                 <span className="text-center typo-13-medium text-gray-700 md:typo-20-medium">
                   {category.label}
                 </span>
