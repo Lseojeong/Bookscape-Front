@@ -39,7 +39,7 @@ const SearchInputUi = forwardRef<HTMLInputElement, SearchInputUiProps>(
           className="absolute top-1/2 right-5 -translate-y-1/2"
           aria-label="검색"
         >
-          <SearchIcon />
+          <SearchIcon className="h-6 w-6" />
         </button>
       </form>
     );
