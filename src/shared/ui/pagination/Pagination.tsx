@@ -119,7 +119,7 @@ export default function Pagination({
         ariaLabel={'이전 페이지'}
         isArrow={true}
       >
-        <ChevronLeftIcon />
+        <ChevronLeftIcon className="h-10 w-10" />
       </PageButton>
 
       {/* 페이지 번호 버튼 */}
@@ -141,7 +141,7 @@ export default function Pagination({
         ariaLabel={'다음 페이지'}
         isArrow={true}
       >
-        <ChevronRightIcon />
+        <ChevronRightIcon className="h-10 w-10" />
       </PageButton>
     </nav>
   );
