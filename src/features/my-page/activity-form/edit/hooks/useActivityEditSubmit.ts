@@ -1,12 +1,17 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import {
+  ACTIVITY_ERROR_MESSAGES,
+  HTTP_STATUS,
+} from '@/features/my-page/activity-form/common/constants/validation';
 import { useUploadImage } from '@/features/my-page/activity-form/common/mutations/useUploadImage';
 import { formatAddress } from '@/features/my-page/activity-form/common/utils/address';
 import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/common/utils/images';
 import type { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
 import { useUpdateActivity } from '@/features/my-page/activity-form/edit/mutations/useUpdateActivity';
 import type { ActivityDetailForForm } from '@/features/my-page/activity-form/types';
+import { ApiError } from '@/shared/apis/apiError';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -104,8 +109,15 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
       // 캐시 무효화를 통해 최신 데이터 갱신 보장
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(activityId) });
       router.push(`/activity/${activityId}`);
-    } catch {
-      showToast('cancel', '체험 수정에 실패했습니다. 다시 시도해주세요.');
+    } catch (error) {
+      if (error instanceof ApiError && error.status === HTTP_STATUS.BAD_REQUEST) {
+        const errorMessage = error.message || ACTIVITY_ERROR_MESSAGES.SCHEDULE_CONFLICT;
+
+        showToast('cancel', errorMessage);
+        return;
+      }
+
+      showToast('cancel', ACTIVITY_ERROR_MESSAGES.UPDATE_FAIL);
     } finally {
       setIsUploading(false);
     }

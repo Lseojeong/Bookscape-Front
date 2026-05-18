@@ -120,7 +120,7 @@ export default function ReservationBar({
         ariaLabel="예약 날짜 선택"
         surfaceClassName={cn('px-7.5', step === 'headcount' && 'max-h-none!')}
       >
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1">
           {step === 'schedule' ? (
             <ScheduleStep
               selected={selected}

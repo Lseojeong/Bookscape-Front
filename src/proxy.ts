@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { isProtectedPath } from '@/features/auth/utils/path';
 
 const ACCESS_TOKEN_COOKIE_KEY = 'accessToken';
 
@@ -33,14 +34,6 @@ const normalizePathname = (pathname: string): string => {
 };
 
 const isAuthPath = (pathname: string) => pathname === '/login' || pathname === '/signup';
-
-const isProtectedPath = (pathname: string) => {
-  if (pathname.startsWith('/mypage')) return true;
-  if (pathname.startsWith('/activity/new')) return true;
-  if (/^\/activity\/[^/]+\/edit(\/.*)?$/.test(pathname)) return true;
-
-  return false;
-};
 
 export const proxy = (request: NextRequest) => {
   const pathname = normalizePathname(request.nextUrl.pathname);

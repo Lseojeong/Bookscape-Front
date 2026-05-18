@@ -21,7 +21,7 @@ export default function SearchActivityList({ activities }: SearchActivityListPro
         return (
           <li key={data.id}>
             <Link href={`/activity/${data.id}`}>
-              <ActivityCard data={data} />
+              <ActivityCard data={data} titleTag="h2" />
             </Link>
           </li>
         );

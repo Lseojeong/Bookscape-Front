@@ -24,7 +24,7 @@ export const useDeleteAllMyNotifications = () => {
       if (ids.length === 0) return;
       if (!userId) return;
 
-      const myNotificationsQueryKey = QUERY_KEYS.MY_NOTIFICATIONS_BASE(userId);
+      const myNotificationsQueryKey = QUERY_KEYS.MY_NOTIFICATIONS_BASE();
 
       onStart?.();
 

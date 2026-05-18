@@ -8,7 +8,7 @@ import { useUserStore } from '@/shared/stores/userStore';
 export const useDeleteMyNotificationMutation = () => {
   const queryClient = useQueryClient();
   const userId = useUserStore((s) => s.user?.id);
-  const myNotificationsQueryKey = QUERY_KEYS.MY_NOTIFICATIONS_BASE(userId);
+  const myNotificationsQueryKey = QUERY_KEYS.MY_NOTIFICATIONS_BASE();
 
   return useMutation({
     mutationFn: deleteMyNotification,

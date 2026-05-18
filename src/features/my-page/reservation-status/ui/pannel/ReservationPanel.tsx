@@ -60,12 +60,7 @@ export default function ReservationPanel({
   // 모바일: BottomSheet
   if (isMobile) {
     return (
-      <BottomSheet
-        isOpen={isOpen}
-        onClose={onClose}
-        ariaLabel="예약 현황"
-        surfaceClassName="h-auto! max-h-[90dvh]!"
-      >
+      <BottomSheet isOpen={isOpen} onClose={onClose} ariaLabel="예약 현황">
         <div className="px-6 pt-2 pb-7.5">{content}</div>
       </BottomSheet>
     );
