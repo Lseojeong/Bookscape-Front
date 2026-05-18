@@ -69,7 +69,7 @@ export default function NotificationItem({
             {getTimeAgo(updatedAt)}
           </time>
           <button type="button" onClick={() => void onDelete(id)}>
-            <DeleteIcon className="h-6 text-gray-300 hover:text-gray-700" />
+            <DeleteIcon className="h-6 w-6 text-gray-300 hover:text-gray-700" />
           </button>
         </div>
       </div>
