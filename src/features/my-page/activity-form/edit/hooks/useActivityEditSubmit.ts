@@ -1,6 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import {
+  ACTIVITY_ERROR_MESSAGES,
+  HTTP_STATUS,
+} from '@/features/my-page/activity-form/common/constants/validation';
 import { useUploadImage } from '@/features/my-page/activity-form/common/mutations/useUploadImage';
 import { formatAddress } from '@/features/my-page/activity-form/common/utils/address';
 import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/common/utils/images';
@@ -106,12 +110,14 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
       await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ACTIVITY_DETAIL(activityId) });
       router.push(`/activity/${activityId}`);
     } catch (error) {
-      if (error instanceof ApiError && error.status === 400) {
-        showToast('cancel', '예약이 있는 시간대는 수정할 수 없습니다.');
+      if (error instanceof ApiError && error.status === HTTP_STATUS.BAD_REQUEST) {
+        const errorMessage = error.message || ACTIVITY_ERROR_MESSAGES.SCHEDULE_CONFLICT;
+
+        showToast('cancel', errorMessage);
         return;
       }
-      // 기본 에러
-      showToast('cancel', '체험 수정에 실패했습니다. 다시 시도해주세요.');
+
+      showToast('cancel', ACTIVITY_ERROR_MESSAGES.UPDATE_FAIL);
     } finally {
       setIsUploading(false);
     }

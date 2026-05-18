@@ -14,4 +14,15 @@ export const ACTIVITY_ERROR_MESSAGES = {
   SCHEDULE_OVERLAP: (start: string, end: string) => `${start} - ${end}이 중복입니다`,
   DATE_ALREADY_ADDED: '이미 추가된 날짜입니다',
   TIME_EXCEEDS_MIDNIGHT: '자정(24:00)을 초과하는 시간대는 등록할 수 없습니다',
+  SCHEDULE_CONFLICT: '예약이 있는 시간대는 수정할 수 없습니다.',
+  UPDATE_FAIL: '체험 수정에 실패했습니다. 다시 시도해주세요.',
 };
+
+/**
+ * 체험 등록/수정 페이지에서 사용되는 HTTP 상태 코드입니다.
+ */
+export const HTTP_STATUS = {
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+} as const;
