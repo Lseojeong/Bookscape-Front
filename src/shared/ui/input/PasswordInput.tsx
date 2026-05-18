@@ -33,7 +33,7 @@ export default function PasswordInput<T extends FieldValues>({
           type="button"
           onClick={() => setShowPassword((prev) => !prev)}
           aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
-          className="flex items-center justify-center text-gray-400 transition-colors hover:text-gray-600"
+          className="flex h-6 w-6 items-center justify-center text-gray-400 transition-colors hover:text-gray-600"
         >
           {showPassword ? <EyeOnIcon /> : <EyeOffIcon />}
         </button>
