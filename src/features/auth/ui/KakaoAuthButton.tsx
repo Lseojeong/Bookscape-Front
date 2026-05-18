@@ -23,7 +23,7 @@ export default function KakaoAuthButton({ mode, className, ...props }: KakaoAuth
       {...props}
     >
       <span className="flex gap-1.5">
-        <KakaoIcon />
+        <KakaoIcon className="h-6 w-6" />
         <span className="typo-16-medium">카카오 {label}</span>
       </span>
     </a>

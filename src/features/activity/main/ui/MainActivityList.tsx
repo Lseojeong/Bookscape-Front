@@ -80,7 +80,7 @@ export default function MainActivityList() {
             disabled={!canScrollPrev}
             ariaLabel="이전"
           >
-            <ArrowLeftIcon />
+            <ArrowLeftIcon className="h-6 w-6" />
           </CarouselArrowButton>
 
           {/* 이미지 캐러셀 */}
@@ -108,7 +108,7 @@ export default function MainActivityList() {
             className="-right-5"
             ariaLabel="다음"
           >
-            <ArrowRightIcon />
+            <ArrowRightIcon className="h-6 w-6" />
           </CarouselArrowButton>
         </div>
       )}
