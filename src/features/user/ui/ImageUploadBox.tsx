@@ -7,7 +7,7 @@ import { DefaultProfileImage } from '@/shared/assets/images';
 import { IMAGE_RULES } from '@/shared/constants/file';
 import useObjectUrl from '@/shared/hooks/useObjectUrl';
 import Button from '@/shared/ui/button/Button';
-import { validateImageFile } from '@/shared/utils/file';
+import { convertHeicToJpeg, validateImageFile } from '@/shared/utils/file';
 
 type ProfileImageUploadProps = {
   initialImageUrl?: string | null;
@@ -46,12 +46,33 @@ export default function ImageUploadBox({
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(initialImageUrl ?? null);
   const objectUrl = useObjectUrl(file);
   const previewImage = objectUrl ?? currentImageUrl;
+  const [isConverting, setIsConverting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    const validationError = validateImageFile(selected);
+    let processedFile = selected;
+
+    const isHeic =
+      selected.name.toLowerCase().endsWith('.heic') ||
+      selected.name.toLowerCase().endsWith('.heif') ||
+      selected.type === 'image/heic' ||
+      selected.type === 'image/heif';
+
+    if (isHeic) setIsConverting(true);
+
+    try {
+      processedFile = await convertHeicToJpeg(selected);
+    } catch {
+      setError('HEIC 이미지 변환에 실패했습니다. 다른 형식으로 업로드해 주세요.');
+      e.target.value = '';
+      return;
+    } finally {
+      setIsConverting(false);
+    }
+
+    const validationError = validateImageFile(processedFile);
     if (validationError) {
       setError(validationError);
       e.target.value = '';
@@ -59,8 +80,8 @@ export default function ImageUploadBox({
     }
 
     setError(null);
-    setFile(selected);
-    onFileChange?.(selected);
+    setFile(processedFile);
+    onFileChange?.(processedFile);
     e.target.value = '';
   };
 
@@ -77,7 +98,11 @@ export default function ImageUploadBox({
     <div className="flex flex-col items-center gap-6">
       <div className="relative">
         <div className="relative h-30 w-30 overflow-hidden rounded-full bg-primary-100">
-          {previewImage ? (
+          {isConverting ? (
+            <div className="flex h-full w-full items-center justify-center">
+              <span className="h-6 w-6 animate-spin rounded-full border-2 border-primary-400 border-t-transparent" />
+            </div>
+          ) : previewImage ? (
             <Image
               src={previewImage}
               alt={objectUrl ? '프로필 이미지 미리보기' : '프로필 이미지'}
