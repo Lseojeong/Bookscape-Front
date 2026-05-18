@@ -24,6 +24,7 @@ import FormLabel from '@/shared/ui/form/FormLabel';
 import InfiniteScrollSentinel from '@/shared/ui/infinite-scroll/InfiniteScrollSentinel';
 import Skeleton from '@/shared/ui/skeleton/Skeleton';
 import TabBar from '@/shared/ui/tab-bar/TabBar';
+import { formatEndTime } from '@/shared/utils/time';
 
 type ReservationPanelContentProps = {
   date: Date;
@@ -193,14 +194,14 @@ export default function ReservationPanelContent({
                     <SelectDropdownValue
                       render={(value) => {
                         const s = availableSchedules.find((s) => String(s.scheduleId) === value);
-                        return s ? `${s.startTime}~${s.endTime}` : '';
+                        return s ? `${s.startTime}~${formatEndTime(s.endTime)}` : '';
                       }}
                     />
                   </SelectDropdownTrigger>
                   <SelectDropdownContent>
                     {availableSchedules.map((s) => (
                       <SelectDropdownItem key={s.scheduleId} value={String(s.scheduleId)}>
-                        {s.startTime}~{s.endTime}
+                        {s.startTime}~{formatEndTime(s.endTime)}
                       </SelectDropdownItem>
                     ))}
                   </SelectDropdownContent>

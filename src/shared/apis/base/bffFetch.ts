@@ -96,7 +96,7 @@ const request = <T>({
     try {
       return await doRequest();
     } catch (error) {
-      // 401이면(= access token 만료 가능성) refresh 후 1회 재시도합니다.
+      // 401이면(= access token 만료 가능성) refresh 후 상황에 따라 세션을 정리합니다.
       if (error instanceof ApiError && error.status === 401 && !isAuthEndpoint(endpoint)) {
         const refreshed = await refreshTokensOnce();
         if (!refreshed) {

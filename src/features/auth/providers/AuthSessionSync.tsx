@@ -10,7 +10,7 @@ import { useUserStore } from '@/shared/stores/userStore';
  *
  * - `persist`로 복원된 `user`는 오래된 값일 수 있어 서버 확인이 필요합니다.
  * - 성공: `setUser(me)`
- * - 401/403: 세션 만료로 보고 `clearSession('expired')`
+ * - 401: 세션 만료로 보고 `clearSession('expired')`
  * - `hasHydrated` 이후에만 실행합니다.
  */
 export default function AuthSessionSync() {
@@ -39,7 +39,7 @@ export default function AuthSessionSync() {
         const me = await getMe();
         if (me) setUser(me);
       } catch (error) {
-        if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+        if (error instanceof ApiError && error.status === 401) {
           clearSession('expired');
           return;
         }
