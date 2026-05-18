@@ -14,10 +14,10 @@ type ToastProps = {
 };
 
 const toastIconConfig = {
-  cancel: { icon: <CancelIcon /> },
-  check: { icon: <CheckIcon /> },
-  warning: { icon: <WarningIcon /> },
-  info: { icon: <NoticeIcon /> },
+  cancel: { icon: <CancelIcon className="h-7 w-7" /> },
+  check: { icon: <CheckIcon className="h-7 w-7" /> },
+  warning: { icon: <WarningIcon className="h-7 w-7" /> },
+  info: { icon: <NoticeIcon className="h-7 w-7" /> },
 };
 
 /**
