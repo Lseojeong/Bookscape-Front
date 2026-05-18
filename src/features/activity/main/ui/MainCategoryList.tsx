@@ -62,8 +62,8 @@ export default function MainCategoryList() {
                 <Image
                   src={Icon}
                   alt="이미지"
-                  width={240}
-                  height={240}
+                  width={120}
+                  height={120}
                   priority
                   className="h-15 w-15 md:h-30 md:w-30"
                   unoptimized // PNG 원본 유지
