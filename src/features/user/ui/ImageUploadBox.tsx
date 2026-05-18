@@ -52,37 +52,36 @@ export default function ImageUploadBox({
     const selected = e.target.files?.[0];
     if (!selected) return;
 
-    let processedFile = selected;
-
-    const isHeic =
-      selected.name.toLowerCase().endsWith('.heic') ||
-      selected.name.toLowerCase().endsWith('.heif') ||
-      selected.type === 'image/heic' ||
-      selected.type === 'image/heif';
-
-    if (isHeic) setIsConverting(true);
-
     try {
-      processedFile = await convertHeicToJpeg(selected);
-    } catch {
-      setError('HEIC 이미지 변환에 실패했습니다. 다른 형식으로 업로드해 주세요.');
-      e.target.value = '';
-      return;
+      let processedFile = selected;
+
+      const isHeic =
+        /\.(heic|heif)$/i.test(selected.name) ||
+        ['image/heic', 'image/heif'].includes(selected.type);
+      if (isHeic) {
+        setIsConverting(true);
+        try {
+          processedFile = await convertHeicToJpeg(selected);
+        } catch {
+          setError('HEIC 이미지 변환에 실패했습니다. 다른 형식으로 업로드해 주세요.');
+          return;
+        } finally {
+          setIsConverting(false);
+        }
+      }
+
+      const validationError = validateImageFile(processedFile);
+      if (validationError) {
+        setError(validationError);
+        return;
+      }
+
+      setError(null);
+      setFile(processedFile);
+      onFileChange?.(processedFile);
     } finally {
-      setIsConverting(false);
-    }
-
-    const validationError = validateImageFile(processedFile);
-    if (validationError) {
-      setError(validationError);
       e.target.value = '';
-      return;
     }
-
-    setError(null);
-    setFile(processedFile);
-    onFileChange?.(processedFile);
-    e.target.value = '';
   };
 
   const handleReset = () => {
