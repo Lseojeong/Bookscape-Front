@@ -107,7 +107,7 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
       router.push(`/activity/${activityId}`);
     } catch (error) {
       if (error instanceof ApiError && error.status === 400) {
-        showToast('cancel', '예약이 있는 시간대는 수정하거나 삭제할 수 없습니다.');
+        showToast('cancel', '예약이 있는 시간대는 수정할 수 없습니다.');
         return;
       }
       // 기본 에러
