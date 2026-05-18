@@ -159,10 +159,10 @@ export default function ActivityForm({
                 images={field.value ? [field.value] : []}
                 maxCount={1}
                 errorMessage={errors.bannerImage?.message}
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) field.onChange(file);
-                  e.target.value = '';
+                onAddFiles={(files) => {
+                  if (files.length > 0) {
+                    field.onChange(files[0]);
+                  }
                 }}
                 onRemove={() => field.onChange(null)}
               />
@@ -184,12 +184,8 @@ export default function ActivityForm({
                   images={currentImages}
                   maxCount={4}
                   errorMessage={errors.subImages?.message}
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file && currentImages.length < 4) {
-                      field.onChange([...currentImages, file]);
-                    }
-                    e.target.value = '';
+                  onAddFiles={(files) => {
+                    field.onChange([...currentImages, ...files]);
                   }}
                   onRemove={(index) => {
                     const newImages = [...currentImages];

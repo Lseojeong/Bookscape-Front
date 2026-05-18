@@ -16,7 +16,7 @@ export type ImageUploaderProps = {
   images: (File | string)[];
   maxCount?: number;
   showCounter?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onAddFiles: (files: File[]) => void;
   onRemove: (index: number) => void;
 };
 
@@ -33,13 +33,13 @@ const getUniqueKey = (img: File | string) => {
  * @example
  * ```tsx
  * <ImageUploader
- *   label="배너 이미지 등록"
- *   images={images}
- *   maxCount={3}
- *   showCounter={true}
- *   errorMessage={errors.bannerImage?.message}
- *   onChange={handleImageChange}
- *   onRemove={handleImageRemove}
+ * label="배너 이미지 등록"
+ * images={images}
+ * maxCount={3}
+ * showCounter={true}
+ * errorMessage={errors.bannerImage?.message}
+ * onAddFiles={handleAddFiles}
+ * onRemove={handleImageRemove}
  * />
  * ```
  */
@@ -49,7 +49,7 @@ export default function ImageUploader({
   images = [],
   maxCount = 1,
   showCounter = false,
-  onChange,
+  onAddFiles,
   onRemove,
 }: ImageUploaderProps) {
   // 컴포넌트 내부에서 즉시 유효성 검사 에러를 띄워줄 상태
@@ -69,35 +69,66 @@ export default function ImageUploader({
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     // 이벤트가 터지자마자 현재의 타겟을 변수에 묶어둠
     const target = e.target;
+    const pickedFiles = Array.from(target.files ?? []);
 
-    let file = target.files?.[0];
-    if (!file) return;
+    if (pickedFiles.length === 0) return;
+
+    // 남은 슬롯만큼만 파일 자르기
+    const remainingCount = Math.max(0, maxCount - count);
+    const filesToProcess = pickedFiles.slice(0, remainingCount);
+
+    if (filesToProcess.length === 0) {
+      target.value = '';
+      return;
+    }
+
+    setIsConverting(true);
 
     try {
-      setIsConverting(true);
+      // Promise.all을 사용하여 다중 파일의 HEIC 변환 및 유효성 검사를 병렬 처리
+      const processedResults = await Promise.all(
+        filesToProcess.map(async (file) => {
+          try {
+            const convertedFile = await convertHeicToJpeg(file);
+            const validationError = validateImageFile(convertedFile);
 
-      file = await convertHeicToJpeg(file);
+            if (validationError) {
+              return { file: null, error: validationError };
+            }
+            return { file: convertedFile, error: null };
+          } catch {
+            return {
+              file: null,
+              error: '이미지 포맷 변환에 실패했습니다. 다른 이미지를 사용해주세요.',
+            };
+          }
+        })
+      );
 
-      const dataTransfer = new DataTransfer();
-      dataTransfer.items.add(file);
+      const validFiles = processedResults
+        .filter((result) => result.file !== null)
+        .map((result) => result.file as File);
 
-      // 지연이 발생해도 묶어둔 target 변수를 사용
-      target.files = dataTransfer.files;
+      const firstError = processedResults.find((result) => result.error !== null)?.error;
 
-      const validationError = validateImageFile(file);
-      if (validationError) {
-        setLocalError(validationError);
-        target.value = '';
-        return;
+      // 에러가 하나라도 발생했다면 첫 번째 에러 메시지를 표시
+      if (firstError) {
+        setLocalError(firstError);
+        // 포맷 변환 실패 에러인 경우 Toast 알림도 함께 표시
+        if (firstError.includes('변환에 실패')) {
+          showToast('cancel', firstError);
+        }
+      } else {
+        setLocalError('');
       }
 
-      setLocalError('');
-      onChange(e);
-    } catch {
-      showToast('cancel', '이미지 포맷 변환에 실패했습니다. 다른 이미지를 사용해주세요.');
+      // 유효한 파일이 하나라도 있다면 onAddFiles 호출
+      if (validFiles.length > 0) {
+        onAddFiles(validFiles);
+      }
     } finally {
       setIsConverting(false);
-      target.value = ''; // e.target 대신 target 사용
+      target.value = ''; // 지연이 발생해도 미리 묶어둔 target 변수를 사용하여 초기화
     }
   };
 
@@ -146,6 +177,7 @@ export default function ImageUploader({
             type="file"
             className="sr-only"
             accept={IMAGE_RULES.ACCEPTED_TYPES.join(',')}
+            multiple={maxCount > 1}
             disabled={isDisabled}
             onChange={handleFileChange}
           />
