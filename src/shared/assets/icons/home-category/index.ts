@@ -1,7 +1,7 @@
-import ArtIcon from './ic-art.svg';
-import FoodIcon from './ic-food.svg';
-import SightseeingIcon from './ic-sightseeing.svg';
-import TourIcon from './ic-tour.svg';
-import WellbeingIcon from './ic-wellbeing.svg';
+import ArtIconPng from './ic-art.png';
+import FoodIconPng from './ic-food.png';
+import SightseeingIconPng from './ic-sightseeing.png';
+import TourIconPng from './ic-tour.png';
+import WellbeingIconPng from './ic-wellbeing.png';
 
-export { ArtIcon, FoodIcon, SightseeingIcon, TourIcon, WellbeingIcon };
+export { ArtIconPng, FoodIconPng, SightseeingIconPng, TourIconPng, WellbeingIconPng };

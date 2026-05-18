@@ -1,7 +1,7 @@
 import ActivityAddress from '@/features/activity/activity-detail/ui/activity-info/ActivityAddress';
 import ActivityKebabMenu from '@/features/activity/activity-detail/ui/activity-info/ActivityKebabMenu';
 import ActivityShare from '@/features/activity/activity-detail/ui/share/ActivityShare';
-import { StarIcon } from '@/shared/assets/icons';
+import RatingSummary from '@/shared/ui/rating-summary/RatingSummary';
 import Title from '@/shared/ui/title/Title';
 import { cn } from '@/shared/utils/cn';
 
@@ -63,14 +63,8 @@ export default function ActivityInfo({
         {title}
       </Title>
       {/* 별점 */}
-      <div className="mb-2.5 flex items-center gap-1.5">
-        <StarIcon aria-hidden className="text-yellow-500" />
-        <span
-          className="typo-14-medium text-gray-700"
-          aria-label={`별점 ${rating}점, 리뷰 ${reviewCount}개`}
-        >
-          {rating} ({reviewCount})
-        </span>
+      <div className="mb-2.5">
+        <RatingSummary averageRating={rating} totalCount={reviewCount} />
       </div>
       {/* 주소, 공유 기능 */}
       <div className="flex items-center justify-between">

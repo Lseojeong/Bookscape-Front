@@ -31,7 +31,7 @@ export default function ActivityShare({ title, description, bannerImageUrl }: Ac
   return (
     <div className="flex items-center gap-3">
       <button type="button" onClick={handleCopyUrl} aria-label="URL 복사">
-        <LinkIcon />
+        <LinkIcon className="h-6 w-6" />
       </button>
       <button
         type="button"
@@ -39,7 +39,7 @@ export default function ActivityShare({ title, description, bannerImageUrl }: Ac
         aria-label="카카오톡 공유"
         className="flex h-9 w-9 items-center justify-center rounded-full bg-kakao-bg"
       >
-        <KakaoIcon />
+        <KakaoIcon className="h-6 w-6" />
       </button>
     </div>
   );

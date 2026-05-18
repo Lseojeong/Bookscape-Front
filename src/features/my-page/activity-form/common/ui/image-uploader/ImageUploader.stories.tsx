@@ -35,18 +35,11 @@ type Story = StoryObj<typeof ImageUploader>;
 const InteractiveTemplate = (args: React.ComponentProps<typeof ImageUploader>) => {
   const [images, setImages] = useState<(File | string)[]>([]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-
-    const newFiles = Array.from(files);
-
+  const handleAddFiles = (files: File[]) => {
     setImages((prev) => {
-      const combined = [...prev, ...newFiles];
+      const combined = [...prev, ...files];
       return combined.slice(0, args.maxCount ?? 1);
     });
-
-    e.target.value = '';
   };
 
   const handleImageRemove = (index: number) => {
@@ -58,7 +51,7 @@ const InteractiveTemplate = (args: React.ComponentProps<typeof ImageUploader>) =
       <ImageUploader
         {...args}
         images={images}
-        onChange={handleImageChange}
+        onAddFiles={handleAddFiles}
         onRemove={handleImageRemove}
       />
     </div>
