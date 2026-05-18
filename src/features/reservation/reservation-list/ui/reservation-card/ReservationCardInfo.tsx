@@ -37,10 +37,12 @@ export default function ReservationCardInfo({
   const { showToast } = useToastStore();
   const createReviewMutation = useCreateMyReservationReviewMutation();
 
+  const displayEndTime = formatEndTime(endTime);
+
   const scheduleText = formatReservationScheduleText({
     date,
     startTime,
-    endTime: formatEndTime(endTime),
+    endTime: displayEndTime,
     headCount,
   });
   const isExpiredPending = useExpiredPendingReservation({ status, date, startTime });
@@ -71,7 +73,7 @@ export default function ReservationCardInfo({
           <span className="hidden lg:inline-block">{formatYmdToDot(date)}</span>
           <span className="hidden lg:inline-block">·</span>
           <span>
-            {startTime} - {formatEndTime(endTime)}
+            {startTime} - {displayEndTime}
           </span>
         </p>
       </div>
