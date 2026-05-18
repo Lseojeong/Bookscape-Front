@@ -12,6 +12,7 @@ import Title from '@/shared/ui/title/Title';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 import { cn } from '@/shared/utils/cn';
 import { formatReservationScheduleText, formatYmdToDot } from '@/shared/utils/dateFormat';
+import { formatEndTime } from '@/shared/utils/time';
 import type { ReservationCardProps } from './ReservationCard';
 
 /**
@@ -36,7 +37,12 @@ export default function ReservationCardInfo({
   const { showToast } = useToastStore();
   const createReviewMutation = useCreateMyReservationReviewMutation();
 
-  const scheduleText = formatReservationScheduleText({ date, startTime, endTime, headCount });
+  const scheduleText = formatReservationScheduleText({
+    date,
+    startTime,
+    endTime: formatEndTime(endTime),
+    headCount,
+  });
   const isExpiredPending = useExpiredPendingReservation({ status, date, startTime });
   const pendingDisabledMessage = RESERVATION_UI_MESSAGES.PENDING_CHANGE_DISABLED_EXPIRED;
 
@@ -65,7 +71,7 @@ export default function ReservationCardInfo({
           <span className="hidden lg:inline-block">{formatYmdToDot(date)}</span>
           <span className="hidden lg:inline-block">·</span>
           <span>
-            {startTime} - {endTime}
+            {startTime} - {formatEndTime(endTime)}
           </span>
         </p>
       </div>
