@@ -4,6 +4,7 @@ import { ActivityScheduleTime } from '@/features/activity/types';
 import Button from '@/shared/ui/button/Button';
 import Loading from '@/shared/ui/loading/Loading';
 import { cn } from '@/shared/utils/cn';
+import { formatEndTime } from '@/shared/utils/time';
 
 type ScheduleListProps = {
   selected?: Date;
@@ -113,7 +114,7 @@ export default function ScheduleList({
                     : 'border-gray-300 text-gray-950'
               )}
             >
-              {schedule.startTime}~{schedule.endTime}
+              {schedule.startTime}~{formatEndTime(schedule.endTime)}
             </button>
           );
         })}
