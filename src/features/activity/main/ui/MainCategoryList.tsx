@@ -61,7 +61,7 @@ export default function MainCategoryList() {
               >
                 <Image
                   src={Icon}
-                  alt="이미지"
+                  alt={`${category.label} 아이콘`}
                   width={120}
                   height={120}
                   priority
