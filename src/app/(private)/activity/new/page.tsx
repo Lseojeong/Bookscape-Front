@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import ActivityNewClient from '@/features/my-page/activity-form/new/ui/ActivityNewClient';
 import PageHeader from '@/shared/ui/page-header/PageHeader';
 
@@ -19,7 +20,9 @@ export default function ActivityNewPage() {
         <PageHeader title="내 체험 등록" />
       </div>
 
-      <ActivityNewClient />
+      <Suspense fallback={null}>
+        <ActivityNewClient />
+      </Suspense>
     </>
   );
 }

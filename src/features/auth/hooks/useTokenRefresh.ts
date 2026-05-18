@@ -15,7 +15,7 @@ const REFRESH_LIMIT = 5 * 60 * 1000; // 5분
  * 1. accessTokenExpiresAt 기준으로 만료 5분 전 delay 계산
  * 2. delay 후 refreshAuthTokens() 호출
  * 3. 성공: 새 만료 시각으로 setSession → useEffect 재실행 → 타이머 재예약
- * 4. 401/403: clearSession으로 세션 초기화 후 재로그인 유도
+ * 4. 401: clearSession으로 세션 초기화 후 재로그인 유도
  */
 export const useTokenRefresh = () => {
   const { showToast } = useToastStore();
@@ -67,7 +67,7 @@ export const useTokenRefresh = () => {
           }
         }
       } catch (error) {
-        if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+        if (error instanceof ApiError && error.status === 401) {
           clearSession('expired');
           showToast('warning', '로그인 시간이 만료되었습니다. 다시 로그인해 주세요.');
           return;
