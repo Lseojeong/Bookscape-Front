@@ -2,7 +2,7 @@
  * 이미지 업로드 관련 설정 상수입니다.
  */
 export const IMAGE_RULES = {
-  MAX_SIZE: 5 * 1024 * 1024, // 5MB
+  MAX_SIZE: 4 * 1024 * 1024, // 4MB
   ACCEPTED_TYPES: [
     'image/jpeg',
     'image/jpg',
@@ -17,6 +17,6 @@ export const IMAGE_RULES = {
  * 이미지 업로드 관련 에러 메시지입니다.
  */
 export const IMAGE_ERROR_MESSAGES = {
-  IMAGE_SIZE_EXCEEDED: '이미지 용량은 5MB를 초과할 수 없습니다',
+  IMAGE_SIZE_EXCEEDED: '이미지 용량은 4MB를 초과할 수 없습니다',
   IMAGE_TYPE_INVALID: 'JPG, JPEG, PNG, WEBP, HEIC, HEIF 파일만 업로드 가능합니다',
 } as const;
