@@ -43,25 +43,25 @@
 <!-- prettier-ignore -->
 |메인 페이지(/)|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/a0db0083-9b74-4a22-b0b2-087d4dd0fcd6" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/a0db0083-9b74-4a22-b0b2-087d4dd0fcd6" />|
 |카테고리 / 인기 체험 / 검색을 통한 체험 탐색|
 
 <!-- prettier-ignore -->
 |회원가입 & 로그인(/signup,/login)|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/369bffd1-95ef-42b1-acaa-d6e0e807981b" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/369bffd1-95ef-42b1-acaa-d6e0e807981b" />|
 |일반 회원가입 및 로그인 - 유효성 검사, 카카오 소셜 로그인|
 
 <!-- prettier-ignore -->
 |체험 리스트(/activities)|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/d892511e-67e5-4087-8660-3fab7109a694" /> <img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/00432502-9a01-415f-917c-89edce42b8ee" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/d892511e-67e5-4087-8660-3fab7109a694" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/00432502-9a01-415f-917c-89edce42b8ee" />|
 |카테고리 필터 / 가격 정렬 / 키워드 검색|
 
 <!-- prettier-ignore -->
 |체험 상세 페이지(/activity/[id])|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/2c9caab2-b5cd-4048-8c39-f6a4610a4296" /> <img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/2af9e694-3c8a-4101-969e-ea1c6afa07c9" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/2c9caab2-b5cd-4048-8c39-f6a4610a4296" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/2af9e694-3c8a-4101-969e-ea1c6afa07c9" />|
 |체험 정보 & 후기, 예약, 카카오톡 공유|
 
 <!-- prettier-ignore -->
@@ -73,31 +73,31 @@
 <!-- prettier-ignore -->
 |내 정보(/mypage/info)|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/76adf7b8-6e7b-4cb8-ae5b-b07fae355db2" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/76adf7b8-6e7b-4cb8-ae5b-b07fae355db2" />|
 |프로필 이미지 / 닉네임 / 비밀번호 변경|
 
 <!-- prettier-ignore -->
 |예약 내역(/mypage/reservation-list)|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/71d4e8bb-6cf5-4416-87e1-9dd3024205f9" /> <img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/62b592e3-cde0-4c55-94b3-3d76db5e5797" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/71d4e8bb-6cf5-4416-87e1-9dd3024205f9" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/62b592e3-cde0-4c55-94b3-3d76db5e5797" />|
 |예약 상태별 확인, 예약 취소, 후기 작성|
 
 <!-- prettier-ignore -->
 |내 체험 관리(/mypage/activity)|
 |:---:|
-|<img width="893" height="459" alt="Image" src="https://github.com/user-attachments/assets/2d8b0107-0fdd-4868-9f76-26de7da91202" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/2d8b0107-0fdd-4868-9f76-26de7da91202" />|
 |등록한 체험 목록 확인 / 체험 삭제|
 
 <!-- prettier-ignore -->
 |체험 등록 & 수정(/activity/new, /activity/[id]/edit)|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/ade16764-05b2-4866-bce6-a4c2f036cb83" /> <img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/c1cec7ef-80eb-474d-bef8-3d5235e0dd0c" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/ade16764-05b2-4866-bce6-a4c2f036cb83" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/c1cec7ef-80eb-474d-bef8-3d5235e0dd0c" />|
 |체험 등록 - 체험 정보 입력, 카카오 우편번호 주소 검색, 이미지 업로드, 예약 스케줄 등록 / 체험 수정|
 
 <!-- prettier-ignore -->
 |예약 현황(/mypage/reservation-status)|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/7fff7712-8aee-4364-96c4-98289cb503f5" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/7fff7712-8aee-4364-96c4-98289cb503f5" />|
 |캘린더로 예약 현황 확인 / 예약 승인 & 거절|
 
 ---
