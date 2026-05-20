@@ -43,7 +43,7 @@
 <!-- prettier-ignore -->
 | PC | Tablet | Mobile |
 |:---:|:---:|:---:|
-|<img width="266" alt="Image" src="https://github.com/user-attachments/assets/7fff7712-8aee-4364-96c4-98289cb503f5" />|<img width="266" alt="Image" src="https://github.com/user-attachments/assets/a7ce0b19-b69c-4bcd-92d8-5dc87809739d" />|<img width="266" alt="Image" src="https://github.com/user-attachments/assets/257f9f44-e783-48ec-9178-668300a6a509" />|
+|<img width="250" alt="Image" src="https://github.com/user-attachments/assets/7fff7712-8aee-4364-96c4-98289cb503f5" />|<img width="250" alt="Image" src="https://github.com/user-attachments/assets/a7ce0b19-b69c-4bcd-92d8-5dc87809739d" />|<img width="250" alt="Image" src="https://github.com/user-attachments/assets/257f9f44-e783-48ec-9178-668300a6a509" />|
 
 <!-- prettier-ignore -->
 |메인 페이지(/)|
