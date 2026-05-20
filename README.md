@@ -55,19 +55,19 @@
 <!-- prettier-ignore -->
 |체험 리스트(/activities)|
 |:---:|
-|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/d892511e-67e5-4087-8660-3fab7109a694" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/00432502-9a01-415f-917c-89edce42b8ee" />|
+|<img width="400" alt="Image" src="https://github.com/user-attachments/assets/d892511e-67e5-4087-8660-3fab7109a694" /> <img width="400" alt="Image" src="https://github.com/user-attachments/assets/00432502-9a01-415f-917c-89edce42b8ee" />|
 |카테고리 필터 / 가격 정렬 / 키워드 검색|
 
 <!-- prettier-ignore -->
 |체험 상세 페이지(/activity/[id])|
 |:---:|
-|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/2c9caab2-b5cd-4048-8c39-f6a4610a4296" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/2af9e694-3c8a-4101-969e-ea1c6afa07c9" />|
+|<img width="400" alt="Image" src="https://github.com/user-attachments/assets/2c9caab2-b5cd-4048-8c39-f6a4610a4296" /> <img width="400" alt="Image" src="https://github.com/user-attachments/assets/2af9e694-3c8a-4101-969e-ea1c6afa07c9" />|
 |체험 정보 & 후기, 예약, 카카오톡 공유|
 
 <!-- prettier-ignore -->
 |알림|
 |:---:|
-|<img width="891" height="504" alt="Image" src="https://github.com/user-attachments/assets/8866dd2e-c44b-4b12-8156-3e6dfb82e26e" />|
+|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/8866dd2e-c44b-4b12-8156-3e6dfb82e26e" />|
 |예약 신청 / 승인 / 거절 알림 실시간 확인 & 삭제|
 
 <!-- prettier-ignore -->
@@ -79,7 +79,7 @@
 <!-- prettier-ignore -->
 |예약 내역(/mypage/reservation-list)|
 |:---:|
-|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/71d4e8bb-6cf5-4416-87e1-9dd3024205f9" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/62b592e3-cde0-4c55-94b3-3d76db5e5797" />|
+|<img width="400" alt="Image" src="https://github.com/user-attachments/assets/71d4e8bb-6cf5-4416-87e1-9dd3024205f9" /> <img width="400" alt="Image" src="https://github.com/user-attachments/assets/62b592e3-cde0-4c55-94b3-3d76db5e5797" />|
 |예약 상태별 확인, 예약 취소, 후기 작성|
 
 <!-- prettier-ignore -->
@@ -91,7 +91,7 @@
 <!-- prettier-ignore -->
 |체험 등록 & 수정(/activity/new, /activity/[id]/edit)|
 |:---:|
-|<img width="800" alt="Image" src="https://github.com/user-attachments/assets/ade16764-05b2-4866-bce6-a4c2f036cb83" /> <img width="800" alt="Image" src="https://github.com/user-attachments/assets/c1cec7ef-80eb-474d-bef8-3d5235e0dd0c" />|
+|<img width="400" alt="Image" src="https://github.com/user-attachments/assets/ade16764-05b2-4866-bce6-a4c2f036cb83" /> <img width="400" alt="Image" src="https://github.com/user-attachments/assets/c1cec7ef-80eb-474d-bef8-3d5235e0dd0c" />|
 |체험 등록 - 체험 정보 입력, 카카오 우편번호 주소 검색, 이미지 업로드, 예약 스케줄 등록 / 체험 수정|
 
 <!-- prettier-ignore -->
