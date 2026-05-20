@@ -41,6 +41,11 @@
 > 모든 화면은 **PC / Tablet / Mobile** 반응형을 고려해 구현했습니다.
 
 <!-- prettier-ignore -->
+| PC | Tablet | Mobile |
+|:---:|:---:|:---:|
+|<img width="280" alt="Image" src="https://github.com/user-attachments/assets/7fff7712-8aee-4364-96c4-98289cb503f5" />|<img width="280" alt="Image" src="https://github.com/user-attachments/assets/a7ce0b19-b69c-4bcd-92d8-5dc87809739d" />|<img width="280" alt="Image" src="https://github.com/user-attachments/assets/257f9f44-e783-48ec-9178-668300a6a509" />|
+
+<!-- prettier-ignore -->
 |메인 페이지(/)|
 |:---:|
 |<img width="800" alt="Image" src="https://github.com/user-attachments/assets/a0db0083-9b74-4a22-b0b2-087d4dd0fcd6" />|
