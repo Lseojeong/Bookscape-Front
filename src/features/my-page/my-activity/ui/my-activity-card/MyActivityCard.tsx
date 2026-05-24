@@ -58,6 +58,7 @@ export default function MyActivityCard({ data, imagePriority }: MyActivityCardPr
         alt={title}
         containerClassName={cardImageStyles}
         priority={imagePriority}
+        sizes="(min-width: 1024px) 200px, (min-width: 768px) 196px, 160px"
       />
       {/* 정보 영역 */}
       <div className="relative layer-base w-full">

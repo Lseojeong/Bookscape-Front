@@ -47,6 +47,7 @@ export default function ActivityCard({ data, titleTag }: ActivityCardProps) {
       <BaseCardImage
         bannerImageUrl={bannerImageUrl}
         containerClassName="mb-16.5 h-44 md:mb-19 md:h-93.5 lg:h-72.5"
+        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
       />
 
       {/* 정보 영역 */}

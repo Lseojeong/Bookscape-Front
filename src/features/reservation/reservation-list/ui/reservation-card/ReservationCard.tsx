@@ -47,6 +47,7 @@ export default function ReservationCard({ data, onReservationChangeClick }: Rese
         containerClassName={cardImageStyles}
         bannerImageUrl={data.activity.bannerImageUrl}
         alt={data.activity.title}
+        sizes="(min-width: 1024px) 200px, (min-width: 768px) 196px, 160px"
       />
       {/* 정보 영역 */}
       <div className="relative layer-base w-full">
