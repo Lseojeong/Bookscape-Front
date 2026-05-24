@@ -13,6 +13,7 @@ type BaseCardImageProps = {
   imageClassName?: string;
   priority?: boolean;
   sizes?: string;
+  quality?: number;
 };
 
 /**
@@ -34,6 +35,7 @@ export default function BaseCardImage({
   imageClassName,
   priority,
   sizes,
+  quality,
 }: BaseCardImageProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -54,6 +56,7 @@ export default function BaseCardImage({
         fill
         priority={priority}
         sizes={sizes}
+        quality={quality}
         className={cn('object-cover', !isLoaded && 'invisible', imageClassName)}
         onLoad={() => setIsLoaded(true)}
         onError={() => {
