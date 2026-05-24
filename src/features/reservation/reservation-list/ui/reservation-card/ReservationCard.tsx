@@ -9,6 +9,7 @@ import ReservationCardInfo from './ReservationCardInfo';
 export type ReservationCardProps = {
   data: MyReservation;
   onReservationChangeClick?: (reservation: MyReservation) => void;
+  imagePriority?: boolean;
 };
 
 /**
@@ -22,7 +23,11 @@ export type ReservationCardProps = {
  * <ReservationCard data={data} />
  * ```
  */
-export default function ReservationCard({ data, onReservationChangeClick }: ReservationCardProps) {
+export default function ReservationCard({
+  data,
+  onReservationChangeClick,
+  imagePriority,
+}: ReservationCardProps) {
   const router = useRouter();
 
   const handleClickCard = (e: React.MouseEvent | React.KeyboardEvent) => {
@@ -47,6 +52,7 @@ export default function ReservationCard({ data, onReservationChangeClick }: Rese
         containerClassName={cardImageStyles}
         bannerImageUrl={data.activity.bannerImageUrl}
         alt={data.activity.title}
+        priority={imagePriority}
         sizes="(min-width: 1024px) 200px, (min-width: 768px) 196px, 160px"
         quality={60}
       />

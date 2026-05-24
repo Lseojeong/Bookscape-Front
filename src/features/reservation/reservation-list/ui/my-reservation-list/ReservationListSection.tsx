@@ -76,21 +76,31 @@ export default function ReservationListSection({
 
   return (
     <div className="flex flex-col gap-7.5">
-      {reservationsByDate.map(({ date, items }, index) => (
-        <section key={date} className="flex flex-col gap-3">
-          <p className="typo-16-bold text-gray-800">{formatYmdToDot(date)}</p>
-          <div className="flex flex-col gap-7.5">
-            {items.map((reservation) => (
-              <ReservationCard
-                key={reservation.id}
-                data={reservation}
-                onReservationChangeClick={onReservationChangeClick}
-              />
-            ))}
-          </div>
-          {index !== reservationsByDate.length - 1 && <div className="mt-5 h-px bg-gray-50" />}
-        </section>
-      ))}
+      {(() => {
+        let prioritizedImageCount = 0;
+
+        return reservationsByDate.map(({ date, items }, index) => (
+          <section key={date} className="flex flex-col gap-3">
+            <p className="typo-16-bold text-gray-800">{formatYmdToDot(date)}</p>
+            <div className="flex flex-col gap-7.5">
+              {items.map((reservation) => {
+                const imagePriority = prioritizedImageCount < 3;
+                prioritizedImageCount += 1;
+
+                return (
+                  <ReservationCard
+                    key={reservation.id}
+                    data={reservation}
+                    imagePriority={imagePriority}
+                    onReservationChangeClick={onReservationChangeClick}
+                  />
+                );
+              })}
+            </div>
+            {index !== reservationsByDate.length - 1 && <div className="mt-5 h-px bg-gray-50" />}
+          </section>
+        ));
+      })()}
     </div>
   );
 }
