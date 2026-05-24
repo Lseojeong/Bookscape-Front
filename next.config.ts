@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
         hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
       },
     ],
+    qualities: [60, 75],
   },
   turbopack: {
     // INFO: Turbopack 설정
