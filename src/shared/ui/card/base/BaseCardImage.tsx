@@ -11,6 +11,7 @@ type BaseCardImageProps = {
   alt?: string;
   containerClassName?: string;
   imageClassName?: string;
+  priority?: boolean;
 };
 
 /**
@@ -30,6 +31,7 @@ export default function BaseCardImage({
   alt,
   containerClassName,
   imageClassName,
+  priority,
 }: BaseCardImageProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -48,6 +50,7 @@ export default function BaseCardImage({
         src={src}
         alt={alt ?? '체험 배너 이미지'}
         fill
+        priority={priority}
         className={cn('object-cover', !isLoaded && 'invisible', imageClassName)}
         onLoad={() => setIsLoaded(true)}
         onError={() => {

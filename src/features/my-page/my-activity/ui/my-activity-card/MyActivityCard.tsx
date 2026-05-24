@@ -22,6 +22,7 @@ export type MyActivityCardData = {
 
 export type MyActivityCardProps = {
   data: MyActivityCardData;
+  imagePriority?: boolean;
 };
 
 /**
@@ -32,7 +33,7 @@ export type MyActivityCardProps = {
  * <MyActivityCard data={activity} />
  * ```
  */
-export default function MyActivityCard({ data }: MyActivityCardProps) {
+export default function MyActivityCard({ data, imagePriority }: MyActivityCardProps) {
   const router = useRouter();
   const { id, title, bannerImageUrl } = data;
 
@@ -56,6 +57,7 @@ export default function MyActivityCard({ data }: MyActivityCardProps) {
         bannerImageUrl={bannerImageUrl}
         alt={title}
         containerClassName={cardImageStyles}
+        priority={imagePriority}
       />
       {/* 정보 영역 */}
       <div className="relative layer-base w-full">

@@ -62,9 +62,10 @@ export default function MyActivityList() {
   return (
     <>
       <div className="flex flex-col gap-4 md:gap-7.5">
-        {activities.map((activity) => (
+        {activities.map((activity, index) => (
           <MyActivityCard
             key={activity.id}
+            imagePriority={index < 3}
             data={{
               id: activity.id,
               title: activity.title,
