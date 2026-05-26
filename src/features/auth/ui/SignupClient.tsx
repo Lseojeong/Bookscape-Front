@@ -80,6 +80,7 @@ export default function SignupClient() {
             type: 'server',
             message: removeDotSuffix(error.message),
           });
+          return;
         }
 
         showToast('cancel', '회원가입 중 오류가 발생했습니다.');

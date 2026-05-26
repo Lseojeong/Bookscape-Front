@@ -95,6 +95,7 @@ export default function LoginClient() {
             type: 'server',
             message,
           });
+          return;
         }
 
         showToast('cancel', '로그인 중 오류가 발생했습니다.');
