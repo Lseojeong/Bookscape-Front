@@ -11,7 +11,7 @@ import { getImageUrl, getImageUrls } from '@/features/my-page/activity-form/comm
 import type { ActivityFormValues } from '@/features/my-page/activity-form/common/utils/schema';
 import { useUpdateActivity } from '@/features/my-page/activity-form/edit/mutations/useUpdateActivity';
 import type { ActivityDetailForForm } from '@/features/my-page/activity-form/types';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { QUERY_KEYS } from '@/shared/constants/queryKey';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -114,7 +114,7 @@ export const useActivityEditSubmit = (activityId: number, originalData?: Activit
       ]);
       router.push(`/activity/${activityId}`);
     } catch (error) {
-      if (error instanceof ApiError && error.status === HTTP_STATUS.BAD_REQUEST) {
+      if (error instanceof HttpError && error.status === HTTP_STATUS.BAD_REQUEST) {
         const errorMessage = error.message || ACTIVITY_ERROR_MESSAGES.SCHEDULE_CONFLICT;
 
         showToast('cancel', errorMessage);

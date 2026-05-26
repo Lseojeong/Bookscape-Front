@@ -3,7 +3,7 @@ import { AUTH_API_MESSAGE } from '@/features/auth/constants/authMessage';
 import { RefreshResponse } from '@/features/auth/types/auth';
 import { getAuthCookie, setAuthCookies } from '@/features/auth/utils/cookies';
 import { getJwtExpiresAt } from '@/features/auth/utils/jwt';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
 /**
@@ -48,7 +48,7 @@ export async function POST() {
     return response;
   } catch (error) {
     // 서버 또는 네트워크 에러
-    if (error instanceof ApiError) {
+    if (error instanceof HttpError) {
       return NextResponse.json(
         { message: error.message || AUTH_API_MESSAGE.LOGIN.ERROR },
         { status: error.status }

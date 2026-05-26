@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { refreshAuthTokens } from '@/features/auth/apis/auth';
 import { useTokenRefresh } from '@/features/auth/hooks/useTokenRefresh';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -47,7 +47,7 @@ describe('useTokenRefresh', () => {
   });
 
   it('refresh 실패(401)이면 세션을 비우고 토스트를 띄운다', async () => {
-    mockRefreshAuthTokens.mockRejectedValueOnce(new ApiError(401, 'Unauthorized'));
+    mockRefreshAuthTokens.mockRejectedValueOnce(new HttpError(401, 'Unauthorized'));
 
     const clearSessionSpy = jest.spyOn(useUserStore.getState(), 'clearSession');
     const showToastSpy = jest.spyOn(useToastStore.getState(), 'showToast');

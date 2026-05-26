@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { getMe } from '@/features/user/apis';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 
 /**
@@ -39,7 +39,7 @@ export default function AuthSessionSync() {
         const me = await getMe();
         if (me) setUser(me);
       } catch (error) {
-        if (error instanceof ApiError && error.status === 401) {
+        if (error instanceof HttpError && error.status === 401) {
           clearSession('expired');
           return;
         }

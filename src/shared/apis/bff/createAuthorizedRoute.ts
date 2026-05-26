@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { COMMON_MESSAGE } from '@/shared/constants/message';
 
 /**
@@ -56,7 +56,7 @@ const parseRequestBody = async (request: Request): Promise<unknown> => {
     try {
       return JSON.parse(text) as unknown;
     } catch {
-      throw new ApiError(400, '요청 본문이 올바른 JSON 형식이 아닙니다.');
+      throw new HttpError(400, '요청 본문이 올바른 JSON 형식이 아닙니다.');
     }
   }
 
@@ -120,8 +120,8 @@ export const createAuthorizedRoute = <
 
       return NextResponse.json(result);
     } catch (error) {
-      if (error instanceof ApiError) {
-        return NextResponse.json({ message: error.message }, { status: error.status });
+      if (error instanceof HttpError) {
+        return NextResponse.json({ message: error.message }, { status: error.status ?? 500 });
       }
 
       return NextResponse.json({ message: COMMON_MESSAGE.ERROR.INTERNAL }, { status: 500 });

@@ -1,4 +1,4 @@
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError, NetworkError } from '@/shared/apis/apiError';
 import { COMMON_MESSAGE } from '@/shared/constants/message';
 
 /**
@@ -8,7 +8,7 @@ import { COMMON_MESSAGE } from '@/shared/constants/message';
  * - 요청 URL을 구성하고, 쿼리 파라미터를 추가할 수 있습니다.
  * - 요청 본문을 JSON 또는 FormData로 자동 변환합니다.
  * - 응답이 JSON인 경우 자동으로 파싱하여 반환합니다.
- * - 요청이 실패한 경우 ApiError를 던집니다.
+ * - 요청이 실패한 경우 HttpError 또는 NetworkError를 던집니다.
  * - 요청 타임아웃을 지원하여, 지정된 시간 내에 응답이 없으면 요청을 취소합니다.
  * - AbortSignal을 지원하여, 외부에서 요청을 취소할 수 있습니다.
  * @example
@@ -22,8 +22,10 @@ import { COMMON_MESSAGE } from '@/shared/constants/message';
  *     });
  *     console.log(data);
  *   } catch (error) {
- *     if (error instanceof ApiError) {
+ *     if (error instanceof HttpError) {
  *       console.error(`API Error: ${error.status} - ${error.message}`);
+ *     } else if (error instanceof NetworkError) {
+ *       console.error(`Network Error: ${error.message}`);
  *     } else {
  *       console.error('Unexpected Error:', error);
  *     }
@@ -124,7 +126,7 @@ export async function coreFetch<T>(
     const data = parseResponse(text, isJson);
 
     if (!res.ok) {
-      throw new ApiError(
+      throw new HttpError(
         res.status,
         data?.message || res.statusText || `API 요청 실패: ${res.status}`
       );
@@ -133,17 +135,17 @@ export async function coreFetch<T>(
     return data;
   } catch (error) {
     // Fetch 자체 실패(네트워크/타임아웃 abort 등)는 네트워크 에러 메세지로 통일
-    if (error instanceof ApiError) throw error;
+    if (error instanceof HttpError || error instanceof NetworkError) throw error;
 
     if (isAbortError(error)) {
       if (abortedByTimeout) {
-        throw new Error(COMMON_MESSAGE.ERROR.NETWORK);
+        throw new NetworkError(COMMON_MESSAGE.ERROR.NETWORK);
       }
       // 외부 취소(라우트 변경, 수동 abort 등)
       throw new Error('요청이 취소되었습니다.');
     }
 
-    throw new ApiError(500, COMMON_MESSAGE.ERROR.INTERNAL);
+    throw new NetworkError(COMMON_MESSAGE.ERROR.NETWORK);
   } finally {
     clearTimeout(timeoutId);
   }

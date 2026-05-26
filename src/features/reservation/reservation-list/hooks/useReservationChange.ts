@@ -6,7 +6,7 @@ import { useAvailableSchedule } from '@/features/reservation/activity-panel/quer
 import { useMyReservations } from '@/features/reservation/activity-panel/queries/useMyReservations';
 import { useUpdateMyReservationApplication } from '@/features/reservation/reservation-list/mutations/useUpdateMyReservationApplication';
 import type { MyReservation } from '@/features/reservation/types';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
 /**
@@ -81,7 +81,7 @@ export const useReservationChange = (reservation: MyReservation) => {
       showToast('check', '예약이 변경되었습니다.');
       return true;
     } catch (error: unknown) {
-      if (error instanceof ApiError && error.status === 401) {
+      if (error instanceof HttpError && error.status === 401) {
         showToast('cancel', '로그인을 해주세요.');
         return false;
       }

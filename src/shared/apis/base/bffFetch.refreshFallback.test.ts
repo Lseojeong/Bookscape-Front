@@ -22,7 +22,7 @@ describe('bffFetch refresh-token fallback', () => {
   it('retries the original request once after a successful refresh', async () => {
     jest.resetModules();
     setupUserStoreMock();
-    const { ApiError } = await import('@/shared/apis/apiError');
+    const { HttpError } = await import('@/shared/apis/apiError');
 
     const urlCallCounts = new Map<string, number>();
     const coreFetchMock = jest.fn(async (url: string) => {
@@ -30,7 +30,7 @@ describe('bffFetch refresh-token fallback', () => {
 
       if (url === '/api/books?retry=1') {
         // 최초 요청은 401, refresh 성공 후 재시도는 성공
-        if (urlCallCounts.get(url) === 1) throw new ApiError(401, 'unauthorized');
+        if (urlCallCounts.get(url) === 1) throw new HttpError(401, 'unauthorized');
         return { ok: true };
       }
       if (url === '/api/auth/tokens') return { success: true, accessTokenExpiresAt: 123 };
@@ -69,11 +69,11 @@ describe('bffFetch refresh-token fallback', () => {
   it('clears the session as expired when refresh fails, then rethrows the original error', async () => {
     jest.resetModules();
     setupUserStoreMock();
-    const { ApiError } = await import('@/shared/apis/apiError');
+    const { HttpError } = await import('@/shared/apis/apiError');
 
     const coreFetchMock = jest.fn(async (url: string) => {
-      if (url === '/api/books') throw new ApiError(401, 'unauthorized');
-      if (url === '/api/auth/tokens') throw new ApiError(401, 'refresh failed');
+      if (url === '/api/books') throw new HttpError(401, 'unauthorized');
+      if (url === '/api/auth/tokens') throw new HttpError(401, 'refresh failed');
       return null;
     });
 
@@ -85,14 +85,14 @@ describe('bffFetch refresh-token fallback', () => {
 
     const { bffFetch } = await import('@/shared/apis/base/bffFetch');
 
-    await expect(bffFetch.get('/books')).rejects.toBeInstanceOf(ApiError);
+    await expect(bffFetch.get('/books')).rejects.toBeInstanceOf(HttpError);
     expect(mockClearSession).toHaveBeenCalledWith('expired');
   });
 
   it('deduplicates concurrent refresh calls (refresh only once)', async () => {
     jest.resetModules();
     setupUserStoreMock();
-    const { ApiError } = await import('@/shared/apis/apiError');
+    const { HttpError } = await import('@/shared/apis/apiError');
 
     let refreshCalls = 0;
     const urlCallCounts = new Map<string, number>();
@@ -107,7 +107,7 @@ describe('bffFetch refresh-token fallback', () => {
       }
       if (url === '/api/books?ok=1') {
         // 2개 요청이 각각 1번씩 401을 받고, refresh 이후에는 모두 성공해야 함
-        if ((urlCallCounts.get(url) ?? 0) <= 2) throw new ApiError(401, 'unauthorized');
+        if ((urlCallCounts.get(url) ?? 0) <= 2) throw new HttpError(401, 'unauthorized');
         return { ok: true };
       }
       return null;

@@ -1,4 +1,4 @@
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import {
   coreFetch,
   FetchRequestOptions,
@@ -97,7 +97,7 @@ const request = <T>({
       return await doRequest();
     } catch (error) {
       // 401이면(= access token 만료 가능성) refresh 후 상황에 따라 세션을 정리합니다.
-      if (error instanceof ApiError && error.status === 401 && !isAuthEndpoint(endpoint)) {
+      if (error instanceof HttpError && error.status === 401 && !isAuthEndpoint(endpoint)) {
         const refreshed = await refreshTokensOnce();
         if (!refreshed) {
           await clearSessionExpired();
@@ -107,7 +107,7 @@ const request = <T>({
         try {
           return await doRequest();
         } catch (retryError) {
-          if (retryError instanceof ApiError && retryError.status === 401) {
+          if (retryError instanceof HttpError && retryError.status === 401) {
             await clearSessionExpired();
           }
           throw retryError;

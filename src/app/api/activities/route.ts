@@ -3,7 +3,7 @@ import type {
   CreateActivityRequestBody,
   CreateActivityResponse,
 } from '@/features/my-page/activity-form/types';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { createAuthorizedRoute } from '@/shared/apis/bff/createAuthorizedRoute';
 import { proxyFetch } from '@/shared/apis/bff/proxy';
 
@@ -19,7 +19,7 @@ import { proxyFetch } from '@/shared/apis/bff/proxy';
  */
 export const POST = createAuthorizedRoute<CreateActivityRequestBody>(async ({ body }) => {
   if (body?.title && body.title.length > 50) {
-    throw new ApiError(400, ACTIVITY_ERROR_MESSAGES.TITLE_MAX_LENGTH);
+    throw new HttpError(400, ACTIVITY_ERROR_MESSAGES.TITLE_MAX_LENGTH);
   }
   return proxyFetch.post<CreateActivityResponse>('/activities', body);
 });

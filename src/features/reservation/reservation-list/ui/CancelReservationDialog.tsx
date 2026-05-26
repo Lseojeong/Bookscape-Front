@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useCancelMyReservation } from '@/features/reservation/reservation-list/mutations/useCancelMyReservation';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -36,7 +36,7 @@ export default function CancelReservationDialog({
             showToast('check', '예약이 취소되었습니다.');
           },
           onError: (error) => {
-            if (error instanceof ApiError) {
+            if (error instanceof HttpError) {
               if (error.status === 401) {
                 showToast('cancel', '로그인이 필요합니다.');
                 router.push('/login');

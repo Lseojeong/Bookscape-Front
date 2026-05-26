@@ -6,7 +6,7 @@ import { getActivityDetail, getActivityReviews } from '@/features/activity/apis'
 import ReservationBar from '@/features/reservation/activity-panel/ui/ReservationBar';
 import ReservationWidget from '@/features/reservation/activity-panel/ui/ReservationWidget';
 import { getAvailableSchedule } from '@/features/reservation/apis';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { COMMON_OPEN_GRAPH } from '@/shared/constants/metadata';
 
 type Props = {
@@ -64,7 +64,7 @@ export default async function ActivityDetailPage({ params }: Props) {
   // 체험 상세 정보 불러오기 실패 시 404 또는 에러 처리
   if (detailResult.status === 'rejected') {
     const error = detailResult.reason;
-    if (error instanceof ApiError && error.status === 404) notFound();
+    if (error instanceof HttpError && error.status === 404) notFound();
     throw error;
   }
 
