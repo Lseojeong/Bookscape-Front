@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useDeleteActivity } from '@/features/my-page/common/mutations/useDeleteActivity';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import ConfirmDialog from '@/shared/ui/dialog/ConfirmDialog';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -35,7 +35,7 @@ export default function DeleteActivityDialog({ id, isOpen, onClose }: DeleteActi
           onClose();
           router.push('/mypage/activity');
         } catch (error) {
-          if (error instanceof ApiError) {
+          if (error instanceof HttpError) {
             if (error.status === 401) {
               showToast('cancel', '로그인이 필요합니다.');
               onClose();

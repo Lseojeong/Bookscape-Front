@@ -6,7 +6,7 @@ import {
   createOAuthSessionResponse,
   getRequiredKakaoRedirectUri,
 } from '@/features/auth/utils/oauthSessionServer';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { serverFetch } from '@/shared/apis/base/serverFetch';
 
 export async function POST(request: NextRequest) {
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       refreshToken: data.refreshToken,
     });
   } catch (error) {
-    if (error instanceof ApiError) {
+    if (error instanceof HttpError) {
       return NextResponse.json({ message: error.message }, { status: error.status });
     }
     if (error instanceof Error) {

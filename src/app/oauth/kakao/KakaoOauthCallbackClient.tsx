@@ -13,7 +13,7 @@ import {
   KAKAO_OAUTH_START_SIGNIN_URL,
   KAKAO_OAUTH_START_SIGNUP_URL,
 } from '@/features/auth/utils/kakaoOauthClient';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -77,7 +77,7 @@ export default function KakaoOauthCallbackClient() {
         const errorMessage = err instanceof Error ? err.message : '';
         if (
           mode === 'signin' &&
-          err instanceof ApiError &&
+          err instanceof HttpError &&
           (err.status === 404 || isNotRegisteredKakaoUserError(errorMessage))
         ) {
           window.location.replace(KAKAO_OAUTH_START_SIGNUP_URL);

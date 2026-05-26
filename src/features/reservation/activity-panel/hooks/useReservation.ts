@@ -6,7 +6,7 @@ import type { ActivityDetail, ActivitySchedule } from '@/features/activity/types
 import { useCreateReservation } from '@/features/reservation/activity-panel/mutations/useCreateReservation';
 import { useAvailableSchedule } from '@/features/reservation/activity-panel/queries/useAvailableSchedule';
 import { useMyReservations } from '@/features/reservation/activity-panel/queries/useMyReservations';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -89,7 +89,7 @@ export const useReservation = (
           reset();
         },
         onError: (error: unknown) => {
-          if (error instanceof ApiError && error.status === 401) {
+          if (error instanceof HttpError && error.status === 401) {
             showToast('cancel', '로그인을 해주세요.');
             router.push('/login');
             return;

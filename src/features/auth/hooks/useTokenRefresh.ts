@@ -2,7 +2,7 @@
 import * as Sentry from '@sentry/nextjs';
 import { useEffect, useRef } from 'react';
 import { refreshAuthTokens } from '@/features/auth/apis/auth';
-import { ApiError } from '@/shared/apis/apiError';
+import { HttpError } from '@/shared/apis/apiError';
 import { useUserStore } from '@/shared/stores/userStore';
 import { useToastStore } from '@/shared/ui/toast/stores/useToastStore';
 
@@ -67,7 +67,7 @@ export const useTokenRefresh = () => {
           }
         }
       } catch (error) {
-        if (error instanceof ApiError && error.status === 401) {
+        if (error instanceof HttpError && error.status === 401) {
           clearSession('expired');
           showToast('warning', '로그인 시간이 만료되었습니다. 다시 로그인해 주세요.');
           return;
