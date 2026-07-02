@@ -60,6 +60,7 @@ export default function BaseCardImage({
           if (!hasError) setHasError(true);
           setIsLoaded(true);
         }}
+        fetchPriority="high"
       />
     </div>
   );
