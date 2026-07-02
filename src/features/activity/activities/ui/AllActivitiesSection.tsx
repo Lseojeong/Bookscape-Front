@@ -2,7 +2,6 @@
 import { useAllActivityList } from '@/features/activity/activities/hooks/useAllActivityList';
 import ActivityListWithPagination from '@/features/activity/common/ui/ActivityListWithPagination';
 import ActivityCardSkeleton from '@/features/activity/common/ui/skeleton/ActivityCardSkeleton';
-import useDelayedLoading from '@/shared/hooks/useDelayedLoading';
 import EmptyState from '@/shared/ui/empty-state/EmptyState';
 
 /**
@@ -13,19 +12,14 @@ import EmptyState from '@/shared/ui/empty-state/EmptyState';
 export default function AllActivitiesSection() {
   const { page, activities, totalPages, handlePageChange, isLoading, isError, refetch } =
     useAllActivityList();
-  const isSkeletonVisible = useDelayedLoading(isLoading);
-
   return (
     <>
-      {isLoading && !isSkeletonVisible ? null : isSkeletonVisible ? (
-        <>
-          {/* ~ md: 6개 노출, lg: 12개 노출 */}
-          <div className="mt-5 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <ActivityCardSkeleton key={i} className={i >= 6 ? 'hidden lg:block' : ''} />
-            ))}
-          </div>
-        </>
+      {isLoading ? (
+        <div className="mt-5 grid grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <ActivityCardSkeleton key={i} className={i >= 6 ? 'hidden lg:block' : ''} />
+          ))}
+        </div>
       ) : isError ? (
         <div className="mt-10">
           <EmptyState
