@@ -19,6 +19,7 @@ export type ActivityCardData = {
 export type ActivityCardProps = {
   data: ActivityCardData;
   titleTag?: TitleAs;
+  priority?: boolean;
 };
 
 /**
@@ -29,16 +30,14 @@ export type ActivityCardProps = {
  *
  * @example
  * ```tsx
- * <ActivityCard data={activity} />
- *
  * <div className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4 lg:gap-6">
- *   {activities.map((activity) => (
- *     <ActivityCard key={activity.id} data={activity} />
+ *   {activities.map((activity, index) => (
+ *     <ActivityCard key={activity.id} data={activity} priority={index < 4} />
  *   ))}
  * </div>
  * ```
  */
-export default function ActivityCard({ data, titleTag }: ActivityCardProps) {
+export default function ActivityCard({ data, titleTag, priority = false }: ActivityCardProps) {
   const { bannerImageUrl } = data;
 
   return (
@@ -47,6 +46,7 @@ export default function ActivityCard({ data, titleTag }: ActivityCardProps) {
       <BaseCardImage
         bannerImageUrl={bannerImageUrl}
         containerClassName="mb-16.5 h-44 md:mb-19 md:h-93.5 lg:h-72.5"
+        priority={priority}
       />
 
       {/* 정보 영역 */}

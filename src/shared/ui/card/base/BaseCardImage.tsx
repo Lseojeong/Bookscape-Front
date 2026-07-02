@@ -11,6 +11,8 @@ type BaseCardImageProps = {
   alt?: string;
   containerClassName?: string;
   imageClassName?: string;
+  sizes?: string;
+  priority?: boolean;
 };
 
 /**
@@ -30,6 +32,8 @@ export default function BaseCardImage({
   alt,
   containerClassName,
   imageClassName,
+  sizes = '(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw',
+  priority = false,
 }: BaseCardImageProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -48,6 +52,8 @@ export default function BaseCardImage({
         src={src}
         alt={alt ?? '체험 배너 이미지'}
         fill
+        sizes={sizes}
+        priority={priority}
         className={cn('object-cover', !isLoaded && 'invisible', imageClassName)}
         onLoad={() => setIsLoaded(true)}
         onError={() => {

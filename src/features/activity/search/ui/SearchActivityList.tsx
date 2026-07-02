@@ -17,11 +17,11 @@ type SearchActivityListProps = {
 export default function SearchActivityList({ activities }: SearchActivityListProps) {
   return (
     <ul className="grid w-full grid-cols-2 gap-4.5 md:gap-5 lg:grid-cols-4 lg:gap-6">
-      {activities.map((data) => {
+      {activities.map((data, index) => {
         return (
           <li key={data.id}>
             <Link href={`/activity/${data.id}`}>
-              <ActivityCard data={data} titleTag="h2" />
+              <ActivityCard data={data} titleTag="h2" priority={index < 4} />
             </Link>
           </li>
         );

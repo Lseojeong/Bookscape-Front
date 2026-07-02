@@ -86,14 +86,14 @@ export default function MainActivityList() {
           {/* 이미지 캐러셀 */}
           <div ref={emblaRef} className="overflow-hidden pb-4">
             <ul className="flex gap-4 md:gap-5 lg:gap-6">
-              {activityData.map((data) => {
+              {activityData.map((data, index) => {
                 return (
                   <li
                     key={data.id}
                     className="w-[calc((100%-50px*2)/2)] min-w-50 flex-none md:w-[calc((100%-20px*1)/2)] lg:w-[calc((100%-24px*3)/4)]"
                   >
                     <Link href={`/activity/${data.id}`}>
-                      <ActivityCard data={data} />
+                      <ActivityCard data={data} priority={index < 4} />
                     </Link>
                   </li>
                 );
