@@ -47,6 +47,7 @@ export default function ActivityCard({ data, titleTag, priority = false }: Activ
         bannerImageUrl={bannerImageUrl}
         containerClassName="mb-16.5 h-44 md:mb-19 md:h-93.5 lg:h-72.5"
         priority={priority}
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
       />
 
       {/* 정보 영역 */}

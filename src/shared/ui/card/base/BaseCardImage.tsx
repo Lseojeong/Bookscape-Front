@@ -13,6 +13,7 @@ type BaseCardImageProps = {
   imageClassName?: string;
   sizes?: string;
   priority?: boolean;
+  fetchPriority?: 'high' | 'low' | 'auto';
 };
 
 /**
@@ -32,8 +33,9 @@ export default function BaseCardImage({
   alt,
   containerClassName,
   imageClassName,
-  sizes = '(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw',
+  sizes,
   priority = false,
+  fetchPriority = 'auto',
 }: BaseCardImageProps) {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -54,13 +56,13 @@ export default function BaseCardImage({
         fill
         sizes={sizes}
         priority={priority}
+        fetchPriority={fetchPriority}
         className={cn('object-cover', !isLoaded && 'invisible', imageClassName)}
         onLoad={() => setIsLoaded(true)}
         onError={() => {
           if (!hasError) setHasError(true);
           setIsLoaded(true);
         }}
-        fetchPriority="high"
       />
     </div>
   );
